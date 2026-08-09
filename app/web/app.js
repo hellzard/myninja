@@ -422,6 +422,45 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Yokai Event - Kitsune
+    let autoKitsuneInterval = null;
+    const btnAutoKitsune = document.getElementById('toggle-autokitsune');
+
+    if (btnAutoKitsune) {
+        btnAutoKitsune.addEventListener('click', () => {
+            if (autoKitsuneInterval) {
+                clearInterval(autoKitsuneInterval);
+                autoKitsuneInterval = null;
+                btnAutoKitsune.textContent = "START";
+                btnAutoKitsune.style.background = "";
+                addLog("Auto Yokai Kitsune STOPPED.");
+                return;
+            }
+
+            btnAutoKitsune.textContent = "STOP";
+            btnAutoKitsune.style.background = "#ff5252";
+            addLog(`Auto Yokai Kitsune STARTED...`);
+
+            autoKitsuneInterval = setInterval(async () => {
+                try {
+                    const res = await fetch('/api/bot/auto_event_step', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            sessionkey: sessionState.sessionkey,
+                            char_id: sessionState.char_id,
+                            event_id: 'yokai_kitsune'
+                        })
+                    });
+                    const data = await res.json();
+                    addLog(`[Kitsune] Response: ${data.message}`);
+                } catch(e) {
+                    addLog(`[Kitsune] Error: ${e.message}`);
+                }
+            }, 5000);
+        });
+    }
+
     // Auto Shadow War
     let autoShadowWarInterval = null;
     const btnAutoShadowWar = document.getElementById('toggle-autoshadowwar');

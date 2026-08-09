@@ -198,3 +198,107 @@ async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: in
     
     return f"Circus Event Complete! Reward: {finish_res}"
 
+async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int, boss_type: str = "kitsune"):
+    # 1. Get Character Data
+    try:
+        char_info_res = await client.send_amf_request("36a62s4oZ7iYRJjd.iakN46g0GaJN", [[char_id, sessionkey, char_id, "EVENT"]])
+    except Exception as e:
+        return f"Failed to fetch character data: {e}"
+    
+    if not isinstance(char_info_res, dict) or not hasattr(char_info_res, 'get'):
+        err_detail = ""
+        if hasattr(char_info_res, 'description'):
+            err_detail = f" desc={char_info_res.description}"
+        if hasattr(char_info_res, 'code'):
+            err_detail += f" code={char_info_res.code}"
+        if hasattr(char_info_res, 'details'):
+            err_detail += f" details={char_info_res.details}"
+        return f"Failed to fetch character data: server returned {type(char_info_res).__name__}{err_detail}"
+    
+    if char_info_res.get('status') != 1:
+        return f"Failed to fetch character data: {char_info_res}"
+        
+    char_data = char_info_res.get('character_data', {})
+    if not isinstance(char_data, dict):
+        char_data = {}
+    char_agility = char_data.get('agility', 0)
+    
+    loc5 = {
+        "status": {
+            "wind": char_data.get('atrrib_wind', 0),
+            "fire": char_data.get('atrrib_fire', 0),
+            "lightning": char_data.get('atrrib_lightning', 0),
+            "water": char_data.get('atrrib_water', 0),
+            "earth": char_data.get('atrrib_earth', 0)
+        },
+        "items": {
+            "weapon": char_data.get('character_weapon', ''),
+            "set": char_data.get('character_set', ''),
+            "back_item": char_data.get('character_back_item', ''),
+            "accessory": char_data.get('character_accessory', '')
+        },
+        "____": [],
+        "bytes": {
+            "_": 100000, "__": 100000, "___": "1", "____": "1", "_____": 100000, "______": 100000
+        }
+    }
+    loc6_str = base64.b64encode(json.dumps(loc5).encode('utf-8')).decode('utf-8')
+    
+    # 2. Start Event
+    if boss_type == "kitsune":
+        boss_id = 312610
+        ene_id = "ene_2133"
+        hp = 60800
+        enemy_agility = 171
+        
+        # Kitsune requires item_27
+        try:
+            item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [[sessionkey, char_id, "item_27"]])
+        except Exception as e:
+            return f"Failed to use Yokai ticket: {e}"
+    else:
+        return f"Unknown yokai boss type: {boss_type}"
+    
+    enemy_info_str = f"id:{ene_id}|hp:{hp}|agility:{enemy_agility}"
+    
+    hash_start_str = str(char_id) + ene_id + enemy_info_str + str(char_agility)
+    hash_start = hashlib.sha256(hash_start_str.encode('utf-8')).hexdigest()
+    
+    try:
+        # NOTE: Yokai uses MTpVa9K3yFwo instead of QBUJb0w3NBsX
+        start_res = await client.send_amf_request("urUAcOuL6PahuoEd.MTpVa9K3yFwo", [[
+            char_id, ene_id, char_agility, enemy_info_str, hash_start, sessionkey
+        ]])
+    except Exception as e:
+        return f"Failed to start Yokai Event: {e}"
+    
+    if not isinstance(start_res, dict) or not hasattr(start_res, 'get'):
+        return f"Failed to start Yokai Event: server returned {type(start_res).__name__}"
+    
+    if start_res.get('status') != 1 or 'code' not in start_res:
+        return f"Failed to start Yokai Event: {start_res}"
+        
+    battle_code = start_res['code']
+    
+    # 3. Wait for battle
+    await asyncio.sleep(3)
+    
+    # 4. Finish Event
+    if boss_type == "kitsune":
+        damage_done = 60800 # from charles
+    else:
+        damage_done = hp
+        
+    hash_end_str = str(char_id) + ene_id + battle_code + str(damage_done) + loc6_str
+    hash_end = hashlib.sha256(hash_end_str.encode('utf-8')).hexdigest()
+    
+    try:
+        # NOTE: Yokai uses iETwupoGdQMO instead of fRGiPcIczAbE
+        finish_res = await client.send_amf_request("urUAcOuL6PahuoEd.iETwupoGdQMO", [[
+            char_id, ene_id, battle_code, damage_done, hash_end, loc6_str, sessionkey
+        ]])
+    except Exception as e:
+        return f"Yokai Event finish failed: {e}"
+    
+    return f"Yokai Event Complete! Reward: {finish_res}"
+

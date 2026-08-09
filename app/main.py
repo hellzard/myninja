@@ -14,7 +14,8 @@ from app.services.bot_manager import (
     auto_monster_hunt,
     auto_mission_s,
     auto_clan_war,
-    run_circus_event
+    run_circus_event,
+    run_yokai_event
 )
 
 # -----------------
@@ -114,6 +115,8 @@ async def api_auto_event_step(req: AutoEventRequest):
             res = await run_circus_event(client, req.sessionkey, req.char_id, boss_type="ringmaster")
         elif req.event_id == "circus_jester":
             res = await run_circus_event(client, req.sessionkey, req.char_id, boss_type="jester")
+        elif req.event_id == "yokai_kitsune":
+            res = await run_yokai_event(client, req.sessionkey, req.char_id, boss_type="kitsune")
         else:
             res = await run_mission(client, req.sessionkey, req.char_id, req.event_id)
         return {"status": "success", "message": res}
