@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Ninja Sage Cloud Dashboard</title>
+    <meta name="description" content="Ninja Sage Cloud Controller" />
+    <link rel="stylesheet" href="/panel/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="/panel/app.js" defer></script>
+    <style>
+      .login-overlay {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: radial-gradient(circle at center, #2e1205 0%, #0c0502 50%, #020101 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+      .login-container {
+        display: flex;
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 900px;
+        padding: 2rem;
+        box-sizing: border-box;
+      }
+      .login-panel {
+        flex: 1;
+        background: rgba(20, 20, 20, 0.85);
+        backdrop-filter: blur(10px);
+        border: 1px solid #333;
+        border-radius: 12px;
+        padding: 2rem;
+        box-sizing: border-box;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+      }
+      .login-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+      .login-header svg {
+        width: 48px;
+        height: 48px;
+      }
+      .login-header h2 {
+        margin: 0;
+        font-size: 24px;
+        color: #fff;
+        font-weight: 600;
+      }
+      .login-header p {
+        margin: 4px 0 0 0;
+        font-size: 14px;
+        color: #888;
+      }
+      .btn-outline {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 10px;
+        background: transparent;
+        border: 1px solid #d97706;
+        color: #d97706;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-bottom: 1.5rem;
+        transition: all 0.2s;
+      }
+      .btn-outline:hover {
+        background: rgba(217, 119, 6, 0.1);
+      }
+      .form-group {
+        margin-bottom: 1.25rem;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 14px;
+        font-weight: 500;
+        color: #ddd;
+      }
+      .input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+      .input-wrapper svg {
+        position: absolute;
+        left: 12px;
+        width: 18px;
+        height: 18px;
+        fill: #666;
+      }
+      .input-wrapper input {
+        width: 100%;
+        padding: 12px 12px 12px 40px;
+        background: #111;
+        border: 1px solid #333;
+        color: #fff;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-size: 14px;
+        transition: border-color 0.2s;
+      }
+      .input-wrapper input:focus {
+        outline: none;
+        border-color: #d97706;
+      }
+      .input-wrapper .show-pwd {
+        position: absolute;
+        right: 12px;
+        color: #d97706;
+        font-size: 12px;
+        cursor: pointer;
+      }
+      .btn-primary {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(90deg, #d97706, #fbbf24);
+        color: #000;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 1.5rem;
+      }
+      .btn-primary:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+      
+      .logs-panel {
+        display: flex;
+        flex-direction: column;
+      }
+      .logs-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+      .logs-header h3 {
+        margin: 0;
+        color: #fff;
+        font-size: 20px;
+      }
+      .btn-clear {
+        background: transparent;
+        border: 1px solid #555;
+        color: #aaa;
+        padding: 6px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .btn-clear:hover {
+        border-color: #d97706;
+        color: #d97706;
+      }
+      .login-logs {
+        flex: 1;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        overflow-y: auto;
+        font-family: monospace;
+        font-size: 13px;
+        color: #aaa;
+      }
+      .login-logs li {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 12px;
+        align-items: flex-start;
+      }
+      .log-time {
+        color: #666;
+        min-width: 65px;
+      }
+      .log-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-top: 4px;
+        flex-shrink: 0;
+      }
+      .log-dot.ok { background: #10b981; }
+      .log-dot.warn { background: #f59e0b; }
+      .log-dot.err { background: #ef4444; }
+      
+      .login-footer {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        text-align: center;
+        color: #666;
+        font-size: 12px;
+      }
+      .login-footer a {
+        color: #d97706;
+        text-decoration: none;
+        margin-left: 10px;
+      }
+      .hidden {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Login Modal -->
+    <div id="login-modal" class="login-overlay">
+      <div class="login-container">
+        
+        <!-- Left Panel: Form -->
+        <div class="login-panel">
+          <div class="login-header">
+
+            <div>
+              <h2>Account Login</h2>
+              <p>Welcome back. Please sign in to continue.</p>
+            </div>
+          </div>
+          
+
+          <form id="login-form">
+            <div class="form-group">
+              <label>Username</label>
+              <div class="input-wrapper">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                <input type="text" id="login-user" required placeholder="Enter your username" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <div class="input-wrapper">
+                <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                <input type="password" id="login-pass" required placeholder="Enter your password" />
+                <span class="show-pwd" onclick="const p=document.getElementById('login-pass'); p.type=p.type==='password'?'text':'password';">Show</span>
+              </div>
+            </div>
+            
+            <button type="submit" class="btn-primary" id="login-btn">
+              Login &rarr;
+            </button>
+            
+            <button type="button" class="btn-outline" style="margin-top: 1rem; margin-bottom: 0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              Quick Login
+            </button>
+          </form>
+        </div>
+        
+        <!-- Right Panel: Logs -->
+        <div class="login-panel logs-panel">
+          <div class="logs-header">
+            <h3>Logs</h3>
+            <button class="btn-clear" onclick="document.getElementById('startup-logs').innerHTML='';">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              Clear
+            </button>
+          </div>
+          <ul class="login-logs" id="startup-logs">
+            <li>
+              <span class="log-time">00:00:00</span>
+              <div class="log-dot ok"></div>
+              <span>Panel check ok</span>
+            </li>
+          </ul>
+        </div>
+        
+      </div>
+      
+      <div class="login-footer">
+        &copy; 2026 My Ninja Panel. All rights reserved. <a href="#">Privacy</a>
+      </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div class="shell hidden" id="app-shell">
+      <div class="bento-container">
+        
+        <!-- Profile Card -->
+        <div class="bento-card bento-profile">
+          <div class="profile-avatar">忍</div>
+          <h2 id="metric-char">Unknown</h2>
+          <div class="profile-id">ID: <span id="metric-char-id">—</span></div>
+          
+          <div class="profile-stats-grid">
+            <div class="stat-box">
+              <span class="stat-label">Level</span>
+              <span class="stat-value" id="metric-level">--</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">XP</span>
+              <span class="stat-value" id="metric-xp">--</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">Gold</span>
+              <span class="stat-value" id="metric-gold" style="color:var(--primary)">--</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">Tokens</span>
+              <span class="stat-value" id="metric-token" style="color:var(--primary)">--</span>
+            </div>
+          </div>
+          
+          <div class="profile-btn-group">
+             <button id="btn-refresh-stats" class="bento-btn primary">Refresh Stats</button>
+             <button id="btn-logout" class="bento-btn secondary" style="color: #f87171; border-color: rgba(248,113,113,0.3); font-weight: bold;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px; margin-top: -2px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                Logout
+             </button>
+          </div>
+        </div>
+
+        <!-- Automation Modules -->
+        <div class="bento-card bento-actions">
+          <div class="card-header">
+            <h3>Automation Modules</h3>
+            <button class="bento-btn-small">Settings</button>
+          </div>
+          
+          <div class="modules-grid">
+            <!-- Main Actions -->
+            <div class="module-card" onclick="document.getElementById('modal-main').classList.add('show')">
+               <div class="module-icon">
+                 <svg viewBox="0 0 24 24"><path d="M14.5 4h5v5l-14 14-5-5 14-14z"></path><path d="M9.5 4h-5v5l14 14 5-5-14-14z"></path></svg>
+               </div>
+               <div class="module-info">
+                 <h4>Main Action</h4>
+                 <p>Leveling, Eudemon, Monster Hunt</p>
+               </div>
+               <div class="module-arrow">→</div>
+            </div>
+            
+            <!-- Events -->
+            <div class="module-card" onclick="document.getElementById('modal-events').classList.add('show')">
+               <div class="module-icon">
+                 <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+               </div>
+               <div class="module-info">
+                 <h4>Events</h4>
+                 <p>Yokai, Circus, Seasonal</p>
+               </div>
+               <div class="module-arrow">→</div>
+            </div>
+            
+            <!-- War -->
+            <div class="module-card" onclick="document.getElementById('modal-war').classList.add('show')">
+               <div class="module-icon">
+                 <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+               </div>
+               <div class="module-info">
+                 <h4>War</h4>
+                 <p>Shadow War, Clan War</p>
+               </div>
+               <div class="module-arrow">→</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terminal Log -->
+        <div class="bento-card bento-terminal">
+          <div class="card-header">
+             <h3 style="display:flex; align-items:center; gap:8px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                Terminal Log
+             </h3>
+             <button class="bento-btn-small" onclick="document.getElementById('activity-log').innerHTML='';">Clear Log</button>
+          </div>
+          <div class="terminal-window">
+            <ul id="activity-log" class="terminal-log-list">
+              <li>
+                 <span class="log-time">00:00:00</span>
+                 <span class="log-dot ok"></span>
+                 <span class="log-msg">System initialized. Waiting for bot commands...</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modals styles and classes -->
+      <style>
+        .hidden { display: none !important; }
+        :root {
+          --bg-app: #09090b;       
+          --bg-card: #18181b;      
+          --bg-hover: #27272a;     
+          --border-color: #27272a; 
+          --primary: #ea580c;      
+          --primary-hover: #c2410c;
+          --text-main: #fafafa;    
+          --text-muted: #a1a1aa;   
+          --radius: 12px;
+        }
+
+        .shell {
+          background-color: var(--bg-app);
+          color: var(--text-main);
+          font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+          min-height: 100vh; position: absolute; top: 0; left: 0; right: 0;
+          display: flex; align-items: center; justify-content: center;
+        }
+
+        .bento-btn {
+          padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 600; cursor: pointer;
+          border: 1px solid transparent; transition: all 0.2s; font-family: inherit; font-size: 0.95rem;
+        }
+        .bento-btn.primary { background: var(--primary); color: #fff; }
+        .bento-btn.primary:hover { background: var(--primary-hover); }
+        .bento-btn.secondary { background: var(--bg-hover); color: var(--text-main); border-color: var(--border-color); }
+        .bento-btn.secondary:hover { background: #3f3f46; }
+
+        .bento-container {
+          width: 100%; max-width: 1100px; padding: 1.5rem;
+          display: grid; gap: 1.5rem; grid-template-columns: 1fr;
+        }
+        @media (min-width: 900px) {
+          .bento-container { grid-template-columns: 350px 1fr; }
+          .bento-terminal { grid-column: 1 / 3; }
+        }
+
+        .bento-card {
+          background: var(--bg-card); border: 1px solid var(--border-color);
+          border-radius: var(--radius); padding: 1.5rem;
+        }
+
+        /* Profile */
+        .profile-avatar {
+          width: 90px; height: 90px; margin: 0 auto 1rem auto;
+          border-radius: 50%; background: #09090b; border: 2px solid var(--primary);
+          display: flex; align-items: center; justify-content: center;
+          font-size: 2.5rem; font-family: serif; font-weight: bold; color: var(--primary);
+          box-shadow: 0 0 20px rgba(234,88,12,0.15);
+        }
+        .bento-profile h2 { text-align: center; margin: 0 0 0.5rem 0; font-size: 1.75rem; font-weight: 600; }
+        .profile-id { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
+        
+        .profile-stats-grid {
+          display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;
+        }
+        .stat-box {
+          background: var(--bg-app); border: 1px solid var(--border-color);
+          border-radius: 8px; padding: 1rem; text-align: center;
+        }
+        .stat-label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.25rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-value { display: block; font-size: 1.25rem; font-weight: 700; }
+        .profile-btn-group { display: flex; gap: 0.75rem; }
+        .profile-btn-group button { flex: 1; }
+
+        /* Modules */
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .card-header h3 { margin: 0; font-size: 1.25rem; font-weight: 600; }
+        .bento-btn-small { 
+          background: var(--bg-hover); color: var(--text-main); border: 1px solid var(--border-color);
+          padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500;
+          transition: 0.2s; font-family: inherit;
+        }
+        .bento-btn-small:hover { background: #3f3f46; }
+
+        .modules-grid { display: flex; flex-direction: column; gap: 1rem; }
+        .module-card {
+          display: flex; align-items: center; gap: 1.25rem;
+          background: var(--bg-app); border: 1px solid var(--border-color);
+          padding: 1.25rem; border-radius: 12px; cursor: pointer;
+          transition: all 0.2s;
+        }
+        .module-card:hover { border-color: var(--primary); background: #1f1a16; transform: translateY(-2px); }
+        .module-icon { 
+          width: 52px; height: 52px; background: var(--bg-hover); border-radius: 10px;
+          display: flex; align-items: center; justify-content: center; color: var(--primary);
+        }
+        .module-icon svg { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2; fill: none; }
+        .module-info { flex: 1; }
+        .module-info h4 { margin: 0 0 0.25rem 0; font-size: 1.1rem; }
+        .module-info p { margin: 0; color: var(--text-muted); font-size: 0.85rem; }
+        .module-arrow { color: var(--text-muted); font-weight: bold; font-size: 1.25rem; transition: 0.2s; }
+        .module-card:hover .module-arrow { color: var(--primary); transform: translateX(4px); }
+
+        /* Terminal */
+        .bento-terminal { display: flex; flex-direction: column; min-height: 350px; }
+        .terminal-window {
+          flex: 1; background: #000; border: 1px solid #111; border-radius: 8px;
+          padding: 1.25rem; overflow-y: auto; max-height: 400px; 
+          font-family: 'JetBrains Mono', 'Consolas', monospace; font-size: 0.85rem; line-height: 1.5;
+        }
+        .terminal-log-list { list-style: none; margin: 0; padding: 0; }
+        .terminal-log-list li { display: flex; gap: 0.75rem; margin-bottom: 0.5rem; align-items: flex-start; }
+        .log-time { color: #52525b; min-width: 65px; }
+        .log-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+        .log-dot.ok { background: #22c55e; }
+        .log-dot.err { background: #ef4444; }
+        .log-msg { color: #d4d4d8; }
+
+        /* Modals */
+        .dash-modal {
+          position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+          background: rgba(0,0,0,0.8); backdrop-filter: blur(4px);
+          display: flex; align-items: center; justify-content: center; z-index: 99999;
+          opacity: 0; visibility: hidden; transition: 0.2s;
+        }
+        .dash-modal.show { opacity: 1; visibility: visible; }
+        .dash-modal-content {
+          background: var(--bg-card); border: 1px solid var(--border-color);
+          border-radius: var(--radius); width: 90%; max-width: 550px; padding: 1.5rem;
+          transform: scale(0.95); transition: 0.2s; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+        .dash-modal.show .dash-modal-content { transform: scale(1); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .modal-header h3 { margin: 0; font-size: 1.25rem; font-weight: 600; }
+        .btn-close-modal { background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; }
+        .btn-close-modal:hover { color: #fff; }
+
+        .modal-list-item {
+          display: flex; justify-content: space-between; align-items: center;
+          background: var(--bg-app); border: 1px solid var(--border-color);
+          padding: 1.25rem; border-radius: 8px; margin-bottom: 0.75rem;
+        }
+        .modal-list-item h4 { margin: 0 0 0.25rem 0; font-size: 1rem; }
+        .modal-list-item small { color: var(--text-muted); font-size: 0.85rem; }
+        
+        .btn-toggle {
+          background: var(--bg-hover); color: var(--text-main); border: 1px solid var(--border-color);
+          padding: 0.5rem 1.25rem; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.2s; font-family: inherit;
+        }
+        .btn-toggle:hover { background: #3f3f46; }
+        .btn-toggle[style*="background: rgb(255, 82, 82)"] {
+          background: #ef4444 !important; border-color: #ef4444 !important; color: white !important;
+          box-shadow: 0 0 15px rgba(239,68,68,0.3);
+        }
+      </style>
+
+      <!-- Main Action Modal -->
+      <div id="modal-main" class="dash-modal">
+         <div class="dash-modal-content">
+            <div class="modal-header">
+               <h3>Main Actions</h3>
+               <button class="btn-close-modal" onclick="document.getElementById('modal-main').classList.remove('show')">&times;</button>
+            </div>
+            <div>
+               <div class="modal-list-item">
+                 <div><h4>Auto Leveling</h4><small>Farms highest normal mission.</small></div>
+                 <div style="display: flex; align-items: center;">
+                   <input type="number" id="auto_level_max" value="60" style="width: 60px; background:var(--bg-card); color:var(--text-main); border:1px solid var(--border-color); padding:0.5rem; margin-right:8px; border-radius:6px; font-family:inherit; text-align:center;"/>
+                   <button id="toggle-autolevel" class="btn-toggle">START</button>
+                 </div>
+               </div>
+               <div class="modal-list-item">
+                 <div><h4>Eudemon Boss</h4><small>Loops all boss hunting zones.</small></div>
+                 <button id="toggle-autohunting" class="btn-toggle">START</button>
+               </div>
+               <div class="modal-list-item">
+                 <div><h4>Monster Hunt</h4><small>Completes monster hunt routes.</small></div>
+                 <button id="toggle-automonster" class="btn-toggle">START</button>
+               </div>
+               <div class="modal-list-item">
+                 <div><h4>Daily Event</h4><small>Auto claims daily missions.</small></div>
+                 <button id="toggle-autodaily" class="btn-toggle">START</button>
+               </div>
+               <div class="modal-list-item">
+                 <div><h4>Mission S</h4><small>Insta-wins special S-rank missions.</small></div>
+                 <button id="toggle-automissions" class="btn-toggle">START</button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- Events Modal -->
+      <div id="modal-events" class="dash-modal">
+         <div class="dash-modal-content">
+            <div class="modal-header">
+               <h3>Events</h3>
+               <button class="btn-close-modal" onclick="document.getElementById('modal-events').classList.remove('show')">&times;</button>
+            </div>
+            <div>
+               <div class="modal-list-item">
+                 <div><h4>Circus Event (Shadow Ringmaster)</h4><small>Boss HP: 34k | Agility: 186</small></div>
+                 <button id="toggle-autoringmaster" class="btn-toggle">START</button>
+               </div>
+               <div class="modal-list-item">
+                 <div><h4>Circus Event (Nightmare Jester)</h4><small>Boss HP: 114k | Agility: 166</small></div>
+                 <button id="toggle-autojester" class="btn-toggle">START</button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- War Modal -->
+      <div id="modal-war" class="dash-modal">
+         <div class="dash-modal-content">
+            <div class="modal-header">
+               <h3>War</h3>
+               <button class="btn-close-modal" onclick="document.getElementById('modal-war').classList.remove('show')">&times;</button>
+            </div>
+            <div>
+               <div class="modal-list-item">
+                 <div><h4>Shadow War</h4><small>Auto fights shadow wars.</small></div>
+                 <button id="toggle-autoshadowwar" class="btn-toggle">START</button>
+               </div>
+               <div class="modal-list-item">
+                 <div><h4>Clan War</h4><small>Auto fights clan wars.</small></div>
+                 <button id="toggle-autoclanwar" class="btn-toggle">START</button>
+               </div>
+            </div>
+         </div>
+      </div>
+    </div>
+  </body>
+</html>
