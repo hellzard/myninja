@@ -3,3 +3,4 @@ Py3AMF==0.8.12
 requests==2.32.3
 uvicorn==0.30.4
 httpx
+pycryptodomex
