@@ -256,6 +256,17 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
             item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [[sessionkey, char_id, "item_27"]])
         except Exception as e:
             return f"Failed to use Yokai ticket: {e}"
+    elif boss_type == "tengu":
+        boss_id = 312610
+        ene_id = "ene_2132"
+        hp = 75924
+        enemy_agility = 176
+        
+        # Tengu requires item_31
+        try:
+            item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [[sessionkey, char_id, "item_31"]])
+        except Exception as e:
+            return f"Failed to use Tengu ticket: {e}"
     else:
         return f"Unknown yokai boss type: {boss_type}"
     
@@ -286,6 +297,8 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
     # 4. Finish Event
     if boss_type == "kitsune":
         damage_done = 60800 # from charles
+    elif boss_type == "tengu":
+        damage_done = 75924 # from charles
     else:
         damage_done = hp
         

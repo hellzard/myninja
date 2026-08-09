@@ -117,6 +117,8 @@ async def api_auto_event_step(req: AutoEventRequest):
             res = await run_circus_event(client, req.sessionkey, req.char_id, boss_type="jester")
         elif req.event_id == "yokai_kitsune":
             res = await run_yokai_event(client, req.sessionkey, req.char_id, boss_type="kitsune")
+        elif req.event_id == "yokai_tengu":
+            res = await run_yokai_event(client, req.sessionkey, req.char_id, boss_type="tengu")
         else:
             res = await run_mission(client, req.sessionkey, req.char_id, req.event_id)
         return {"status": "success", "message": res}

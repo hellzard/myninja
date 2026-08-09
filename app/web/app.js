@@ -461,6 +461,45 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Yokai Event - Tengu
+    let autoTenguInterval = null;
+    const btnAutoTengu = document.getElementById('toggle-autotengu');
+
+    if (btnAutoTengu) {
+        btnAutoTengu.addEventListener('click', () => {
+            if (autoTenguInterval) {
+                clearInterval(autoTenguInterval);
+                autoTenguInterval = null;
+                btnAutoTengu.textContent = "START";
+                btnAutoTengu.style.background = "";
+                addLog("Auto Yokai Tengu STOPPED.");
+                return;
+            }
+
+            btnAutoTengu.textContent = "STOP";
+            btnAutoTengu.style.background = "#ff5252";
+            addLog(`Auto Yokai Tengu STARTED...`);
+
+            autoTenguInterval = setInterval(async () => {
+                try {
+                    const res = await fetch('/api/bot/auto_event_step', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            sessionkey: sessionState.sessionkey,
+                            char_id: sessionState.char_id,
+                            event_id: 'yokai_tengu'
+                        })
+                    });
+                    const data = await res.json();
+                    addLog(`[Tengu] Response: ${data.message}`);
+                } catch(e) {
+                    addLog(`[Tengu] Error: ${e.message}`);
+                }
+            }, 5000);
+        });
+    }
+
     // Auto Shadow War
     let autoShadowWarInterval = null;
     const btnAutoShadowWar = document.getElementById('toggle-autoshadowwar');
