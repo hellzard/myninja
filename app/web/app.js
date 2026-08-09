@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const appShell = document.getElementById('app-shell');
     const loginForm = document.getElementById('login-form');
     const loginBtn = document.getElementById('login-btn');
+    const quickLoginBtn = document.getElementById('quick-login-btn');
     const loginError = document.getElementById('login-error');
     
     const charNameText = document.getElementById('metric-char');
@@ -119,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     tokens: data.tokens || '--'
                 };
                 localStorage.setItem('ns_session', JSON.stringify(sessionState));
+                localStorage.setItem('ns_quick_login', JSON.stringify({ user, pass }));
                 setTimeout(() => checkLoginState(), 1000); // Give user time to read logs
             } else {
                 addStartupLog(data.message || "Login failed", 'err');
@@ -130,6 +132,21 @@ document.addEventListener('DOMContentLoaded', () => {
             loginBtn.innerHTML = "Login &rarr;";
         }
     });
+
+    if (quickLoginBtn) {
+        quickLoginBtn.addEventListener('click', () => {
+            const stored = localStorage.getItem('ns_quick_login');
+            if (stored) {
+                const creds = JSON.parse(stored);
+                document.getElementById('login-user').value = creds.user;
+                document.getElementById('login-pass').value = creds.pass;
+                addStartupLog("Quick login credentials loaded", 'ok');
+                loginBtn.click();
+            } else {
+                addStartupLog("No saved credentials for Quick Login", 'warn');
+            }
+        });
+    }
 
     document.getElementById('btn-logout').addEventListener('click', () => {
         localStorage.removeItem('ns_session');
