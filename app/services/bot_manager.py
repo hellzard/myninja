@@ -230,7 +230,8 @@ async def auto_mission_s(client: NinjaSageClient, sessionkey: str, char_id: int)
     if char_data_res.get('status') == 0:
         return f"Failed to get character data for Mission S: {char_data_res.get('error', 'Unknown error')}"
     char_data = char_data_res
-    char_level = int(char_data.get('character_level', char_data.get('level', 0)))
+    char_obj = char_data.get('character_data', char_data)
+    char_level = int(char_obj.get('character_level', char_obj.get('level', 0)))
     if char_level < 80:
         raise Exception(f"Mission S requires level 80. Current level: {char_level}")
 
@@ -375,8 +376,9 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
         return f"Failed to get character data for exam: {char_data_res.get('error', 'Unknown error')}"
     
     char = char_data_res
-    level = int(char.get('character_level', char.get('level', 1)))
-    rank = char.get('rank', 1)
+    char_obj = char.get('character_data', char)
+    level = int(char_obj.get('character_level', char_obj.get('level', 1)))
+    rank = char_obj.get('rank', 1)
     
     # 1. Genin -> Chunin (Level 20)
     if level >= 20 and rank < 2:
@@ -422,7 +424,8 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
     char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
     if char_data_res.get('status') == 0:
         return f"Failed to get character data for Eudemon: {char_data_res.get('error', 'Unknown error')}"
-    char_level = int(char_data_res.get('character_level', char_data_res.get('level', 1)))
+    char_obj = char_data_res.get('character_data', char_data_res)
+    char_level = int(char_obj.get('character_level', char_obj.get('level', 1)))
     
     # 2. Get available bosses
     avail_res = await client.send_amf_request("EudemonGarden.getData", [sessionkey, char_id])
