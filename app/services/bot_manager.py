@@ -500,7 +500,7 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
                 results.append(f"Failed to defeat {boss_name}: {finish_res}")
                 
     if not results:
-        return "No Eudemon Bosses fought (maybe out of attempts)."
+        return f"No Eudemon Bosses fought. Parsed Level: {char_level}. Attempts: {avail_raw}"
     return " | ".join(results)
 
 async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: int, boss_type: str = "ringmaster"):
