@@ -191,9 +191,91 @@ async def auto_monster_hunt(client: NinjaSageClient, sessionkey: str, char_id: i
         return f"Battle failed: {finish_res}"
 
 async def auto_mission_s(client: NinjaSageClient, sessionkey: str, char_id: int):
-    # Mission S uses specific high tier mission IDs
-    # Using placeholder msn_s1
-    return await run_mission(client, sessionkey, char_id, "msn_s1")
+    import hashlib
+    import asyncio
+    
+    MISSION_S_STAGE_CONFIG = {
+        1: {'mission_id': 'msn_112', 'energy_cost': 10, 'min_level': 80},
+        2: {'mission_id': 'msn_113', 'energy_cost': 12, 'min_level': 81},
+        3: {'mission_id': 'msn_114', 'energy_cost': 14, 'min_level': 82},
+        4: {'mission_id': 'msn_115', 'energy_cost': 16, 'min_level': 83},
+        5: {'mission_id': 'msn_116', 'energy_cost': 25, 'min_level': 84},
+    }
+    MISSION_S_FINISH_DAMAGE = 235000
+
+    # 1. Get Char data to find level
+    char_data_res = await client.send_amf_request("CharacterDAO.getById", [char_id, sessionkey])
+    if char_data_res.get('status') != 1:
+        return "Failed to get character data for Mission S"
+    char_data = char_data_res['character']
+    char_level = int(char_data.get('level', 0))
+    if char_level < 80:
+        raise Exception(f"Mission S requires level 80. Current level: {char_level}")
+
+    # 2. Get Mission S Data
+    msn_s_data = await client.send_amf_request("BattleSystem.getMissionSData", [char_id, sessionkey])
+    if not isinstance(msn_s_data, dict) or msn_s_data.get('status') != 1:
+        return f"Failed to get Mission S data: {msn_s_data}"
+        
+    unlocked_stage = int(msn_s_data.get('stage', 0))
+    energy = int(msn_s_data.get('energy', 0))
+    max_energy = int(msn_s_data.get('max_energy', 0))
+    
+    # 3. Resolve stage to run
+    stage_to_run = None
+    for stage in range(min(unlocked_stage, 5), 0, -1):
+        stage_cfg = MISSION_S_STAGE_CONFIG.get(stage)
+        if stage_cfg and char_level >= stage_cfg['min_level'] and energy >= stage_cfg['energy_cost']:
+            stage_to_run = stage
+            break
+            
+    if stage_to_run is None:
+        raise Exception(f"Mission S has no unlocked stage available for level {char_level} and energy {energy}/{max_energy}")
+        
+    stage_cfg = MISSION_S_STAGE_CONFIG[stage_to_run]
+    mission_id = stage_cfg['mission_id']
+    
+    mission_info = get_data_by_id(mission_id, MISSION_DATA)
+    if not mission_info:
+        return f"Unknown mission_id {mission_id} for Mission S"
+        
+    # Calculate agility
+    agility = calculate_agility(char_data)
+    
+    # Prepare enemies
+    enemies = mission_info.get("enemies", [])
+    enemy_attrs = []
+    for enemy in enemies:
+        enemy_attr = get_data_by_id(enemy, ENEMY_DATA)
+        hp = enemy_attr.get("hp", 0)
+        ene_agi = enemy_attr.get("agility", 0)
+        enemy_attrs.append(f"id:{enemy}|hp:{hp}|agility:{ene_agi}")
+        
+    hash_input = ",".join(enemies) + "".join(enemy_attrs) + str(agility)
+    mission_hash = hashlib.md5(hash_input.encode()).hexdigest()
+    
+    # 4. Start Battle
+    start_params = [char_id, mission_id, ",".join(enemies), "#".join(enemy_attrs), agility, mission_hash, sessionkey, stage_to_run]
+    start_res = await client.send_amf_request("BattleSystem.startMission", start_params)
+    
+    if start_res.get('status') != 1 or 'battle_code' not in start_res:
+        return f"Failed to start Mission S stage {stage_to_run}: {start_res}"
+        
+    battle_id = start_res['battle_code']
+    await asyncio.sleep(2)
+    
+    # 5. Finish Battle
+    finish_hash_input = f"{mission_id}{char_id}{battle_id}{MISSION_S_FINISH_DAMAGE}"
+    finish_mission_hash = hashlib.md5(finish_hash_input.encode()).hexdigest()
+    
+    finish_params = [char_id, mission_id, battle_id, finish_mission_hash, MISSION_S_FINISH_DAMAGE, sessionkey, BATTLE_HASH, 1]
+    finish_res = await client.send_amf_request("BattleSystem.finishMission", finish_params)
+    
+    if finish_res.get('status') == 1:
+        rewards = finish_res.get('result', [])
+        return f"Mission S Stage {stage_to_run} Complete! Energy left: {energy - stage_cfg['energy_cost']}. Rewards: {rewards}"
+    else:
+        return f"Mission S finish failed: {finish_res}"
 
 async def auto_clan_war(client: NinjaSageClient, sessionkey: str, char_id: int):
     import httpx
