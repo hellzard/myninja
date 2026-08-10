@@ -773,10 +773,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 addLog("Refreshing Session Token via Quick Login...");
                 const creds = JSON.parse(stored);
                 try {
-                    const res = await fetch('/api/login', {
+                    const res = await fetch('/api/auth/login', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email: creds.user, password: creds.pass })
+                        body: JSON.stringify({ username: creds.user, password: creds.pass })
                     });
                     const data = await res.json();
                     if (data.status === 'success') {

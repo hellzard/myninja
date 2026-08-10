@@ -74,10 +74,10 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
     if not mission_info:
         return f"Unknown mission_id {mission_id}"
         
-    char_data_res = await client.send_amf_request("CharacterDAO.getById", [char_id, sessionkey])
-    if char_data_res.get('status') != 1:
-        return f"Failed to get character data: {char_data_res}"
-    char_data = char_data_res['character']
+    char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
+    if char_data_res.get('status') == 0:
+        return f"Failed to get character data: {char_data_res.get('error', 'Unknown error')}"
+    char_data = char_data_res
     agility = calculate_agility(char_data)
     
     enemies = mission_info.get("enemies", [])
@@ -226,10 +226,10 @@ async def auto_mission_s(client: NinjaSageClient, sessionkey: str, char_id: int)
     MISSION_S_FINISH_DAMAGE = 235000
 
     # 1. Get Char data to find level
-    char_data_res = await client.send_amf_request("CharacterDAO.getById", [char_id, sessionkey])
-    if char_data_res.get('status') != 1:
-        return f"Failed to get character data for Mission S: {char_data_res}"
-    char_data = char_data_res['character']
+    char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
+    if char_data_res.get('status') == 0:
+        return f"Failed to get character data for Mission S: {char_data_res.get('error', 'Unknown error')}"
+    char_data = char_data_res
     char_level = int(char_data.get('level', 0))
     if char_level < 80:
         raise Exception(f"Mission S requires level 80. Current level: {char_level}")
@@ -370,11 +370,11 @@ async def auto_clan_war(client: NinjaSageClient, sessionkey: str, char_id: int):
 
 async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
     # Retrieve char data to check level and rank
-    char_data_res = await client.send_amf_request("CharacterDAO.getById", [char_id, sessionkey])
-    if char_data_res.get('status') != 1:
-        return f"Failed to get character data for exam: {char_data_res}"
+    char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
+    if char_data_res.get('status') == 0:
+        return f"Failed to get character data for exam: {char_data_res.get('error', 'Unknown error')}"
     
-    char = char_data_res['character']
+    char = char_data_res
     level = char.get('level', 1)
     rank = char.get('rank', 1)
     
@@ -419,10 +419,10 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
 
 async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
     # 1. Get Char Level
-    char_data_res = await client.send_amf_request("CharacterDAO.getById", [char_id, sessionkey])
-    if char_data_res.get('status') != 1:
-        return f"Failed to get character data for Eudemon: {char_data_res}"
-    char_level = char_data_res.get('character', {}).get('level', 1)
+    char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
+    if char_data_res.get('status') == 0:
+        return f"Failed to get character data for Eudemon: {char_data_res.get('error', 'Unknown error')}"
+    char_level = char_data_res.get('level', 1)
     
     # 2. Get available bosses
     avail_res = await client.send_amf_request("EudemonGarden.getData", [sessionkey, char_id])
@@ -520,10 +520,10 @@ async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: in
             err_detail += f" details={char_info_res.details}"
         return f"Failed to fetch character data: server returned {type(char_info_res).__name__}{err_detail}"
     
-    if char_info_res.get('status') != 1:
-        return f"Failed to fetch character data: {char_info_res}"
+    if char_info_res.get('status') == 0:
+        return f"Failed to fetch character data: {char_info_res.get('error', 'Unknown error')}"
         
-    char_data = char_info_res.get('character_data', {})
+    char_data = char_info_res
     if not isinstance(char_data, dict):
         char_data = {}
     char_agility = char_data.get('agility', 0)
@@ -630,10 +630,10 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
             err_detail += f" details={char_info_res.details}"
         return f"Failed to fetch character data: server returned {type(char_info_res).__name__}{err_detail}"
     
-    if char_info_res.get('status') != 1:
-        return f"Failed to fetch character data: {char_info_res}"
+    if char_info_res.get('status') == 0:
+        return f"Failed to fetch character data: {char_info_res.get('error', 'Unknown error')}"
         
-    char_data = char_info_res.get('character_data', {})
+    char_data = char_info_res
     if not isinstance(char_data, dict):
         char_data = {}
     char_agility = char_data.get('agility', 0)
