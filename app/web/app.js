@@ -382,6 +382,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 5000); // 5 seconds delay for boss fights
     });
 
+    // Eudemon Boss (Desktop & Mobile share same logic if we use querySelectorAll)
+    const eudemonBtns = document.querySelectorAll('#btnAutoEudemon');
+    eudemonBtns.forEach(btn => {
+        btn.addEventListener('click', async () => {
+            if (!sessionState.sessionkey) return;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'WAIT...';
+            btn.disabled = true;
+            
+            try {
+                addLog(`[Eudemon] Starting auto Eudemon boss fights...`);
+                const res = await fetch('/api/bot/auto_eudemon', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        sessionkey: sessionState.sessionkey,
+                        char_id: sessionState.char_id
+                    })
+                });
+                const data = await res.json();
+                
+                if (data.status === 'success') {
+                    addLog(`[Eudemon] Result:\n${data.message}`, 'ok');
+                } else {
+                    addLog(`[Eudemon] Failed: ${data.message}`, 'error');
+                }
+            } catch (e) {
+                addLog(`[Eudemon] Error: ${e.message}`, 'error');
+            }
+            
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+    });
+
     // Circus Event - Shadow Ringmaster
     let autoRingmasterInterval = null;
     const btnAutoRingmaster = document.getElementById('toggle-autoringmaster');

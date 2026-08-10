@@ -15,6 +15,7 @@ from app.services.bot_manager import (
     auto_mission_s,
     auto_clan_war,
     auto_exam,
+    auto_eudemon,
     run_circus_event,
     run_yokai_event
 )
@@ -169,6 +170,15 @@ async def api_auto_exam_step(req: BasicBotRequest):
     client = NinjaSageClient()
     try:
         res = await auto_exam(client, req.sessionkey, req.char_id)
+        return {"status": "success", "message": res}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+@app.post("/api/bot/auto_eudemon")
+async def api_auto_eudemon(req: BasicBotRequest):
+    client = NinjaSageClient()
+    try:
+        res = await auto_eudemon(client, req.sessionkey, req.char_id)
         return {"status": "success", "message": res}
     except Exception as e:
         return {"status": "error", "message": str(e)}

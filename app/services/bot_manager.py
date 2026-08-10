@@ -236,6 +236,89 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
     
     return f"No exams available for Level {level} Rank {rank}"
 
+async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
+    # 1. Get Char Level
+    char_data_res = await client.send_amf_request("CharacterDAO.getById", [char_id, sessionkey])
+    if char_data_res.get('status') != 1:
+        return "Failed to get character data for Eudemon"
+    char_level = char_data_res.get('character', {}).get('level', 1)
+    
+    # 2. Get available bosses
+    avail_res = await client.send_amf_request("EudemonGarden.getData", [sessionkey, char_id])
+    if "data" not in avail_res:
+        return "Eudemon boss response missing 'data'"
+        
+    avail_raw = avail_res["data"]
+    if not avail_raw:
+        return "No boss entries"
+        
+    # avail_bosses is a list of integers representing how many times we can fight each boss
+    avail_bosses = list(map(int, avail_raw.split(",")))
+    
+    # 3. Load gamedata.json
+    import json
+    import os
+    try:
+        with open(os.path.join(os.path.dirname(__file__), "..", "data", "gamedata.json"), "r", encoding="utf-8") as f:
+            gamedata = json.load(f)
+    except Exception as e:
+        return f"Failed to load gamedata.json: {e}"
+        
+    eudemon_entry = next((item for item in gamedata if item.get('id') == 'eudemon'), None)
+    if not eudemon_entry:
+        return "Eudemon gamedata not found"
+        
+    bosses = eudemon_entry["data"]["bosses"]
+    results = []
+    
+    for b in bosses:
+        if int(b["lvl"]) > char_level:
+            break
+            
+        boss_index = b.get("num", 0)
+        boss_name = b.get("name", "Unknown Boss")
+        
+        # If boss_index is out of range, skip
+        if boss_index >= len(avail_bosses):
+            continue
+            
+        attempts = avail_bosses[boss_index]
+        for i in range(attempts):
+            import asyncio
+            import hashlib
+            
+            # Start Hunting
+            start_res = await client.send_amf_request("EudemonGarden.startHunting", [char_id, boss_index, sessionkey])
+            if start_res.get("status") != 1:
+                results.append(f"Failed to start {boss_name}: {start_res}")
+                continue
+                
+            battle_id = str(start_res.get("code", ""))
+            
+            # Wait for battle (2 seconds simulate)
+            await asyncio.sleep(2)
+            
+            # Finish Hunting
+            # Hash logic: md5(str(boss_index) + str(char_id) + battle_id)
+            loc2_str = str(boss_index) + str(char_id) + battle_id
+            loc2 = hashlib.md5(loc2_str.encode()).hexdigest()
+            
+            BATTLE_HASH = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzAxIiwid2VhcG9uIjoid3BuXzAxIiwic2V0Ijoic2V0XzAxXzAifSwic3RhdHVzIjp7ImVhcnRoIjowLCJmaXJlIjowLCJ3YXRlciI6MCwibGlnaHRuaW5nIjowLCJ3aW5kIjowfSwiYnl0ZXMiOnsiXyI6ODIyODQ0NywiX18iOjgyMjg0NDcsIl9fXyI6IjE3NjI3NDY2NTk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mjc0NjY1OTE3NjI3NDY2NTkxNzYyNzQ2NjU5MTc2Mjc0NjY1OSIsIl9fX19fIjo4MjI4NDQ3LCJfX19fX18iOjgyMjg0NDcsIl9fX18iOjE3NjI3NDY2NTl9LCJfX19fIjpbeyJfIjoic2tpbGxfMTMiLCJfXyI6MjkxMzR9XX0="
+            
+            finish_params = [char_id, boss_index, battle_id, loc2, sessionkey, BATTLE_HASH]
+            finish_res = await client.send_amf_request("EudemonGarden.finishHunting", finish_params)
+            
+            if finish_res.get("status") == 1:
+                xp = finish_res.get("result", [0,0])[0]
+                gold = finish_res.get("result", [0,0])[1]
+                results.append(f"Defeated {boss_name} {i+1}/{attempts} - Gained XP: {xp}, Gold: {gold}")
+            else:
+                results.append(f"Failed to defeat {boss_name}: {finish_res}")
+                
+    if not results:
+        return "No Eudemon Bosses fought (maybe out of attempts)."
+    return " | ".join(results)
+
 async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: int, boss_type: str = "ringmaster"):
     # 1. Get Character Data to calculate agility and _loc6_
     print(f"DEBUG CIRCUS: char_id={char_id} type={type(char_id)} sessionkey={sessionkey[:20]}... boss_type={boss_type}")
