@@ -76,7 +76,7 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
         
     char_data_res = await client.send_amf_request("CharacterDAO.getById", [char_id, sessionkey])
     if char_data_res.get('status') != 1:
-        return "Failed to get character data"
+        return f"Failed to get character data: {char_data_res}"
     char_data = char_data_res['character']
     agility = calculate_agility(char_data)
     
@@ -175,7 +175,7 @@ async def auto_monster_hunt(client: NinjaSageClient, sessionkey: str, char_id: i
     # 1. Get Event Data
     event_res = await client.send_amf_request("MonsterHunterEvent2023.getEventData", [char_id, sessionkey])
     if event_res.get('status') != 1:
-        return "Failed to get Monster Hunt data"
+        return f"Failed to get Monster Hunt data: {event_res}"
         
     boss_id = event_res.get('boss_id', '')
     energy = event_res.get('energy', 0)
@@ -228,7 +228,7 @@ async def auto_mission_s(client: NinjaSageClient, sessionkey: str, char_id: int)
     # 1. Get Char data to find level
     char_data_res = await client.send_amf_request("CharacterDAO.getById", [char_id, sessionkey])
     if char_data_res.get('status') != 1:
-        return "Failed to get character data for Mission S"
+        return f"Failed to get character data for Mission S: {char_data_res}"
     char_data = char_data_res['character']
     char_level = int(char_data.get('level', 0))
     if char_level < 80:
@@ -372,7 +372,7 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
     # Retrieve char data to check level and rank
     char_data_res = await client.send_amf_request("CharacterDAO.getById", [char_id, sessionkey])
     if char_data_res.get('status') != 1:
-        return "Failed to get character data for exam"
+        return f"Failed to get character data for exam: {char_data_res}"
     
     char = char_data_res['character']
     level = char.get('level', 1)
@@ -421,7 +421,7 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
     # 1. Get Char Level
     char_data_res = await client.send_amf_request("CharacterDAO.getById", [char_id, sessionkey])
     if char_data_res.get('status') != 1:
-        return "Failed to get character data for Eudemon"
+        return f"Failed to get character data for Eudemon: {char_data_res}"
     char_level = char_data_res.get('character', {}).get('level', 1)
     
     # 2. Get available bosses
