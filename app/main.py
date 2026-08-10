@@ -183,6 +183,15 @@ async def api_auto_eudemon(req: BasicBotRequest):
     except Exception as e:
         return {"status": "error", "message": str(e)}
 
+@app.post("/api/bot/auto_monster_step")
+async def api_auto_monster_hunt_step(req: BasicBotRequest):
+    client = NinjaSageClient()
+    try:
+        res = await auto_monster_hunt(client, req.sessionkey, req.char_id)
+        return {"status": "success", "message": res}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
 @app.post("/api/bot/command")
 async def bot_command(req: BotCommandRequest):
     client = NinjaSageClient()
