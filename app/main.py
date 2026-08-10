@@ -14,6 +14,7 @@ from app.services.bot_manager import (
     auto_monster_hunt,
     auto_mission_s,
     auto_clan_war,
+    auto_exam,
     run_circus_event,
     run_yokai_event
 )
@@ -159,6 +160,15 @@ async def api_auto_clan_war_step(req: BasicBotRequest):
     client = NinjaSageClient()
     try:
         res = await auto_clan_war(client, req.sessionkey, req.char_id)
+        return {"status": "success", "message": res}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+@app.post("/api/bot/auto_exam_step")
+async def api_auto_exam_step(req: BasicBotRequest):
+    client = NinjaSageClient()
+    try:
+        res = await auto_exam(client, req.sessionkey, req.char_id)
         return {"status": "success", "message": res}
     except Exception as e:
         return {"status": "error", "message": str(e)}

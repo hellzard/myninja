@@ -244,11 +244,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
+            // First try taking exam if eligible
+            try {
+                const examRes = await fetch('/api/bot/auto_exam_step', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        sessionkey: sessionState.sessionkey,
+                        char_id: sessionState.char_id
+                    })
+                });
+                if (examRes.ok) {
+                    const examData = await examRes.json();
+                    if (!examData.message.includes("No exams available")) {
+                        addLog(`[Exam System] ${examData.message}`, 'ok');
+                    }
+                }
+            } catch (e) {
+                console.error("Exam check failed", e);
+            }
+            
+            // Then run normal leveling
             try {
                 const res = await fetch('/api/bot/auto_leveling_step', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
+                    body: JSON.stringify({
                         sessionkey: sessionState.sessionkey,
                         char_id: sessionState.char_id,
                         mission_id: `msn_${autoLevelTarget}`

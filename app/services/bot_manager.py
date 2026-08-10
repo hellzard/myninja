@@ -33,15 +33,68 @@ async def auto_giveaway(client: NinjaSageClient, sessionkey: str, char_id: int):
         logs.append(f"Failed to check giveaways: {res}")
     return " | ".join(logs)
 
+import hashlib
+import json
+import os
+
+base_dir = os.path.dirname(os.path.dirname(__file__))
+with open(os.path.join(base_dir, "data", "mission.json"), "r", encoding="utf-8") as f:
+    MISSION_DATA = json.load(f)
+with open(os.path.join(base_dir, "data", "enemy.json"), "r", encoding="utf-8") as f:
+    ENEMY_DATA = json.load(f)
+
+def get_data_by_id(data_id: str, data_list: list) -> dict:
+    for item in data_list:
+        if item.get("id") == data_id:
+            return item
+    return {}
+
+def calculate_agility(char_data: dict) -> int:
+    agility = 10
+    if 'status' in char_data and 'wind' in char_data['status']:
+        agility += char_data['status']['wind'] * 1
+    # Note: real calculation includes gear, but often server accepts it if no gear is equipped or hash isn't strictly validated on agility
+    return agility
+
+BATTLE_HASH = "e89c256038cc9603"
+
 async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mission_id: str):
-    start_res = await client.send_amf_request("IOIJB836r2Hu2PPW.mwaPMdtCPC5o", [char_id, mission_id, "char_0", "char_0", "char_0", "char_0", sessionkey])
+    mission_info = get_data_by_id(mission_id, MISSION_DATA)
+    if not mission_info:
+        return f"Unknown mission_id {mission_id}"
+        
+    char_data_res = await client.send_amf_request("CharacterDAO.getById", [char_id, sessionkey])
+    if char_data_res.get('status') != 1:
+        return "Failed to get character data"
+    char_data = char_data_res['character']
+    agility = calculate_agility(char_data)
+    
+    enemies = mission_info.get("enemies", [])
+    enemy_attrs = []
+    for enemy in enemies:
+        enemy_attr = get_data_by_id(enemy, ENEMY_DATA)
+        hp = enemy_attr.get("hp", 0)
+        ene_agi = enemy_attr.get("agility", 0)
+        enemy_attrs.append(f"id:{enemy}|hp:{hp}|agility:{ene_agi}")
+        
+    hash_input = ",".join(enemies) + "".join(enemy_attrs) + str(agility)
+    mission_hash = hashlib.md5(hash_input.encode()).hexdigest()
+    
+    start_params = [char_id, mission_id, ",".join(enemies), "#".join(enemy_attrs), agility, mission_hash, sessionkey]
+    
+    start_res = await client.send_amf_request("BattleSystem.startMission", start_params)
     if start_res.get('status') == 1 and 'battle_code' in start_res:
-        battle_code = start_res['battle_code']
+        battle_id = start_res['battle_code']
         await asyncio.sleep(1)
-        finish_res = await client.send_amf_request("IOIJB836r2Hu2PPW.MSi71s3i1X89", [char_id, mission_id, battle_code, 1, 9999, sessionkey, [], 0])
-        return f"Mission Complete! Reward: {finish_res}"
+        
+        finish_hash_input = f"{mission_id}{char_id}{battle_id}0"
+        finish_mission_hash = hashlib.md5(finish_hash_input.encode()).hexdigest()
+        
+        finish_params = [char_id, mission_id, battle_id, finish_mission_hash, 0, sessionkey, BATTLE_HASH, 0]
+        finish_res = await client.send_amf_request("BattleSystem.finishMission", finish_params)
+        return f"Mission {mission_id} Complete! Reward: {finish_res}"
     else:
-        return f"Failed to start mission: {start_res}"
+        return f"Failed to start mission {mission_id}: {start_res}"
 
 async def run_hunting(client: NinjaSageClient, sessionkey: str, char_id: int, zone: int):
     start_res = await client.send_amf_request("JDEUnbiWJXOtHxVv.CCQV8v8GpKBY", [char_id, zone, sessionkey])
@@ -133,6 +186,55 @@ async def auto_clan_war(client: NinjaSageClient, sessionkey: str, char_id: int):
             return f"Clan War against {opponent_name} Complete! Reward: {reward_data}"
         else:
             return f"Clan War failed: {battle_resp.text}"
+
+async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
+    # Retrieve char data to check level and rank
+    char_data_res = await client.send_amf_request("CharacterDAO.getById", [char_id, sessionkey])
+    if char_data_res.get('status') != 1:
+        return "Failed to get character data for exam"
+    
+    char = char_data_res['character']
+    level = char.get('level', 1)
+    rank = char.get('rank', 1)
+    
+    # 1. Genin -> Chunin (Level 20)
+    if level >= 20 and rank < 2:
+        exam_data = await client.send_amf_request("ChuninExam.getData", [sessionkey, char_id])
+        if exam_data.get('status') == 1:
+            stage = exam_data.get('progress', 0)
+            if stage < 5:
+                # Need to complete stages 1-5 (index 0 to 4)
+                await client.send_amf_request("ChuninExam.startStage", [char_id, stage, sessionkey])
+                await asyncio.sleep(1)
+                # Stage 1 needs special payload (2, 0, 0, 0), others might just need empty or none
+                finish_params = [sessionkey, char_id, 2, 0, 0, 0] if stage == 0 else [sessionkey, char_id]
+                res = await client.send_amf_request("ChuninExam.finishStage", finish_params)
+                return f"Chunin Exam Stage {stage+1} completed! {res}"
+            else:
+                # All stages done, promote!
+                res = await client.send_amf_request("ChuninExam.promoteToChunin", [sessionkey, char_id])
+                return f"Promoted to Chunin! {res}"
+        return f"Chunin Exam data: {exam_data}"
+        
+    # 2. Chunin -> Jounin (Level 40)
+    elif level >= 40 and rank < 3:
+        # Simplistic implementation logic based on APK decompilation
+        exam_data = await client.send_amf_request("JouninExam.getData", [sessionkey, char_id])
+        if exam_data.get('status') == 1:
+            stage = exam_data.get('progress', 0)
+            if stage < 6:
+                await client.send_amf_request("JouninExam.startStage", [char_id, stage, sessionkey])
+                await asyncio.sleep(1)
+                res = await client.send_amf_request("JouninExam.finishStage", [sessionkey, char_id])
+                return f"Jounin Exam Stage {stage+1} completed! {res}"
+            else:
+                res = await client.send_amf_request("JouninExam.promoteToJounin", [sessionkey, char_id])
+                return f"Promoted to Jounin! {res}"
+        return f"Jounin Exam data: {exam_data}"
+        
+    # Add higher exams (Special Jounin, Ninja Tutor) similarly if needed...
+    
+    return f"No exams available for Level {level} Rank {rank}"
 
 async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: int, boss_type: str = "ringmaster"):
     # 1. Get Character Data to calculate agility and _loc6_
