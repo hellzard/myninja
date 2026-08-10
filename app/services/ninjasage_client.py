@@ -11,6 +11,12 @@ class NinjaSageClient:
         Sends an AMF request to the official server and decodes the response.
         """
         # 1. Encode the AMF payload
+        # The official APK always wraps the parameters array inside another array (BUILD_LIST 1)
+        if body and not isinstance(body[0], list):
+            body = [body]
+        elif not body:
+            body = [[]]
+            
         envelope = remoting.Envelope(amfVersion=pyamf.AMF3)
         request_msg = remoting.Request(target=target_uri, body=body)
         envelope["/1"] = request_msg
