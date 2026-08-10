@@ -297,7 +297,31 @@ async def auto_clan_war(client: NinjaSageClient, sessionkey: str, char_id: int):
             
         headers = {"Authorization": f"Bearer {token}"}
         
-        # 2. Get opponents
+        # 2. Check stamina
+        stamina_resp = await http.post(f"{clan_base_url}/player/stamina", json={}, headers=headers)
+        if stamina_resp.status_code != 200:
+            return f"Failed to get Clan War stamina: {stamina_resp.text}"
+            
+        stamina_data = stamina_resp.json()
+        char_stamina_data = stamina_data.get("char", {})
+        stamina = char_stamina_data.get("stamina", 0)
+        
+        if stamina < 10:
+            # Try to refill
+            refill_resp = await http.post(f"{clan_base_url}/player/stamina/refill", json={}, headers=headers)
+            if refill_resp.status_code == 200:
+                refill_data = refill_resp.json()
+                if refill_data.get("status") == "ok":
+                    stamina = refill_data.get("char", {}).get("stamina", stamina)
+                else:
+                    raise Exception("Not enough clan stamina and refill failed.")
+            else:
+                raise Exception(f"Not enough clan stamina ({stamina}/100) and refill request failed.")
+                
+        if stamina < 10:
+            raise Exception("Still not enough stamina after refill attempt.")
+            
+        # 3. Get opponents
         opp_resp = await http.post(f"{clan_base_url}/battle/opponents", json={}, headers=headers)
         if opp_resp.status_code != 200:
             return f"Failed to get Clan War opponents: {opp_resp.text}"
@@ -312,7 +336,7 @@ async def auto_clan_war(client: NinjaSageClient, sessionkey: str, char_id: int):
         opponent_id = opponent['id']
         opponent_name = opponent.get('name', str(opponent_id))
         
-        # 3. Quick battle
+        # 4. Quick battle
         code = "".join(random.choices(string.ascii_letters + string.digits, k=24))
         battle_resp = await http.post(f"{clan_base_url}/battle/quick/{opponent_id}", json={"code": code}, headers=headers)
         
