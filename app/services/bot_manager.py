@@ -59,6 +59,17 @@ def calculate_agility(char_data: dict) -> int:
 BATTLE_HASH = "e89c256038cc9603"
 
 async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mission_id: str):
+    SAGE_SCROLL_MINIGAME_MISSION_IDS = {'msn_109', 'msn_110', 'msn_111'}
+    if mission_id in SAGE_SCROLL_MINIGAME_MISSION_IDS:
+        start_res = await client.send_amf_request("BattleSystem.startSageScrollMiniGame", [char_id, sessionkey, mission_id])
+        if isinstance(start_res, dict) and 'status' in start_res and start_res['status'] != 1:
+            return f"Failed to start Sage Scroll mission {mission_id}: {start_res}"
+            
+        battle_id = str(start_res) if not isinstance(start_res, dict) else str(start_res.get('battle_code', start_res.get('id', start_res)))
+        await asyncio.sleep(2)
+        finish_res = await client.send_amf_request("BattleSystem.finishSageScrollMiniGame", [char_id, sessionkey, battle_id])
+        return f"Sage Scroll Mission {mission_id} Complete! Reward: {finish_res}"
+        
     mission_info = get_data_by_id(mission_id, MISSION_DATA)
     if not mission_info:
         return f"Unknown mission_id {mission_id}"
