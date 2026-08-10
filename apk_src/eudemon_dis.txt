@@ -1,0 +1,639 @@
+﻿# pydisasm version 6.1.8
+# Python bytecode 3.10 (3439)
+# Disassembled from Python 3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]
+# Timestamp in code: 1780820770 (2026-06-07 15:26:10)
+# Source code size mod 2**32: 4410 bytes
+# Method Name:       <module>
+# Filename:          eudemon.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        2
+# Flags:             0x00000040 (NOFREE)
+# First Line:        1
+# Constants:
+#    0: 1
+#    1: ('send_amf_request', 'save_to_json', 'open_json_to_dict', 'flatten_json', 'get_data_by_id', 'StatManager', 'CUCSG', 'save_fight_data')
+#    2: 0
+#    3: None
+#    4: ('List',)
+#    5: ('config',)
+#    6: 'data/gamedata.json'
+#    7: <Code310 code object check_stop_event at 0x1bd74c8cf50, file eudemon.py>, line 21
+#    8: 'check_stop_event'
+#    9: <Code310 code object fight_eudemon_boss at 0x1bd73b86360, file eudemon.py>, line 29
+#   10: 'fight_eudemon_boss'
+# Names:
+#    0: utils
+#    1: send_amf_request
+#    2: save_to_json
+#    3: open_json_to_dict
+#    4: flatten_json
+#    5: get_data_by_id
+#    6: StatManager
+#    7: CUCSG
+#    8: save_fight_data
+#    9: struct
+#   10: typing
+#   11: List
+#   12: 
+#   13: config
+#   14: time
+#   15: keyboard
+#   16: gamedata
+#   17: BATTLE_HASH
+#   18: battle_hash
+#   19: check_stop_event
+#   20: fight_eudemon_boss
+  1:           0 LOAD_CONST           (1)
+               2 LOAD_CONST           (('send_amf_request', 'save_to_json', 'open_json_to_dict', 'flatten_json', 'get_data_by_id', 'StatManager', 'CUCSG', 'save_fight_data'))
+               4 IMPORT_NAME          (utils)
+               6 IMPORT_FROM          (send_amf_request)
+               8 STORE_NAME           (send_amf_request)
+              10 IMPORT_FROM          (save_to_json)
+              12 STORE_NAME           (save_to_json)
+              14 IMPORT_FROM          (open_json_to_dict)
+              16 STORE_NAME           (open_json_to_dict)
+              18 IMPORT_FROM          (flatten_json)
+              20 STORE_NAME           (flatten_json)
+              22 IMPORT_FROM          (get_data_by_id)
+              24 STORE_NAME           (get_data_by_id)
+              26 IMPORT_FROM          (StatManager)
+              28 STORE_NAME           (StatManager)
+              30 IMPORT_FROM          (CUCSG)
+              32 STORE_NAME           (CUCSG)
+              34 IMPORT_FROM          (save_fight_data)
+              36 STORE_NAME           (save_fight_data)
+              38 POP_TOP
+
+ 11:          40 LOAD_CONST           (0)
+              42 LOAD_CONST           (None)
+              44 IMPORT_NAME          (struct)
+              46 STORE_NAME           (struct)
+
+ 12:          48 LOAD_CONST           (0)
+              50 LOAD_CONST           (('List',))
+              52 IMPORT_NAME          (typing)
+              54 IMPORT_FROM          (List)
+              56 STORE_NAME           (List)
+              58 POP_TOP
+
+ 13:          60 LOAD_CONST           (1)
+              62 LOAD_CONST           (('config',))
+              64 IMPORT_NAME          12
+              66 IMPORT_FROM          (config)
+              68 STORE_NAME           (config)
+              70 POP_TOP
+
+ 14:          72 LOAD_CONST           (0)
+              74 LOAD_CONST           (None)
+              76 IMPORT_NAME          (time)
+              78 STORE_NAME           (time)
+
+ 15:          80 LOAD_CONST           (0)
+              82 LOAD_CONST           (None)
+              84 IMPORT_NAME          (keyboard)
+              86 STORE_NAME           (keyboard)
+
+ 17:          88 LOAD_NAME            (open_json_to_dict)
+              90 LOAD_CONST           ("data/gamedata.json")
+              92 CALL_FUNCTION        (1 positional argument)
+              94 STORE_NAME           (gamedata)
+
+ 18:          96 LOAD_NAME            (config)
+              98 LOAD_ATTR            (BATTLE_HASH)
+             100 STORE_NAME           (battle_hash)
+
+ 21:         102 LOAD_CONST           (<Code310 code object check_stop_event at 0x1bd74c8cf50, file eudemon.py>, line 21)
+             104 LOAD_CONST           ("check_stop_event")
+             106 MAKE_FUNCTION        (No arguments)
+             108 STORE_NAME           (check_stop_event)
+
+ 29:         110 LOAD_CONST           (<Code310 code object fight_eudemon_boss at 0x1bd73b86360, file eudemon.py>, line 29)
+             112 LOAD_CONST           ("fight_eudemon_boss")
+             114 MAKE_FUNCTION        (No arguments)
+             116 STORE_NAME           (fight_eudemon_boss)
+             118 LOAD_CONST           (None)
+             120 RETURN_VALUE
+
+
+# Method Name:       check_stop_event
+# Filename:          eudemon.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        21
+# Constants:
+#    0: 'Check if stop event is set from GUI'
+#    1: 'stop_event'
+#    2: 'Eudemon boss fight stopped by user request'
+#    3: True
+#    4: False
+# Names:
+#    0: hasattr
+#    1: config
+#    2: stop_event
+#    3: is_set
+#    4: print
+ 23:           0 LOAD_GLOBAL          (hasattr)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_CONST           ("stop_event")
+               6 CALL_FUNCTION        (2 positional arguments)
+               8 POP_JUMP_IF_FALSE    (to 32)
+              10 LOAD_GLOBAL          (config)
+              12 LOAD_ATTR            (stop_event)
+              14 LOAD_METHOD          (is_set)
+              16 CALL_METHOD          (0 positional arguments)
+              18 POP_JUMP_IF_FALSE    (to 32)
+
+ 24:          20 LOAD_GLOBAL          (print)
+              22 LOAD_CONST           ("Eudemon boss fight stopped by user request")
+              24 CALL_FUNCTION        (1 positional argument)
+              26 POP_TOP
+
+ 25:          28 LOAD_CONST           (True)
+              30 RETURN_VALUE
+
+ 26:     >>   32 LOAD_CONST           (False)
+              34 RETURN_VALUE
+
+
+# Method Name:       fight_eudemon_boss
+# Filename:          eudemon.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  16
+# Stack size:        13
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        29
+# Constants:
+#    0: None
+#    1: 'character_data_character_id'
+#    2: 'character_data_character_level'
+#    3: 'sessionkey'
+#    4: 'EudemonGarden.getData'
+#    5: 'data'
+#    6: "Eudemon boss response missing 'data'; skipping available boss fights."
+#    7: 'Eudemon boss response contains no boss entries; skipping available boss fights.'
+#    8: ','
+#    9: 'eudemon'
+#   10: 'bosses'
+#   11: 'q'
+#   12: 'Stopped by user'
+#   13: 'lvl'
+#   14: 'num'
+#   15: 'Fighting boss: '
+#   16: 'name'
+#   17: ' (Level: '
+#   18: ') - '
+#   19: 1
+#   20: '/'
+#   21: 'EudemonGarden.startHunting'
+#   22: 'status'
+#   23: 'finished due to error'
+#   24: 'code'
+#   25: 'Waiting 30 seconds for battle to complete...'
+#   26: 30
+#   27: 'Battle wait interrupted by user'
+#   28: 'EudemonGarden.finishHunting'
+#   29: 'Successfully defeated boss - Gained XP: '
+#   30: 'result'
+#   31: 0
+#   32: ', Gained Gold: '
+#   33: 'Battle failed with status: '
+#   34: 'stop_event'
+#   35: 'Finished fighting available Eudemon bosses.'
+#   36: ''
+# Names:
+#    0: check_stop_event
+#    1: flatten_json
+#    2: config
+#    3: char_data
+#    4: login_data
+#    5: send_amf_request
+#    6: print
+#    7: list
+#    8: map
+#    9: int
+#   10: split
+#   11: get_data_by_id
+#   12: gamedata
+#   13: keyboard
+#   14: is_pressed
+#   15: range
+#   16: str
+#   17: time
+#   18: sleep
+#   19: CUCSG
+#   20: hash
+#   21: battle_hash
+#   22: save_fight_data
+#   23: hasattr
+#   24: stop_event
+#   25: is_set
+#   26: clear
+# Varnames:
+#	char_data, char_id, char_level, session_key, parameters, available_bosses_data, available_bosses_raw, available_bosses, boss, b, i, eudemon_boss_battle_data, battle_id, wait_seconds, _loc2_, eudemon_boss_battle_result
+# Local variables:
+#    0: char_data
+#    1: char_id
+#    2: char_level
+#    3: session_key
+#    4: parameters
+#    5: available_bosses_data
+#    6: available_bosses_raw
+#    7: available_bosses
+#    8: boss
+#    9: b
+#   10: i
+#   11: eudemon_boss_battle_data
+#   12: battle_id
+#   13: wait_seconds
+#   14: _loc2_
+#   15: eudemon_boss_battle_result
+ 31:           0 LOAD_GLOBAL          (check_stop_event)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 POP_JUMP_IF_FALSE    (to 10)
+
+ 32:           6 LOAD_CONST           (None)
+               8 RETURN_VALUE
+
+ 34:     >>   10 LOAD_GLOBAL          (flatten_json)
+              12 LOAD_GLOBAL          (config)
+              14 LOAD_ATTR            (char_data)
+              16 CALL_FUNCTION        (1 positional argument)
+              18 STORE_FAST           (char_data)
+
+ 35:          20 LOAD_FAST            (char_data)
+              22 LOAD_CONST           ("character_data_character_id")
+              24 BINARY_SUBSCR
+              26 STORE_FAST           (char_id)
+
+ 36:          28 LOAD_FAST            (char_data)
+              30 LOAD_CONST           ("character_data_character_level")
+              32 BINARY_SUBSCR
+              34 STORE_FAST           (char_level)
+
+ 37:          36 LOAD_GLOBAL          (config)
+              38 LOAD_ATTR            (login_data)
+              40 LOAD_CONST           ("sessionkey")
+              42 BINARY_SUBSCR
+              44 STORE_FAST           (session_key)
+
+ 39:          46 LOAD_FAST            (session_key)
+              48 LOAD_FAST            (char_id)
+              50 BUILD_LIST           2
+              52 STORE_FAST           (parameters)
+
+ 40:          54 LOAD_GLOBAL          (send_amf_request)
+              56 LOAD_CONST           ("EudemonGarden.getData")
+              58 LOAD_FAST            (parameters)
+              60 CALL_FUNCTION        (2 positional arguments)
+              62 STORE_FAST           (available_bosses_data)
+
+ 43:          64 LOAD_GLOBAL          (check_stop_event)
+              66 CALL_FUNCTION        (0 positional arguments)
+              68 POP_JUMP_IF_FALSE    (to 74)
+
+ 44:          70 LOAD_CONST           (None)
+              72 RETURN_VALUE
+
+ 46:     >>   74 LOAD_CONST           ("data")
+              76 LOAD_FAST            (available_bosses_data)
+              78 CONTAINS_OP          (not in)
+              80 POP_JUMP_IF_FALSE    (to 94)
+
+ 47:          82 LOAD_GLOBAL          (print)
+              84 LOAD_CONST           ("Eudemon boss response missing 'data'; skipping available boss fights.")
+              86 CALL_FUNCTION        (1 positional argument)
+              88 POP_TOP
+
+ 48:          90 LOAD_CONST           (None)
+              92 RETURN_VALUE
+
+ 50:     >>   94 LOAD_FAST            (available_bosses_data)
+              96 LOAD_CONST           ("data")
+              98 BINARY_SUBSCR
+             100 STORE_FAST           (available_bosses_raw)
+
+ 51:         102 LOAD_FAST            (available_bosses_raw)
+             104 POP_JUMP_IF_TRUE     (to 118)
+
+ 52:         106 LOAD_GLOBAL          (print)
+             108 LOAD_CONST           ("Eudemon boss response contains no boss entries; skipping available boss fights.")
+             110 CALL_FUNCTION        (1 positional argument)
+             112 POP_TOP
+
+ 53:         114 LOAD_CONST           (None)
+             116 RETURN_VALUE
+
+ 55:     >>  118 LOAD_GLOBAL          (list)
+             120 LOAD_GLOBAL          (map)
+             122 LOAD_GLOBAL          (int)
+             124 LOAD_FAST            (available_bosses_raw)
+             126 LOAD_METHOD          (split)
+             128 LOAD_CONST           (",")
+             130 CALL_METHOD          (1 positional argument)
+             132 CALL_FUNCTION        (2 positional arguments)
+             134 CALL_FUNCTION        (1 positional argument)
+             136 STORE_FAST           (available_bosses)
+
+ 57:         138 LOAD_GLOBAL          (get_data_by_id)
+             140 LOAD_CONST           ("eudemon")
+             142 LOAD_GLOBAL          (gamedata)
+             144 CALL_FUNCTION        (2 positional arguments)
+             146 LOAD_CONST           ("data")
+             148 BINARY_SUBSCR
+             150 LOAD_CONST           ("bosses")
+             152 BINARY_SUBSCR
+             154 STORE_FAST           (boss)
+
+ 60:         156 LOAD_FAST            (boss)
+             158 GET_ITER
+         >>  160 FOR_ITER             (to 588)
+             162 STORE_FAST           (b)
+
+ 62:         164 LOAD_GLOBAL          (check_stop_event)
+             166 CALL_FUNCTION        (0 positional arguments)
+             168 POP_JUMP_IF_TRUE     (to 180)
+             170 LOAD_GLOBAL          (keyboard)
+             172 LOAD_METHOD          (is_pressed)
+             174 LOAD_CONST           ("q")
+             176 CALL_METHOD          (1 positional argument)
+             178 POP_JUMP_IF_FALSE    (to 192)
+
+ 63:     >>  180 LOAD_GLOBAL          (print)
+             182 LOAD_CONST           ("Stopped by user")
+             184 CALL_FUNCTION        (1 positional argument)
+             186 POP_TOP
+
+ 64:         188 POP_TOP
+             190 JUMP_FORWARD         (to 588)
+
+ 66:     >>  192 LOAD_GLOBAL          (int)
+             194 LOAD_FAST            (b)
+             196 LOAD_CONST           ("lvl")
+             198 BINARY_SUBSCR
+             200 CALL_FUNCTION        (1 positional argument)
+             202 LOAD_FAST            (char_level)
+             204 COMPARE_OP           (>)
+             206 POP_JUMP_IF_FALSE    (to 212)
+
+ 67:         208 POP_TOP
+             210 JUMP_FORWARD         (to 588)
+
+ 69:     >>  212 LOAD_GLOBAL          (range)
+             214 LOAD_FAST            (available_bosses)
+             216 LOAD_FAST            (b)
+             218 LOAD_CONST           ("num")
+             220 BINARY_SUBSCR
+             222 BINARY_SUBSCR
+             224 CALL_FUNCTION        (1 positional argument)
+             226 GET_ITER
+         >>  228 FOR_ITER             (to 584)
+             230 STORE_FAST           (i)
+
+ 71:         232 LOAD_GLOBAL          (check_stop_event)
+             234 CALL_FUNCTION        (0 positional arguments)
+             236 POP_JUMP_IF_TRUE     (to 248)
+             238 LOAD_GLOBAL          (keyboard)
+             240 LOAD_METHOD          (is_pressed)
+             242 LOAD_CONST           ("q")
+             244 CALL_METHOD          (1 positional argument)
+             246 POP_JUMP_IF_FALSE    (to 260)
+
+ 72:     >>  248 LOAD_GLOBAL          (print)
+             250 LOAD_CONST           ("Stopped by user")
+             252 CALL_FUNCTION        (1 positional argument)
+             254 POP_TOP
+
+ 73:         256 POP_TOP
+             258 JUMP_FORWARD         (to 586)
+
+ 75:     >>  260 LOAD_GLOBAL          (print)
+             262 LOAD_CONST           ("Fighting boss: ")
+             264 LOAD_FAST            (b)
+             266 LOAD_CONST           ("name")
+             268 BINARY_SUBSCR
+             270 FORMAT_VALUE         0
+             272 LOAD_CONST           (" (Level: ")
+             274 LOAD_FAST            (b)
+             276 LOAD_CONST           ("lvl")
+             278 BINARY_SUBSCR
+             280 FORMAT_VALUE         0
+             282 LOAD_CONST           (") - ")
+             284 LOAD_FAST            (i)
+             286 LOAD_CONST           (1)
+             288 BINARY_ADD
+             290 FORMAT_VALUE         0
+             292 LOAD_CONST           ("/")
+             294 LOAD_FAST            (available_bosses)
+             296 LOAD_FAST            (b)
+             298 LOAD_CONST           ("num")
+             300 BINARY_SUBSCR
+             302 BINARY_SUBSCR
+             304 FORMAT_VALUE         0
+             306 BUILD_STRING         8
+             308 CALL_FUNCTION        (1 positional argument)
+             310 POP_TOP
+
+ 77:         312 LOAD_FAST            (char_id)
+             314 LOAD_FAST            (b)
+             316 LOAD_CONST           ("num")
+             318 BINARY_SUBSCR
+             320 LOAD_FAST            (session_key)
+             322 BUILD_LIST           3
+             324 STORE_FAST           (parameters)
+
+ 78:         326 LOAD_GLOBAL          (send_amf_request)
+             328 LOAD_CONST           ("EudemonGarden.startHunting")
+             330 LOAD_FAST            (parameters)
+             332 CALL_FUNCTION        (2 positional arguments)
+             334 STORE_FAST           (eudemon_boss_battle_data)
+
+ 81:         336 LOAD_GLOBAL          (check_stop_event)
+             338 CALL_FUNCTION        (0 positional arguments)
+             340 POP_JUMP_IF_FALSE    (to 346)
+
+ 82:         342 POP_TOP
+             344 JUMP_FORWARD         (to 586)
+
+ 84:     >>  346 LOAD_FAST            (eudemon_boss_battle_data)
+             348 LOAD_CONST           ("status")
+             350 BINARY_SUBSCR
+             352 LOAD_CONST           (1)
+             354 COMPARE_OP           (!=)
+             356 POP_JUMP_IF_FALSE    (to 370)
+
+ 85:         358 LOAD_GLOBAL          (print)
+             360 LOAD_CONST           ("finished due to error")
+             362 CALL_FUNCTION        (1 positional argument)
+             364 POP_TOP
+
+ 86:         366 POP_TOP
+             368 JUMP_FORWARD         (to 586)
+
+ 88:     >>  370 LOAD_GLOBAL          (str)
+             372 LOAD_FAST            (eudemon_boss_battle_data)
+             374 LOAD_CONST           ("code")
+             376 BINARY_SUBSCR
+             378 CALL_FUNCTION        (1 positional argument)
+             380 STORE_FAST           (battle_id)
+
+ 91:         382 LOAD_GLOBAL          (print)
+             384 LOAD_CONST           ("Waiting 30 seconds for battle to complete...")
+             386 CALL_FUNCTION        (1 positional argument)
+             388 POP_TOP
+
+ 92:         390 LOAD_GLOBAL          (range)
+             392 LOAD_CONST           (30)
+             394 CALL_FUNCTION        (1 positional argument)
+             396 GET_ITER
+         >>  398 FOR_ITER             (to 432)
+             400 STORE_FAST           (wait_seconds)
+
+ 93:         402 LOAD_GLOBAL          (check_stop_event)
+             404 CALL_FUNCTION        (0 positional arguments)
+             406 POP_JUMP_IF_FALSE    (to 420)
+
+ 94:         408 LOAD_GLOBAL          (print)
+             410 LOAD_CONST           ("Battle wait interrupted by user")
+             412 CALL_FUNCTION        (1 positional argument)
+             414 POP_TOP
+
+ 95:         416 POP_TOP
+             418 JUMP_FORWARD         (to 570)
+
+ 96:     >>  420 LOAD_GLOBAL          (time)
+             422 LOAD_METHOD          (sleep)
+             424 LOAD_CONST           (1)
+             426 CALL_METHOD          (1 positional argument)
+             428 POP_TOP
+             430 JUMP_ABSOLUTE        (to 398)
+
+ 99:     >>  432 LOAD_GLOBAL          (CUCSG)
+             434 LOAD_METHOD          (hash)
+             436 LOAD_GLOBAL          (str)
+             438 LOAD_FAST            (b)
+             440 LOAD_CONST           ("num")
+             442 BINARY_SUBSCR
+             444 CALL_FUNCTION        (1 positional argument)
+             446 LOAD_GLOBAL          (str)
+             448 LOAD_FAST            (char_id)
+             450 CALL_FUNCTION        (1 positional argument)
+             452 BINARY_ADD
+             454 LOAD_FAST            (battle_id)
+             456 BINARY_ADD
+             458 CALL_METHOD          (1 positional argument)
+             460 STORE_FAST           (_loc2_)
+
+101:         462 LOAD_FAST            (char_id)
+             464 LOAD_FAST            (b)
+             466 LOAD_CONST           ("num")
+             468 BINARY_SUBSCR
+             470 LOAD_FAST            (battle_id)
+             472 LOAD_FAST            (_loc2_)
+             474 LOAD_FAST            (session_key)
+             476 LOAD_GLOBAL          (battle_hash)
+             478 BUILD_LIST           6
+             480 STORE_FAST           (parameters)
+
+103:         482 LOAD_GLOBAL          (send_amf_request)
+             484 LOAD_CONST           ("EudemonGarden.finishHunting")
+             486 LOAD_FAST            (parameters)
+             488 CALL_FUNCTION        (2 positional arguments)
+             490 STORE_FAST           (eudemon_boss_battle_result)
+
+104:         492 LOAD_GLOBAL          (save_fight_data)
+             494 LOAD_FAST            (eudemon_boss_battle_result)
+             496 CALL_FUNCTION        (1 positional argument)
+             498 POP_TOP
+
+106:         500 LOAD_FAST            (eudemon_boss_battle_result)
+             502 LOAD_CONST           ("status")
+             504 BINARY_SUBSCR
+             506 LOAD_CONST           (1)
+             508 COMPARE_OP           (==)
+             510 EXTENDED_ARG         (256)
+             512 POP_JUMP_IF_FALSE    (to 552)
+
+107:         514 LOAD_GLOBAL          (print)
+             516 LOAD_CONST           ("Successfully defeated boss - Gained XP: ")
+             518 LOAD_FAST            (eudemon_boss_battle_result)
+             520 LOAD_CONST           ("result")
+             522 BINARY_SUBSCR
+             524 LOAD_CONST           (0)
+             526 BINARY_SUBSCR
+             528 FORMAT_VALUE         0
+             530 LOAD_CONST           (", Gained Gold: ")
+             532 LOAD_FAST            (eudemon_boss_battle_result)
+             534 LOAD_CONST           ("result")
+             536 BINARY_SUBSCR
+             538 LOAD_CONST           (1)
+             540 BINARY_SUBSCR
+             542 FORMAT_VALUE         0
+             544 BUILD_STRING         4
+             546 CALL_FUNCTION        (1 positional argument)
+             548 POP_TOP
+             550 JUMP_FORWARD         (to 570)
+
+109:     >>  552 LOAD_GLOBAL          (print)
+             554 LOAD_CONST           ("Battle failed with status: ")
+             556 LOAD_FAST            (eudemon_boss_battle_result)
+             558 LOAD_CONST           ("status")
+             560 BINARY_SUBSCR
+             562 FORMAT_VALUE         0
+             564 BUILD_STRING         2
+             566 CALL_FUNCTION        (1 positional argument)
+             568 POP_TOP
+
+112:     >>  570 LOAD_GLOBAL          (check_stop_event)
+             572 CALL_FUNCTION        (0 positional arguments)
+             574 EXTENDED_ARG         (256)
+             576 POP_JUMP_IF_FALSE    (to 582)
+
+113:         578 POP_TOP
+             580 JUMP_FORWARD         (to 586)
+
+112:     >>  582 JUMP_ABSOLUTE        (to 228)
+
+116:     >>  584 JUMP_ABSOLUTE        (to 160)
+
+117:     >>  586 POP_TOP
+
+120:     >>  588 LOAD_GLOBAL          (hasattr)
+             590 LOAD_GLOBAL          (config)
+             592 LOAD_CONST           ("stop_event")
+             594 CALL_FUNCTION        (2 positional arguments)
+             596 EXTENDED_ARG         (256)
+             598 POP_JUMP_IF_FALSE    (to 622)
+             600 LOAD_GLOBAL          (config)
+             602 LOAD_ATTR            (stop_event)
+             604 LOAD_METHOD          (is_set)
+             606 CALL_METHOD          (0 positional arguments)
+             608 EXTENDED_ARG         (256)
+             610 POP_JUMP_IF_TRUE     (to 622)
+
+121:         612 LOAD_GLOBAL          (config)
+             614 LOAD_ATTR            (stop_event)
+             616 LOAD_METHOD          (clear)
+             618 CALL_METHOD          (0 positional arguments)
+             620 POP_TOP
+
+123:     >>  622 LOAD_GLOBAL          (print)
+             624 LOAD_CONST           ("Finished fighting available Eudemon bosses.")
+             626 CALL_FUNCTION        (1 positional argument)
+             628 POP_TOP
+
+124:         630 LOAD_GLOBAL          (print)
+             632 LOAD_CONST           ("")
+             634 CALL_FUNCTION        (1 positional argument)
+             636 POP_TOP
+             638 LOAD_CONST           (None)
+             640 RETURN_VALUE
+

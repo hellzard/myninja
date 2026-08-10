@@ -1,0 +1,91 @@
+﻿# pydisasm version 6.1.8
+# Python bytecode 3.10 (3439)
+# Disassembled from Python 3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]
+# Timestamp in code: 1780820770 (2026-06-07 15:26:10)
+# Source code size mod 2**32: 303 bytes
+# Method Name:       <module>
+# Filename:          resources.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        2
+# Flags:             0x00000040 (NOFREE)
+# First Line:        1
+# Constants:
+#    0: 1
+#    1: ('download_resource',)
+#    2: <Code310 code object download_all_resources at 0x21a058ecf50, file resources.py>, line 3
+#    3: 'download_all_resources'
+#    4: '__main__'
+#    5: None
+# Names:
+#    0: utils
+#    1: download_resource
+#    2: download_all_resources
+#    3: __name__
+  1:           0 LOAD_CONST           (1)
+               2 LOAD_CONST           (('download_resource',))
+               4 IMPORT_NAME          (utils)
+               6 IMPORT_FROM          (download_resource)
+               8 STORE_NAME           (download_resource)
+              10 POP_TOP
+
+  3:          12 LOAD_CONST           (<Code310 code object download_all_resources at 0x21a058ecf50, file resources.py>, line 3)
+              14 LOAD_CONST           ("download_all_resources")
+              16 MAKE_FUNCTION        (No arguments)
+              18 STORE_NAME           (download_all_resources)
+
+  8:          20 LOAD_NAME            (__name__)
+              22 LOAD_CONST           ("__main__")
+              24 COMPARE_OP           (==)
+              26 POP_JUMP_IF_FALSE    (to 38)
+
+  9:          28 LOAD_NAME            (download_all_resources)
+              30 CALL_FUNCTION        (0 positional arguments)
+              32 POP_TOP
+              34 LOAD_CONST           (None)
+              36 RETURN_VALUE
+
+  8:     >>   38 LOAD_CONST           (None)
+              40 RETURN_VALUE
+
+
+# Method Name:       download_all_resources
+# Filename:          resources.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        3
+# Constants:
+#    0: None
+#    1: ('mission', 'enemy', 'weapon-effect', 'back_item-effect', 'accessory-effect', 'gamedata')
+# Names:
+#    0: download_resource
+# Varnames:
+#	resources_list, resource
+# Local variables:
+#    0: resources_list
+#    1: resource
+  4:           0 BUILD_LIST           0
+               2 LOAD_CONST           (('mission', 'enemy', 'weapon-effect', 'back_item-effect', 'accessory-effect', 'gamedata'))
+               4 LIST_EXTEND          1
+               6 STORE_FAST           (resources_list)
+
+  5:           8 LOAD_FAST            (resources_list)
+              10 GET_ITER
+         >>   12 FOR_ITER             (to 26)
+              14 STORE_FAST           (resource)
+
+  6:          16 LOAD_GLOBAL          (download_resource)
+              18 LOAD_FAST            (resource)
+              20 CALL_FUNCTION        (1 positional argument)
+              22 POP_TOP
+              24 JUMP_ABSOLUTE        (to 12)
+
+  5:     >>   26 LOAD_CONST           (None)
+              28 RETURN_VALUE
+

@@ -1,0 +1,1845 @@
+﻿# pydisasm version 6.1.8
+# Python bytecode 3.10 (3439)
+# Disassembled from Python 3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]
+# Timestamp in code: 1780820770 (2026-06-07 15:26:10)
+# Source code size mod 2**32: 8832 bytes
+# Method Name:       <module>
+# Filename:          minigames.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        14
+# Flags:             0x00000040 (NOFREE)
+# First Line:        1
+# Constants:
+#    0: 0
+#    1: ('dataclass',)
+#    2: None
+#    3: ('Any', 'Optional')
+#    4: 1
+#    5: ('config',)
+#    6: ('CUCSG', 'flatten_json', 'save_fight_data', 'send_amf_request')
+#    7: 25
+#    8: 2
+#    9: 3
+#   10: True
+#   11: ('frozen',)
+#   12: <Code310 code object MinigameConfig at 0x206ca8e1220, file minigames.py>, line 16
+#   13: 'MinigameConfig'
+#   14: 'christmas'
+#   15: 'Christmas Event 2025 Minigame'
+#   16: 'ChristmasEvent2025'
+#   17: 121
+#   18: ('key', 'label', 'api_class', 'finish_value')
+#   19: 'anniversary'
+#   20: 'Anniversary Event 2026 Minigame'
+#   21: 'AnniversaryEvent2026'
+#   22: 'win'
+#   23: 'worldcup'
+#   24: 'World Cup Event 2026 Minigame'
+#   25: 'WorldCupEvent2026'
+#   26: 'random_worldcup_score'
+#   27: 'getminigamedata'
+#   28: 'startminigame'
+#   29: 'finishminigame'
+#   30: 'minigame_energy'
+#   31: 'battle_code'
+#   32: ('key', 'label', 'api_class', 'finish_value', 'data_method_name', 'start_method_name', 'finish_method_name', 'energy_key', 'battle_code_key', 'finish_hash_mode')
+#   33: ('christmas', 'anniversary', 'worldcup')
+#   34: <Code310 code object MinigameSystem at 0x206ca8e2210, file minigames.py>, line 72
+#   35: 'MinigameSystem'
+#   36: 'minigame_key'
+#   37: 'num_loops'
+#   38: 'return'
+#   39: <Code310 code object fight_minigame_event at 0x206ca8e23c0, file minigames.py>, line 238
+#   40: 'fight_minigame_event'
+#   41: (None,)
+# Names:
+#    0: dataclasses
+#    1: dataclass
+#    2: hashlib
+#    3: random
+#    4: time
+#    5: typing
+#    6: Any
+#    7: Optional
+#    8: 
+#    9: config
+#   10: utils
+#   11: CUCSG
+#   12: flatten_json
+#   13: save_fight_data
+#   14: send_amf_request
+#   15: MINIGAME_FINISH_DELAY_SECONDS
+#   16: MINIGAME_REQUEST_DELAY_SECONDS
+#   17: MINIGAME_BETWEEN_RUNS_SECONDS
+#   18: MinigameConfig
+#   19: MINIGAME_CONFIGS
+#   20: MinigameSystem
+#   21: str
+#   22: int
+#   23: fight_minigame_event
+  1:           0 LOAD_CONST           (0)
+               2 LOAD_CONST           (('dataclass',))
+               4 IMPORT_NAME          (dataclasses)
+               6 IMPORT_FROM          (dataclass)
+               8 STORE_NAME           (dataclass)
+              10 POP_TOP
+
+  2:          12 LOAD_CONST           (0)
+              14 LOAD_CONST           (None)
+              16 IMPORT_NAME          (hashlib)
+              18 STORE_NAME           (hashlib)
+
+  3:          20 LOAD_CONST           (0)
+              22 LOAD_CONST           (None)
+              24 IMPORT_NAME          (random)
+              26 STORE_NAME           (random)
+
+  4:          28 LOAD_CONST           (0)
+              30 LOAD_CONST           (None)
+              32 IMPORT_NAME          (time)
+              34 STORE_NAME           (time)
+
+  5:          36 LOAD_CONST           (0)
+              38 LOAD_CONST           (('Any', 'Optional'))
+              40 IMPORT_NAME          (typing)
+              42 IMPORT_FROM          (Any)
+              44 STORE_NAME           (Any)
+              46 IMPORT_FROM          (Optional)
+              48 STORE_NAME           (Optional)
+              50 POP_TOP
+
+  7:          52 LOAD_CONST           (1)
+              54 LOAD_CONST           (('config',))
+              56 IMPORT_NAME          8
+              58 IMPORT_FROM          (config)
+              60 STORE_NAME           (config)
+              62 POP_TOP
+
+  8:          64 LOAD_CONST           (1)
+              66 LOAD_CONST           (('CUCSG', 'flatten_json', 'save_fight_data', 'send_amf_request'))
+              68 IMPORT_NAME          (utils)
+              70 IMPORT_FROM          (CUCSG)
+              72 STORE_NAME           (CUCSG)
+              74 IMPORT_FROM          (flatten_json)
+              76 STORE_NAME           (flatten_json)
+              78 IMPORT_FROM          (save_fight_data)
+              80 STORE_NAME           (save_fight_data)
+              82 IMPORT_FROM          (send_amf_request)
+              84 STORE_NAME           (send_amf_request)
+              86 POP_TOP
+
+ 11:          88 LOAD_CONST           (25)
+              90 STORE_NAME           (MINIGAME_FINISH_DELAY_SECONDS)
+
+ 12:          92 LOAD_CONST           (2)
+              94 STORE_NAME           (MINIGAME_REQUEST_DELAY_SECONDS)
+
+ 13:          96 LOAD_CONST           (3)
+              98 STORE_NAME           (MINIGAME_BETWEEN_RUNS_SECONDS)
+
+ 16:         100 LOAD_NAME            (dataclass)
+             102 LOAD_CONST           (True)
+             104 LOAD_CONST           (('frozen',))
+             106 CALL_FUNCTION_KW     (1 total positional and keyword args)
+
+ 17:         108 LOAD_BUILD_CLASS
+             110 LOAD_CONST           (<Code310 code object MinigameConfig at 0x206ca8e1220, file minigames.py>, line 16)
+             112 LOAD_CONST           ("MinigameConfig")
+             114 MAKE_FUNCTION        (No arguments)
+             116 LOAD_CONST           ("MinigameConfig")
+             118 CALL_FUNCTION        (2 positional arguments)
+             120 CALL_FUNCTION        (1 positional argument)
+             122 STORE_NAME           (MinigameConfig)
+
+ 45:         124 LOAD_NAME            (MinigameConfig)
+
+ 46:         126 LOAD_CONST           ("christmas")
+
+ 47:         128 LOAD_CONST           ("Christmas Event 2025 Minigame")
+
+ 48:         130 LOAD_CONST           ("ChristmasEvent2025")
+
+ 49:         132 LOAD_CONST           (121)
+
+ 45:         134 LOAD_CONST           (('key', 'label', 'api_class', 'finish_value'))
+             136 CALL_FUNCTION_KW     (4 total positional and keyword args)
+
+ 51:         138 LOAD_NAME            (MinigameConfig)
+
+ 52:         140 LOAD_CONST           ("anniversary")
+
+ 53:         142 LOAD_CONST           ("Anniversary Event 2026 Minigame")
+
+ 54:         144 LOAD_CONST           ("AnniversaryEvent2026")
+
+ 55:         146 LOAD_CONST           ("win")
+
+ 51:         148 LOAD_CONST           (('key', 'label', 'api_class', 'finish_value'))
+             150 CALL_FUNCTION_KW     (4 total positional and keyword args)
+
+ 57:         152 LOAD_NAME            (MinigameConfig)
+
+ 58:         154 LOAD_CONST           ("worldcup")
+
+ 59:         156 LOAD_CONST           ("World Cup Event 2026 Minigame")
+
+ 60:         158 LOAD_CONST           ("WorldCupEvent2026")
+
+ 61:         160 LOAD_CONST           ("random_worldcup_score")
+
+ 62:         162 LOAD_CONST           ("getminigamedata")
+
+ 63:         164 LOAD_CONST           ("startminigame")
+
+ 64:         166 LOAD_CONST           ("finishminigame")
+
+ 65:         168 LOAD_CONST           ("minigame_energy")
+
+ 66:         170 LOAD_CONST           ("battle_code")
+
+ 67:         172 LOAD_CONST           ("worldcup")
+
+ 57:         174 LOAD_CONST           (('key', 'label', 'api_class', 'finish_value', 'data_method_name', 'start_method_name', 'finish_method_name', 'energy_key', 'battle_code_key', 'finish_hash_mode'))
+             176 CALL_FUNCTION_KW     (10 total positional and keyword args)
+
+ 44:         178 LOAD_CONST           (('christmas', 'anniversary', 'worldcup'))
+             180 BUILD_CONST_KEY_MAP  3
+             182 STORE_NAME           (MINIGAME_CONFIGS)
+
+ 72:         184 LOAD_BUILD_CLASS
+             186 LOAD_CONST           (<Code310 code object MinigameSystem at 0x206ca8e2210, file minigames.py>, line 72)
+             188 LOAD_CONST           ("MinigameSystem")
+             190 MAKE_FUNCTION        (No arguments)
+             192 LOAD_CONST           ("MinigameSystem")
+             194 CALL_FUNCTION        (2 positional arguments)
+             196 STORE_NAME           (MinigameSystem)
+
+238:         198 LOAD_CONST           ((None,))
+             200 LOAD_CONST           ("minigame_key")
+             202 LOAD_NAME            (str)
+             204 LOAD_CONST           ("num_loops")
+             206 LOAD_NAME            (Optional)
+             208 LOAD_NAME            (int)
+             210 BINARY_SUBSCR
+             212 LOAD_CONST           ("return")
+             214 LOAD_CONST           (None)
+             216 BUILD_TUPLE          6
+             218 LOAD_CONST           (<Code310 code object fight_minigame_event at 0x206ca8e23c0, file minigames.py>, line 238)
+             220 LOAD_CONST           ("fight_minigame_event")
+             222 MAKE_FUNCTION        (default, annotation)
+             224 STORE_NAME           (fight_minigame_event)
+             226 LOAD_CONST           (None)
+             228 RETURN_VALUE
+
+
+# Method Name:       MinigameConfig
+# Filename:          minigames.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        3
+# Flags:             0x00000040 (NOFREE)
+# First Line:        16
+# Constants:
+#    0: 'MinigameConfig'
+#    1: 'key'
+#    2: 'label'
+#    3: 'api_class'
+#    4: 'finish_value'
+#    5: 'getMinigameData'
+#    6: 'data_method_name'
+#    7: 'startMinigame'
+#    8: 'start_method_name'
+#    9: 'finishMinigame'
+#   10: 'finish_method_name'
+#   11: 'energy'
+#   12: 'energy_key'
+#   13: 'code'
+#   14: 'battle_code_key'
+#   15: 'default'
+#   16: 'finish_hash_mode'
+#   17: 'return'
+#   18: <Code310 code object get_data_method at 0x206ca7ecf50, file minigames.py>, line 29
+#   19: 'MinigameConfig.get_data_method'
+#   20: <Code310 code object start_method at 0x206ca8e0fe0, file minigames.py>, line 32
+#   21: 'MinigameConfig.start_method'
+#   22: <Code310 code object finish_method at 0x206ca8e1070, file minigames.py>, line 35
+#   23: 'MinigameConfig.finish_method'
+#   24: <Code310 code object get_finish_value at 0x206ca8e11c0, file minigames.py>, line 38
+#   25: 'MinigameConfig.get_finish_value'
+#   26: None
+# Names:
+#    0: __name__
+#    1: __module__
+#    2: __qualname__
+#    3: str
+#    4: __annotations__
+#    5: Any
+#    6: data_method_name
+#    7: start_method_name
+#    8: finish_method_name
+#    9: energy_key
+#   10: battle_code_key
+#   11: finish_hash_mode
+#   12: get_data_method
+#   13: start_method
+#   14: finish_method
+#   15: get_finish_value
+ 16:           0 LOAD_NAME            (__name__)
+               2 STORE_NAME           (__module__)
+               4 LOAD_CONST           ("MinigameConfig")
+               6 STORE_NAME           (__qualname__)
+               8 SETUP_ANNOTATIONS
+
+ 18:          10 LOAD_NAME            (str)
+              12 LOAD_NAME            (__annotations__)
+              14 LOAD_CONST           ("key")
+              16 STORE_SUBSCR
+
+ 19:          18 LOAD_NAME            (str)
+              20 LOAD_NAME            (__annotations__)
+              22 LOAD_CONST           ("label")
+              24 STORE_SUBSCR
+
+ 20:          26 LOAD_NAME            (str)
+              28 LOAD_NAME            (__annotations__)
+              30 LOAD_CONST           ("api_class")
+              32 STORE_SUBSCR
+
+ 21:          34 LOAD_NAME            (Any)
+              36 LOAD_NAME            (__annotations__)
+              38 LOAD_CONST           ("finish_value")
+              40 STORE_SUBSCR
+
+ 22:          42 LOAD_CONST           ("getMinigameData")
+              44 STORE_NAME           (data_method_name)
+              46 LOAD_NAME            (str)
+              48 LOAD_NAME            (__annotations__)
+              50 LOAD_CONST           ("data_method_name")
+              52 STORE_SUBSCR
+
+ 23:          54 LOAD_CONST           ("startMinigame")
+              56 STORE_NAME           (start_method_name)
+              58 LOAD_NAME            (str)
+              60 LOAD_NAME            (__annotations__)
+              62 LOAD_CONST           ("start_method_name")
+              64 STORE_SUBSCR
+
+ 24:          66 LOAD_CONST           ("finishMinigame")
+              68 STORE_NAME           (finish_method_name)
+              70 LOAD_NAME            (str)
+              72 LOAD_NAME            (__annotations__)
+              74 LOAD_CONST           ("finish_method_name")
+              76 STORE_SUBSCR
+
+ 25:          78 LOAD_CONST           ("energy")
+              80 STORE_NAME           (energy_key)
+              82 LOAD_NAME            (str)
+              84 LOAD_NAME            (__annotations__)
+              86 LOAD_CONST           ("energy_key")
+              88 STORE_SUBSCR
+
+ 26:          90 LOAD_CONST           ("code")
+              92 STORE_NAME           (battle_code_key)
+              94 LOAD_NAME            (str)
+              96 LOAD_NAME            (__annotations__)
+              98 LOAD_CONST           ("battle_code_key")
+             100 STORE_SUBSCR
+
+ 27:         102 LOAD_CONST           ("default")
+             104 STORE_NAME           (finish_hash_mode)
+             106 LOAD_NAME            (str)
+             108 LOAD_NAME            (__annotations__)
+             110 LOAD_CONST           ("finish_hash_mode")
+             112 STORE_SUBSCR
+
+ 29:         114 LOAD_CONST           ("return")
+             116 LOAD_NAME            (str)
+             118 BUILD_TUPLE          2
+             120 LOAD_CONST           (<Code310 code object get_data_method at 0x206ca7ecf50, file minigames.py>, line 29)
+             122 LOAD_CONST           ("MinigameConfig.get_data_method")
+             124 MAKE_FUNCTION        (annotation)
+             126 STORE_NAME           (get_data_method)
+
+ 32:         128 LOAD_CONST           ("return")
+             130 LOAD_NAME            (str)
+             132 BUILD_TUPLE          2
+             134 LOAD_CONST           (<Code310 code object start_method at 0x206ca8e0fe0, file minigames.py>, line 32)
+             136 LOAD_CONST           ("MinigameConfig.start_method")
+             138 MAKE_FUNCTION        (annotation)
+             140 STORE_NAME           (start_method)
+
+ 35:         142 LOAD_CONST           ("return")
+             144 LOAD_NAME            (str)
+             146 BUILD_TUPLE          2
+             148 LOAD_CONST           (<Code310 code object finish_method at 0x206ca8e1070, file minigames.py>, line 35)
+             150 LOAD_CONST           ("MinigameConfig.finish_method")
+             152 MAKE_FUNCTION        (annotation)
+             154 STORE_NAME           (finish_method)
+
+ 38:         156 LOAD_CONST           ("return")
+             158 LOAD_NAME            (Any)
+             160 BUILD_TUPLE          2
+             162 LOAD_CONST           (<Code310 code object get_finish_value at 0x206ca8e11c0, file minigames.py>, line 38)
+             164 LOAD_CONST           ("MinigameConfig.get_finish_value")
+             166 MAKE_FUNCTION        (annotation)
+             168 STORE_NAME           (get_finish_value)
+             170 LOAD_CONST           (None)
+             172 RETURN_VALUE
+
+
+# Method Name:       MinigameSystem
+# Filename:          minigames.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        11
+# Flags:             0x00000040 (NOFREE)
+# First Line:        72
+# Constants:
+#    0: 'MinigameSystem'
+#    1: 'return'
+#    2: <Code310 code object _check_stop_event at 0x206ca8e1430, file minigames.py>, line 73
+#    3: 'MinigameSystem._check_stop_event'
+#    4: 'seconds'
+#    5: <Code310 code object _wait_with_stop_check at 0x206ca8e1610, file minigames.py>, line 80
+#    6: 'MinigameSystem._wait_with_stop_check'
+#    7: 'method'
+#    8: 'parameters'
+#    9: 'delay'
+#   10: <Code310 code object _send_request at 0x206ca8e1730, file minigames.py>, line 87
+#   11: 'MinigameSystem._send_request'
+#   12: 'response'
+#   13: <Code310 code object _response_message at 0x206c879ccb0, file minigames.py>, line 92
+#   14: 'MinigameSystem._response_message'
+#   15: 'char_id'
+#   16: 'session_key'
+#   17: 'finish_value'
+#   18: 'battle_code'
+#   19: <Code310 code object _build_finish_hash at 0x206ca8e1af0, file minigames.py>, line 109
+#   20: 'MinigameSystem._build_finish_hash'
+#   21: 'score'
+#   22: <Code310 code object _build_worldcup_finish_hash at 0x206ca8e1c10, file minigames.py>, line 114
+#   23: 'MinigameSystem._build_worldcup_finish_hash'
+#   24: 'rewards'
+#   25: <Code310 code object _normalize_rewards at 0x206ca8e1e80, file minigames.py>, line 118
+#   26: 'MinigameSystem._normalize_rewards'
+#   27: <Code310 code object _get_character_session at 0x206ca8e1f40, file minigames.py>, line 124
+#   28: 'MinigameSystem._get_character_session'
+#   29: None
+#   30: 'minigame_key'
+#   31: 'num_loops'
+#   32: <Code310 code object run at 0x206ca8e1fd0, file minigames.py>, line 131
+#   33: 'MinigameSystem.run'
+#   34: (None,)
+# Names:
+#    0: __name__
+#    1: __module__
+#    2: __qualname__
+#    3: staticmethod
+#    4: bool
+#    5: _check_stop_event
+#    6: int
+#    7: _wait_with_stop_check
+#    8: MINIGAME_REQUEST_DELAY_SECONDS
+#    9: str
+#   10: list
+#   11: _send_request
+#   12: Any
+#   13: _response_message
+#   14: _build_finish_hash
+#   15: _build_worldcup_finish_hash
+#   16: _normalize_rewards
+#   17: tuple
+#   18: _get_character_session
+#   19: Optional
+#   20: run
+ 72:           0 LOAD_NAME            (__name__)
+               2 STORE_NAME           (__module__)
+               4 LOAD_CONST           ("MinigameSystem")
+               6 STORE_NAME           (__qualname__)
+
+ 73:           8 LOAD_NAME            (staticmethod)
+
+ 74:          10 LOAD_CONST           ("return")
+              12 LOAD_NAME            (bool)
+              14 BUILD_TUPLE          2
+              16 LOAD_CONST           (<Code310 code object _check_stop_event at 0x206ca8e1430, file minigames.py>, line 73)
+              18 LOAD_CONST           ("MinigameSystem._check_stop_event")
+              20 MAKE_FUNCTION        (annotation)
+              22 CALL_FUNCTION        (1 positional argument)
+              24 STORE_NAME           (_check_stop_event)
+
+ 80:          26 LOAD_CONST           ("seconds")
+              28 LOAD_NAME            (int)
+              30 LOAD_CONST           ("return")
+              32 LOAD_NAME            (bool)
+              34 BUILD_TUPLE          4
+              36 LOAD_CONST           (<Code310 code object _wait_with_stop_check at 0x206ca8e1610, file minigames.py>, line 80)
+              38 LOAD_CONST           ("MinigameSystem._wait_with_stop_check")
+              40 MAKE_FUNCTION        (annotation)
+              42 STORE_NAME           (_wait_with_stop_check)
+
+ 87:          44 LOAD_NAME            (MINIGAME_REQUEST_DELAY_SECONDS)
+              46 BUILD_TUPLE          1
+              48 LOAD_CONST           ("method")
+              50 LOAD_NAME            (str)
+              52 LOAD_CONST           ("parameters")
+              54 LOAD_NAME            (list)
+              56 LOAD_CONST           ("delay")
+              58 LOAD_NAME            (int)
+              60 BUILD_TUPLE          6
+              62 LOAD_CONST           (<Code310 code object _send_request at 0x206ca8e1730, file minigames.py>, line 87)
+              64 LOAD_CONST           ("MinigameSystem._send_request")
+              66 MAKE_FUNCTION        (default, annotation)
+              68 STORE_NAME           (_send_request)
+
+ 92:          70 LOAD_NAME            (staticmethod)
+
+ 93:          72 LOAD_CONST           ("response")
+              74 LOAD_NAME            (Any)
+              76 LOAD_CONST           ("return")
+              78 LOAD_NAME            (str)
+              80 BUILD_TUPLE          4
+              82 LOAD_CONST           (<Code310 code object _response_message at 0x206c879ccb0, file minigames.py>, line 92)
+              84 LOAD_CONST           ("MinigameSystem._response_message")
+              86 MAKE_FUNCTION        (annotation)
+              88 CALL_FUNCTION        (1 positional argument)
+              90 STORE_NAME           (_response_message)
+
+109:          92 LOAD_NAME            (staticmethod)
+
+110:          94 LOAD_CONST           ("char_id")
+              96 LOAD_NAME            (str)
+              98 LOAD_CONST           ("session_key")
+             100 LOAD_NAME            (str)
+             102 LOAD_CONST           ("finish_value")
+             104 LOAD_NAME            (Any)
+             106 LOAD_CONST           ("battle_code")
+             108 LOAD_NAME            (str)
+             110 LOAD_CONST           ("return")
+             112 LOAD_NAME            (str)
+             114 BUILD_TUPLE          10
+             116 LOAD_CONST           (<Code310 code object _build_finish_hash at 0x206ca8e1af0, file minigames.py>, line 109)
+             118 LOAD_CONST           ("MinigameSystem._build_finish_hash")
+             120 MAKE_FUNCTION        (annotation)
+             122 CALL_FUNCTION        (1 positional argument)
+             124 STORE_NAME           (_build_finish_hash)
+
+114:         126 LOAD_NAME            (staticmethod)
+
+115:         128 LOAD_CONST           ("char_id")
+             130 LOAD_NAME            (str)
+             132 LOAD_CONST           ("score")
+             134 LOAD_NAME            (int)
+             136 LOAD_CONST           ("battle_code")
+             138 LOAD_NAME            (str)
+             140 LOAD_CONST           ("return")
+             142 LOAD_NAME            (str)
+             144 BUILD_TUPLE          8
+             146 LOAD_CONST           (<Code310 code object _build_worldcup_finish_hash at 0x206ca8e1c10, file minigames.py>, line 114)
+             148 LOAD_CONST           ("MinigameSystem._build_worldcup_finish_hash")
+             150 MAKE_FUNCTION        (annotation)
+             152 CALL_FUNCTION        (1 positional argument)
+             154 STORE_NAME           (_build_worldcup_finish_hash)
+
+118:         156 LOAD_NAME            (staticmethod)
+
+119:         158 LOAD_CONST           ("rewards")
+             160 LOAD_NAME            (Any)
+             162 LOAD_CONST           ("return")
+             164 LOAD_NAME            (list)
+             166 LOAD_NAME            (str)
+             168 BINARY_SUBSCR
+             170 BUILD_TUPLE          4
+             172 LOAD_CONST           (<Code310 code object _normalize_rewards at 0x206ca8e1e80, file minigames.py>, line 118)
+             174 LOAD_CONST           ("MinigameSystem._normalize_rewards")
+             176 MAKE_FUNCTION        (annotation)
+             178 CALL_FUNCTION        (1 positional argument)
+             180 STORE_NAME           (_normalize_rewards)
+
+124:         182 LOAD_NAME            (staticmethod)
+
+125:         184 LOAD_CONST           ("return")
+             186 LOAD_NAME            (tuple)
+             188 LOAD_NAME            (str)
+             190 LOAD_NAME            (str)
+             192 BUILD_TUPLE          2
+             194 BINARY_SUBSCR
+             196 BUILD_TUPLE          2
+             198 LOAD_CONST           (<Code310 code object _get_character_session at 0x206ca8e1f40, file minigames.py>, line 124)
+             200 LOAD_CONST           ("MinigameSystem._get_character_session")
+             202 MAKE_FUNCTION        (annotation)
+             204 CALL_FUNCTION        (1 positional argument)
+             206 STORE_NAME           (_get_character_session)
+
+131:         208 LOAD_CONST           ((None,))
+             210 LOAD_CONST           ("minigame_key")
+             212 LOAD_NAME            (str)
+             214 LOAD_CONST           ("num_loops")
+             216 LOAD_NAME            (Optional)
+             218 LOAD_NAME            (int)
+             220 BINARY_SUBSCR
+             222 LOAD_CONST           ("return")
+             224 LOAD_CONST           (None)
+             226 BUILD_TUPLE          6
+             228 LOAD_CONST           (<Code310 code object run at 0x206ca8e1fd0, file minigames.py>, line 131)
+             230 LOAD_CONST           ("MinigameSystem.run")
+             232 MAKE_FUNCTION        (default, annotation)
+             234 STORE_NAME           (run)
+             236 LOAD_CONST           (None)
+             238 RETURN_VALUE
+
+
+# Method Name:       fight_minigame_event
+# Filename:          minigames.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        238
+# Constants:
+#    0: None
+#    1: ('num_loops',)
+# Names:
+#    0: MinigameSystem
+#    1: run
+# Varnames:
+#	minigame_key, num_loops, system
+# Positional arguments:
+#	minigame_key, num_loops
+# Local variables:
+#    2: system
+239:           0 LOAD_GLOBAL          (MinigameSystem)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (system)
+
+240:           6 LOAD_FAST            (system)
+               8 LOAD_ATTR            (run)
+              10 LOAD_FAST            (minigame_key)
+              12 LOAD_FAST            (num_loops)
+              14 LOAD_CONST           (('num_loops',))
+              16 CALL_FUNCTION_KW     (2 total positional and keyword args)
+              18 POP_TOP
+              20 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+
+# Method Name:       get_data_method
+# Filename:          minigames.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        29
+# Constants:
+#    0: None
+#    1: '.'
+# Names:
+#    0: api_class
+#    1: data_method_name
+# Varnames:
+#	self
+# Positional arguments:
+#	self
+ 30:           0 LOAD_FAST            (self)
+               2 LOAD_ATTR            (api_class)
+               4 FORMAT_VALUE         0
+               6 LOAD_CONST           (".")
+               8 LOAD_FAST            (self)
+              10 LOAD_ATTR            (data_method_name)
+              12 FORMAT_VALUE         0
+              14 BUILD_STRING         3
+              16 RETURN_VALUE
+
+
+# Method Name:       start_method
+# Filename:          minigames.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        32
+# Constants:
+#    0: None
+#    1: '.'
+# Names:
+#    0: api_class
+#    1: start_method_name
+# Varnames:
+#	self
+# Positional arguments:
+#	self
+ 33:           0 LOAD_FAST            (self)
+               2 LOAD_ATTR            (api_class)
+               4 FORMAT_VALUE         0
+               6 LOAD_CONST           (".")
+               8 LOAD_FAST            (self)
+              10 LOAD_ATTR            (start_method_name)
+              12 FORMAT_VALUE         0
+              14 BUILD_STRING         3
+              16 RETURN_VALUE
+
+
+# Method Name:       finish_method
+# Filename:          minigames.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        35
+# Constants:
+#    0: None
+#    1: '.'
+# Names:
+#    0: api_class
+#    1: finish_method_name
+# Varnames:
+#	self
+# Positional arguments:
+#	self
+ 36:           0 LOAD_FAST            (self)
+               2 LOAD_ATTR            (api_class)
+               4 FORMAT_VALUE         0
+               6 LOAD_CONST           (".")
+               8 LOAD_FAST            (self)
+              10 LOAD_ATTR            (finish_method_name)
+              12 FORMAT_VALUE         0
+              14 BUILD_STRING         3
+              16 RETURN_VALUE
+
+
+# Method Name:       get_finish_value
+# Filename:          minigames.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        38
+# Constants:
+#    0: None
+#    1: 'random_worldcup_score'
+#    2: 26000
+#    3: 30000
+# Names:
+#    0: finish_value
+#    1: random
+#    2: randint
+# Varnames:
+#	self
+# Positional arguments:
+#	self
+ 39:           0 LOAD_FAST            (self)
+               2 LOAD_ATTR            (finish_value)
+               4 LOAD_CONST           ("random_worldcup_score")
+               6 COMPARE_OP           (==)
+               8 POP_JUMP_IF_FALSE    (to 22)
+
+ 40:          10 LOAD_GLOBAL          (random)
+              12 LOAD_METHOD          (randint)
+              14 LOAD_CONST           (26000)
+              16 LOAD_CONST           (30000)
+              18 CALL_METHOD          (2 positional arguments)
+              20 RETURN_VALUE
+
+ 41:     >>   22 LOAD_FAST            (self)
+              24 LOAD_ATTR            (finish_value)
+              26 RETURN_VALUE
+
+
+# Method Name:       _check_stop_event
+# Filename:          minigames.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        73
+# Constants:
+#    0: None
+#    1: 'stop_event'
+#    2: 'Minigame stopped by user request'
+#    3: True
+#    4: False
+# Names:
+#    0: hasattr
+#    1: config
+#    2: stop_event
+#    3: is_set
+#    4: print
+ 75:           0 LOAD_GLOBAL          (hasattr)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_CONST           ("stop_event")
+               6 CALL_FUNCTION        (2 positional arguments)
+               8 POP_JUMP_IF_FALSE    (to 32)
+              10 LOAD_GLOBAL          (config)
+              12 LOAD_ATTR            (stop_event)
+              14 LOAD_METHOD          (is_set)
+              16 CALL_METHOD          (0 positional arguments)
+              18 POP_JUMP_IF_FALSE    (to 32)
+
+ 76:          20 LOAD_GLOBAL          (print)
+              22 LOAD_CONST           ("Minigame stopped by user request")
+              24 CALL_FUNCTION        (1 positional argument)
+              26 POP_TOP
+
+ 77:          28 LOAD_CONST           (True)
+              30 RETURN_VALUE
+
+ 78:     >>   32 LOAD_CONST           (False)
+              34 RETURN_VALUE
+
+
+# Method Name:       _wait_with_stop_check
+# Filename:          minigames.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        80
+# Constants:
+#    0: None
+#    1: False
+#    2: 1
+#    3: True
+# Names:
+#    0: range
+#    1: _check_stop_event
+#    2: time
+#    3: sleep
+# Varnames:
+#	self, seconds, _
+# Positional arguments:
+#	self, seconds
+# Local variables:
+#    2: _
+ 81:           0 LOAD_GLOBAL          (range)
+               2 LOAD_FAST            (seconds)
+               4 CALL_FUNCTION        (1 positional argument)
+               6 GET_ITER
+         >>    8 FOR_ITER             (to 38)
+              10 STORE_FAST           (_)
+
+ 82:          12 LOAD_FAST            (self)
+              14 LOAD_METHOD          (_check_stop_event)
+              16 CALL_METHOD          (0 positional arguments)
+              18 POP_JUMP_IF_FALSE    (to 26)
+
+ 83:          20 POP_TOP
+              22 LOAD_CONST           (False)
+              24 RETURN_VALUE
+
+ 84:     >>   26 LOAD_GLOBAL          (time)
+              28 LOAD_METHOD          (sleep)
+              30 LOAD_CONST           (1)
+              32 CALL_METHOD          (1 positional argument)
+              34 POP_TOP
+              36 JUMP_ABSOLUTE        (to 8)
+
+ 85:     >>   38 LOAD_CONST           (True)
+              40 RETURN_VALUE
+
+
+# Method Name:       _send_request
+# Filename:          minigames.py
+# Argument count:    4
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  4
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        87
+# Constants:
+#    0: None
+#    1: 0
+# Names:
+#    0: _wait_with_stop_check
+#    1: send_amf_request
+# Varnames:
+#	self, method, parameters, delay
+# Positional arguments:
+#	self, method, parameters, delay
+ 88:           0 LOAD_FAST            (delay)
+               2 LOAD_CONST           (0)
+               4 COMPARE_OP           (>)
+               6 POP_JUMP_IF_FALSE    (to 22)
+               8 LOAD_FAST            (self)
+              10 LOAD_METHOD          (_wait_with_stop_check)
+              12 LOAD_FAST            (delay)
+              14 CALL_METHOD          (1 positional argument)
+              16 POP_JUMP_IF_TRUE     (to 22)
+
+ 89:          18 LOAD_CONST           (None)
+              20 RETURN_VALUE
+
+ 90:     >>   22 LOAD_GLOBAL          (send_amf_request)
+              24 LOAD_FAST            (method)
+              26 LOAD_FAST            (parameters)
+              28 CALL_FUNCTION        (2 positional arguments)
+              30 RETURN_VALUE
+
+
+# Method Name:       _response_message
+# Filename:          minigames.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        92
+# Constants:
+#    0: None
+#    1: 'No response'
+#    2: 'result'
+#    3: 'error'
+#    4: 'message'
+#    5: ('description', 'message', 'details', 'faultString')
+# Names:
+#    0: isinstance
+#    1: dict
+#    2: str
+#    3: get
+#    4: getattr
+# Varnames:
+#	response, attr, value
+# Positional arguments:
+#	response
+# Local variables:
+#    1: attr
+#    2: value
+ 94:           0 LOAD_FAST            (response)
+               2 LOAD_CONST           (None)
+               4 IS_OP                (is)
+               6 POP_JUMP_IF_FALSE    (to 12)
+
+ 95:           8 LOAD_CONST           ("No response")
+              10 RETURN_VALUE
+
+ 96:     >>   12 LOAD_GLOBAL          (isinstance)
+              14 LOAD_FAST            (response)
+              16 LOAD_GLOBAL          (dict)
+              18 CALL_FUNCTION        (2 positional arguments)
+              20 POP_JUMP_IF_FALSE    (to 60)
+
+ 97:          22 LOAD_GLOBAL          (str)
+
+ 98:          24 LOAD_FAST            (response)
+              26 LOAD_METHOD          (get)
+              28 LOAD_CONST           ("result")
+              30 CALL_METHOD          (1 positional argument)
+              32 JUMP_IF_TRUE_OR_POP  (to 56)
+
+ 99:          34 LOAD_FAST            (response)
+              36 LOAD_METHOD          (get)
+              38 LOAD_CONST           ("error")
+              40 CALL_METHOD          (1 positional argument)
+
+ 98:          42 JUMP_IF_TRUE_OR_POP  (to 56)
+
+100:          44 LOAD_FAST            (response)
+              46 LOAD_METHOD          (get)
+              48 LOAD_CONST           ("message")
+              50 CALL_METHOD          (1 positional argument)
+
+ 98:          52 JUMP_IF_TRUE_OR_POP  (to 56)
+
+101:          54 LOAD_FAST            (response)
+
+ 97:     >>   56 CALL_FUNCTION        (1 positional argument)
+              58 RETURN_VALUE
+
+103:     >>   60 LOAD_CONST           (('description', 'message', 'details', 'faultString'))
+              62 GET_ITER
+         >>   64 FOR_ITER             (to 98)
+              66 STORE_FAST           (attr)
+
+104:          68 LOAD_GLOBAL          (getattr)
+              70 LOAD_FAST            (response)
+              72 LOAD_FAST            (attr)
+              74 LOAD_CONST           (None)
+              76 CALL_FUNCTION        (3 positional arguments)
+              78 STORE_FAST           (value)
+
+105:          80 LOAD_FAST            (value)
+              82 POP_JUMP_IF_FALSE    (to 96)
+
+106:          84 LOAD_GLOBAL          (str)
+              86 LOAD_FAST            (value)
+              88 CALL_FUNCTION        (1 positional argument)
+              90 ROT_TWO
+              92 POP_TOP
+              94 RETURN_VALUE
+
+105:     >>   96 JUMP_ABSOLUTE        (to 64)
+
+107:     >>   98 LOAD_GLOBAL          (str)
+             100 LOAD_FAST            (response)
+             102 CALL_FUNCTION        (1 positional argument)
+             104 RETURN_VALUE
+
+
+# Method Name:       _build_finish_hash
+# Filename:          minigames.py
+# Argument count:    4
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  5
+# Stack size:        7
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        109
+# Constants:
+#    0: None
+#    1: '|'
+#    2: 'utf-8'
+# Names:
+#    0: hashlib
+#    1: sha256
+#    2: encode
+#    3: hexdigest
+# Varnames:
+#	char_id, session_key, finish_value, battle_code, hash_input
+# Positional arguments:
+#	char_id, session_key, finish_value, battle_code
+# Local variables:
+#    4: hash_input
+111:           0 LOAD_FAST            (char_id)
+               2 FORMAT_VALUE         0
+               4 LOAD_CONST           ("|")
+               6 LOAD_FAST            (session_key)
+               8 FORMAT_VALUE         0
+              10 LOAD_CONST           ("|")
+              12 LOAD_FAST            (finish_value)
+              14 FORMAT_VALUE         0
+              16 LOAD_CONST           ("|")
+              18 LOAD_FAST            (battle_code)
+              20 FORMAT_VALUE         0
+              22 BUILD_STRING         7
+              24 STORE_FAST           (hash_input)
+
+112:          26 LOAD_GLOBAL          (hashlib)
+              28 LOAD_METHOD          (sha256)
+              30 LOAD_FAST            (hash_input)
+              32 LOAD_METHOD          (encode)
+              34 LOAD_CONST           ("utf-8")
+              36 CALL_METHOD          (1 positional argument)
+              38 CALL_METHOD          (1 positional argument)
+              40 LOAD_METHOD          (hexdigest)
+              42 CALL_METHOD          (0 positional arguments)
+              44 RETURN_VALUE
+
+
+# Method Name:       _build_worldcup_finish_hash
+# Filename:          minigames.py
+# Argument count:    3
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        7
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        114
+# Constants:
+#    0: None
+#    1: '_'
+# Names:
+#    0: CUCSG
+#    1: hash
+# Varnames:
+#	char_id, score, battle_code
+# Positional arguments:
+#	char_id, score, battle_code
+116:           0 LOAD_GLOBAL          (CUCSG)
+               2 LOAD_METHOD          (hash)
+               4 LOAD_FAST            (char_id)
+               6 FORMAT_VALUE         0
+               8 LOAD_CONST           ("_")
+              10 LOAD_FAST            (score)
+              12 FORMAT_VALUE         0
+              14 LOAD_CONST           ("_")
+              16 LOAD_FAST            (battle_code)
+              18 FORMAT_VALUE         0
+              20 BUILD_STRING         5
+              22 CALL_METHOD          (1 positional argument)
+              24 RETURN_VALUE
+
+
+# Method Name:       _normalize_rewards
+# Filename:          minigames.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        118
+# Constants:
+#    0: None
+#    1: <Code310 code object <listcomp> at 0x206ca8e1df0, file minigames.py>, line 122
+#    2: 'MinigameSystem._normalize_rewards.<locals>.<listcomp>'
+# Names:
+#    0: isinstance
+#    1: list
+# Varnames:
+#	rewards
+# Positional arguments:
+#	rewards
+120:           0 LOAD_GLOBAL          (isinstance)
+               2 LOAD_FAST            (rewards)
+               4 LOAD_GLOBAL          (list)
+               6 CALL_FUNCTION        (2 positional arguments)
+               8 POP_JUMP_IF_TRUE     (to 14)
+
+121:          10 BUILD_LIST           0
+              12 RETURN_VALUE
+
+122:     >>   14 LOAD_CONST           (<Code310 code object <listcomp> at 0x206ca8e1df0, file minigames.py>, line 122)
+              16 LOAD_CONST           ("MinigameSystem._normalize_rewards.<locals>.<listcomp>")
+              18 MAKE_FUNCTION        (No arguments)
+              20 LOAD_FAST            (rewards)
+              22 GET_ITER
+              24 CALL_FUNCTION        (1 positional argument)
+              26 RETURN_VALUE
+
+
+# Method Name:       _get_character_session
+# Filename:          minigames.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        124
+# Constants:
+#    0: None
+#    1: 'character_data_character_id'
+#    2: 'sessionkey'
+# Names:
+#    0: flatten_json
+#    1: config
+#    2: char_data
+#    3: str
+#    4: login_data
+# Varnames:
+#	char_flat, char_id, session_key
+# Local variables:
+#    0: char_flat
+#    1: char_id
+#    2: session_key
+126:           0 LOAD_GLOBAL          (flatten_json)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_ATTR            (char_data)
+               6 CALL_FUNCTION        (1 positional argument)
+               8 STORE_FAST           (char_flat)
+
+127:          10 LOAD_GLOBAL          (str)
+              12 LOAD_FAST            (char_flat)
+              14 LOAD_CONST           ("character_data_character_id")
+              16 BINARY_SUBSCR
+              18 CALL_FUNCTION        (1 positional argument)
+              20 STORE_FAST           (char_id)
+
+128:          22 LOAD_GLOBAL          (str)
+              24 LOAD_GLOBAL          (config)
+              26 LOAD_ATTR            (login_data)
+              28 LOAD_CONST           ("sessionkey")
+              30 BINARY_SUBSCR
+              32 CALL_FUNCTION        (1 positional argument)
+              34 STORE_FAST           (session_key)
+
+129:          36 LOAD_FAST            (char_id)
+              38 LOAD_FAST            (session_key)
+              40 BUILD_TUPLE          2
+              42 RETURN_VALUE
+
+
+# Method Name:       run
+# Filename:          minigames.py
+# Argument count:    3
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  18
+# Stack size:        7
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        131
+# Constants:
+#    0: None
+#    1: 'Unknown minigame: '
+#    2: 'Starting '
+#    3: '...'
+#    4: 0
+#    5: 'Failed to get minigame data: '
+#    6: 'status'
+#    7: 1
+#    8: ' energy: '
+#    9: 'No energy left for '
+#   10: 'Finished requested '
+#   11: ' run(s) for '
+#   12: 'Starting minigame '
+#   13: 'Failed to start minigame: '
+#   14: 'Failed to start minigame: missing battle code in '
+#   15: 'Battle code: '
+#   16: 'Waiting '
+#   17: ' seconds before finishing...'
+#   18: 'worldcup'
+#   19: 'Score: '
+#   20: 'Failed to finish minigame: '
+#   21: 'current_energy'
+#   22: '?'
+#   23: 'rewards'
+#   24: 'rank'
+#   25: ' completed successfully'
+#   26: 'Remaining energy: '
+#   27: 'Rewards: '
+#   28: ', '
+#   29: 'Rewards: none'
+#   30: 'Rank: '
+# Names:
+#    0: MINIGAME_CONFIGS
+#    1: get
+#    2: ValueError
+#    3: _get_character_session
+#    4: print
+#    5: label
+#    6: _check_stop_event
+#    7: _send_request
+#    8: get_data_method
+#    9: isinstance
+#   10: dict
+#   11: _response_message
+#   12: int
+#   13: energy_key
+#   14: start_method
+#   15: battle_code_key
+#   16: MINIGAME_FINISH_DELAY_SECONDS
+#   17: _wait_with_stop_check
+#   18: get_finish_value
+#   19: finish_hash_mode
+#   20: _build_worldcup_finish_hash
+#   21: str
+#   22: _build_finish_hash
+#   23: finish_method
+#   24: save_fight_data
+#   25: _normalize_rewards
+#   26: join
+#   27: MINIGAME_BETWEEN_RUNS_SECONDS
+# Varnames:
+#	self, minigame_key, num_loops, minigame, char_id, session_key, completed_runs, minigame_data, energy, start_result, battle_code, finish_value, finish_hash, finish_params, finish_result, current_energy, rewards, rank
+# Positional arguments:
+#	self, minigame_key, num_loops
+# Local variables:
+#    3: minigame
+#    4: char_id
+#    5: session_key
+#    6: completed_runs
+#    7: minigame_data
+#    8: energy
+#    9: start_result
+#   10: battle_code
+#   11: finish_value
+#   12: finish_hash
+#   13: finish_params
+#   14: finish_result
+#   15: current_energy
+#   16: rewards
+#   17: rank
+132:           0 LOAD_GLOBAL          (MINIGAME_CONFIGS)
+               2 LOAD_METHOD          (get)
+               4 LOAD_FAST            (minigame_key)
+               6 CALL_METHOD          (1 positional argument)
+               8 STORE_FAST           (minigame)
+
+133:          10 LOAD_FAST            (minigame)
+              12 POP_JUMP_IF_TRUE     (to 28)
+
+134:          14 LOAD_GLOBAL          (ValueError)
+              16 LOAD_CONST           ("Unknown minigame: ")
+              18 LOAD_FAST            (minigame_key)
+              20 FORMAT_VALUE         0
+              22 BUILD_STRING         2
+              24 CALL_FUNCTION        (1 positional argument)
+              26 RAISE_VARARGS        (exception instance)
+
+136:     >>   28 LOAD_FAST            (self)
+              30 LOAD_METHOD          (_get_character_session)
+              32 CALL_METHOD          (0 positional arguments)
+              34 UNPACK_SEQUENCE      2
+              36 STORE_FAST           (char_id)
+              38 STORE_FAST           (session_key)
+
+137:          40 LOAD_GLOBAL          (print)
+              42 LOAD_CONST           ("Starting ")
+              44 LOAD_FAST            (minigame)
+              46 LOAD_ATTR            (label)
+              48 FORMAT_VALUE         0
+              50 LOAD_CONST           ("...")
+              52 BUILD_STRING         3
+              54 CALL_FUNCTION        (1 positional argument)
+              56 POP_TOP
+
+139:          58 LOAD_CONST           (0)
+              60 STORE_FAST           (completed_runs)
+
+140:          62 LOAD_FAST            (self)
+              64 LOAD_METHOD          (_check_stop_event)
+              66 CALL_METHOD          (0 positional arguments)
+              68 EXTENDED_ARG         (256)
+              70 POP_JUMP_IF_TRUE     (to 922)
+
+141:     >>   72 LOAD_FAST            (self)
+              74 LOAD_METHOD          (_send_request)
+
+142:          76 LOAD_FAST            (minigame)
+              78 LOAD_METHOD          (get_data_method)
+              80 CALL_METHOD          (0 positional arguments)
+
+143:          82 LOAD_FAST            (char_id)
+              84 LOAD_FAST            (session_key)
+              86 BUILD_LIST           2
+
+141:          88 CALL_METHOD          (2 positional arguments)
+              90 STORE_FAST           (minigame_data)
+
+145:          92 LOAD_FAST            (minigame_data)
+              94 LOAD_CONST           (None)
+              96 IS_OP                (is)
+              98 POP_JUMP_IF_FALSE    (to 104)
+
+146:         100 LOAD_CONST           (None)
+             102 RETURN_VALUE
+
+147:     >>  104 LOAD_GLOBAL          (isinstance)
+             106 LOAD_FAST            (minigame_data)
+             108 LOAD_GLOBAL          (dict)
+             110 CALL_FUNCTION        (2 positional arguments)
+             112 POP_JUMP_IF_TRUE     (to 138)
+
+148:         114 LOAD_GLOBAL          (print)
+             116 LOAD_CONST           ("Failed to get minigame data: ")
+             118 LOAD_FAST            (self)
+             120 LOAD_METHOD          (_response_message)
+             122 LOAD_FAST            (minigame_data)
+             124 CALL_METHOD          (1 positional argument)
+             126 FORMAT_VALUE         0
+             128 BUILD_STRING         2
+             130 CALL_FUNCTION        (1 positional argument)
+             132 POP_TOP
+
+149:         134 LOAD_CONST           (None)
+             136 RETURN_VALUE
+
+150:     >>  138 LOAD_FAST            (minigame_data)
+             140 LOAD_METHOD          (get)
+             142 LOAD_CONST           ("status")
+             144 CALL_METHOD          (1 positional argument)
+             146 LOAD_CONST           (1)
+             148 COMPARE_OP           (!=)
+             150 POP_JUMP_IF_FALSE    (to 176)
+
+151:         152 LOAD_GLOBAL          (print)
+             154 LOAD_CONST           ("Failed to get minigame data: ")
+             156 LOAD_FAST            (self)
+             158 LOAD_METHOD          (_response_message)
+             160 LOAD_FAST            (minigame_data)
+             162 CALL_METHOD          (1 positional argument)
+             164 FORMAT_VALUE         0
+             166 BUILD_STRING         2
+             168 CALL_FUNCTION        (1 positional argument)
+             170 POP_TOP
+
+152:         172 LOAD_CONST           (None)
+             174 RETURN_VALUE
+
+154:     >>  176 LOAD_GLOBAL          (int)
+             178 LOAD_FAST            (minigame_data)
+             180 LOAD_METHOD          (get)
+             182 LOAD_FAST            (minigame)
+             184 LOAD_ATTR            (energy_key)
+             186 LOAD_CONST           (0)
+             188 CALL_METHOD          (2 positional arguments)
+             190 JUMP_IF_TRUE_OR_POP  (to 194)
+             192 LOAD_CONST           (0)
+         >>  194 CALL_FUNCTION        (1 positional argument)
+             196 STORE_FAST           (energy)
+
+155:         198 LOAD_GLOBAL          (print)
+             200 LOAD_FAST            (minigame)
+             202 LOAD_ATTR            (label)
+             204 FORMAT_VALUE         0
+             206 LOAD_CONST           (" energy: ")
+             208 LOAD_FAST            (energy)
+             210 FORMAT_VALUE         0
+             212 BUILD_STRING         3
+             214 CALL_FUNCTION        (1 positional argument)
+             216 POP_TOP
+
+156:         218 LOAD_FAST            (energy)
+             220 LOAD_CONST           (0)
+             222 COMPARE_OP           (<=)
+             224 POP_JUMP_IF_FALSE    (to 246)
+
+157:         226 LOAD_GLOBAL          (print)
+             228 LOAD_CONST           ("No energy left for ")
+             230 LOAD_FAST            (minigame)
+             232 LOAD_ATTR            (label)
+             234 FORMAT_VALUE         0
+             236 BUILD_STRING         2
+             238 CALL_FUNCTION        (1 positional argument)
+             240 POP_TOP
+
+158:         242 LOAD_CONST           (None)
+             244 RETURN_VALUE
+
+160:     >>  246 LOAD_FAST            (num_loops)
+             248 LOAD_CONST           (None)
+             250 IS_OP                (is not)
+             252 POP_JUMP_IF_FALSE    (to 288)
+             254 LOAD_FAST            (completed_runs)
+             256 LOAD_FAST            (num_loops)
+             258 COMPARE_OP           (>=)
+             260 POP_JUMP_IF_FALSE    (to 288)
+
+161:         262 LOAD_GLOBAL          (print)
+             264 LOAD_CONST           ("Finished requested ")
+             266 LOAD_FAST            (completed_runs)
+             268 FORMAT_VALUE         0
+             270 LOAD_CONST           (" run(s) for ")
+             272 LOAD_FAST            (minigame)
+             274 LOAD_ATTR            (label)
+             276 FORMAT_VALUE         0
+             278 BUILD_STRING         4
+             280 CALL_FUNCTION        (1 positional argument)
+             282 POP_TOP
+
+162:         284 LOAD_CONST           (None)
+             286 RETURN_VALUE
+
+164:     >>  288 LOAD_GLOBAL          (print)
+             290 LOAD_CONST           ("Starting minigame ")
+             292 LOAD_FAST            (completed_runs)
+             294 LOAD_CONST           (1)
+             296 BINARY_ADD
+             298 FORMAT_VALUE         0
+             300 LOAD_CONST           ("...")
+             302 BUILD_STRING         3
+             304 CALL_FUNCTION        (1 positional argument)
+             306 POP_TOP
+
+165:         308 LOAD_FAST            (self)
+             310 LOAD_METHOD          (_send_request)
+
+166:         312 LOAD_FAST            (minigame)
+             314 LOAD_METHOD          (start_method)
+             316 CALL_METHOD          (0 positional arguments)
+
+167:         318 LOAD_FAST            (char_id)
+             320 LOAD_FAST            (session_key)
+             322 BUILD_LIST           2
+
+165:         324 CALL_METHOD          (2 positional arguments)
+             326 STORE_FAST           (start_result)
+
+169:         328 LOAD_FAST            (start_result)
+             330 LOAD_CONST           (None)
+             332 IS_OP                (is)
+             334 POP_JUMP_IF_FALSE    (to 340)
+
+170:         336 LOAD_CONST           (None)
+             338 RETURN_VALUE
+
+171:     >>  340 LOAD_GLOBAL          (isinstance)
+             342 LOAD_FAST            (start_result)
+             344 LOAD_GLOBAL          (dict)
+             346 CALL_FUNCTION        (2 positional arguments)
+             348 POP_JUMP_IF_TRUE     (to 374)
+
+172:         350 LOAD_GLOBAL          (print)
+             352 LOAD_CONST           ("Failed to start minigame: ")
+             354 LOAD_FAST            (self)
+             356 LOAD_METHOD          (_response_message)
+             358 LOAD_FAST            (start_result)
+             360 CALL_METHOD          (1 positional argument)
+             362 FORMAT_VALUE         0
+             364 BUILD_STRING         2
+             366 CALL_FUNCTION        (1 positional argument)
+             368 POP_TOP
+
+173:         370 LOAD_CONST           (None)
+             372 RETURN_VALUE
+
+174:     >>  374 LOAD_FAST            (start_result)
+             376 LOAD_METHOD          (get)
+             378 LOAD_CONST           ("status")
+             380 CALL_METHOD          (1 positional argument)
+             382 LOAD_CONST           (1)
+             384 COMPARE_OP           (!=)
+             386 POP_JUMP_IF_FALSE    (to 412)
+
+175:         388 LOAD_GLOBAL          (print)
+             390 LOAD_CONST           ("Failed to start minigame: ")
+             392 LOAD_FAST            (self)
+             394 LOAD_METHOD          (_response_message)
+             396 LOAD_FAST            (start_result)
+             398 CALL_METHOD          (1 positional argument)
+             400 FORMAT_VALUE         0
+             402 BUILD_STRING         2
+             404 CALL_FUNCTION        (1 positional argument)
+             406 POP_TOP
+
+176:         408 LOAD_CONST           (None)
+             410 RETURN_VALUE
+
+178:     >>  412 LOAD_FAST            (start_result)
+             414 LOAD_METHOD          (get)
+             416 LOAD_FAST            (minigame)
+             418 LOAD_ATTR            (battle_code_key)
+             420 CALL_METHOD          (1 positional argument)
+             422 STORE_FAST           (battle_code)
+
+179:         424 LOAD_FAST            (battle_code)
+             426 POP_JUMP_IF_TRUE     (to 446)
+
+180:         428 LOAD_GLOBAL          (print)
+             430 LOAD_CONST           ("Failed to start minigame: missing battle code in ")
+             432 LOAD_FAST            (start_result)
+             434 FORMAT_VALUE         0
+             436 BUILD_STRING         2
+             438 CALL_FUNCTION        (1 positional argument)
+             440 POP_TOP
+
+181:         442 LOAD_CONST           (None)
+             444 RETURN_VALUE
+
+183:     >>  446 LOAD_GLOBAL          (print)
+             448 LOAD_CONST           ("Battle code: ")
+             450 LOAD_FAST            (battle_code)
+             452 FORMAT_VALUE         0
+             454 BUILD_STRING         2
+             456 CALL_FUNCTION        (1 positional argument)
+             458 POP_TOP
+
+184:         460 LOAD_GLOBAL          (print)
+             462 LOAD_CONST           ("Waiting ")
+             464 LOAD_GLOBAL          (MINIGAME_FINISH_DELAY_SECONDS)
+             466 FORMAT_VALUE         0
+             468 LOAD_CONST           (" seconds before finishing...")
+             470 BUILD_STRING         3
+             472 CALL_FUNCTION        (1 positional argument)
+             474 POP_TOP
+
+185:         476 LOAD_FAST            (self)
+             478 LOAD_METHOD          (_wait_with_stop_check)
+             480 LOAD_GLOBAL          (MINIGAME_FINISH_DELAY_SECONDS)
+             482 CALL_METHOD          (1 positional argument)
+             484 POP_JUMP_IF_TRUE     (to 490)
+
+186:         486 LOAD_CONST           (None)
+             488 RETURN_VALUE
+
+188:     >>  490 LOAD_FAST            (minigame)
+             492 LOAD_METHOD          (get_finish_value)
+             494 CALL_METHOD          (0 positional arguments)
+             496 STORE_FAST           (finish_value)
+
+189:         498 LOAD_FAST            (minigame)
+             500 LOAD_ATTR            (finish_hash_mode)
+             502 LOAD_CONST           ("worldcup")
+             504 COMPARE_OP           (==)
+             506 EXTENDED_ARG         (256)
+             508 POP_JUMP_IF_FALSE    (to 566)
+
+190:         510 LOAD_FAST            (self)
+             512 LOAD_METHOD          (_build_worldcup_finish_hash)
+             514 LOAD_FAST            (char_id)
+             516 LOAD_GLOBAL          (int)
+             518 LOAD_FAST            (finish_value)
+             520 CALL_FUNCTION        (1 positional argument)
+             522 LOAD_GLOBAL          (str)
+             524 LOAD_FAST            (battle_code)
+             526 CALL_FUNCTION        (1 positional argument)
+             528 CALL_METHOD          (3 positional arguments)
+             530 STORE_FAST           (finish_hash)
+
+191:         532 LOAD_FAST            (char_id)
+             534 LOAD_FAST            (session_key)
+             536 LOAD_FAST            (finish_value)
+             538 LOAD_FAST            (finish_hash)
+             540 LOAD_GLOBAL          (str)
+             542 LOAD_FAST            (battle_code)
+             544 CALL_FUNCTION        (1 positional argument)
+             546 BUILD_LIST           5
+             548 STORE_FAST           (finish_params)
+
+192:         550 LOAD_GLOBAL          (print)
+             552 LOAD_CONST           ("Score: ")
+             554 LOAD_FAST            (finish_value)
+             556 FORMAT_VALUE         0
+             558 BUILD_STRING         2
+             560 CALL_FUNCTION        (1 positional argument)
+             562 POP_TOP
+             564 JUMP_FORWARD         (to 598)
+
+194:     >>  566 LOAD_FAST            (self)
+             568 LOAD_METHOD          (_build_finish_hash)
+
+195:         570 LOAD_FAST            (char_id)
+
+196:         572 LOAD_FAST            (session_key)
+
+197:         574 LOAD_FAST            (finish_value)
+
+198:         576 LOAD_GLOBAL          (str)
+             578 LOAD_FAST            (battle_code)
+             580 CALL_FUNCTION        (1 positional argument)
+
+194:         582 CALL_METHOD          (4 positional arguments)
+             584 STORE_FAST           (finish_hash)
+
+200:         586 LOAD_FAST            (char_id)
+             588 LOAD_FAST            (session_key)
+             590 LOAD_FAST            (finish_value)
+             592 LOAD_FAST            (finish_hash)
+             594 BUILD_LIST           4
+             596 STORE_FAST           (finish_params)
+
+201:     >>  598 LOAD_FAST            (self)
+             600 LOAD_METHOD          (_send_request)
+
+202:         602 LOAD_FAST            (minigame)
+             604 LOAD_METHOD          (finish_method)
+             606 CALL_METHOD          (0 positional arguments)
+
+203:         608 LOAD_FAST            (finish_params)
+
+201:         610 CALL_METHOD          (2 positional arguments)
+             612 STORE_FAST           (finish_result)
+
+205:         614 LOAD_FAST            (finish_result)
+             616 LOAD_CONST           (None)
+             618 IS_OP                (is)
+             620 EXTENDED_ARG         (256)
+             622 POP_JUMP_IF_FALSE    (to 628)
+
+206:         624 LOAD_CONST           (None)
+             626 RETURN_VALUE
+
+208:     >>  628 LOAD_GLOBAL          (save_fight_data)
+             630 LOAD_FAST            (finish_result)
+             632 CALL_FUNCTION        (1 positional argument)
+             634 POP_TOP
+
+209:         636 LOAD_GLOBAL          (isinstance)
+             638 LOAD_FAST            (finish_result)
+             640 LOAD_GLOBAL          (dict)
+             642 CALL_FUNCTION        (2 positional arguments)
+             644 EXTENDED_ARG         (256)
+             646 POP_JUMP_IF_TRUE     (to 672)
+
+210:         648 LOAD_GLOBAL          (print)
+             650 LOAD_CONST           ("Failed to finish minigame: ")
+             652 LOAD_FAST            (self)
+             654 LOAD_METHOD          (_response_message)
+             656 LOAD_FAST            (finish_result)
+             658 CALL_METHOD          (1 positional argument)
+             660 FORMAT_VALUE         0
+             662 BUILD_STRING         2
+             664 CALL_FUNCTION        (1 positional argument)
+             666 POP_TOP
+
+211:         668 LOAD_CONST           (None)
+             670 RETURN_VALUE
+
+212:     >>  672 LOAD_FAST            (finish_result)
+             674 LOAD_METHOD          (get)
+             676 LOAD_CONST           ("status")
+             678 CALL_METHOD          (1 positional argument)
+             680 LOAD_CONST           (1)
+             682 COMPARE_OP           (!=)
+             684 EXTENDED_ARG         (256)
+             686 POP_JUMP_IF_FALSE    (to 712)
+
+213:         688 LOAD_GLOBAL          (print)
+             690 LOAD_CONST           ("Failed to finish minigame: ")
+             692 LOAD_FAST            (self)
+             694 LOAD_METHOD          (_response_message)
+             696 LOAD_FAST            (finish_result)
+             698 CALL_METHOD          (1 positional argument)
+             700 FORMAT_VALUE         0
+             702 BUILD_STRING         2
+             704 CALL_FUNCTION        (1 positional argument)
+             706 POP_TOP
+
+214:         708 LOAD_CONST           (None)
+             710 RETURN_VALUE
+
+216:     >>  712 LOAD_FAST            (completed_runs)
+             714 LOAD_CONST           (1)
+             716 INPLACE_ADD
+             718 STORE_FAST           (completed_runs)
+
+217:         720 LOAD_FAST            (finish_result)
+             722 LOAD_METHOD          (get)
+             724 LOAD_CONST           ("current_energy")
+             726 LOAD_CONST           ("?")
+             728 CALL_METHOD          (2 positional arguments)
+             730 STORE_FAST           (current_energy)
+
+218:         732 LOAD_FAST            (self)
+             734 LOAD_METHOD          (_normalize_rewards)
+             736 LOAD_FAST            (finish_result)
+             738 LOAD_METHOD          (get)
+             740 LOAD_CONST           ("rewards")
+             742 CALL_METHOD          (1 positional argument)
+             744 CALL_METHOD          (1 positional argument)
+             746 STORE_FAST           (rewards)
+
+219:         748 LOAD_FAST            (finish_result)
+             750 LOAD_METHOD          (get)
+             752 LOAD_CONST           ("rank")
+             754 CALL_METHOD          (1 positional argument)
+             756 STORE_FAST           (rank)
+
+221:         758 LOAD_GLOBAL          (print)
+             760 LOAD_FAST            (minigame)
+             762 LOAD_ATTR            (label)
+             764 FORMAT_VALUE         0
+             766 LOAD_CONST           (" completed successfully")
+             768 BUILD_STRING         2
+             770 CALL_FUNCTION        (1 positional argument)
+             772 POP_TOP
+
+222:         774 LOAD_GLOBAL          (print)
+             776 LOAD_CONST           ("Remaining energy: ")
+             778 LOAD_FAST            (current_energy)
+             780 FORMAT_VALUE         0
+             782 BUILD_STRING         2
+             784 CALL_FUNCTION        (1 positional argument)
+             786 POP_TOP
+
+223:         788 LOAD_FAST            (rewards)
+             790 EXTENDED_ARG         (256)
+             792 POP_JUMP_IF_FALSE    (to 816)
+
+224:         794 LOAD_GLOBAL          (print)
+             796 LOAD_CONST           ("Rewards: ")
+             798 LOAD_CONST           (", ")
+             800 LOAD_METHOD          (join)
+             802 LOAD_FAST            (rewards)
+             804 CALL_METHOD          (1 positional argument)
+             806 FORMAT_VALUE         0
+             808 BUILD_STRING         2
+             810 CALL_FUNCTION        (1 positional argument)
+             812 POP_TOP
+             814 JUMP_FORWARD         (to 824)
+
+226:     >>  816 LOAD_GLOBAL          (print)
+             818 LOAD_CONST           ("Rewards: none")
+             820 CALL_FUNCTION        (1 positional argument)
+             822 POP_TOP
+
+227:     >>  824 LOAD_FAST            (rank)
+             826 LOAD_CONST           (None)
+             828 IS_OP                (is not)
+             830 EXTENDED_ARG         (256)
+             832 POP_JUMP_IF_FALSE    (to 848)
+
+228:         834 LOAD_GLOBAL          (print)
+             836 LOAD_CONST           ("Rank: ")
+             838 LOAD_FAST            (rank)
+             840 FORMAT_VALUE         0
+             842 BUILD_STRING         2
+             844 CALL_FUNCTION        (1 positional argument)
+             846 POP_TOP
+
+230:     >>  848 LOAD_FAST            (num_loops)
+             850 LOAD_CONST           (None)
+             852 IS_OP                (is not)
+             854 EXTENDED_ARG         (256)
+             856 POP_JUMP_IF_FALSE    (to 894)
+             858 LOAD_FAST            (completed_runs)
+             860 LOAD_FAST            (num_loops)
+             862 COMPARE_OP           (>=)
+             864 EXTENDED_ARG         (256)
+             866 POP_JUMP_IF_FALSE    (to 894)
+
+231:         868 LOAD_GLOBAL          (print)
+             870 LOAD_CONST           ("Finished requested ")
+             872 LOAD_FAST            (completed_runs)
+             874 FORMAT_VALUE         0
+             876 LOAD_CONST           (" run(s) for ")
+             878 LOAD_FAST            (minigame)
+             880 LOAD_ATTR            (label)
+             882 FORMAT_VALUE         0
+             884 BUILD_STRING         4
+             886 CALL_FUNCTION        (1 positional argument)
+             888 POP_TOP
+
+232:         890 LOAD_CONST           (None)
+             892 RETURN_VALUE
+
+234:     >>  894 LOAD_FAST            (self)
+             896 LOAD_METHOD          (_wait_with_stop_check)
+             898 LOAD_GLOBAL          (MINIGAME_BETWEEN_RUNS_SECONDS)
+             900 CALL_METHOD          (1 positional argument)
+             902 EXTENDED_ARG         (256)
+             904 POP_JUMP_IF_TRUE     (to 910)
+
+235:         906 LOAD_CONST           (None)
+             908 RETURN_VALUE
+
+140:     >>  910 LOAD_FAST            (self)
+             912 LOAD_METHOD          (_check_stop_event)
+             914 CALL_METHOD          (0 positional arguments)
+             916 POP_JUMP_IF_FALSE    (to 72)
+             918 LOAD_CONST           (None)
+             920 RETURN_VALUE
+         >>  922 LOAD_CONST           (None)
+             924 RETURN_VALUE
+
+
+# Method Name:       <listcomp>
+# Filename:          minigames.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        4
+# Flags:             0x00000053 (NOFREE | NESTED | NEWLOCALS | OPTIMIZED)
+# First Line:        122
+# Names:
+#    0: str
+# Varnames:
+#	.0, item
+# Positional arguments:
+#	.0
+# Local variables:
+#    1: item
+122:           0 BUILD_LIST           0
+               2 LOAD_FAST            (.0)
+         >>    4 FOR_ITER             (to 18)
+               6 STORE_FAST           (item)
+               8 LOAD_GLOBAL          (str)
+              10 LOAD_FAST            (item)
+              12 CALL_FUNCTION        (1 positional argument)
+              14 LIST_APPEND          2
+              16 JUMP_ABSOLUTE        (to 4)
+         >>   18 RETURN_VALUE
+

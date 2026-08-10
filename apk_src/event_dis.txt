@@ -1,0 +1,1898 @@
+﻿# pydisasm version 6.1.8
+# Python bytecode 3.10 (3439)
+# Disassembled from Python 3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]
+# Timestamp in code: 1780820770 (2026-06-07 15:26:10)
+# Source code size mod 2**32: 49664 bytes
+# Method Name:       <module>
+# Filename:          event.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        6
+# Flags:             0x00000040 (NOFREE)
+# First Line:        1
+# Constants:
+#    0: 1
+#    1: ('send_amf_request', 'flatten_json', 'get_data_by_id', 'StatManager', 'CUCSG', 'save_fight_data', 'open_json_to_dict')
+#    2: ('config',)
+#    3: 0
+#    4: None
+#    5: ('Optional', 'Dict', 'Tuple')
+#    6: ('dataclass',)
+#    7: <Code310 code object EventConfig at 0x18606b76360, file event.py>, line 21
+#    8: 'EventConfig'
+#    9: <Code310 code object EventBattleSystem at 0x18609313260, file event.py>, line 94
+#   10: 'EventBattleSystem'
+#   11: 'num_loops'
+#   12: <Code310 code object fight_cd_event at 0x18609313380, file event.py>, line 1078
+#   13: 'fight_cd_event'
+#   14: <Code310 code object fight_aniv_event at 0x186093133b0, file event.py>, line 1083
+#   15: 'fight_aniv_event'
+#   16: 'enemy_id'
+#   17: <Code310 code object fight_pumpkin_event at 0x18609313440, file event.py>, line 1088
+#   18: 'fight_pumpkin_event'
+#   19: <Code310 code object fight_yinyang_event at 0x18609313410, file event.py>, line 1093
+#   20: 'fight_yinyang_event'
+#   21: <Code310 code object fight_gi_event at 0x186093134d0, file event.py>, line 1098
+#   22: 'fight_gi_event'
+#   23: <Code310 code object fight_snow_event at 0x186093134a0, file event.py>, line 1102
+#   24: 'fight_snow_event'
+#   25: <Code310 code object fight_thanks_event at 0x18609313530, file event.py>, line 1106
+#   26: 'fight_thanks_event'
+#   27: <Code310 code object fight_sakura_event at 0x18609313590, file event.py>, line 1110
+#   28: 'fight_sakura_event'
+#   29: <Code310 code object fight_easter_event at 0x186093135f0, file event.py>, line 1114
+#   30: 'fight_easter_event'
+#   31: <Code310 code object fight_worldcup_event at 0x18609313650, file event.py>, line 1118
+#   32: 'fight_worldcup_event'
+#   33: <Code310 code object fight_aniv_special_mission at 0x18609313740, file event.py>, line 1122
+#   34: 'fight_aniv_special_mission'
+#   35: <Code310 code object fight_phantom_event at 0x18609313800, file event.py>, line 1137
+#   36: 'fight_phantom_event'
+#   37: (None,)
+#   38: (None, None)
+# Names:
+#    0: utils
+#    1: send_amf_request
+#    2: flatten_json
+#    3: get_data_by_id
+#    4: StatManager
+#    5: CUCSG
+#    6: save_fight_data
+#    7: open_json_to_dict
+#    8: 
+#    9: config
+#   10: time
+#   11: sys
+#   12: re
+#   13: typing
+#   14: Optional
+#   15: Dict
+#   16: Tuple
+#   17: dataclasses
+#   18: dataclass
+#   19: random
+#   20: BATTLE_HASH
+#   21: EventConfig
+#   22: EventBattleSystem
+#   23: int
+#   24: fight_cd_event
+#   25: fight_aniv_event
+#   26: str
+#   27: fight_pumpkin_event
+#   28: fight_yinyang_event
+#   29: fight_gi_event
+#   30: fight_snow_event
+#   31: fight_thanks_event
+#   32: fight_sakura_event
+#   33: fight_easter_event
+#   34: fight_worldcup_event
+#   35: fight_aniv_special_mission
+#   36: fight_phantom_event
+  1:           0 LOAD_CONST           (1)
+               2 LOAD_CONST           (('send_amf_request', 'flatten_json', 'get_data_by_id', 'StatManager', 'CUCSG', 'save_fight_data', 'open_json_to_dict'))
+               4 IMPORT_NAME          (utils)
+               6 IMPORT_FROM          (send_amf_request)
+               8 STORE_NAME           (send_amf_request)
+              10 IMPORT_FROM          (flatten_json)
+              12 STORE_NAME           (flatten_json)
+              14 IMPORT_FROM          (get_data_by_id)
+              16 STORE_NAME           (get_data_by_id)
+              18 IMPORT_FROM          (StatManager)
+              20 STORE_NAME           (StatManager)
+              22 IMPORT_FROM          (CUCSG)
+              24 STORE_NAME           (CUCSG)
+              26 IMPORT_FROM          (save_fight_data)
+              28 STORE_NAME           (save_fight_data)
+              30 IMPORT_FROM          (open_json_to_dict)
+              32 STORE_NAME           (open_json_to_dict)
+              34 POP_TOP
+
+ 10:          36 LOAD_CONST           (1)
+              38 LOAD_CONST           (('config',))
+              40 IMPORT_NAME          8
+              42 IMPORT_FROM          (config)
+              44 STORE_NAME           (config)
+              46 POP_TOP
+
+ 11:          48 LOAD_CONST           (0)
+              50 LOAD_CONST           (None)
+              52 IMPORT_NAME          (time)
+              54 STORE_NAME           (time)
+
+ 12:          56 LOAD_CONST           (0)
+              58 LOAD_CONST           (None)
+              60 IMPORT_NAME          (sys)
+              62 STORE_NAME           (sys)
+
+ 13:          64 LOAD_CONST           (0)
+              66 LOAD_CONST           (None)
+              68 IMPORT_NAME          (re)
+              70 STORE_NAME           (re)
+
+ 14:          72 LOAD_CONST           (0)
+              74 LOAD_CONST           (('Optional', 'Dict', 'Tuple'))
+              76 IMPORT_NAME          (typing)
+              78 IMPORT_FROM          (Optional)
+              80 STORE_NAME           (Optional)
+              82 IMPORT_FROM          (Dict)
+              84 STORE_NAME           (Dict)
+              86 IMPORT_FROM          (Tuple)
+              88 STORE_NAME           (Tuple)
+              90 POP_TOP
+
+ 15:          92 LOAD_CONST           (0)
+              94 LOAD_CONST           (('dataclass',))
+              96 IMPORT_NAME          (dataclasses)
+              98 IMPORT_FROM          (dataclass)
+             100 STORE_NAME           (dataclass)
+             102 POP_TOP
+
+ 16:         104 LOAD_CONST           (0)
+             106 LOAD_CONST           (None)
+             108 IMPORT_NAME          (random)
+             110 STORE_NAME           (random)
+
+ 18:         112 LOAD_NAME            (config)
+             114 LOAD_ATTR            (BATTLE_HASH)
+             116 STORE_NAME           (BATTLE_HASH)
+
+ 21:         118 LOAD_NAME            (dataclass)
+
+ 22:         120 LOAD_BUILD_CLASS
+             122 LOAD_CONST           (<Code310 code object EventConfig at 0x18606b76360, file event.py>, line 21)
+             124 LOAD_CONST           ("EventConfig")
+             126 MAKE_FUNCTION        (No arguments)
+             128 LOAD_CONST           ("EventConfig")
+             130 CALL_FUNCTION        (2 positional arguments)
+             132 CALL_FUNCTION        (1 positional argument)
+             134 STORE_NAME           (EventConfig)
+
+ 94:         136 LOAD_BUILD_CLASS
+             138 LOAD_CONST           (<Code310 code object EventBattleSystem at 0x18609313260, file event.py>, line 94)
+             140 LOAD_CONST           ("EventBattleSystem")
+             142 MAKE_FUNCTION        (No arguments)
+             144 LOAD_CONST           ("EventBattleSystem")
+             146 CALL_FUNCTION        (2 positional arguments)
+             148 STORE_NAME           (EventBattleSystem)
+
+1078:         150 LOAD_CONST           ((None,))
+             152 LOAD_CONST           ("num_loops")
+             154 LOAD_NAME            (Optional)
+             156 LOAD_NAME            (int)
+             158 BINARY_SUBSCR
+             160 BUILD_TUPLE          2
+             162 LOAD_CONST           (<Code310 code object fight_cd_event at 0x18609313380, file event.py>, line 1078)
+             164 LOAD_CONST           ("fight_cd_event")
+             166 MAKE_FUNCTION        (default, annotation)
+             168 STORE_NAME           (fight_cd_event)
+
+1083:         170 LOAD_CONST           ((None,))
+             172 LOAD_CONST           ("num_loops")
+             174 LOAD_NAME            (Optional)
+             176 LOAD_NAME            (int)
+             178 BINARY_SUBSCR
+             180 BUILD_TUPLE          2
+             182 LOAD_CONST           (<Code310 code object fight_aniv_event at 0x186093133b0, file event.py>, line 1083)
+             184 LOAD_CONST           ("fight_aniv_event")
+             186 MAKE_FUNCTION        (default, annotation)
+             188 STORE_NAME           (fight_aniv_event)
+
+1088:         190 LOAD_CONST           ((None, None))
+             192 LOAD_CONST           ("enemy_id")
+             194 LOAD_NAME            (Optional)
+             196 LOAD_NAME            (str)
+             198 BINARY_SUBSCR
+             200 LOAD_CONST           ("num_loops")
+             202 LOAD_NAME            (Optional)
+             204 LOAD_NAME            (int)
+             206 BINARY_SUBSCR
+             208 BUILD_TUPLE          4
+             210 LOAD_CONST           (<Code310 code object fight_pumpkin_event at 0x18609313440, file event.py>, line 1088)
+             212 LOAD_CONST           ("fight_pumpkin_event")
+             214 MAKE_FUNCTION        (default, annotation)
+             216 STORE_NAME           (fight_pumpkin_event)
+
+1093:         218 LOAD_CONST           ((None, None))
+             220 LOAD_CONST           ("enemy_id")
+             222 LOAD_NAME            (Optional)
+             224 LOAD_NAME            (str)
+             226 BINARY_SUBSCR
+             228 LOAD_CONST           ("num_loops")
+             230 LOAD_NAME            (Optional)
+             232 LOAD_NAME            (int)
+             234 BINARY_SUBSCR
+             236 BUILD_TUPLE          4
+             238 LOAD_CONST           (<Code310 code object fight_yinyang_event at 0x18609313410, file event.py>, line 1093)
+             240 LOAD_CONST           ("fight_yinyang_event")
+             242 MAKE_FUNCTION        (default, annotation)
+             244 STORE_NAME           (fight_yinyang_event)
+
+1098:         246 LOAD_CONST           ((None, None))
+             248 LOAD_CONST           ("enemy_id")
+             250 LOAD_NAME            (Optional)
+             252 LOAD_NAME            (str)
+             254 BINARY_SUBSCR
+             256 LOAD_CONST           ("num_loops")
+             258 LOAD_NAME            (Optional)
+             260 LOAD_NAME            (int)
+             262 BINARY_SUBSCR
+             264 BUILD_TUPLE          4
+             266 LOAD_CONST           (<Code310 code object fight_gi_event at 0x186093134d0, file event.py>, line 1098)
+             268 LOAD_CONST           ("fight_gi_event")
+             270 MAKE_FUNCTION        (default, annotation)
+             272 STORE_NAME           (fight_gi_event)
+
+1102:         274 LOAD_CONST           ((None, None))
+             276 LOAD_CONST           ("enemy_id")
+             278 LOAD_NAME            (Optional)
+             280 LOAD_NAME            (str)
+             282 BINARY_SUBSCR
+             284 LOAD_CONST           ("num_loops")
+             286 LOAD_NAME            (Optional)
+             288 LOAD_NAME            (int)
+             290 BINARY_SUBSCR
+             292 BUILD_TUPLE          4
+             294 LOAD_CONST           (<Code310 code object fight_snow_event at 0x186093134a0, file event.py>, line 1102)
+             296 LOAD_CONST           ("fight_snow_event")
+             298 MAKE_FUNCTION        (default, annotation)
+             300 STORE_NAME           (fight_snow_event)
+
+1106:         302 LOAD_CONST           ((None, None))
+             304 LOAD_CONST           ("enemy_id")
+             306 LOAD_NAME            (Optional)
+             308 LOAD_NAME            (str)
+             310 BINARY_SUBSCR
+             312 LOAD_CONST           ("num_loops")
+             314 LOAD_NAME            (Optional)
+             316 LOAD_NAME            (int)
+             318 BINARY_SUBSCR
+             320 BUILD_TUPLE          4
+             322 LOAD_CONST           (<Code310 code object fight_thanks_event at 0x18609313530, file event.py>, line 1106)
+             324 LOAD_CONST           ("fight_thanks_event")
+             326 MAKE_FUNCTION        (default, annotation)
+             328 STORE_NAME           (fight_thanks_event)
+
+1110:         330 LOAD_CONST           ((None,))
+             332 LOAD_CONST           ("num_loops")
+             334 LOAD_NAME            (Optional)
+             336 LOAD_NAME            (int)
+             338 BINARY_SUBSCR
+             340 BUILD_TUPLE          2
+             342 LOAD_CONST           (<Code310 code object fight_sakura_event at 0x18609313590, file event.py>, line 1110)
+             344 LOAD_CONST           ("fight_sakura_event")
+             346 MAKE_FUNCTION        (default, annotation)
+             348 STORE_NAME           (fight_sakura_event)
+
+1114:         350 LOAD_CONST           ((None, None))
+             352 LOAD_CONST           ("enemy_id")
+             354 LOAD_NAME            (Optional)
+             356 LOAD_NAME            (str)
+             358 BINARY_SUBSCR
+             360 LOAD_CONST           ("num_loops")
+             362 LOAD_NAME            (Optional)
+             364 LOAD_NAME            (int)
+             366 BINARY_SUBSCR
+             368 BUILD_TUPLE          4
+             370 LOAD_CONST           (<Code310 code object fight_easter_event at 0x186093135f0, file event.py>, line 1114)
+             372 LOAD_CONST           ("fight_easter_event")
+             374 MAKE_FUNCTION        (default, annotation)
+             376 STORE_NAME           (fight_easter_event)
+
+1118:         378 LOAD_CONST           ((None, None))
+             380 LOAD_CONST           ("enemy_id")
+             382 LOAD_NAME            (Optional)
+             384 LOAD_NAME            (str)
+             386 BINARY_SUBSCR
+             388 LOAD_CONST           ("num_loops")
+             390 LOAD_NAME            (Optional)
+             392 LOAD_NAME            (int)
+             394 BINARY_SUBSCR
+             396 BUILD_TUPLE          4
+             398 LOAD_CONST           (<Code310 code object fight_worldcup_event at 0x18609313650, file event.py>, line 1118)
+             400 LOAD_CONST           ("fight_worldcup_event")
+             402 MAKE_FUNCTION        (default, annotation)
+             404 STORE_NAME           (fight_worldcup_event)
+
+1122:         406 LOAD_CONST           ((None,))
+             408 LOAD_CONST           ("num_loops")
+             410 LOAD_NAME            (Optional)
+             412 LOAD_NAME            (int)
+             414 BINARY_SUBSCR
+             416 BUILD_TUPLE          2
+             418 LOAD_CONST           (<Code310 code object fight_aniv_special_mission at 0x18609313740, file event.py>, line 1122)
+             420 LOAD_CONST           ("fight_aniv_special_mission")
+             422 MAKE_FUNCTION        (default, annotation)
+             424 STORE_NAME           (fight_aniv_special_mission)
+
+1137:         426 LOAD_CONST           ((None,))
+             428 LOAD_CONST           ("num_loops")
+             430 LOAD_NAME            (Optional)
+             432 LOAD_NAME            (int)
+             434 BINARY_SUBSCR
+             436 BUILD_TUPLE          2
+             438 LOAD_CONST           (<Code310 code object fight_phantom_event at 0x18609313800, file event.py>, line 1137)
+             440 LOAD_CONST           ("fight_phantom_event")
+             442 MAKE_FUNCTION        (default, annotation)
+             444 STORE_NAME           (fight_phantom_event)
+             446 LOAD_CONST           (None)
+             448 RETURN_VALUE
+
+
+# Method Name:       EventConfig
+# Filename:          event.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        5
+# Flags:             0x00000040 (NOFREE)
+# First Line:        21
+# Constants:
+#    0: 'EventConfig'
+#    1: 'Configuration for event battle systems.'
+#    2: 'name'
+#    3: 'api_class'
+#    4: 'enemy_choices'
+#    5: False
+#    6: 'is_fixed_boss'
+#    7: None
+#    8: 'boss_id'
+#    9: 'boss_hp'
+#   10: 'boss_agility'
+#   11: 'is_random_enemy'
+#   12: 0
+#   13: 'delay_between_calls'
+#   14: 'finish_damage'
+#   15: 'return'
+#   16: <Code310 code object get_battle_data_method at 0x1860921cf50, file event.py>, line 35
+#   17: 'EventConfig.get_battle_data_method'
+#   18: <Code310 code object get_start_battle_method at 0x18609310f50, file event.py>, line 42
+#   19: 'EventConfig.get_start_battle_method'
+#   20: <Code310 code object get_finish_battle_method at 0x18609310fb0, file event.py>, line 47
+#   21: 'EventConfig.get_finish_battle_method'
+#   22: 'battle_data'
+#   23: <Code310 code object get_enemy_from_battle_data at 0x186093110d0, file event.py>, line 52
+#   24: 'EventConfig.get_enemy_from_battle_data'
+# Names:
+#    0: __name__
+#    1: __module__
+#    2: __qualname__
+#    3: __doc__
+#    4: str
+#    5: __annotations__
+#    6: Dict
+#    7: Tuple
+#    8: is_fixed_boss
+#    9: bool
+#   10: boss_id
+#   11: Optional
+#   12: boss_hp
+#   13: int
+#   14: boss_agility
+#   15: is_random_enemy
+#   16: delay_between_calls
+#   17: finish_damage
+#   18: get_battle_data_method
+#   19: get_start_battle_method
+#   20: get_finish_battle_method
+#   21: dict
+#   22: get_enemy_from_battle_data
+ 21:           0 LOAD_NAME            (__name__)
+               2 STORE_NAME           (__module__)
+               4 LOAD_CONST           ("EventConfig")
+               6 STORE_NAME           (__qualname__)
+               8 SETUP_ANNOTATIONS
+
+ 23:          10 LOAD_CONST           ("Configuration for event battle systems.")
+              12 STORE_NAME           (__doc__)
+
+ 24:          14 LOAD_NAME            (str)
+              16 LOAD_NAME            (__annotations__)
+              18 LOAD_CONST           ("name")
+              20 STORE_SUBSCR
+
+ 25:          22 LOAD_NAME            (str)
+              24 LOAD_NAME            (__annotations__)
+              26 LOAD_CONST           ("api_class")
+              28 STORE_SUBSCR
+
+ 26:          30 LOAD_NAME            (Dict)
+              32 LOAD_NAME            (str)
+              34 LOAD_NAME            (Tuple)
+              36 LOAD_NAME            (str)
+              38 LOAD_NAME            (str)
+              40 BUILD_TUPLE          2
+              42 BINARY_SUBSCR
+              44 BUILD_TUPLE          2
+              46 BINARY_SUBSCR
+              48 LOAD_NAME            (__annotations__)
+              50 LOAD_CONST           ("enemy_choices")
+              52 STORE_SUBSCR
+
+ 27:          54 LOAD_CONST           (False)
+              56 STORE_NAME           (is_fixed_boss)
+              58 LOAD_NAME            (bool)
+              60 LOAD_NAME            (__annotations__)
+              62 LOAD_CONST           ("is_fixed_boss")
+              64 STORE_SUBSCR
+
+ 28:          66 LOAD_CONST           (None)
+              68 STORE_NAME           (boss_id)
+              70 LOAD_NAME            (Optional)
+              72 LOAD_NAME            (str)
+              74 BINARY_SUBSCR
+              76 LOAD_NAME            (__annotations__)
+              78 LOAD_CONST           ("boss_id")
+              80 STORE_SUBSCR
+
+ 29:          82 LOAD_CONST           (None)
+              84 STORE_NAME           (boss_hp)
+              86 LOAD_NAME            (Optional)
+              88 LOAD_NAME            (int)
+              90 BINARY_SUBSCR
+              92 LOAD_NAME            (__annotations__)
+              94 LOAD_CONST           ("boss_hp")
+              96 STORE_SUBSCR
+
+ 30:          98 LOAD_CONST           (None)
+             100 STORE_NAME           (boss_agility)
+             102 LOAD_NAME            (Optional)
+             104 LOAD_NAME            (int)
+             106 BINARY_SUBSCR
+             108 LOAD_NAME            (__annotations__)
+             110 LOAD_CONST           ("boss_agility")
+             112 STORE_SUBSCR
+
+ 31:         114 LOAD_CONST           (False)
+             116 STORE_NAME           (is_random_enemy)
+             118 LOAD_NAME            (bool)
+             120 LOAD_NAME            (__annotations__)
+             122 LOAD_CONST           ("is_random_enemy")
+             124 STORE_SUBSCR
+
+ 32:         126 LOAD_CONST           (0)
+             128 STORE_NAME           (delay_between_calls)
+             130 LOAD_NAME            (int)
+             132 LOAD_NAME            (__annotations__)
+             134 LOAD_CONST           ("delay_between_calls")
+             136 STORE_SUBSCR
+
+ 33:         138 LOAD_CONST           (0)
+             140 STORE_NAME           (finish_damage)
+             142 LOAD_NAME            (int)
+             144 LOAD_NAME            (__annotations__)
+             146 LOAD_CONST           ("finish_damage")
+             148 STORE_SUBSCR
+
+ 35:         150 LOAD_CONST           ("return")
+             152 LOAD_NAME            (str)
+             154 BUILD_TUPLE          2
+             156 LOAD_CONST           (<Code310 code object get_battle_data_method at 0x1860921cf50, file event.py>, line 35)
+             158 LOAD_CONST           ("EventConfig.get_battle_data_method")
+             160 MAKE_FUNCTION        (annotation)
+             162 STORE_NAME           (get_battle_data_method)
+
+ 42:         164 LOAD_CONST           ("return")
+             166 LOAD_NAME            (str)
+             168 BUILD_TUPLE          2
+             170 LOAD_CONST           (<Code310 code object get_start_battle_method at 0x18609310f50, file event.py>, line 42)
+             172 LOAD_CONST           ("EventConfig.get_start_battle_method")
+             174 MAKE_FUNCTION        (annotation)
+             176 STORE_NAME           (get_start_battle_method)
+
+ 47:         178 LOAD_CONST           ("return")
+             180 LOAD_NAME            (str)
+             182 BUILD_TUPLE          2
+             184 LOAD_CONST           (<Code310 code object get_finish_battle_method at 0x18609310fb0, file event.py>, line 47)
+             186 LOAD_CONST           ("EventConfig.get_finish_battle_method")
+             188 MAKE_FUNCTION        (annotation)
+             190 STORE_NAME           (get_finish_battle_method)
+
+ 52:         192 LOAD_CONST           ("battle_data")
+             194 LOAD_NAME            (dict)
+             196 LOAD_CONST           ("return")
+             198 LOAD_NAME            (Optional)
+             200 LOAD_NAME            (str)
+             202 BINARY_SUBSCR
+             204 BUILD_TUPLE          4
+             206 LOAD_CONST           (<Code310 code object get_enemy_from_battle_data at 0x186093110d0, file event.py>, line 52)
+             208 LOAD_CONST           ("EventConfig.get_enemy_from_battle_data")
+             210 MAKE_FUNCTION        (annotation)
+             212 STORE_NAME           (get_enemy_from_battle_data)
+             214 LOAD_CONST           (None)
+             216 RETURN_VALUE
+
+
+# Method Name:       EventBattleSystem
+# Filename:          event.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        19
+# Flags:             0x00000040 (NOFREE)
+# First Line:        94
+# Constants:
+#    0: 'EventBattleSystem'
+#    1: 'Unified system for handling all event battles.'
+#    2: 'Phantom Kyunoki Event 2026'
+#    3: 'PhantomKyunokiEvent2026'
+#    4: '1'
+#    5: ('ene_258', 'Phantom Kyunoki')
+#    6: False
+#    7: 'ene_258'
+#    8: 74925
+#    9: 169
+#   10: 2
+#   11: ('name', 'api_class', 'enemy_choices', 'is_fixed_boss', 'is_random_enemy', 'boss_id', 'boss_hp', 'boss_agility', 'delay_between_calls')
+#   12: 'Christmas Event 2025'
+#   13: 'ChristmasEvent2025'
+#   14: ('ene_2117', 'Yuki Onna Warrior')
+#   15: ('ene_2118', 'Snow Spirit')
+#   16: ('ene_2119', 'Yuki Onna')
+#   17: ('1', '2', '3')
+#   18: ('name', 'api_class', 'enemy_choices', 'delay_between_calls')
+#   19: 'Thanks GivingEvent 2025'
+#   20: 'ThanksGivingEvent2025'
+#   21: ('ene_2113', 'Cornfield Bandit')
+#   22: ('ene_2114', 'Cranberry Mage')
+#   23: ('ene_2115', 'Grateful Farmer')
+#   24: ('ene_2116', 'Turkey Champ')
+#   25: ('1', '2', '3', '4')
+#   26: 'Sakura Bloom Event 2026'
+#   27: 'HanamiEvent2026'
+#   28: ('ene_2120', 'Sakura Duelist')
+#   29: ('ene_2121', 'Hanami Spirit')
+#   30: ('ene_2122', 'Withered')
+#   31: 200000
+#   32: ('name', 'api_class', 'enemy_choices', 'delay_between_calls', 'finish_damage')
+#   33: 'Easter Event 2026'
+#   34: 'EasterEvent2026'
+#   35: ('ene_2124', 'Berserk Hornbill')
+#   36: ('ene_2125', 'Panzer Bear')
+#   37: ('ene_2126', 'Crimson Thorn')
+#   38: ('ene_2127', 'Calamity Serpent')
+#   39: ('ene_2128', 'Crimson Demon')
+#   40: ('1', '2', '3', '4', '5')
+#   41: 'World Cup Event 2026'
+#   42: 'WorldCupEvent2026'
+#   43: ('ene_2129', 'Spirit Team Captain')
+#   44: ('ene_2130', 'Spirit Goalkeeper')
+#   45: ('1', '2')
+#   46: 'Confronting Death Event'
+#   47: 'ConfrontingDeathEvent2025'
+#   48: True
+#   49: 'ene_2112'
+#   50: 30000
+#   51: 150
+#   52: ('name', 'api_class', 'enemy_choices', 'is_fixed_boss', 'boss_id', 'boss_hp', 'boss_agility')
+#   53: 'Anniversary Event 2026'
+#   54: 'AnniversaryEvent2026'
+#   55: ('name', 'api_class', 'enemy_choices', 'is_fixed_boss', 'is_random_enemy', 'delay_between_calls')
+#   56: 'Pumpkin Event'
+#   57: 'HalloweenEvent2025'
+#   58: ('ene_2104', 'Pumpkin Minion')
+#   59: ('ene_2105', 'Skeleton Ninja')
+#   60: ('ene_2106', 'Zombie Samurai')
+#   61: ('ene_2103', 'Headless Pumpkin Horseman')
+#   62: ('ene_2102', 'Cursed Pumpkin King')
+#   63: 3
+#   64: 'Yin Yang Event'
+#   65: 'YinYangEvent'
+#   66: ('ene_2100', 'Yin Tiger')
+#   67: ('ene_2101', 'Yang Dragon')
+#   68: 'Independence Event'
+#   69: 'IndependenceEvent2025'
+#   70: ('ene_2095', 'Lembuswana')
+#   71: ('ene_2096', 'Besukih')
+#   72: ('ene_2097', 'Leak')
+#   73: ('ene_2098', 'Ahool')
+#   74: ('ene_2099', 'Sembrani')
+#   75: ('phantom', 'snow', 'thanks', 'sakura', 'easter', 'worldcup', 'cd', 'aniv', 'pumpkin', 'yinyang', 'independence')
+#   76: <Code310 code object __init__ at 0x186093118b0, file event.py>, line 219
+#   77: 'EventBattleSystem.__init__'
+#   78: <Code310 code object _check_stop_event at 0x186093119d0, file event.py>, line 222
+#   79: 'EventBattleSystem._check_stop_event'
+#   80: 'return'
+#   81: <Code310 code object _get_character_data at 0x18609311a90, file event.py>, line 230
+#   82: 'EventBattleSystem._get_character_data'
+#   83: 'result'
+#   84: 'initial_tokens'
+#   85: None
+#   86: <Code310 code object _check_hack_detection at 0x18609311c40, file event.py>, line 238
+#   87: 'EventBattleSystem._check_hack_detection'
+#   88: 'seconds'
+#   89: <Code310 code object _wait_with_stop_check at 0x18609311df0, file event.py>, line 245
+#   90: 'EventBattleSystem._wait_with_stop_check'
+#   91: ('delay',)
+#   92: 'event_config'
+#   93: 'method'
+#   94: 'parameters'
+#   95: 'delay'
+#   96: <Code310 code object _send_event_request at 0x18609311f40, file event.py>, line 253
+#   97: 'EventBattleSystem._send_event_request'
+#   98: <Code310 code object _response_message at 0x18609311fa0, file event.py>, line 267
+#   99: 'EventBattleSystem._response_message'
+#  100: 5
+#  101: 'message'
+#  102: 'default_seconds'
+#  103: <Code310 code object _extract_retry_delay at 0x186093121b0, file event.py>, line 288
+#  104: 'EventBattleSystem._extract_retry_delay'
+#  105: 'battle_data'
+#  106: <Code310 code object _prompt_enemy_selection at 0x186093123c0, file event.py>, line 303
+#  107: 'EventBattleSystem._prompt_enemy_selection'
+#  108: 'char_id'
+#  109: 'enemy_id'
+#  110: 'battle_code'
+#  111: 'damage'
+#  112: <Code310 code object _create_battle_hash at 0x186093125a0, file event.py>, line 324
+#  113: 'EventBattleSystem._create_battle_hash'
+#  114: 'char_data'
+#  115: 'session_key'
+#  116: 'enemy_data'
+#  117: <Code310 code object _execute_battle at 0x18609312630, file event.py>, line 330
+#  118: 'EventBattleSystem._execute_battle'
+#  119: <Code310 code object check_energy at 0x186093127b0, file event.py>, line 360
+#  120: 'EventBattleSystem.check_energy'
+#  121: <Code310 code object _buy_event_energy at 0x18609312990, file event.py>, line 394
+#  122: 'EventBattleSystem._buy_event_energy'
+#  123: 'event_type'
+#  124: <Code310 code object _event_resource_policy at 0x18609312b10, file event.py>, line 427
+#  125: 'EventBattleSystem._event_resource_policy'
+#  126: <Code310 code object _handle_empty_event_energy at 0x18609312cf0, file event.py>, line 441
+#  127: 'EventBattleSystem._handle_empty_event_energy'
+#  128: 'battle_number'
+#  129: <Code310 code object _get_random_enemy_with_retry at 0x18609312e40, file event.py>, line 457
+#  130: 'EventBattleSystem._get_random_enemy_with_retry'
+#  131: <Code310 code object _enemy_name_from_id at 0x18609312f00, file event.py>, line 504
+#  132: 'EventBattleSystem._enemy_name_from_id'
+#  133: <Code310 code object _is_hanami_boss_unlocked at 0x18609312fc0, file event.py>, line 511
+#  134: 'EventBattleSystem._is_hanami_boss_unlocked'
+#  135: 'unlocked_base_enemies'
+#  136: <Code310 code object _select_hanami_enemy at 0x186073c9130, file event.py>, line 520
+#  137: 'EventBattleSystem._select_hanami_enemy'
+#  138: 'num_loops'
+#  139: <Code310 code object fight_event at 0x18609312e10, file event.py>, line 529
+#  140: 'EventBattleSystem.fight_event'
+#  141: <Code310 code object start_special_mission at 0x18609311550, file event.py>, line 843
+#  142: 'EventBattleSystem.start_special_mission'
+#  143: 'battle_hash'
+#  144: <Code310 code object _finish_special_mission at 0x186093131d0, file event.py>, line 1045
+#  145: 'EventBattleSystem._finish_special_mission'
+#  146: (5,)
+#  147: (None,)
+#  148: (None, None)
+# Names:
+#    0: __name__
+#    1: __module__
+#    2: __qualname__
+#    3: __doc__
+#    4: EventConfig
+#    5: EVENT_CONFIGS
+#    6: __init__
+#    7: staticmethod
+#    8: _check_stop_event
+#    9: Tuple
+#   10: dict
+#   11: str
+#   12: _get_character_data
+#   13: int
+#   14: _check_hack_detection
+#   15: _wait_with_stop_check
+#   16: list
+#   17: Optional
+#   18: _send_event_request
+#   19: _response_message
+#   20: _extract_retry_delay
+#   21: _prompt_enemy_selection
+#   22: _create_battle_hash
+#   23: _execute_battle
+#   24: check_energy
+#   25: bool
+#   26: _buy_event_energy
+#   27: tuple
+#   28: _event_resource_policy
+#   29: _handle_empty_event_energy
+#   30: _get_random_enemy_with_retry
+#   31: _enemy_name_from_id
+#   32: _is_hanami_boss_unlocked
+#   33: set
+#   34: _select_hanami_enemy
+#   35: fight_event
+#   36: start_special_mission
+#   37: _finish_special_mission
+ 94:           0 LOAD_NAME            (__name__)
+               2 STORE_NAME           (__module__)
+               4 LOAD_CONST           ("EventBattleSystem")
+               6 STORE_NAME           (__qualname__)
+
+ 95:           8 LOAD_CONST           ("Unified system for handling all event battles.")
+              10 STORE_NAME           (__doc__)
+
+ 99:          12 LOAD_NAME            (EventConfig)
+
+100:          14 LOAD_CONST           ("Phantom Kyunoki Event 2026")
+
+101:          16 LOAD_CONST           ("PhantomKyunokiEvent2026")
+
+103:          18 LOAD_CONST           ("1")
+              20 LOAD_CONST           (('ene_258', 'Phantom Kyunoki'))
+
+102:          22 BUILD_MAP            1
+
+105:          24 LOAD_CONST           (False)
+
+106:          26 LOAD_CONST           (False)
+
+107:          28 LOAD_CONST           ("ene_258")
+
+108:          30 LOAD_CONST           (74925)
+
+109:          32 LOAD_CONST           (169)
+
+110:          34 LOAD_CONST           (2)
+
+ 99:          36 LOAD_CONST           (('name', 'api_class', 'enemy_choices', 'is_fixed_boss', 'is_random_enemy', 'boss_id', 'boss_hp', 'boss_agility', 'delay_between_calls'))
+              38 CALL_FUNCTION_KW     (9 total positional and keyword args)
+
+112:          40 LOAD_NAME            (EventConfig)
+
+113:          42 LOAD_CONST           ("Christmas Event 2025")
+
+114:          44 LOAD_CONST           ("ChristmasEvent2025")
+
+116:          46 LOAD_CONST           (('ene_2117', 'Yuki Onna Warrior'))
+
+117:          48 LOAD_CONST           (('ene_2118', 'Snow Spirit'))
+
+118:          50 LOAD_CONST           (('ene_2119', 'Yuki Onna'))
+
+115:          52 LOAD_CONST           (('1', '2', '3'))
+              54 BUILD_CONST_KEY_MAP  3
+
+120:          56 LOAD_CONST           (2)
+
+112:          58 LOAD_CONST           (('name', 'api_class', 'enemy_choices', 'delay_between_calls'))
+              60 CALL_FUNCTION_KW     (4 total positional and keyword args)
+
+122:          62 LOAD_NAME            (EventConfig)
+
+123:          64 LOAD_CONST           ("Thanks GivingEvent 2025")
+
+124:          66 LOAD_CONST           ("ThanksGivingEvent2025")
+
+126:          68 LOAD_CONST           (('ene_2113', 'Cornfield Bandit'))
+
+127:          70 LOAD_CONST           (('ene_2114', 'Cranberry Mage'))
+
+128:          72 LOAD_CONST           (('ene_2115', 'Grateful Farmer'))
+
+129:          74 LOAD_CONST           (('ene_2116', 'Turkey Champ'))
+
+125:          76 LOAD_CONST           (('1', '2', '3', '4'))
+              78 BUILD_CONST_KEY_MAP  4
+
+131:          80 LOAD_CONST           (2)
+
+122:          82 LOAD_CONST           (('name', 'api_class', 'enemy_choices', 'delay_between_calls'))
+              84 CALL_FUNCTION_KW     (4 total positional and keyword args)
+
+133:          86 LOAD_NAME            (EventConfig)
+
+134:          88 LOAD_CONST           ("Sakura Bloom Event 2026")
+
+135:          90 LOAD_CONST           ("HanamiEvent2026")
+
+137:          92 LOAD_CONST           (('ene_2120', 'Sakura Duelist'))
+
+138:          94 LOAD_CONST           (('ene_2121', 'Hanami Spirit'))
+
+139:          96 LOAD_CONST           (('ene_2122', 'Withered'))
+
+136:          98 LOAD_CONST           (('1', '2', '3'))
+             100 BUILD_CONST_KEY_MAP  3
+
+141:         102 LOAD_CONST           (2)
+
+142:         104 LOAD_CONST           (200000)
+
+133:         106 LOAD_CONST           (('name', 'api_class', 'enemy_choices', 'delay_between_calls', 'finish_damage'))
+             108 CALL_FUNCTION_KW     (5 total positional and keyword args)
+
+144:         110 LOAD_NAME            (EventConfig)
+
+145:         112 LOAD_CONST           ("Easter Event 2026")
+
+146:         114 LOAD_CONST           ("EasterEvent2026")
+
+148:         116 LOAD_CONST           (('ene_2124', 'Berserk Hornbill'))
+
+149:         118 LOAD_CONST           (('ene_2125', 'Panzer Bear'))
+
+150:         120 LOAD_CONST           (('ene_2126', 'Crimson Thorn'))
+
+151:         122 LOAD_CONST           (('ene_2127', 'Calamity Serpent'))
+
+152:         124 LOAD_CONST           (('ene_2128', 'Crimson Demon'))
+
+147:         126 LOAD_CONST           (('1', '2', '3', '4', '5'))
+             128 BUILD_CONST_KEY_MAP  5
+
+154:         130 LOAD_CONST           (2)
+
+155:         132 LOAD_CONST           (200000)
+
+144:         134 LOAD_CONST           (('name', 'api_class', 'enemy_choices', 'delay_between_calls', 'finish_damage'))
+             136 CALL_FUNCTION_KW     (5 total positional and keyword args)
+
+157:         138 LOAD_NAME            (EventConfig)
+
+158:         140 LOAD_CONST           ("World Cup Event 2026")
+
+159:         142 LOAD_CONST           ("WorldCupEvent2026")
+
+161:         144 LOAD_CONST           (('ene_2129', 'Spirit Team Captain'))
+
+162:         146 LOAD_CONST           (('ene_2130', 'Spirit Goalkeeper'))
+
+160:         148 LOAD_CONST           (('1', '2'))
+             150 BUILD_CONST_KEY_MAP  2
+
+164:         152 LOAD_CONST           (2)
+
+165:         154 LOAD_CONST           (200000)
+
+157:         156 LOAD_CONST           (('name', 'api_class', 'enemy_choices', 'delay_between_calls', 'finish_damage'))
+             158 CALL_FUNCTION_KW     (5 total positional and keyword args)
+
+167:         160 LOAD_NAME            (EventConfig)
+
+168:         162 LOAD_CONST           ("Confronting Death Event")
+
+169:         164 LOAD_CONST           ("ConfrontingDeathEvent2025")
+
+170:         166 BUILD_MAP            0
+
+171:         168 LOAD_CONST           (True)
+
+172:         170 LOAD_CONST           ("ene_2112")
+
+173:         172 LOAD_CONST           (30000)
+
+174:         174 LOAD_CONST           (150)
+
+167:         176 LOAD_CONST           (('name', 'api_class', 'enemy_choices', 'is_fixed_boss', 'boss_id', 'boss_hp', 'boss_agility'))
+             178 CALL_FUNCTION_KW     (7 total positional and keyword args)
+
+176:         180 LOAD_NAME            (EventConfig)
+
+177:         182 LOAD_CONST           ("Anniversary Event 2026")
+
+178:         184 LOAD_CONST           ("AnniversaryEvent2026")
+
+179:         186 BUILD_MAP            0
+
+180:         188 LOAD_CONST           (False)
+
+181:         190 LOAD_CONST           (True)
+
+182:         192 LOAD_CONST           (2)
+
+176:         194 LOAD_CONST           (('name', 'api_class', 'enemy_choices', 'is_fixed_boss', 'is_random_enemy', 'delay_between_calls'))
+             196 CALL_FUNCTION_KW     (6 total positional and keyword args)
+
+184:         198 LOAD_NAME            (EventConfig)
+
+185:         200 LOAD_CONST           ("Pumpkin Event")
+
+186:         202 LOAD_CONST           ("HalloweenEvent2025")
+
+188:         204 LOAD_CONST           (('ene_2104', 'Pumpkin Minion'))
+
+189:         206 LOAD_CONST           (('ene_2105', 'Skeleton Ninja'))
+
+190:         208 LOAD_CONST           (('ene_2106', 'Zombie Samurai'))
+
+191:         210 LOAD_CONST           (('ene_2103', 'Headless Pumpkin Horseman'))
+
+192:         212 LOAD_CONST           (('ene_2102', 'Cursed Pumpkin King'))
+
+187:         214 LOAD_CONST           (('1', '2', '3', '4', '5'))
+             216 BUILD_CONST_KEY_MAP  5
+
+194:         218 LOAD_CONST           (3)
+
+184:         220 LOAD_CONST           (('name', 'api_class', 'enemy_choices', 'delay_between_calls'))
+             222 CALL_FUNCTION_KW     (4 total positional and keyword args)
+
+196:         224 LOAD_NAME            (EventConfig)
+
+197:         226 LOAD_CONST           ("Yin Yang Event")
+
+198:         228 LOAD_CONST           ("YinYangEvent")
+
+200:         230 LOAD_CONST           (('ene_2100', 'Yin Tiger'))
+
+201:         232 LOAD_CONST           (('ene_2101', 'Yang Dragon'))
+
+199:         234 LOAD_CONST           (('1', '2'))
+             236 BUILD_CONST_KEY_MAP  2
+
+203:         238 LOAD_CONST           (3)
+
+196:         240 LOAD_CONST           (('name', 'api_class', 'enemy_choices', 'delay_between_calls'))
+             242 CALL_FUNCTION_KW     (4 total positional and keyword args)
+
+205:         244 LOAD_NAME            (EventConfig)
+
+206:         246 LOAD_CONST           ("Independence Event")
+
+207:         248 LOAD_CONST           ("IndependenceEvent2025")
+
+209:         250 LOAD_CONST           (('ene_2095', 'Lembuswana'))
+
+210:         252 LOAD_CONST           (('ene_2096', 'Besukih'))
+
+211:         254 LOAD_CONST           (('ene_2097', 'Leak'))
+
+212:         256 LOAD_CONST           (('ene_2098', 'Ahool'))
+
+213:         258 LOAD_CONST           (('ene_2099', 'Sembrani'))
+
+208:         260 LOAD_CONST           (('1', '2', '3', '4', '5'))
+             262 BUILD_CONST_KEY_MAP  5
+
+215:         264 LOAD_CONST           (3)
+
+205:         266 LOAD_CONST           (('name', 'api_class', 'enemy_choices', 'delay_between_calls'))
+             268 CALL_FUNCTION_KW     (4 total positional and keyword args)
+
+ 97:         270 LOAD_CONST           (('phantom', 'snow', 'thanks', 'sakura', 'easter', 'worldcup', 'cd', 'aniv', 'pumpkin', 'yinyang', 'independence'))
+             272 BUILD_CONST_KEY_MAP  11
+             274 STORE_NAME           (EVENT_CONFIGS)
+
+219:         276 LOAD_CONST           (<Code310 code object __init__ at 0x186093118b0, file event.py>, line 219)
+             278 LOAD_CONST           ("EventBattleSystem.__init__")
+             280 MAKE_FUNCTION        (No arguments)
+             282 STORE_NAME           (__init__)
+
+222:         284 LOAD_NAME            (staticmethod)
+
+223:         286 LOAD_CONST           (<Code310 code object _check_stop_event at 0x186093119d0, file event.py>, line 222)
+             288 LOAD_CONST           ("EventBattleSystem._check_stop_event")
+             290 MAKE_FUNCTION        (No arguments)
+             292 CALL_FUNCTION        (1 positional argument)
+             294 STORE_NAME           (_check_stop_event)
+
+230:         296 LOAD_NAME            (staticmethod)
+
+231:         298 LOAD_CONST           ("return")
+             300 LOAD_NAME            (Tuple)
+             302 LOAD_NAME            (dict)
+             304 LOAD_NAME            (str)
+             306 LOAD_NAME            (str)
+             308 BUILD_TUPLE          3
+             310 BINARY_SUBSCR
+             312 BUILD_TUPLE          2
+             314 LOAD_CONST           (<Code310 code object _get_character_data at 0x18609311a90, file event.py>, line 230)
+             316 LOAD_CONST           ("EventBattleSystem._get_character_data")
+             318 MAKE_FUNCTION        (annotation)
+             320 CALL_FUNCTION        (1 positional argument)
+             322 STORE_NAME           (_get_character_data)
+
+238:         324 LOAD_NAME            (staticmethod)
+
+239:         326 LOAD_CONST           ("result")
+             328 LOAD_NAME            (dict)
+             330 LOAD_CONST           ("initial_tokens")
+             332 LOAD_NAME            (int)
+             334 LOAD_CONST           ("return")
+             336 LOAD_CONST           (None)
+             338 BUILD_TUPLE          6
+             340 LOAD_CONST           (<Code310 code object _check_hack_detection at 0x18609311c40, file event.py>, line 238)
+             342 LOAD_CONST           ("EventBattleSystem._check_hack_detection")
+             344 MAKE_FUNCTION        (annotation)
+             346 CALL_FUNCTION        (1 positional argument)
+             348 STORE_NAME           (_check_hack_detection)
+
+245:         350 LOAD_CONST           ("seconds")
+             352 LOAD_NAME            (int)
+             354 BUILD_TUPLE          2
+             356 LOAD_CONST           (<Code310 code object _wait_with_stop_check at 0x18609311df0, file event.py>, line 245)
+             358 LOAD_CONST           ("EventBattleSystem._wait_with_stop_check")
+             360 MAKE_FUNCTION        (annotation)
+             362 STORE_NAME           (_wait_with_stop_check)
+
+259:         364 LOAD_CONST           (None)
+
+253:         366 LOAD_CONST           (('delay',))
+             368 BUILD_CONST_KEY_MAP  1
+             370 LOAD_CONST           ("event_config")
+
+255:         372 LOAD_NAME            (EventConfig)
+
+253:         374 LOAD_CONST           ("method")
+
+256:         376 LOAD_NAME            (str)
+
+253:         378 LOAD_CONST           ("parameters")
+
+257:         380 LOAD_NAME            (list)
+
+253:         382 LOAD_CONST           ("delay")
+
+259:         384 LOAD_NAME            (Optional)
+             386 LOAD_NAME            (int)
+             388 BINARY_SUBSCR
+
+253:         390 BUILD_TUPLE          8
+             392 LOAD_CONST           (<Code310 code object _send_event_request at 0x18609311f40, file event.py>, line 253)
+             394 LOAD_CONST           ("EventBattleSystem._send_event_request")
+             396 MAKE_FUNCTION        (keyword-only, annotation)
+             398 STORE_NAME           (_send_event_request)
+
+267:         400 LOAD_NAME            (staticmethod)
+
+268:         402 LOAD_CONST           ("return")
+             404 LOAD_NAME            (str)
+             406 BUILD_TUPLE          2
+             408 LOAD_CONST           (<Code310 code object _response_message at 0x18609311fa0, file event.py>, line 267)
+             410 LOAD_CONST           ("EventBattleSystem._response_message")
+             412 MAKE_FUNCTION        (annotation)
+             414 CALL_FUNCTION        (1 positional argument)
+             416 STORE_NAME           (_response_message)
+
+288:         418 LOAD_NAME            (staticmethod)
+
+289:         420 LOAD_CONST           ((5,))
+             422 LOAD_CONST           ("message")
+             424 LOAD_NAME            (str)
+             426 LOAD_CONST           ("default_seconds")
+             428 LOAD_NAME            (int)
+             430 LOAD_CONST           ("return")
+             432 LOAD_NAME            (int)
+             434 BUILD_TUPLE          6
+             436 LOAD_CONST           (<Code310 code object _extract_retry_delay at 0x186093121b0, file event.py>, line 288)
+             438 LOAD_CONST           ("EventBattleSystem._extract_retry_delay")
+             440 MAKE_FUNCTION        (default, annotation)
+             442 CALL_FUNCTION        (1 positional argument)
+             444 STORE_NAME           (_extract_retry_delay)
+
+303:         446 LOAD_CONST           ((None,))
+             448 LOAD_CONST           ("event_config")
+             450 LOAD_NAME            (EventConfig)
+             452 LOAD_CONST           ("battle_data")
+             454 LOAD_NAME            (dict)
+             456 LOAD_CONST           ("return")
+             458 LOAD_NAME            (str)
+             460 BUILD_TUPLE          6
+             462 LOAD_CONST           (<Code310 code object _prompt_enemy_selection at 0x186093123c0, file event.py>, line 303)
+             464 LOAD_CONST           ("EventBattleSystem._prompt_enemy_selection")
+             466 MAKE_FUNCTION        (default, annotation)
+             468 STORE_NAME           (_prompt_enemy_selection)
+
+324:         470 LOAD_CONST           ("char_id")
+             472 LOAD_NAME            (str)
+             474 LOAD_CONST           ("enemy_id")
+             476 LOAD_NAME            (str)
+             478 LOAD_CONST           ("battle_code")
+
+325:         480 LOAD_NAME            (str)
+
+324:         482 LOAD_CONST           ("damage")
+
+325:         484 LOAD_NAME            (int)
+
+324:         486 LOAD_CONST           ("return")
+
+325:         488 LOAD_NAME            (str)
+
+324:         490 BUILD_TUPLE          10
+             492 LOAD_CONST           (<Code310 code object _create_battle_hash at 0x186093125a0, file event.py>, line 324)
+             494 LOAD_CONST           ("EventBattleSystem._create_battle_hash")
+             496 MAKE_FUNCTION        (annotation)
+             498 STORE_NAME           (_create_battle_hash)
+
+330:         500 LOAD_CONST           ("char_data")
+             502 LOAD_NAME            (dict)
+             504 LOAD_CONST           ("char_id")
+             506 LOAD_NAME            (str)
+             508 LOAD_CONST           ("session_key")
+             510 LOAD_NAME            (str)
+             512 LOAD_CONST           ("enemy_id")
+
+331:         514 LOAD_NAME            (str)
+
+330:         516 LOAD_CONST           ("enemy_data")
+
+331:         518 LOAD_NAME            (dict)
+
+330:         520 LOAD_CONST           ("event_config")
+
+331:         522 LOAD_NAME            (EventConfig)
+
+330:         524 LOAD_CONST           ("return")
+
+331:         526 LOAD_NAME            (dict)
+
+330:         528 BUILD_TUPLE          14
+             530 LOAD_CONST           (<Code310 code object _execute_battle at 0x18609312630, file event.py>, line 330)
+             532 LOAD_CONST           ("EventBattleSystem._execute_battle")
+             534 MAKE_FUNCTION        (annotation)
+             536 STORE_NAME           (_execute_battle)
+
+360:         538 LOAD_CONST           (<Code310 code object check_energy at 0x186093127b0, file event.py>, line 360)
+             540 LOAD_CONST           ("EventBattleSystem.check_energy")
+             542 MAKE_FUNCTION        (No arguments)
+             544 STORE_NAME           (check_energy)
+
+394:         546 LOAD_CONST           ("event_config")
+             548 LOAD_NAME            (EventConfig)
+             550 LOAD_CONST           ("return")
+             552 LOAD_NAME            (bool)
+             554 BUILD_TUPLE          4
+             556 LOAD_CONST           (<Code310 code object _buy_event_energy at 0x18609312990, file event.py>, line 394)
+             558 LOAD_CONST           ("EventBattleSystem._buy_event_energy")
+             560 MAKE_FUNCTION        (annotation)
+             562 STORE_NAME           (_buy_event_energy)
+
+427:         564 LOAD_CONST           ("event_type")
+             566 LOAD_NAME            (str)
+             568 LOAD_CONST           ("return")
+             570 LOAD_NAME            (tuple)
+             572 LOAD_NAME            (str)
+             574 LOAD_NAME            (int)
+             576 BUILD_TUPLE          2
+             578 BINARY_SUBSCR
+             580 BUILD_TUPLE          4
+             582 LOAD_CONST           (<Code310 code object _event_resource_policy at 0x18609312b10, file event.py>, line 427)
+             584 LOAD_CONST           ("EventBattleSystem._event_resource_policy")
+             586 MAKE_FUNCTION        (annotation)
+             588 STORE_NAME           (_event_resource_policy)
+
+441:         590 LOAD_CONST           ("event_type")
+             592 LOAD_NAME            (str)
+             594 LOAD_CONST           ("event_config")
+             596 LOAD_NAME            (EventConfig)
+             598 LOAD_CONST           ("return")
+             600 LOAD_NAME            (bool)
+             602 BUILD_TUPLE          6
+             604 LOAD_CONST           (<Code310 code object _handle_empty_event_energy at 0x18609312cf0, file event.py>, line 441)
+             606 LOAD_CONST           ("EventBattleSystem._handle_empty_event_energy")
+             608 MAKE_FUNCTION        (annotation)
+             610 STORE_NAME           (_handle_empty_event_energy)
+
+457:         612 LOAD_CONST           ("event_config")
+             614 LOAD_NAME            (EventConfig)
+             616 LOAD_CONST           ("char_id")
+             618 LOAD_NAME            (str)
+             620 LOAD_CONST           ("session_key")
+
+458:         622 LOAD_NAME            (str)
+
+457:         624 LOAD_CONST           ("battle_number")
+
+458:         626 LOAD_NAME            (int)
+
+457:         628 LOAD_CONST           ("return")
+
+458:         630 LOAD_NAME            (Optional)
+             632 LOAD_NAME            (Tuple)
+             634 LOAD_NAME            (str)
+             636 LOAD_NAME            (dict)
+             638 BUILD_TUPLE          2
+             640 BINARY_SUBSCR
+             642 BINARY_SUBSCR
+
+457:         644 BUILD_TUPLE          10
+             646 LOAD_CONST           (<Code310 code object _get_random_enemy_with_retry at 0x18609312e40, file event.py>, line 457)
+             648 LOAD_CONST           ("EventBattleSystem._get_random_enemy_with_retry")
+             650 MAKE_FUNCTION        (annotation)
+             652 STORE_NAME           (_get_random_enemy_with_retry)
+
+504:         654 LOAD_CONST           (<Code310 code object _enemy_name_from_id at 0x18609312f00, file event.py>, line 504)
+             656 LOAD_CONST           ("EventBattleSystem._enemy_name_from_id")
+             658 MAKE_FUNCTION        (No arguments)
+             660 STORE_NAME           (_enemy_name_from_id)
+
+511:         662 LOAD_NAME            (staticmethod)
+
+512:         664 LOAD_CONST           ("battle_data")
+             666 LOAD_NAME            (dict)
+             668 LOAD_CONST           ("return")
+             670 LOAD_NAME            (bool)
+             672 BUILD_TUPLE          4
+             674 LOAD_CONST           (<Code310 code object _is_hanami_boss_unlocked at 0x18609312fc0, file event.py>, line 511)
+             676 LOAD_CONST           ("EventBattleSystem._is_hanami_boss_unlocked")
+             678 MAKE_FUNCTION        (annotation)
+             680 CALL_FUNCTION        (1 positional argument)
+             682 STORE_NAME           (_is_hanami_boss_unlocked)
+
+520:         684 LOAD_CONST           ("battle_data")
+             686 LOAD_NAME            (dict)
+             688 LOAD_CONST           ("unlocked_base_enemies")
+             690 LOAD_NAME            (set)
+             692 LOAD_NAME            (str)
+             694 BINARY_SUBSCR
+             696 LOAD_CONST           ("return")
+             698 LOAD_NAME            (str)
+             700 BUILD_TUPLE          6
+             702 LOAD_CONST           (<Code310 code object _select_hanami_enemy at 0x186073c9130, file event.py>, line 520)
+             704 LOAD_CONST           ("EventBattleSystem._select_hanami_enemy")
+             706 MAKE_FUNCTION        (annotation)
+             708 STORE_NAME           (_select_hanami_enemy)
+
+529:         710 NOP
+
+530:         712 NOP
+
+529:         714 LOAD_CONST           ((None, None))
+             716 LOAD_CONST           ("event_type")
+             718 LOAD_NAME            (str)
+             720 LOAD_CONST           ("enemy_id")
+             722 LOAD_NAME            (Optional)
+             724 LOAD_NAME            (str)
+             726 BINARY_SUBSCR
+             728 LOAD_CONST           ("num_loops")
+
+530:         730 LOAD_NAME            (Optional)
+             732 LOAD_NAME            (int)
+             734 BINARY_SUBSCR
+
+529:         736 LOAD_CONST           ("return")
+
+530:         738 LOAD_CONST           (None)
+
+529:         740 BUILD_TUPLE          8
+             742 LOAD_CONST           (<Code310 code object fight_event at 0x18609312e10, file event.py>, line 529)
+             744 LOAD_CONST           ("EventBattleSystem.fight_event")
+             746 MAKE_FUNCTION        (default, annotation)
+             748 STORE_NAME           (fight_event)
+
+843:         750 LOAD_CONST           ((None,))
+             752 LOAD_CONST           ("num_loops")
+             754 LOAD_NAME            (Optional)
+             756 LOAD_NAME            (int)
+             758 BINARY_SUBSCR
+             760 LOAD_CONST           ("return")
+             762 LOAD_CONST           (None)
+             764 BUILD_TUPLE          4
+             766 LOAD_CONST           (<Code310 code object start_special_mission at 0x18609311550, file event.py>, line 843)
+             768 LOAD_CONST           ("EventBattleSystem.start_special_mission")
+             770 MAKE_FUNCTION        (default, annotation)
+             772 STORE_NAME           (start_special_mission)
+
+1045:         774 LOAD_CONST           ("char_id")
+             776 LOAD_NAME            (str)
+             778 LOAD_CONST           ("enemy_id")
+             780 LOAD_NAME            (str)
+             782 LOAD_CONST           ("battle_code")
+
+1046:         784 LOAD_NAME            (str)
+
+1045:         786 LOAD_CONST           ("battle_hash")
+
+1046:         788 LOAD_NAME            (str)
+
+1045:         790 LOAD_CONST           ("session_key")
+
+1047:         792 LOAD_NAME            (str)
+
+1045:         794 LOAD_CONST           ("return")
+
+1047:         796 LOAD_NAME            (dict)
+
+1045:         798 BUILD_TUPLE          12
+             800 LOAD_CONST           (<Code310 code object _finish_special_mission at 0x186093131d0, file event.py>, line 1045)
+             802 LOAD_CONST           ("EventBattleSystem._finish_special_mission")
+             804 MAKE_FUNCTION        (annotation)
+             806 STORE_NAME           (_finish_special_mission)
+             808 LOAD_CONST           (None)
+             810 RETURN_VALUE
+
+
+# Method Name:       fight_cd_event
+# Filename:          event.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        1078
+# Constants:
+#    0: 'Fight Confronting Death Event.'
+#    1: 'cd'
+#    2: ('num_loops',)
+#    3: None
+# Names:
+#    0: EventBattleSystem
+#    1: fight_event
+# Varnames:
+#	num_loops, system
+# Positional arguments:
+#	num_loops
+# Local variables:
+#    1: system
+1080:           0 LOAD_GLOBAL          (EventBattleSystem)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (system)
+
+1081:           6 LOAD_FAST            (system)
+               8 LOAD_ATTR            (fight_event)
+              10 LOAD_CONST           ("cd")
+              12 LOAD_FAST            (num_loops)
+              14 LOAD_CONST           (('num_loops',))
+              16 CALL_FUNCTION_KW     (2 total positional and keyword args)
+              18 POP_TOP
+              20 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+
+# Method Name:       fight_aniv_event
+# Filename:          event.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        1083
+# Constants:
+#    0: 'Fight Aniv Event 2026.'
+#    1: 'aniv'
+#    2: ('num_loops',)
+#    3: None
+# Names:
+#    0: EventBattleSystem
+#    1: fight_event
+# Varnames:
+#	num_loops, system
+# Positional arguments:
+#	num_loops
+# Local variables:
+#    1: system
+1085:           0 LOAD_GLOBAL          (EventBattleSystem)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (system)
+
+1086:           6 LOAD_FAST            (system)
+               8 LOAD_ATTR            (fight_event)
+              10 LOAD_CONST           ("aniv")
+              12 LOAD_FAST            (num_loops)
+              14 LOAD_CONST           (('num_loops',))
+              16 CALL_FUNCTION_KW     (2 total positional and keyword args)
+              18 POP_TOP
+              20 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+
+# Method Name:       fight_pumpkin_event
+# Filename:          event.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        1088
+# Constants:
+#    0: 'Fight Pumpkin/Halloween Event.'
+#    1: 'pumpkin'
+#    2: None
+# Names:
+#    0: EventBattleSystem
+#    1: fight_event
+# Varnames:
+#	enemy_id, num_loops, system
+# Positional arguments:
+#	enemy_id, num_loops
+# Local variables:
+#    2: system
+1090:           0 LOAD_GLOBAL          (EventBattleSystem)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (system)
+
+1091:           6 LOAD_FAST            (system)
+               8 LOAD_METHOD          (fight_event)
+              10 LOAD_CONST           ("pumpkin")
+              12 LOAD_FAST            (enemy_id)
+              14 LOAD_FAST            (num_loops)
+              16 CALL_METHOD          (3 positional arguments)
+              18 POP_TOP
+              20 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+
+# Method Name:       fight_yinyang_event
+# Filename:          event.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        1093
+# Constants:
+#    0: 'Fight Yin Yang Event.'
+#    1: 'yinyang'
+#    2: None
+# Names:
+#    0: EventBattleSystem
+#    1: fight_event
+# Varnames:
+#	enemy_id, num_loops, system
+# Positional arguments:
+#	enemy_id, num_loops
+# Local variables:
+#    2: system
+1095:           0 LOAD_GLOBAL          (EventBattleSystem)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (system)
+
+1096:           6 LOAD_FAST            (system)
+               8 LOAD_METHOD          (fight_event)
+              10 LOAD_CONST           ("yinyang")
+              12 LOAD_FAST            (enemy_id)
+              14 LOAD_FAST            (num_loops)
+              16 CALL_METHOD          (3 positional arguments)
+              18 POP_TOP
+              20 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+
+# Method Name:       fight_gi_event
+# Filename:          event.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        1098
+# Constants:
+#    0: 'Fight Independence Event.'
+#    1: 'independence'
+#    2: None
+# Names:
+#    0: EventBattleSystem
+#    1: fight_event
+# Varnames:
+#	enemy_id, num_loops, system
+# Positional arguments:
+#	enemy_id, num_loops
+# Local variables:
+#    2: system
+1100:           0 LOAD_GLOBAL          (EventBattleSystem)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (system)
+
+1101:           6 LOAD_FAST            (system)
+               8 LOAD_METHOD          (fight_event)
+              10 LOAD_CONST           ("independence")
+              12 LOAD_FAST            (enemy_id)
+              14 LOAD_FAST            (num_loops)
+              16 CALL_METHOD          (3 positional arguments)
+              18 POP_TOP
+              20 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+
+# Method Name:       fight_snow_event
+# Filename:          event.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        1102
+# Constants:
+#    0: 'Fight Independence Event.'
+#    1: 'snow'
+#    2: None
+# Names:
+#    0: EventBattleSystem
+#    1: fight_event
+# Varnames:
+#	enemy_id, num_loops, system
+# Positional arguments:
+#	enemy_id, num_loops
+# Local variables:
+#    2: system
+1104:           0 LOAD_GLOBAL          (EventBattleSystem)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (system)
+
+1105:           6 LOAD_FAST            (system)
+               8 LOAD_METHOD          (fight_event)
+              10 LOAD_CONST           ("snow")
+              12 LOAD_FAST            (enemy_id)
+              14 LOAD_FAST            (num_loops)
+              16 CALL_METHOD          (3 positional arguments)
+              18 POP_TOP
+              20 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+
+# Method Name:       fight_thanks_event
+# Filename:          event.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        1106
+# Constants:
+#    0: 'Fight Independence Event.'
+#    1: 'thanks'
+#    2: None
+# Names:
+#    0: EventBattleSystem
+#    1: fight_event
+# Varnames:
+#	enemy_id, num_loops, system
+# Positional arguments:
+#	enemy_id, num_loops
+# Local variables:
+#    2: system
+1108:           0 LOAD_GLOBAL          (EventBattleSystem)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (system)
+
+1109:           6 LOAD_FAST            (system)
+               8 LOAD_METHOD          (fight_event)
+              10 LOAD_CONST           ("thanks")
+              12 LOAD_FAST            (enemy_id)
+              14 LOAD_FAST            (num_loops)
+              16 CALL_METHOD          (3 positional arguments)
+              18 POP_TOP
+              20 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+
+# Method Name:       fight_sakura_event
+# Filename:          event.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        1110
+# Constants:
+#    0: 'Fight Sakura Bloom Event 2026 with auto enemy selection.'
+#    1: 'sakura'
+#    2: ('num_loops',)
+#    3: None
+# Names:
+#    0: EventBattleSystem
+#    1: fight_event
+# Varnames:
+#	num_loops, system
+# Positional arguments:
+#	num_loops
+# Local variables:
+#    1: system
+1112:           0 LOAD_GLOBAL          (EventBattleSystem)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (system)
+
+1113:           6 LOAD_FAST            (system)
+               8 LOAD_ATTR            (fight_event)
+              10 LOAD_CONST           ("sakura")
+              12 LOAD_FAST            (num_loops)
+              14 LOAD_CONST           (('num_loops',))
+              16 CALL_FUNCTION_KW     (2 total positional and keyword args)
+              18 POP_TOP
+              20 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+
+# Method Name:       fight_easter_event
+# Filename:          event.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        1114
+# Constants:
+#    0: 'Fight Easter Event 2026.'
+#    1: 'easter'
+#    2: None
+# Names:
+#    0: EventBattleSystem
+#    1: fight_event
+# Varnames:
+#	enemy_id, num_loops, system
+# Positional arguments:
+#	enemy_id, num_loops
+# Local variables:
+#    2: system
+1116:           0 LOAD_GLOBAL          (EventBattleSystem)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (system)
+
+1117:           6 LOAD_FAST            (system)
+               8 LOAD_METHOD          (fight_event)
+              10 LOAD_CONST           ("easter")
+              12 LOAD_FAST            (enemy_id)
+              14 LOAD_FAST            (num_loops)
+              16 CALL_METHOD          (3 positional arguments)
+              18 POP_TOP
+              20 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+
+# Method Name:       fight_worldcup_event
+# Filename:          event.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        1118
+# Constants:
+#    0: 'Fight World Cup Event 2026.'
+#    1: 'worldcup'
+#    2: None
+# Names:
+#    0: EventBattleSystem
+#    1: fight_event
+# Varnames:
+#	enemy_id, num_loops, system
+# Positional arguments:
+#	enemy_id, num_loops
+# Local variables:
+#    2: system
+1120:           0 LOAD_GLOBAL          (EventBattleSystem)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (system)
+
+1121:           6 LOAD_FAST            (system)
+               8 LOAD_METHOD          (fight_event)
+              10 LOAD_CONST           ("worldcup")
+              12 LOAD_FAST            (enemy_id)
+              14 LOAD_FAST            (num_loops)
+              16 CALL_METHOD          (3 positional arguments)
+              18 POP_TOP
+              20 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+
+# Method Name:       fight_aniv_special_mission
+# Filename:          event.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        1122
+# Constants:
+#    0: '\n    Fight Aniv Event 2026 special mission (fixed boss ene_525, 2 times per day).\n    Does not use energy.\n    \n    Args:\n        num_loops: Number of battles to execute (max 2 per day, if None tries both)\n    \n    Example:\n        fight_aniv_special_mission()    # Uses both daily attempts\n        fight_aniv_special_mission(1)   # Uses 1 attempt\n        fight_aniv_special_mission(2)   # Uses both attempts\n    '
+#    1: None
+# Names:
+#    0: EventBattleSystem
+#    1: start_special_mission
+# Varnames:
+#	num_loops, system
+# Positional arguments:
+#	num_loops
+# Local variables:
+#    1: system
+1135:           0 LOAD_GLOBAL          (EventBattleSystem)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (system)
+
+1136:           6 LOAD_FAST            (system)
+               8 LOAD_METHOD          (start_special_mission)
+              10 LOAD_FAST            (num_loops)
+              12 CALL_METHOD          (1 positional argument)
+              14 POP_TOP
+              16 LOAD_CONST           (None)
+              18 RETURN_VALUE
+
+
+# Method Name:       fight_phantom_event
+# Filename:          event.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        1137
+# Constants:
+#    0: '\n    Fight Phantom Kyunoki Event 2026.\n    \n    Args:\n        num_loops: Number of battles to execute (if None, uses all available energy)\n    \n    Example:\n        fight_phantom_event()    # Uses all energy\n        fight_phantom_event(5)   # Fights 5 times\n    '
+#    1: 'phantom'
+#    2: ('num_loops',)
+#    3: None
+# Names:
+#    0: EventBattleSystem
+#    1: fight_event
+# Varnames:
+#	num_loops, system
+# Positional arguments:
+#	num_loops
+# Local variables:
+#    1: system
+1148:           0 LOAD_GLOBAL          (EventBattleSystem)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (system)
+
+1149:           6 LOAD_FAST            (system)
+               8 LOAD_ATTR            (fight_event)
+              10 LOAD_CONST           ("phantom")
+              12 LOAD_FAST            (num_loops)
+              14 LOAD_CONST           (('num_loops',))
+              16 CALL_FUNCTION_KW     (2 total positional and keyword args)
+              18 POP_TOP
+              20 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+
+# Method Name:       get_battle_data_method
+# Filename:          event.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        2
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        35
+# Constants:
+#    0: None
+#    1: 'WorldCupEvent2026'
+#    2: '.geteventdata'
+#    3: 'EasterEvent2026'
+#    4: '.getEventData'
+#    5: '.getBattleData'
+# Names:
+#    0: api_class
+# Varnames:
+#	self
+# Positional arguments:
+#	self
+ 36:           0 LOAD_FAST            (self)
+               2 LOAD_ATTR            (api_class)
+               4 LOAD_CONST           ("WorldCupEvent2026")
+               6 COMPARE_OP           (==)
+               8 POP_JUMP_IF_FALSE    (to 22)
+
+ 37:          10 LOAD_FAST            (self)
+              12 LOAD_ATTR            (api_class)
+              14 FORMAT_VALUE         0
+              16 LOAD_CONST           (".geteventdata")
+              18 BUILD_STRING         2
+              20 RETURN_VALUE
+
+ 38:     >>   22 LOAD_FAST            (self)
+              24 LOAD_ATTR            (api_class)
+              26 LOAD_CONST           ("EasterEvent2026")
+              28 COMPARE_OP           (==)
+              30 POP_JUMP_IF_FALSE    (to 44)
+
+ 39:          32 LOAD_FAST            (self)
+              34 LOAD_ATTR            (api_class)
+              36 FORMAT_VALUE         0
+              38 LOAD_CONST           (".getEventData")
+              40 BUILD_STRING         2
+              42 RETURN_VALUE
+
+ 40:     >>   44 LOAD_FAST            (self)
+              46 LOAD_ATTR            (api_class)
+              48 FORMAT_VALUE         0
+              50 LOAD_CONST           (".getBattleData")
+              52 BUILD_STRING         2
+              54 RETURN_VALUE
+
+
+# Method Name:       get_start_battle_method
+# Filename:          event.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        2
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        42
+# Constants:
+#    0: None
+#    1: 'WorldCupEvent2026'
+#    2: '.startbattle'
+#    3: '.startBattle'
+# Names:
+#    0: api_class
+# Varnames:
+#	self
+# Positional arguments:
+#	self
+ 43:           0 LOAD_FAST            (self)
+               2 LOAD_ATTR            (api_class)
+               4 LOAD_CONST           ("WorldCupEvent2026")
+               6 COMPARE_OP           (==)
+               8 POP_JUMP_IF_FALSE    (to 22)
+
+ 44:          10 LOAD_FAST            (self)
+              12 LOAD_ATTR            (api_class)
+              14 FORMAT_VALUE         0
+              16 LOAD_CONST           (".startbattle")
+              18 BUILD_STRING         2
+              20 RETURN_VALUE
+
+ 45:     >>   22 LOAD_FAST            (self)
+              24 LOAD_ATTR            (api_class)
+              26 FORMAT_VALUE         0
+              28 LOAD_CONST           (".startBattle")
+              30 BUILD_STRING         2
+              32 RETURN_VALUE
+
+
+# Method Name:       get_finish_battle_method
+# Filename:          event.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        2
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        47
+# Constants:
+#    0: None
+#    1: 'WorldCupEvent2026'
+#    2: '.finishbattle'
+#    3: '.finishBattle'
+# Names:
+#    0: api_class
+# Varnames:
+#	self
+# Positional arguments:
+#	self
+ 48:           0 LOAD_FAST            (self)
+               2 LOAD_ATTR            (api_class)
+               4 LOAD_CONST           ("WorldCupEvent2026")
+               6 COMPARE_OP           (==)
+               8 POP_JUMP_IF_FALSE    (to 22)
+
+ 49:          10 LOAD_FAST            (self)
+              12 LOAD_ATTR            (api_class)
+              14 FORMAT_VALUE         0
+              16 LOAD_CONST           (".finishbattle")
+              18 BUILD_STRING         2
+              20 RETURN_VALUE
+
+ 50:     >>   22 LOAD_FAST            (self)
+              24 LOAD_ATTR            (api_class)
+              26 FORMAT_VALUE         0
+              28 LOAD_CONST           (".finishBattle")
+              30 BUILD_STRING         2
+              32 RETURN_VALUE
+
+'charmap' codec can't encode characters in position 474-475: character maps to <undefined>

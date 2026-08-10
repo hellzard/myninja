@@ -1,0 +1,1611 @@
+﻿# pydisasm version 6.1.8
+# Python bytecode 3.10 (3439)
+# Disassembled from Python 3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]
+# Timestamp in code: 1780820770 (2026-06-07 15:26:10)
+# Source code size mod 2**32: 8581 bytes
+# Method Name:       <module>
+# Filename:          shadow_war.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        3
+# Flags:             0x00000040 (NOFREE)
+# First Line:        1
+# Constants:
+#    0: 1
+#    1: ('config',)
+#    2: 0
+#    3: None
+#    4: ('flatten_json', 'send_amf_request', 'CUCSG', 'save_fight_data')
+#    5: <Code310 code object ShadowWarEvent at 0x2646b121bb0, file shadow_war.py>, line 6
+#    6: 'ShadowWarEvent'
+#    7: <Code310 code object shadow_war_event at 0x2646b121cd0, file shadow_war.py>, line 212
+#    8: 'shadow_war_event'
+# Names:
+#    0: 
+#    1: config
+#    2: time
+#    3: utils
+#    4: flatten_json
+#    5: send_amf_request
+#    6: CUCSG
+#    7: save_fight_data
+#    8: ShadowWarEvent
+#    9: shadow_war_event
+  1:           0 LOAD_CONST           (1)
+               2 LOAD_CONST           (('config',))
+               4 IMPORT_NAME          0
+               6 IMPORT_FROM          (config)
+               8 STORE_NAME           (config)
+              10 POP_TOP
+
+  2:          12 LOAD_CONST           (0)
+              14 LOAD_CONST           (None)
+              16 IMPORT_NAME          (time)
+              18 STORE_NAME           (time)
+
+  3:          20 LOAD_CONST           (1)
+              22 LOAD_CONST           (('flatten_json', 'send_amf_request', 'CUCSG', 'save_fight_data'))
+              24 IMPORT_NAME          (utils)
+              26 IMPORT_FROM          (flatten_json)
+              28 STORE_NAME           (flatten_json)
+              30 IMPORT_FROM          (send_amf_request)
+              32 STORE_NAME           (send_amf_request)
+              34 IMPORT_FROM          (CUCSG)
+              36 STORE_NAME           (CUCSG)
+              38 IMPORT_FROM          (save_fight_data)
+              40 STORE_NAME           (save_fight_data)
+              42 POP_TOP
+
+  6:          44 LOAD_BUILD_CLASS
+              46 LOAD_CONST           (<Code310 code object ShadowWarEvent at 0x2646b121bb0, file shadow_war.py>, line 6)
+              48 LOAD_CONST           ("ShadowWarEvent")
+              50 MAKE_FUNCTION        (No arguments)
+              52 LOAD_CONST           ("ShadowWarEvent")
+              54 CALL_FUNCTION        (2 positional arguments)
+              56 STORE_NAME           (ShadowWarEvent)
+
+212:          58 LOAD_CONST           (<Code310 code object shadow_war_event at 0x2646b121cd0, file shadow_war.py>, line 212)
+              60 LOAD_CONST           ("shadow_war_event")
+              62 MAKE_FUNCTION        (No arguments)
+              64 STORE_NAME           (shadow_war_event)
+              66 LOAD_CONST           (None)
+              68 RETURN_VALUE
+
+
+# Method Name:       ShadowWarEvent
+# Filename:          shadow_war.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        4
+# Flags:             0x00000040 (NOFREE)
+# First Line:        6
+# Constants:
+#    0: 'ShadowWarEvent'
+#    1: <Code310 code object __init__ at 0x26469a4cf50, file shadow_war.py>, line 7
+#    2: 'ShadowWarEvent.__init__'
+#    3: <Code310 code object _check_stop_event at 0x2646b120f20, file shadow_war.py>, line 25
+#    4: 'ShadowWarEvent._check_stop_event'
+#    5: 'seconds'
+#    6: 'return'
+#    7: <Code310 code object _wait_with_stop_check at 0x2646b121130, file shadow_war.py>, line 32
+#    8: 'ShadowWarEvent._wait_with_stop_check'
+#    9: <Code310 code object _handle_empty_shadow_war_energy at 0x2646b121310, file shadow_war.py>, line 39
+#   10: 'ShadowWarEvent._handle_empty_shadow_war_energy'
+#   11: <Code310 code object _response_message at 0x264689a6360, file shadow_war.py>, line 59
+#   12: 'ShadowWarEvent._response_message'
+#   13: <Code310 code object get_event_status at 0x2646b121640, file shadow_war.py>, line 79
+#   14: 'ShadowWarEvent.get_event_status'
+#   15: <Code310 code object refill_energy at 0x2646b120ad0, file shadow_war.py>, line 83
+#   16: 'ShadowWarEvent.refill_energy'
+#   17: <Code310 code object get_available_battles at 0x2646b121190, file shadow_war.py>, line 94
+#   18: 'ShadowWarEvent.get_available_battles'
+#   19: <Code310 code object get_enemies at 0x2646b121610, file shadow_war.py>, line 107
+#   20: 'ShadowWarEvent.get_enemies'
+#   21: <Code310 code object start_battle at 0x2646b1217f0, file shadow_war.py>, line 111
+#   22: 'ShadowWarEvent.start_battle'
+#   23: <Code310 code object finish_battle at 0x2646b1218b0, file shadow_war.py>, line 116
+#   24: 'ShadowWarEvent.finish_battle'
+#   25: <Code310 code object process_battle at 0x264696ca930, file shadow_war.py>, line 122
+#   26: 'ShadowWarEvent.process_battle'
+#   27: <Code310 code object run at 0x2646b121a90, file shadow_war.py>, line 183
+#   28: 'ShadowWarEvent.run'
+#   29: None
+# Names:
+#    0: __name__
+#    1: __module__
+#    2: __qualname__
+#    3: __init__
+#    4: staticmethod
+#    5: _check_stop_event
+#    6: int
+#    7: bool
+#    8: _wait_with_stop_check
+#    9: _handle_empty_shadow_war_energy
+#   10: str
+#   11: _response_message
+#   12: get_event_status
+#   13: refill_energy
+#   14: get_available_battles
+#   15: get_enemies
+#   16: start_battle
+#   17: finish_battle
+#   18: process_battle
+#   19: run
+  6:           0 LOAD_NAME            (__name__)
+               2 STORE_NAME           (__module__)
+               4 LOAD_CONST           ("ShadowWarEvent")
+               6 STORE_NAME           (__qualname__)
+
+  7:           8 LOAD_CONST           (<Code310 code object __init__ at 0x26469a4cf50, file shadow_war.py>, line 7)
+              10 LOAD_CONST           ("ShadowWarEvent.__init__")
+              12 MAKE_FUNCTION        (No arguments)
+              14 STORE_NAME           (__init__)
+
+ 25:          16 LOAD_NAME            (staticmethod)
+
+ 26:          18 LOAD_CONST           (<Code310 code object _check_stop_event at 0x2646b120f20, file shadow_war.py>, line 25)
+              20 LOAD_CONST           ("ShadowWarEvent._check_stop_event")
+              22 MAKE_FUNCTION        (No arguments)
+              24 CALL_FUNCTION        (1 positional argument)
+              26 STORE_NAME           (_check_stop_event)
+
+ 32:          28 LOAD_CONST           ("seconds")
+              30 LOAD_NAME            (int)
+              32 LOAD_CONST           ("return")
+              34 LOAD_NAME            (bool)
+              36 BUILD_TUPLE          4
+              38 LOAD_CONST           (<Code310 code object _wait_with_stop_check at 0x2646b121130, file shadow_war.py>, line 32)
+              40 LOAD_CONST           ("ShadowWarEvent._wait_with_stop_check")
+              42 MAKE_FUNCTION        (annotation)
+              44 STORE_NAME           (_wait_with_stop_check)
+
+ 39:          46 LOAD_CONST           ("return")
+              48 LOAD_NAME            (bool)
+              50 BUILD_TUPLE          2
+              52 LOAD_CONST           (<Code310 code object _handle_empty_shadow_war_energy at 0x2646b121310, file shadow_war.py>, line 39)
+              54 LOAD_CONST           ("ShadowWarEvent._handle_empty_shadow_war_energy")
+              56 MAKE_FUNCTION        (annotation)
+              58 STORE_NAME           (_handle_empty_shadow_war_energy)
+
+ 59:          60 LOAD_NAME            (staticmethod)
+
+ 60:          62 LOAD_CONST           ("return")
+              64 LOAD_NAME            (str)
+              66 BUILD_TUPLE          2
+              68 LOAD_CONST           (<Code310 code object _response_message at 0x264689a6360, file shadow_war.py>, line 59)
+              70 LOAD_CONST           ("ShadowWarEvent._response_message")
+              72 MAKE_FUNCTION        (annotation)
+              74 CALL_FUNCTION        (1 positional argument)
+              76 STORE_NAME           (_response_message)
+
+ 79:          78 LOAD_CONST           (<Code310 code object get_event_status at 0x2646b121640, file shadow_war.py>, line 79)
+              80 LOAD_CONST           ("ShadowWarEvent.get_event_status")
+              82 MAKE_FUNCTION        (No arguments)
+              84 STORE_NAME           (get_event_status)
+
+ 83:          86 LOAD_CONST           ("return")
+              88 LOAD_NAME            (bool)
+              90 BUILD_TUPLE          2
+              92 LOAD_CONST           (<Code310 code object refill_energy at 0x2646b120ad0, file shadow_war.py>, line 83)
+              94 LOAD_CONST           ("ShadowWarEvent.refill_energy")
+              96 MAKE_FUNCTION        (annotation)
+              98 STORE_NAME           (refill_energy)
+
+ 94:         100 LOAD_CONST           (<Code310 code object get_available_battles at 0x2646b121190, file shadow_war.py>, line 94)
+             102 LOAD_CONST           ("ShadowWarEvent.get_available_battles")
+             104 MAKE_FUNCTION        (No arguments)
+             106 STORE_NAME           (get_available_battles)
+
+107:         108 LOAD_CONST           (<Code310 code object get_enemies at 0x2646b121610, file shadow_war.py>, line 107)
+             110 LOAD_CONST           ("ShadowWarEvent.get_enemies")
+             112 MAKE_FUNCTION        (No arguments)
+             114 STORE_NAME           (get_enemies)
+
+111:         116 LOAD_CONST           (<Code310 code object start_battle at 0x2646b1217f0, file shadow_war.py>, line 111)
+             118 LOAD_CONST           ("ShadowWarEvent.start_battle")
+             120 MAKE_FUNCTION        (No arguments)
+             122 STORE_NAME           (start_battle)
+
+116:         124 LOAD_CONST           (<Code310 code object finish_battle at 0x2646b1218b0, file shadow_war.py>, line 116)
+             126 LOAD_CONST           ("ShadowWarEvent.finish_battle")
+             128 MAKE_FUNCTION        (No arguments)
+             130 STORE_NAME           (finish_battle)
+
+122:         132 LOAD_CONST           (<Code310 code object process_battle at 0x264696ca930, file shadow_war.py>, line 122)
+             134 LOAD_CONST           ("ShadowWarEvent.process_battle")
+             136 MAKE_FUNCTION        (No arguments)
+             138 STORE_NAME           (process_battle)
+
+183:         140 LOAD_CONST           (<Code310 code object run at 0x2646b121a90, file shadow_war.py>, line 183)
+             142 LOAD_CONST           ("ShadowWarEvent.run")
+             144 MAKE_FUNCTION        (No arguments)
+             146 STORE_NAME           (run)
+             148 LOAD_CONST           (None)
+             150 RETURN_VALUE
+
+
+# Method Name:       shadow_war_event
+# Filename:          shadow_war.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        2
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        212
+# Constants:
+#    0: 'Main function to execute shadow war event.'
+#    1: None
+# Names:
+#    0: ShadowWarEvent
+#    1: run
+# Varnames:
+#	event
+# Local variables:
+#    0: event
+214:           0 LOAD_GLOBAL          (ShadowWarEvent)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (event)
+
+215:           6 LOAD_FAST            (event)
+               8 LOAD_METHOD          (run)
+              10 CALL_METHOD          (0 positional arguments)
+              12 POP_TOP
+              14 LOAD_CONST           (None)
+              16 RETURN_VALUE
+
+
+# Method Name:       __init__
+# Filename:          shadow_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        7
+# Constants:
+#    0: None
+#    1: 'Character data is not loaded in memory'
+#    2: 'Login data is not loaded in memory'
+#    3: 'character_data_character_id'
+#    4: 'character_id'
+#    5: 'Character ID is missing from current character data'
+#    6: 'sessionkey'
+# Names:
+#    0: isinstance
+#    1: config
+#    2: char_data
+#    3: dict
+#    4: ValueError
+#    5: login_data
+#    6: flatten_json
+#    7: get
+#    8: char_id
+#    9: session_key
+#   10: base_params
+# Varnames:
+#	self, char_flat
+# Positional arguments:
+#	self
+# Local variables:
+#    1: char_flat
+  8:           0 LOAD_GLOBAL          (isinstance)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_ATTR            (char_data)
+               6 LOAD_GLOBAL          (dict)
+               8 CALL_FUNCTION        (2 positional arguments)
+              10 POP_JUMP_IF_TRUE     (to 20)
+
+  9:          12 LOAD_GLOBAL          (ValueError)
+              14 LOAD_CONST           ("Character data is not loaded in memory")
+              16 CALL_FUNCTION        (1 positional argument)
+              18 RAISE_VARARGS        (exception instance)
+
+ 10:     >>   20 LOAD_GLOBAL          (isinstance)
+              22 LOAD_GLOBAL          (config)
+              24 LOAD_ATTR            (login_data)
+              26 LOAD_GLOBAL          (dict)
+              28 CALL_FUNCTION        (2 positional arguments)
+              30 POP_JUMP_IF_TRUE     (to 40)
+
+ 11:          32 LOAD_GLOBAL          (ValueError)
+              34 LOAD_CONST           ("Login data is not loaded in memory")
+              36 CALL_FUNCTION        (1 positional argument)
+              38 RAISE_VARARGS        (exception instance)
+
+ 13:     >>   40 LOAD_GLOBAL          (config)
+              42 LOAD_ATTR            (char_data)
+              44 LOAD_FAST            (self)
+              46 STORE_ATTR           (char_data)
+
+ 14:          48 LOAD_GLOBAL          (config)
+              50 LOAD_ATTR            (login_data)
+              52 LOAD_FAST            (self)
+              54 STORE_ATTR           (login_data)
+
+ 15:          56 LOAD_GLOBAL          (flatten_json)
+              58 LOAD_FAST            (self)
+              60 LOAD_ATTR            (char_data)
+              62 CALL_FUNCTION        (1 positional argument)
+              64 STORE_FAST           (char_flat)
+
+ 17:          66 LOAD_FAST            (char_flat)
+              68 LOAD_METHOD          (get)
+              70 LOAD_CONST           ("character_data_character_id")
+              72 CALL_METHOD          (1 positional argument)
+              74 JUMP_IF_TRUE_OR_POP  (to 84)
+
+ 18:          76 LOAD_FAST            (char_flat)
+              78 LOAD_METHOD          (get)
+              80 LOAD_CONST           ("character_id")
+              82 CALL_METHOD          (1 positional argument)
+
+ 16:     >>   84 LOAD_FAST            (self)
+              86 STORE_ATTR           (char_id)
+
+ 20:          88 LOAD_FAST            (self)
+              90 LOAD_ATTR            (char_id)
+              92 POP_JUMP_IF_TRUE     (to 102)
+
+ 21:          94 LOAD_GLOBAL          (ValueError)
+              96 LOAD_CONST           ("Character ID is missing from current character data")
+              98 CALL_FUNCTION        (1 positional argument)
+             100 RAISE_VARARGS        (exception instance)
+
+ 23:     >>  102 LOAD_FAST            (self)
+             104 LOAD_ATTR            (login_data)
+             106 LOAD_CONST           ("sessionkey")
+             108 BINARY_SUBSCR
+             110 LOAD_FAST            (self)
+             112 STORE_ATTR           (session_key)
+
+ 24:         114 LOAD_FAST            (self)
+             116 LOAD_ATTR            (char_id)
+             118 LOAD_FAST            (self)
+             120 LOAD_ATTR            (session_key)
+             122 BUILD_LIST           2
+             124 LOAD_FAST            (self)
+             126 STORE_ATTR           (base_params)
+             128 LOAD_CONST           (None)
+             130 RETURN_VALUE
+
+
+# Method Name:       _check_stop_event
+# Filename:          shadow_war.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        25
+# Constants:
+#    0: None
+#    1: 'stop_event'
+#    2: 'Shadow war stopped by user request'
+#    3: True
+#    4: False
+# Names:
+#    0: hasattr
+#    1: config
+#    2: stop_event
+#    3: is_set
+#    4: print
+ 27:           0 LOAD_GLOBAL          (hasattr)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_CONST           ("stop_event")
+               6 CALL_FUNCTION        (2 positional arguments)
+               8 POP_JUMP_IF_FALSE    (to 32)
+              10 LOAD_GLOBAL          (config)
+              12 LOAD_ATTR            (stop_event)
+              14 LOAD_METHOD          (is_set)
+              16 CALL_METHOD          (0 positional arguments)
+              18 POP_JUMP_IF_FALSE    (to 32)
+
+ 28:          20 LOAD_GLOBAL          (print)
+              22 LOAD_CONST           ("Shadow war stopped by user request")
+              24 CALL_FUNCTION        (1 positional argument)
+              26 POP_TOP
+
+ 29:          28 LOAD_CONST           (True)
+              30 RETURN_VALUE
+
+ 30:     >>   32 LOAD_CONST           (False)
+              34 RETURN_VALUE
+
+
+# Method Name:       _wait_with_stop_check
+# Filename:          shadow_war.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        32
+# Constants:
+#    0: None
+#    1: False
+#    2: 1
+#    3: True
+# Names:
+#    0: range
+#    1: _check_stop_event
+#    2: time
+#    3: sleep
+# Varnames:
+#	self, seconds, _
+# Positional arguments:
+#	self, seconds
+# Local variables:
+#    2: _
+ 33:           0 LOAD_GLOBAL          (range)
+               2 LOAD_FAST            (seconds)
+               4 CALL_FUNCTION        (1 positional argument)
+               6 GET_ITER
+         >>    8 FOR_ITER             (to 38)
+              10 STORE_FAST           (_)
+
+ 34:          12 LOAD_FAST            (self)
+              14 LOAD_METHOD          (_check_stop_event)
+              16 CALL_METHOD          (0 positional arguments)
+              18 POP_JUMP_IF_FALSE    (to 26)
+
+ 35:          20 POP_TOP
+              22 LOAD_CONST           (False)
+              24 RETURN_VALUE
+
+ 36:     >>   26 LOAD_GLOBAL          (time)
+              28 LOAD_METHOD          (sleep)
+              30 LOAD_CONST           (1)
+              32 CALL_METHOD          (1 positional argument)
+              34 POP_TOP
+              36 JUMP_ABSOLUTE        (to 8)
+
+ 37:     >>   38 LOAD_CONST           (True)
+              40 RETURN_VALUE
+
+
+# Method Name:       _handle_empty_shadow_war_energy
+# Filename:          shadow_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  4
+# Stack size:        7
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        39
+# Constants:
+#    0: None
+#    1: 'sage_shadow_war_empty_resource_mode'
+#    2: 'wait'
+#    3: {'wait', 'stop', 'buy'}
+#    4: 0
+#    5: 'sage_shadow_war_wait_minutes'
+#    6: 30
+#    7: 'stop'
+#    8: 'No energy available for shadow war. Stopping action.'
+#    9: False
+#   10: 'buy'
+#   11: 'No energy available for shadow war. Waiting '
+#   12: ' minute(s).'
+#   13: 60
+# Names:
+#    0: config
+#    1: get_sage_global_settings
+#    2: str
+#    3: get
+#    4: strip
+#    5: lower
+#    6: max
+#    7: int
+#    8: print
+#    9: refill_energy
+#   10: _wait_with_stop_check
+# Varnames:
+#	self, settings, mode, wait_minutes
+# Positional arguments:
+#	self
+# Local variables:
+#    1: settings
+#    2: mode
+#    3: wait_minutes
+ 40:           0 LOAD_GLOBAL          (config)
+               2 LOAD_METHOD          (get_sage_global_settings)
+               4 CALL_METHOD          (0 positional arguments)
+               6 STORE_FAST           (settings)
+
+ 41:           8 LOAD_GLOBAL          (str)
+              10 LOAD_FAST            (settings)
+              12 LOAD_METHOD          (get)
+              14 LOAD_CONST           ("sage_shadow_war_empty_resource_mode")
+              16 LOAD_CONST           ("wait")
+              18 CALL_METHOD          (2 positional arguments)
+              20 CALL_FUNCTION        (1 positional argument)
+              22 LOAD_METHOD          (strip)
+              24 CALL_METHOD          (0 positional arguments)
+              26 LOAD_METHOD          (lower)
+              28 CALL_METHOD          (0 positional arguments)
+              30 STORE_FAST           (mode)
+
+ 42:          32 LOAD_FAST            (mode)
+              34 LOAD_CONST           ({'wait', 'stop', 'buy'})
+              36 CONTAINS_OP          (not in)
+              38 POP_JUMP_IF_FALSE    (to 44)
+
+ 43:          40 LOAD_CONST           ("wait")
+              42 STORE_FAST           (mode)
+
+ 44:     >>   44 LOAD_GLOBAL          (max)
+              46 LOAD_CONST           (0)
+              48 LOAD_GLOBAL          (int)
+              50 LOAD_FAST            (settings)
+              52 LOAD_METHOD          (get)
+              54 LOAD_CONST           ("sage_shadow_war_wait_minutes")
+              56 LOAD_CONST           (30)
+              58 CALL_METHOD          (2 positional arguments)
+              60 JUMP_IF_TRUE_OR_POP  (to 64)
+              62 LOAD_CONST           (30)
+         >>   64 CALL_FUNCTION        (1 positional argument)
+              66 CALL_FUNCTION        (2 positional arguments)
+              68 STORE_FAST           (wait_minutes)
+
+ 46:          70 LOAD_FAST            (mode)
+              72 LOAD_CONST           ("stop")
+              74 COMPARE_OP           (==)
+              76 POP_JUMP_IF_FALSE    (to 90)
+
+ 47:          78 LOAD_GLOBAL          (print)
+              80 LOAD_CONST           ("No energy available for shadow war. Stopping action.")
+              82 CALL_FUNCTION        (1 positional argument)
+              84 POP_TOP
+
+ 48:          86 LOAD_CONST           (False)
+              88 RETURN_VALUE
+
+ 50:     >>   90 LOAD_FAST            (mode)
+              92 LOAD_CONST           ("buy")
+              94 COMPARE_OP           (==)
+              96 POP_JUMP_IF_FALSE    (to 106)
+
+ 51:          98 LOAD_FAST            (self)
+             100 LOAD_METHOD          (refill_energy)
+             102 CALL_METHOD          (0 positional arguments)
+             104 RETURN_VALUE
+
+ 53:     >>  106 LOAD_GLOBAL          (print)
+             108 LOAD_CONST           ("No energy available for shadow war. Waiting ")
+             110 LOAD_FAST            (wait_minutes)
+             112 FORMAT_VALUE         0
+             114 LOAD_CONST           (" minute(s).")
+             116 BUILD_STRING         3
+             118 CALL_FUNCTION        (1 positional argument)
+             120 POP_TOP
+
+ 55:         122 LOAD_FAST            (wait_minutes)
+             124 LOAD_CONST           (0)
+             126 COMPARE_OP           (<=)
+             128 POP_JUMP_IF_FALSE    (to 134)
+
+ 56:         130 LOAD_CONST           (False)
+             132 RETURN_VALUE
+
+ 57:     >>  134 LOAD_FAST            (self)
+             136 LOAD_METHOD          (_wait_with_stop_check)
+             138 LOAD_FAST            (wait_minutes)
+             140 LOAD_CONST           (60)
+             142 BINARY_MULTIPLY
+             144 CALL_METHOD          (1 positional argument)
+             146 RETURN_VALUE
+
+
+# Method Name:       _response_message
+# Filename:          shadow_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        59
+# Constants:
+#    0: None
+#    1: 'No response'
+#    2: 'result'
+#    3: 'error'
+#    4: 'message'
+#    5: ('description', 'message', 'details', 'faultString')
+# Names:
+#    0: isinstance
+#    1: dict
+#    2: str
+#    3: get
+#    4: getattr
+# Varnames:
+#	response, attr, value
+# Positional arguments:
+#	response
+# Local variables:
+#    1: attr
+#    2: value
+ 61:           0 LOAD_FAST            (response)
+               2 LOAD_CONST           (None)
+               4 IS_OP                (is)
+               6 POP_JUMP_IF_FALSE    (to 12)
+
+ 62:           8 LOAD_CONST           ("No response")
+              10 RETURN_VALUE
+
+ 64:     >>   12 LOAD_GLOBAL          (isinstance)
+              14 LOAD_FAST            (response)
+              16 LOAD_GLOBAL          (dict)
+              18 CALL_FUNCTION        (2 positional arguments)
+              20 POP_JUMP_IF_FALSE    (to 60)
+
+ 65:          22 LOAD_GLOBAL          (str)
+
+ 66:          24 LOAD_FAST            (response)
+              26 LOAD_METHOD          (get)
+              28 LOAD_CONST           ("result")
+              30 CALL_METHOD          (1 positional argument)
+              32 JUMP_IF_TRUE_OR_POP  (to 56)
+
+ 67:          34 LOAD_FAST            (response)
+              36 LOAD_METHOD          (get)
+              38 LOAD_CONST           ("error")
+              40 CALL_METHOD          (1 positional argument)
+
+ 66:          42 JUMP_IF_TRUE_OR_POP  (to 56)
+
+ 68:          44 LOAD_FAST            (response)
+              46 LOAD_METHOD          (get)
+              48 LOAD_CONST           ("message")
+              50 CALL_METHOD          (1 positional argument)
+
+ 66:          52 JUMP_IF_TRUE_OR_POP  (to 56)
+
+ 69:          54 LOAD_FAST            (response)
+
+ 65:     >>   56 CALL_FUNCTION        (1 positional argument)
+              58 RETURN_VALUE
+
+ 72:     >>   60 LOAD_CONST           (('description', 'message', 'details', 'faultString'))
+              62 GET_ITER
+         >>   64 FOR_ITER             (to 98)
+              66 STORE_FAST           (attr)
+
+ 73:          68 LOAD_GLOBAL          (getattr)
+              70 LOAD_FAST            (response)
+              72 LOAD_FAST            (attr)
+              74 LOAD_CONST           (None)
+              76 CALL_FUNCTION        (3 positional arguments)
+              78 STORE_FAST           (value)
+
+ 74:          80 LOAD_FAST            (value)
+              82 POP_JUMP_IF_FALSE    (to 96)
+
+ 75:          84 LOAD_GLOBAL          (str)
+              86 LOAD_FAST            (value)
+              88 CALL_FUNCTION        (1 positional argument)
+              90 ROT_TWO
+              92 POP_TOP
+              94 RETURN_VALUE
+
+ 74:     >>   96 JUMP_ABSOLUTE        (to 64)
+
+ 77:     >>   98 LOAD_GLOBAL          (str)
+             100 LOAD_FAST            (response)
+             102 CALL_FUNCTION        (1 positional argument)
+             104 RETURN_VALUE
+
+
+# Method Name:       get_event_status
+# Filename:          shadow_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        79
+# Constants:
+#    0: 'Get current event status including energy.'
+#    1: 'ShadowWar.executeService'
+#    2: 'getStatus'
+# Names:
+#    0: send_amf_request
+#    1: base_params
+# Varnames:
+#	self
+# Positional arguments:
+#	self
+ 81:           0 LOAD_GLOBAL          (send_amf_request)
+               2 LOAD_CONST           ("ShadowWar.executeService")
+               4 LOAD_CONST           ("getStatus")
+               6 LOAD_FAST            (self)
+               8 LOAD_ATTR            (base_params)
+              10 BUILD_LIST           2
+              12 CALL_FUNCTION        (2 positional arguments)
+              14 RETURN_VALUE
+
+
+# Method Name:       refill_energy
+# Filename:          shadow_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        83
+# Constants:
+#    0: 'Buy a full Shadow War energy refill with the same API used by the client.'
+#    1: 'Shadow War: buying full energy refill for 50 tokens...'
+#    2: 'ShadowWar.executeService'
+#    3: 'refillEnergy'
+#    4: 'status'
+#    5: '1'
+#    6: 'Shadow War energy refill successful.'
+#    7: True
+#    8: 'Shadow War energy refill failed: '
+#    9: False
+# Names:
+#    0: print
+#    1: send_amf_request
+#    2: base_params
+#    3: isinstance
+#    4: dict
+#    5: str
+#    6: get
+#    7: _response_message
+# Varnames:
+#	self, response
+# Positional arguments:
+#	self
+# Local variables:
+#    1: response
+ 85:           0 LOAD_GLOBAL          (print)
+               2 LOAD_CONST           ("Shadow War: buying full energy refill for 50 tokens...")
+               4 CALL_FUNCTION        (1 positional argument)
+               6 POP_TOP
+
+ 86:           8 LOAD_GLOBAL          (send_amf_request)
+              10 LOAD_CONST           ("ShadowWar.executeService")
+              12 LOAD_CONST           ("refillEnergy")
+              14 LOAD_FAST            (self)
+              16 LOAD_ATTR            (base_params)
+              18 BUILD_LIST           2
+              20 CALL_FUNCTION        (2 positional arguments)
+              22 STORE_FAST           (response)
+
+ 87:          24 LOAD_GLOBAL          (isinstance)
+              26 LOAD_FAST            (response)
+              28 LOAD_GLOBAL          (dict)
+              30 CALL_FUNCTION        (2 positional arguments)
+              32 POP_JUMP_IF_FALSE    (to 64)
+              34 LOAD_GLOBAL          (str)
+              36 LOAD_FAST            (response)
+              38 LOAD_METHOD          (get)
+              40 LOAD_CONST           ("status")
+              42 CALL_METHOD          (1 positional argument)
+              44 CALL_FUNCTION        (1 positional argument)
+              46 LOAD_CONST           ("1")
+              48 COMPARE_OP           (==)
+              50 POP_JUMP_IF_FALSE    (to 64)
+
+ 88:          52 LOAD_GLOBAL          (print)
+              54 LOAD_CONST           ("Shadow War energy refill successful.")
+              56 CALL_FUNCTION        (1 positional argument)
+              58 POP_TOP
+
+ 89:          60 LOAD_CONST           (True)
+              62 RETURN_VALUE
+
+ 91:     >>   64 LOAD_GLOBAL          (print)
+              66 LOAD_CONST           ("Shadow War energy refill failed: ")
+              68 LOAD_FAST            (self)
+              70 LOAD_METHOD          (_response_message)
+              72 LOAD_FAST            (response)
+              74 CALL_METHOD          (1 positional argument)
+              76 FORMAT_VALUE         0
+              78 BUILD_STRING         2
+              80 CALL_FUNCTION        (1 positional argument)
+              82 POP_TOP
+
+ 92:          84 LOAD_CONST           (False)
+              86 RETURN_VALUE
+
+
+# Method Name:       get_available_battles
+# Filename:          shadow_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        94
+# Constants:
+#    0: 'Calculate number of available battles based on energy.'
+#    1: 'Shadow War unavailable or no energy right now'
+#    2: 0
+#    3: 'status'
+#    4: (None, 1)
+#    5: 'energy'
+#    6: ' energies available'
+#    7: 10
+# Names:
+#    0: get_event_status
+#    1: isinstance
+#    2: dict
+#    3: print
+#    4: get
+# Varnames:
+#	self, event_status, energy
+# Positional arguments:
+#	self
+# Local variables:
+#    1: event_status
+#    2: energy
+ 96:           0 LOAD_FAST            (self)
+               2 LOAD_METHOD          (get_event_status)
+               4 CALL_METHOD          (0 positional arguments)
+               6 STORE_FAST           (event_status)
+
+ 97:           8 LOAD_GLOBAL          (isinstance)
+              10 LOAD_FAST            (event_status)
+              12 LOAD_GLOBAL          (dict)
+              14 CALL_FUNCTION        (2 positional arguments)
+              16 POP_JUMP_IF_TRUE     (to 30)
+
+ 98:          18 LOAD_GLOBAL          (print)
+              20 LOAD_CONST           ("Shadow War unavailable or no energy right now")
+              22 CALL_FUNCTION        (1 positional argument)
+              24 POP_TOP
+
+ 99:          26 LOAD_CONST           (0)
+              28 RETURN_VALUE
+
+100:     >>   30 LOAD_FAST            (event_status)
+              32 LOAD_METHOD          (get)
+              34 LOAD_CONST           ("status")
+              36 CALL_METHOD          (1 positional argument)
+              38 LOAD_CONST           ((None, 1))
+              40 CONTAINS_OP          (not in)
+              42 POP_JUMP_IF_FALSE    (to 56)
+
+101:          44 LOAD_GLOBAL          (print)
+              46 LOAD_CONST           ("Shadow War unavailable or no energy right now")
+              48 CALL_FUNCTION        (1 positional argument)
+              50 POP_TOP
+
+102:          52 LOAD_CONST           (0)
+              54 RETURN_VALUE
+
+103:     >>   56 LOAD_FAST            (event_status)
+              58 LOAD_METHOD          (get)
+              60 LOAD_CONST           ("energy")
+              62 LOAD_CONST           (0)
+              64 CALL_METHOD          (2 positional arguments)
+              66 STORE_FAST           (energy)
+
+104:          68 LOAD_GLOBAL          (print)
+              70 LOAD_FAST            (energy)
+              72 FORMAT_VALUE         0
+              74 LOAD_CONST           (" energies available")
+              76 BUILD_STRING         2
+              78 CALL_FUNCTION        (1 positional argument)
+              80 POP_TOP
+
+105:          82 LOAD_FAST            (energy)
+              84 LOAD_CONST           (10)
+              86 BINARY_FLOOR_DIVIDE
+              88 RETURN_VALUE
+
+
+# Method Name:       get_enemies
+# Filename:          shadow_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        107
+# Constants:
+#    0: 'Retrieve list of enemies.'
+#    1: 'ShadowWar.executeService'
+#    2: 'getEnemies'
+# Names:
+#    0: send_amf_request
+#    1: base_params
+# Varnames:
+#	self
+# Positional arguments:
+#	self
+109:           0 LOAD_GLOBAL          (send_amf_request)
+               2 LOAD_CONST           ("ShadowWar.executeService")
+               4 LOAD_CONST           ("getEnemies")
+               6 LOAD_FAST            (self)
+               8 LOAD_ATTR            (base_params)
+              10 BUILD_LIST           2
+              12 CALL_FUNCTION        (2 positional arguments)
+              14 RETURN_VALUE
+
+
+# Method Name:       start_battle
+# Filename:          shadow_war.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        111
+# Constants:
+#    0: 'Start a battle with specified enemy.'
+#    1: 'ShadowWar.executeService'
+#    2: 'startBattle'
+# Names:
+#    0: char_id
+#    1: session_key
+#    2: send_amf_request
+# Varnames:
+#	self, enemy_id, params
+# Positional arguments:
+#	self, enemy_id
+# Local variables:
+#    2: params
+113:           0 LOAD_FAST            (self)
+               2 LOAD_ATTR            (char_id)
+               4 LOAD_FAST            (self)
+               6 LOAD_ATTR            (session_key)
+               8 LOAD_FAST            (enemy_id)
+              10 BUILD_LIST           3
+              12 STORE_FAST           (params)
+
+114:          14 LOAD_GLOBAL          (send_amf_request)
+              16 LOAD_CONST           ("ShadowWar.executeService")
+              18 LOAD_CONST           ("startBattle")
+              20 LOAD_FAST            (params)
+              22 BUILD_LIST           2
+              24 CALL_FUNCTION        (2 positional arguments)
+              26 RETURN_VALUE
+
+
+# Method Name:       finish_battle
+# Filename:          shadow_war.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  4
+# Stack size:        6
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        116
+# Constants:
+#    0: 'Finish the battle and get rewards.'
+#    1: '0'
+#    2: 0
+#    3: 'ShadowWar.executeService'
+#    4: 'finishBattle'
+# Names:
+#    0: CUCSG
+#    1: hash
+#    2: char_id
+#    3: config
+#    4: BATTLE_HASH
+#    5: session_key
+#    6: send_amf_request
+# Varnames:
+#	self, battle_id, mission_hash, params
+# Positional arguments:
+#	self, battle_id
+# Local variables:
+#    2: mission_hash
+#    3: params
+118:           0 LOAD_GLOBAL          (CUCSG)
+               2 LOAD_METHOD          (hash)
+               4 LOAD_FAST            (self)
+               6 LOAD_ATTR            (char_id)
+               8 FORMAT_VALUE         0
+              10 LOAD_FAST            (battle_id)
+              12 FORMAT_VALUE         0
+              14 LOAD_CONST           ("0")
+              16 LOAD_GLOBAL          (config)
+              18 LOAD_ATTR            (BATTLE_HASH)
+              20 FORMAT_VALUE         0
+              22 BUILD_STRING         4
+              24 CALL_METHOD          (1 positional argument)
+              26 STORE_FAST           (mission_hash)
+
+119:          28 LOAD_FAST            (self)
+              30 LOAD_ATTR            (char_id)
+              32 LOAD_FAST            (self)
+              34 LOAD_ATTR            (session_key)
+              36 LOAD_FAST            (battle_id)
+              38 LOAD_CONST           (0)
+              40 LOAD_GLOBAL          (config)
+              42 LOAD_ATTR            (BATTLE_HASH)
+              44 LOAD_FAST            (mission_hash)
+              46 BUILD_LIST           6
+              48 STORE_FAST           (params)
+
+120:          50 LOAD_GLOBAL          (send_amf_request)
+              52 LOAD_CONST           ("ShadowWar.executeService")
+              54 LOAD_CONST           ("finishBattle")
+              56 LOAD_FAST            (params)
+              58 BUILD_LIST           2
+              60 CALL_FUNCTION        (2 positional arguments)
+              62 RETURN_VALUE
+
+
+# Method Name:       process_battle
+# Filename:          shadow_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  13
+# Stack size:        16
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        122
+# Constants:
+#    0: 'Process a single battle sequence.'
+#    1: False
+#    2: 'Failed to get shadow war enemies: '
+#    3: 'enemies'
+#    4: 'No enemies available'
+#    5: 0
+#    6: 'id'
+#    7: 'name'
+#    8: 'n/a'
+#    9: 'trophy'
+#   10: 'rank'
+#   11: 'Start fighting ID: '
+#   12: 'Battle Begins...'
+#   13: 'Failed to start battle: '
+#   14: 'status'
+#   15: 1
+#   16: 20
+#   17: 'Battle failed: '
+#   18: 'result'
+#   19: 'Victory against '
+#   20: ': XP: '
+#   21: ', Gold: '
+#   22: ', win_trophy: '
+#   23: 'win_trophy'
+#   24: ', trophy: '
+#   25: ', player_rank: '
+#   26: '0'
+#   27: True
+#   28: 'Error processing battle: '
+#   29: None
+# Names:
+#    0: _check_stop_event
+#    1: get_enemies
+#    2: isinstance
+#    3: dict
+#    4: print
+#    5: _response_message
+#    6: str
+#    7: get
+#    8: start_battle
+#    9: _wait_with_stop_check
+#   10: finish_battle
+#   11: save_fight_data
+#   12: len
+#   13: Exception
+# Varnames:
+#	self, enemies_data, enemy_payload, enemy_id, enemy_name, enemy_trophy, enemy_rank, battle_data, battle_result, result_payload, xp_gained, gold_gained, e
+# Positional arguments:
+#	self
+# Local variables:
+#    1: enemies_data
+#    2: enemy_payload
+#    3: enemy_id
+#    4: enemy_name
+#    5: enemy_trophy
+#    6: enemy_rank
+#    7: battle_data
+#    8: battle_result
+#    9: result_payload
+#   10: xp_gained
+#   11: gold_gained
+#   12: e
+124:           0 SETUP_FINALLY        (to 512)
+
+125:           2 LOAD_FAST            (self)
+               4 LOAD_METHOD          (_check_stop_event)
+               6 CALL_METHOD          (0 positional arguments)
+               8 POP_JUMP_IF_FALSE    (to 16)
+
+126:          10 POP_BLOCK
+              12 LOAD_CONST           (False)
+              14 RETURN_VALUE
+
+129:     >>   16 LOAD_FAST            (self)
+              18 LOAD_METHOD          (get_enemies)
+              20 CALL_METHOD          (0 positional arguments)
+              22 STORE_FAST           (enemies_data)
+
+130:          24 LOAD_GLOBAL          (isinstance)
+              26 LOAD_FAST            (enemies_data)
+              28 LOAD_GLOBAL          (dict)
+              30 CALL_FUNCTION        (2 positional arguments)
+              32 POP_JUMP_IF_TRUE     (to 60)
+
+131:          34 LOAD_GLOBAL          (print)
+              36 LOAD_CONST           ("Failed to get shadow war enemies: ")
+              38 LOAD_FAST            (self)
+              40 LOAD_METHOD          (_response_message)
+              42 LOAD_FAST            (enemies_data)
+              44 CALL_METHOD          (1 positional argument)
+              46 FORMAT_VALUE         0
+              48 BUILD_STRING         2
+              50 CALL_FUNCTION        (1 positional argument)
+              52 POP_TOP
+
+132:          54 POP_BLOCK
+              56 LOAD_CONST           (False)
+              58 RETURN_VALUE
+
+133:     >>   60 LOAD_CONST           ("enemies")
+              62 LOAD_FAST            (enemies_data)
+              64 CONTAINS_OP          (not in)
+              66 POP_JUMP_IF_TRUE     (to 76)
+              68 LOAD_FAST            (enemies_data)
+              70 LOAD_CONST           ("enemies")
+              72 BINARY_SUBSCR
+              74 POP_JUMP_IF_TRUE     (to 90)
+
+134:     >>   76 LOAD_GLOBAL          (print)
+              78 LOAD_CONST           ("No enemies available")
+              80 CALL_FUNCTION        (1 positional argument)
+              82 POP_TOP
+
+135:          84 POP_BLOCK
+              86 LOAD_CONST           (False)
+              88 RETURN_VALUE
+
+137:     >>   90 LOAD_FAST            (enemies_data)
+              92 LOAD_CONST           ("enemies")
+              94 BINARY_SUBSCR
+              96 LOAD_CONST           (0)
+              98 BINARY_SUBSCR
+             100 STORE_FAST           (enemy_payload)
+
+138:         102 LOAD_GLOBAL          (str)
+             104 LOAD_FAST            (enemy_payload)
+             106 LOAD_CONST           ("id")
+             108 BINARY_SUBSCR
+             110 CALL_FUNCTION        (1 positional argument)
+             112 STORE_FAST           (enemy_id)
+
+139:         114 LOAD_GLOBAL          (str)
+             116 LOAD_FAST            (enemy_payload)
+             118 LOAD_METHOD          (get)
+             120 LOAD_CONST           ("name")
+             122 LOAD_CONST           ("n/a")
+             124 CALL_METHOD          (2 positional arguments)
+             126 CALL_FUNCTION        (1 positional argument)
+             128 STORE_FAST           (enemy_name)
+
+140:         130 LOAD_FAST            (enemy_payload)
+             132 LOAD_METHOD          (get)
+             134 LOAD_CONST           ("trophy")
+             136 LOAD_CONST           ("n/a")
+             138 CALL_METHOD          (2 positional arguments)
+             140 STORE_FAST           (enemy_trophy)
+
+141:         142 LOAD_FAST            (enemy_payload)
+             144 LOAD_METHOD          (get)
+             146 LOAD_CONST           ("rank")
+             148 LOAD_CONST           ("n/a")
+             150 CALL_METHOD          (2 positional arguments)
+             152 STORE_FAST           (enemy_rank)
+
+142:         154 LOAD_GLOBAL          (print)
+             156 LOAD_CONST           ("Start fighting ID: ")
+             158 LOAD_FAST            (enemy_id)
+             160 FORMAT_VALUE         0
+             162 BUILD_STRING         2
+             164 CALL_FUNCTION        (1 positional argument)
+             166 POP_TOP
+
+143:         168 LOAD_GLOBAL          (print)
+             170 LOAD_CONST           ("Battle Begins...")
+             172 CALL_FUNCTION        (1 positional argument)
+             174 POP_TOP
+
+145:         176 LOAD_FAST            (self)
+             178 LOAD_METHOD          (start_battle)
+             180 LOAD_FAST            (enemy_id)
+             182 CALL_METHOD          (1 positional argument)
+             184 STORE_FAST           (battle_data)
+
+146:         186 LOAD_GLOBAL          (isinstance)
+             188 LOAD_FAST            (battle_data)
+             190 LOAD_GLOBAL          (dict)
+             192 CALL_FUNCTION        (2 positional arguments)
+             194 POP_JUMP_IF_TRUE     (to 222)
+
+147:         196 LOAD_GLOBAL          (print)
+             198 LOAD_CONST           ("Failed to start battle: ")
+             200 LOAD_FAST            (self)
+             202 LOAD_METHOD          (_response_message)
+             204 LOAD_FAST            (battle_data)
+             206 CALL_METHOD          (1 positional argument)
+             208 FORMAT_VALUE         0
+             210 BUILD_STRING         2
+             212 CALL_FUNCTION        (1 positional argument)
+             214 POP_TOP
+
+148:         216 POP_BLOCK
+             218 LOAD_CONST           (False)
+             220 RETURN_VALUE
+
+149:     >>  222 LOAD_FAST            (battle_data)
+             224 LOAD_METHOD          (get)
+             226 LOAD_CONST           ("status")
+             228 CALL_METHOD          (1 positional argument)
+             230 LOAD_CONST           (1)
+             232 COMPARE_OP           (!=)
+             234 POP_JUMP_IF_FALSE    (to 262)
+
+150:         236 LOAD_GLOBAL          (print)
+             238 LOAD_CONST           ("Failed to start battle: ")
+             240 LOAD_FAST            (self)
+             242 LOAD_METHOD          (_response_message)
+             244 LOAD_FAST            (battle_data)
+             246 CALL_METHOD          (1 positional argument)
+             248 FORMAT_VALUE         0
+             250 BUILD_STRING         2
+             252 CALL_FUNCTION        (1 positional argument)
+             254 POP_TOP
+
+151:         256 POP_BLOCK
+             258 LOAD_CONST           (False)
+             260 RETURN_VALUE
+
+154:     >>  262 LOAD_FAST            (self)
+             264 LOAD_METHOD          (_wait_with_stop_check)
+             266 LOAD_CONST           (20)
+             268 CALL_METHOD          (1 positional argument)
+             270 POP_JUMP_IF_TRUE     (to 278)
+
+155:         272 POP_BLOCK
+             274 LOAD_CONST           (False)
+             276 RETURN_VALUE
+
+158:     >>  278 LOAD_FAST            (self)
+             280 LOAD_METHOD          (finish_battle)
+             282 LOAD_FAST            (battle_data)
+             284 LOAD_CONST           ("id")
+             286 BINARY_SUBSCR
+             288 CALL_METHOD          (1 positional argument)
+             290 STORE_FAST           (battle_result)
+
+159:         292 LOAD_GLOBAL          (save_fight_data)
+             294 LOAD_FAST            (battle_result)
+             296 CALL_FUNCTION        (1 positional argument)
+             298 POP_TOP
+
+160:         300 LOAD_GLOBAL          (isinstance)
+             302 LOAD_FAST            (battle_result)
+             304 LOAD_GLOBAL          (dict)
+             306 CALL_FUNCTION        (2 positional arguments)
+             308 POP_JUMP_IF_TRUE     (to 336)
+
+161:         310 LOAD_GLOBAL          (print)
+             312 LOAD_CONST           ("Battle failed: ")
+             314 LOAD_FAST            (self)
+             316 LOAD_METHOD          (_response_message)
+             318 LOAD_FAST            (battle_result)
+             320 CALL_METHOD          (1 positional argument)
+             322 FORMAT_VALUE         0
+             324 BUILD_STRING         2
+             326 CALL_FUNCTION        (1 positional argument)
+             328 POP_TOP
+
+162:         330 POP_BLOCK
+             332 LOAD_CONST           (False)
+             334 RETURN_VALUE
+
+163:     >>  336 LOAD_FAST            (battle_result)
+             338 LOAD_METHOD          (get)
+             340 LOAD_CONST           ("status")
+             342 CALL_METHOD          (1 positional argument)
+             344 LOAD_CONST           (1)
+             346 COMPARE_OP           (==)
+             348 POP_JUMP_IF_FALSE    (to 486)
+
+164:         350 LOAD_FAST            (battle_result)
+             352 LOAD_METHOD          (get)
+             354 LOAD_CONST           ("result")
+             356 CALL_METHOD          (1 positional argument)
+             358 JUMP_IF_TRUE_OR_POP  (to 362)
+             360 BUILD_LIST           0
+         >>  362 STORE_FAST           (result_payload)
+
+165:         364 LOAD_GLOBAL          (len)
+             366 LOAD_FAST            (result_payload)
+             368 CALL_FUNCTION        (1 positional argument)
+             370 LOAD_CONST           (0)
+             372 COMPARE_OP           (>)
+             374 POP_JUMP_IF_FALSE    (to 384)
+             376 LOAD_FAST            (result_payload)
+             378 LOAD_CONST           (0)
+             380 BINARY_SUBSCR
+             382 JUMP_FORWARD         (to 386)
+         >>  384 LOAD_CONST           ("n/a")
+         >>  386 STORE_FAST           (xp_gained)
+
+166:         388 LOAD_GLOBAL          (len)
+             390 LOAD_FAST            (result_payload)
+             392 CALL_FUNCTION        (1 positional argument)
+             394 LOAD_CONST           (1)
+             396 COMPARE_OP           (>)
+             398 POP_JUMP_IF_FALSE    (to 408)
+             400 LOAD_FAST            (result_payload)
+             402 LOAD_CONST           (1)
+             404 BINARY_SUBSCR
+             406 JUMP_FORWARD         (to 410)
+         >>  408 LOAD_CONST           ("n/a")
+         >>  410 STORE_FAST           (gold_gained)
+
+167:         412 LOAD_GLOBAL          (print)
+
+168:         414 LOAD_CONST           ("Victory against ")
+             416 LOAD_FAST            (enemy_name)
+             418 FORMAT_VALUE         0
+             420 LOAD_CONST           (": XP: ")
+
+169:         422 LOAD_FAST            (xp_gained)
+
+168:         424 FORMAT_VALUE         0
+             426 LOAD_CONST           (", Gold: ")
+
+169:         428 LOAD_FAST            (gold_gained)
+
+168:         430 FORMAT_VALUE         0
+             432 LOAD_CONST           (", win_trophy: ")
+
+170:         434 LOAD_FAST            (battle_result)
+             436 LOAD_METHOD          (get)
+             438 LOAD_CONST           ("win_trophy")
+             440 LOAD_CONST           ("n/a")
+             442 CALL_METHOD          (2 positional arguments)
+
+168:         444 FORMAT_VALUE         0
+             446 LOAD_CONST           (", trophy: ")
+
+171:         448 LOAD_FAST            (battle_result)
+             450 LOAD_METHOD          (get)
+             452 LOAD_CONST           ("trophy")
+             454 LOAD_CONST           ("n/a")
+             456 CALL_METHOD          (2 positional arguments)
+
+168:         458 FORMAT_VALUE         0
+             460 LOAD_CONST           (", player_rank: ")
+
+172:         462 LOAD_FAST            (battle_result)
+             464 LOAD_METHOD          (get)
+             466 LOAD_CONST           ("rank")
+             468 LOAD_CONST           ("0")
+             470 CALL_METHOD          (2 positional arguments)
+
+168:         472 FORMAT_VALUE         0
+             474 BUILD_STRING         12
+
+167:         476 CALL_FUNCTION        (1 positional argument)
+             478 POP_TOP
+
+174:         480 POP_BLOCK
+             482 LOAD_CONST           (True)
+             484 RETURN_VALUE
+
+176:     >>  486 LOAD_GLOBAL          (print)
+             488 LOAD_CONST           ("Battle failed: ")
+             490 LOAD_FAST            (self)
+             492 LOAD_METHOD          (_response_message)
+             494 LOAD_FAST            (battle_result)
+             496 CALL_METHOD          (1 positional argument)
+             498 FORMAT_VALUE         0
+             500 BUILD_STRING         2
+             502 CALL_FUNCTION        (1 positional argument)
+             504 POP_TOP
+
+177:         506 POP_BLOCK
+             508 LOAD_CONST           (False)
+             510 RETURN_VALUE
+
+179:     >>  512 DUP_TOP
+             514 LOAD_GLOBAL          (Exception)
+             516 EXTENDED_ARG         (256)
+             518 JUMP_IF_NOT_EXC_MATCH (to 564)
+             520 POP_TOP
+             522 STORE_FAST           (e)
+             524 POP_TOP
+             526 SETUP_FINALLY        (to 556)
+
+180:         528 LOAD_GLOBAL          (print)
+             530 LOAD_CONST           ("Error processing battle: ")
+             532 LOAD_FAST            (e)
+             534 FORMAT_VALUE         0
+             536 BUILD_STRING         2
+             538 CALL_FUNCTION        (1 positional argument)
+             540 POP_TOP
+
+181:         542 POP_BLOCK
+             544 POP_EXCEPT
+             546 LOAD_CONST           (None)
+             548 STORE_FAST           (e)
+             550 DELETE_FAST          (e)
+             552 LOAD_CONST           (False)
+             554 RETURN_VALUE
+         >>  556 LOAD_CONST           (None)
+             558 STORE_FAST           (e)
+             560 DELETE_FAST          (e)
+             562 RERAISE              1
+
+179:     >>  564 RERAISE              0
+
+
+# Method Name:       run
+# Filename:          shadow_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  4
+# Stack size:        6
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        183
+# Constants:
+#    0: 'Main method to run the shadow war event.'
+#    1: None
+#    2: 0
+#    3: 'Starting '
+#    4: ' battles...'
+#    5: 'Battle '
+#    6: 1
+#    7: '/'
+#    8: 30
+#    9: 'Completed '
+#   10: ' battles successfully'
+# Names:
+#    0: _check_stop_event
+#    1: get_available_battles
+#    2: _handle_empty_shadow_war_energy
+#    3: print
+#    4: range
+#    5: process_battle
+#    6: _wait_with_stop_check
+# Varnames:
+#	self, available_battles, successful_battles, i
+# Positional arguments:
+#	self
+# Local variables:
+#    1: available_battles
+#    2: successful_battles
+#    3: i
+185:           0 LOAD_FAST            (self)
+               2 LOAD_METHOD          (_check_stop_event)
+               4 CALL_METHOD          (0 positional arguments)
+               6 POP_JUMP_IF_FALSE    (to 12)
+
+186:           8 LOAD_CONST           (None)
+              10 RETURN_VALUE
+
+188:     >>   12 LOAD_FAST            (self)
+              14 LOAD_METHOD          (get_available_battles)
+              16 CALL_METHOD          (0 positional arguments)
+              18 STORE_FAST           (available_battles)
+
+189:          20 LOAD_FAST            (available_battles)
+              22 LOAD_CONST           (0)
+              24 COMPARE_OP           (<=)
+              26 POP_JUMP_IF_FALSE    (to 56)
+
+190:     >>   28 LOAD_FAST            (self)
+              30 LOAD_METHOD          (_handle_empty_shadow_war_energy)
+              32 CALL_METHOD          (0 positional arguments)
+              34 POP_JUMP_IF_TRUE     (to 40)
+
+191:          36 LOAD_CONST           (None)
+              38 RETURN_VALUE
+
+192:     >>   40 LOAD_FAST            (self)
+              42 LOAD_METHOD          (get_available_battles)
+              44 CALL_METHOD          (0 positional arguments)
+              46 STORE_FAST           (available_battles)
+
+189:          48 LOAD_FAST            (available_battles)
+              50 LOAD_CONST           (0)
+              52 COMPARE_OP           (<=)
+              54 POP_JUMP_IF_TRUE     (to 28)
+
+194:     >>   56 LOAD_GLOBAL          (print)
+              58 LOAD_CONST           ("Starting ")
+              60 LOAD_FAST            (available_battles)
+              62 FORMAT_VALUE         0
+              64 LOAD_CONST           (" battles...")
+              66 BUILD_STRING         3
+              68 CALL_FUNCTION        (1 positional argument)
+              70 POP_TOP
+
+196:          72 LOAD_CONST           (0)
+              74 STORE_FAST           (successful_battles)
+
+197:          76 LOAD_GLOBAL          (range)
+              78 LOAD_FAST            (available_battles)
+              80 CALL_FUNCTION        (1 positional argument)
+              82 GET_ITER
+         >>   84 FOR_ITER             (to 168)
+              86 STORE_FAST           (i)
+
+198:          88 LOAD_FAST            (self)
+              90 LOAD_METHOD          (_check_stop_event)
+              92 CALL_METHOD          (0 positional arguments)
+              94 POP_JUMP_IF_FALSE    (to 100)
+
+199:          96 POP_TOP
+              98 JUMP_FORWARD         (to 168)
+
+200:     >>  100 LOAD_GLOBAL          (print)
+             102 LOAD_CONST           ("Battle ")
+             104 LOAD_FAST            (i)
+             106 LOAD_CONST           (1)
+             108 BINARY_ADD
+             110 FORMAT_VALUE         0
+             112 LOAD_CONST           ("/")
+             114 LOAD_FAST            (available_battles)
+             116 FORMAT_VALUE         0
+             118 BUILD_STRING         4
+             120 CALL_FUNCTION        (1 positional argument)
+             122 POP_TOP
+
+201:         124 LOAD_FAST            (self)
+             126 LOAD_METHOD          (process_battle)
+             128 CALL_METHOD          (0 positional arguments)
+             130 POP_JUMP_IF_FALSE    (to 140)
+
+202:         132 LOAD_FAST            (successful_battles)
+             134 LOAD_CONST           (1)
+             136 INPLACE_ADD
+             138 STORE_FAST           (successful_battles)
+
+205:     >>  140 LOAD_FAST            (i)
+             142 LOAD_FAST            (available_battles)
+             144 LOAD_CONST           (1)
+             146 BINARY_SUBTRACT
+             148 COMPARE_OP           (<)
+             150 POP_JUMP_IF_FALSE    (to 166)
+
+206:         152 LOAD_FAST            (self)
+             154 LOAD_METHOD          (_wait_with_stop_check)
+             156 LOAD_CONST           (30)
+             158 CALL_METHOD          (1 positional argument)
+             160 POP_JUMP_IF_TRUE     (to 166)
+
+207:         162 POP_TOP
+             164 JUMP_FORWARD         (to 168)
+         >>  166 JUMP_ABSOLUTE        (to 84)
+
+209:     >>  168 LOAD_GLOBAL          (print)
+             170 LOAD_CONST           ("Completed ")
+             172 LOAD_FAST            (successful_battles)
+             174 FORMAT_VALUE         0
+             176 LOAD_CONST           ("/")
+             178 LOAD_FAST            (available_battles)
+             180 FORMAT_VALUE         0
+             182 LOAD_CONST           (" battles successfully")
+             184 BUILD_STRING         5
+             186 CALL_FUNCTION        (1 positional argument)
+             188 POP_TOP
+             190 LOAD_CONST           (None)
+             192 RETURN_VALUE
+

@@ -1,0 +1,968 @@
+﻿# pydisasm version 6.1.8
+# Python bytecode 3.10 (3439)
+# Disassembled from Python 3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]
+# Timestamp in code: 1780820770 (2026-06-07 15:26:10)
+# Source code size mod 2**32: 5408 bytes
+# Method Name:       <module>
+# Filename:          amf_req.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        2
+# Flags:             0x00000040 (NOFREE)
+# First Line:        1
+# Constants:
+#    0: 0
+#    1: None
+#    2: 1
+#    3: ('send_amf_request', 'save_to_json', 'Crypt', 'CryptExact', 'get_random_n_seed')
+#    4: ('config',)
+#    5: '40367c3cc999a9f9e951a1d33211545b84b2d5a63933b0020433000c3bb410fb'
+#    6: <Code310 code object _local_login_version_args at 0x27c0d81cf50, file amf_req.py>, line 11
+#    7: '_local_login_version_args'
+#    8: <Code310 code object check_version at 0x27c0d9110a0, file amf_req.py>, line 33
+#    9: 'check_version'
+#   10: <Code310 code object get_all_characters at 0x27c0d911160, file amf_req.py>, line 38
+#   11: 'get_all_characters'
+#   12: <Code310 code object get_character_data at 0x27c0d911490, file amf_req.py>, line 101
+#   13: 'get_character_data'
+#   14: <Code310 code object login at 0x27c0d911640, file amf_req.py>, line 108
+#   15: 'login'
+# Names:
+#    0: base64
+#    1: json
+#    2: utils
+#    3: send_amf_request
+#    4: save_to_json
+#    5: Crypt
+#    6: CryptExact
+#    7: get_random_n_seed
+#    8: 
+#    9: config
+#   10: _LOGIN_KEY_HASH
+#   11: _local_login_version_args
+#   12: check_version
+#   13: get_all_characters
+#   14: get_character_data
+#   15: login
+  1:           0 LOAD_CONST           (0)
+               2 LOAD_CONST           (None)
+               4 IMPORT_NAME          (base64)
+               6 STORE_NAME           (base64)
+
+  2:           8 LOAD_CONST           (0)
+              10 LOAD_CONST           (None)
+              12 IMPORT_NAME          (json)
+              14 STORE_NAME           (json)
+
+  4:          16 LOAD_CONST           (1)
+              18 LOAD_CONST           (('send_amf_request', 'save_to_json', 'Crypt', 'CryptExact', 'get_random_n_seed'))
+              20 IMPORT_NAME          (utils)
+              22 IMPORT_FROM          (send_amf_request)
+              24 STORE_NAME           (send_amf_request)
+              26 IMPORT_FROM          (save_to_json)
+              28 STORE_NAME           (save_to_json)
+              30 IMPORT_FROM          (Crypt)
+              32 STORE_NAME           (Crypt)
+              34 IMPORT_FROM          (CryptExact)
+              36 STORE_NAME           (CryptExact)
+              38 IMPORT_FROM          (get_random_n_seed)
+              40 STORE_NAME           (get_random_n_seed)
+              42 POP_TOP
+
+  5:          44 LOAD_CONST           (1)
+              46 LOAD_CONST           (('config',))
+              48 IMPORT_NAME          8
+              50 IMPORT_FROM          (config)
+              52 STORE_NAME           (config)
+              54 POP_TOP
+
+  8:          56 LOAD_CONST           ("40367c3cc999a9f9e951a1d33211545b84b2d5a63933b0020433000c3bb410fb")
+              58 STORE_NAME           (_LOGIN_KEY_HASH)
+
+ 11:          60 LOAD_CONST           (<Code310 code object _local_login_version_args at 0x27c0d81cf50, file amf_req.py>, line 11)
+              62 LOAD_CONST           ("_local_login_version_args")
+              64 MAKE_FUNCTION        (No arguments)
+              66 STORE_NAME           (_local_login_version_args)
+
+ 33:          68 LOAD_CONST           (<Code310 code object check_version at 0x27c0d9110a0, file amf_req.py>, line 33)
+              70 LOAD_CONST           ("check_version")
+              72 MAKE_FUNCTION        (No arguments)
+              74 STORE_NAME           (check_version)
+
+ 38:          76 LOAD_CONST           (<Code310 code object get_all_characters at 0x27c0d911160, file amf_req.py>, line 38)
+              78 LOAD_CONST           ("get_all_characters")
+              80 MAKE_FUNCTION        (No arguments)
+              82 STORE_NAME           (get_all_characters)
+
+101:          84 LOAD_CONST           (<Code310 code object get_character_data at 0x27c0d911490, file amf_req.py>, line 101)
+              86 LOAD_CONST           ("get_character_data")
+              88 MAKE_FUNCTION        (No arguments)
+              90 STORE_NAME           (get_character_data)
+
+108:          92 LOAD_CONST           (<Code310 code object login at 0x27c0d911640, file amf_req.py>, line 108)
+              94 LOAD_CONST           ("login")
+              96 MAKE_FUNCTION        (No arguments)
+              98 STORE_NAME           (login)
+             100 LOAD_CONST           (None)
+             102 RETURN_VALUE
+
+
+# Method Name:       _local_login_version_args
+# Filename:          amf_req.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  7
+# Stack size:        8
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        11
+# Constants:
+#    0: 'Use bundled client bytes when login is intentionally skipping checkVersion.'
+#    1: ''
+#    2: 'utf-8'
+#    3: (16, 24, 32)
+#    4: '0'
+#    5: 'bytes'
+#    6: '____'
+#    7: '___'
+#    8: 1
+#    9: None
+#   10: 16
+# Names:
+#    0: str
+#    1: len
+#    2: encode
+#    3: isdigit
+#    4: json
+#    5: loads
+#    6: base64
+#    7: b64decode
+#    8: config
+#    9: BATTLE_HASH
+#   10: decode
+#   11: get
+#   12: _LOGIN_KEY_HASH
+#   13: split
+#   14: Exception
+# Varnames:
+#	char_dot__, char_dot__underscore, key, marker, battle_hash, bytes_data, specific_item
+# Positional arguments:
+#	char_dot__, char_dot__underscore
+# Local variables:
+#    2: key
+#    3: marker
+#    4: battle_hash
+#    5: bytes_data
+#    6: specific_item
+ 13:           0 LOAD_GLOBAL          (str)
+               2 LOAD_FAST            (char_dot__)
+               4 JUMP_IF_TRUE_OR_POP  (to 8)
+               6 LOAD_CONST           ("")
+         >>    8 CALL_FUNCTION        (1 positional argument)
+              10 STORE_FAST           (key)
+
+ 14:          12 LOAD_GLOBAL          (str)
+              14 LOAD_FAST            (char_dot__underscore)
+              16 JUMP_IF_TRUE_OR_POP  (to 20)
+              18 LOAD_CONST           ("")
+         >>   20 CALL_FUNCTION        (1 positional argument)
+              22 STORE_FAST           (marker)
+
+ 15:          24 LOAD_GLOBAL          (len)
+              26 LOAD_FAST            (key)
+              28 LOAD_METHOD          (encode)
+              30 LOAD_CONST           ("utf-8")
+              32 CALL_METHOD          (1 positional argument)
+              34 CALL_FUNCTION        (1 positional argument)
+              36 LOAD_CONST           ((16, 24, 32))
+              38 CONTAINS_OP          (in)
+              40 POP_JUMP_IF_FALSE    (to 66)
+              42 LOAD_FAST            (marker)
+              44 LOAD_METHOD          (isdigit)
+              46 CALL_METHOD          (0 positional arguments)
+              48 POP_JUMP_IF_FALSE    (to 66)
+              50 LOAD_FAST            (marker)
+              52 LOAD_CONST           ("0")
+              54 COMPARE_OP           (!=)
+              56 POP_JUMP_IF_FALSE    (to 66)
+
+ 16:          58 LOAD_FAST            (key)
+              60 LOAD_FAST            (marker)
+              62 BUILD_TUPLE          2
+              64 RETURN_VALUE
+
+ 18:     >>   66 SETUP_FINALLY        (to 236)
+
+ 19:          68 LOAD_GLOBAL          (json)
+              70 LOAD_METHOD          (loads)
+              72 LOAD_GLOBAL          (base64)
+              74 LOAD_METHOD          (b64decode)
+              76 LOAD_GLOBAL          (config)
+              78 LOAD_ATTR            (BATTLE_HASH)
+              80 CALL_METHOD          (1 positional argument)
+              82 LOAD_METHOD          (decode)
+              84 LOAD_CONST           ("utf-8")
+              86 CALL_METHOD          (1 positional argument)
+              88 CALL_METHOD          (1 positional argument)
+              90 STORE_FAST           (battle_hash)
+
+ 20:          92 LOAD_FAST            (battle_hash)
+              94 LOAD_METHOD          (get)
+              96 LOAD_CONST           ("bytes")
+              98 BUILD_MAP            0
+             100 CALL_METHOD          (2 positional arguments)
+             102 STORE_FAST           (bytes_data)
+
+ 21:         104 LOAD_GLOBAL          (str)
+             106 LOAD_FAST            (bytes_data)
+             108 LOAD_METHOD          (get)
+             110 LOAD_CONST           ("____")
+             112 CALL_METHOD          (1 positional argument)
+             114 JUMP_IF_TRUE_OR_POP  (to 122)
+             116 LOAD_FAST            (marker)
+             118 JUMP_IF_TRUE_OR_POP  (to 122)
+             120 LOAD_CONST           ("0")
+         >>  122 CALL_FUNCTION        (1 positional argument)
+             124 STORE_FAST           (marker)
+
+ 22:         126 LOAD_GLOBAL          (str)
+             128 LOAD_FAST            (bytes_data)
+             130 LOAD_METHOD          (get)
+             132 LOAD_CONST           ("___")
+             134 CALL_METHOD          (1 positional argument)
+             136 JUMP_IF_TRUE_OR_POP  (to 140)
+             138 LOAD_CONST           ("")
+         >>  140 CALL_FUNCTION        (1 positional argument)
+             142 STORE_FAST           (specific_item)
+
+ 23:         144 LOAD_FAST            (marker)
+             146 POP_JUMP_IF_FALSE    (to 180)
+             148 LOAD_GLOBAL          (_LOGIN_KEY_HASH)
+             150 LOAD_FAST            (specific_item)
+             152 CONTAINS_OP          (in)
+             154 POP_JUMP_IF_FALSE    (to 180)
+
+ 24:         156 LOAD_FAST            (specific_item)
+             158 LOAD_METHOD          (split)
+             160 LOAD_FAST            (marker)
+             162 LOAD_CONST           (1)
+             164 CALL_METHOD          (2 positional arguments)
+             166 LOAD_CONST           (1)
+             168 BINARY_SUBSCR
+             170 LOAD_CONST           (None)
+             172 LOAD_CONST           (16)
+             174 BUILD_SLICE          2
+             176 BINARY_SUBSCR
+             178 STORE_FAST           (key)
+
+ 25:     >>  180 LOAD_GLOBAL          (len)
+             182 LOAD_FAST            (key)
+             184 LOAD_METHOD          (encode)
+             186 LOAD_CONST           ("utf-8")
+             188 CALL_METHOD          (1 positional argument)
+             190 CALL_FUNCTION        (1 positional argument)
+             192 LOAD_CONST           ((16, 24, 32))
+             194 CONTAINS_OP          (in)
+             196 POP_JUMP_IF_FALSE    (to 216)
+             198 LOAD_FAST            (marker)
+             200 LOAD_METHOD          (isdigit)
+             202 CALL_METHOD          (0 positional arguments)
+             204 POP_JUMP_IF_FALSE    (to 226)
+
+ 26:         206 LOAD_FAST            (key)
+             208 LOAD_FAST            (marker)
+             210 BUILD_TUPLE          2
+             212 POP_BLOCK
+             214 RETURN_VALUE
+
+ 25:     >>  216 POP_BLOCK
+
+ 30:         218 LOAD_FAST            (key)
+             220 LOAD_FAST            (marker)
+             222 BUILD_TUPLE          2
+             224 RETURN_VALUE
+
+ 25:     >>  226 POP_BLOCK
+
+ 30:         228 LOAD_FAST            (key)
+             230 LOAD_FAST            (marker)
+             232 BUILD_TUPLE          2
+             234 RETURN_VALUE
+
+ 27:     >>  236 DUP_TOP
+             238 LOAD_GLOBAL          (Exception)
+             240 JUMP_IF_NOT_EXC_MATCH (to 258)
+             242 POP_TOP
+             244 POP_TOP
+             246 POP_TOP
+
+ 28:         248 POP_EXCEPT
+
+ 30:         250 LOAD_FAST            (key)
+             252 LOAD_FAST            (marker)
+             254 BUILD_TUPLE          2
+             256 RETURN_VALUE
+
+ 27:     >>  258 RERAISE              0
+
+
+# Method Name:       check_version
+# Filename:          amf_req.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        33
+# Constants:
+#    0: None
+#    1: 'SystemLogin.checkVersion'
+# Names:
+#    0: send_amf_request
+#    1: config
+#    2: GAME_BUILD_NUM
+# Varnames:
+#	result
+# Local variables:
+#    0: result
+ 34:           0 LOAD_GLOBAL          (send_amf_request)
+               2 LOAD_CONST           ("SystemLogin.checkVersion")
+               4 LOAD_GLOBAL          (config)
+               6 LOAD_ATTR            (GAME_BUILD_NUM)
+               8 BUILD_LIST           1
+              10 CALL_FUNCTION        (2 positional arguments)
+              12 STORE_FAST           (result)
+
+ 35:          14 LOAD_FAST            (result)
+              16 RETURN_VALUE
+
+
+# Method Name:       get_all_characters
+# Filename:          amf_req.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  17
+# Stack size:        12
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        38
+# Constants:
+#    0: None
+#    1: 'uid'
+#    2: 'sessionkey'
+#    3: 'SystemLogin.getAllCharacters'
+#    4: 'total_characters'
+#    5: 'account_data'
+#    6: 'Total characters found: '
+#    7: 'char_id'
+#    8: 0
+#    9: 'character_name'
+#   10: 'Character '
+#   11: 1
+#   12: 'character_level'
+#   13: 'class_id'
+#   14: 'character_xp'
+#   15: '. ID: '
+#   16: ', Name: '
+#   17: ', Level: '
+#   18: ', Class: '
+#   19: ('char_id', 'character_id', 'character_name', 'name', 'character_level', 'level', 'class_id', 'character_xp', 'xp', 'index')
+#   20: 'Warning: Index '
+#   21: ' out of range for account_data'
+#   22: 'Unexpected result structure:'
+#   23: ('char_id', 'character_id', 'character_name', 'name', 'character_level', 'level', 'index')
+# Names:
+#    0: config
+#    1: login_data
+#    2: send_amf_request
+#    3: all_char
+#    4: print
+#    5: range
+#    6: len
+#    7: get
+#    8: append
+#    9: isinstance
+#   10: list
+#   11: enumerate
+#   12: dict
+# Varnames:
+#	account_id, session_key, parameters, result, char_list, total_chars, account_data, i, char_data, char_id, char_name, char_level, char_class, char_exp, character_info, char, char_info
+# Local variables:
+#    0: account_id
+#    1: session_key
+#    2: parameters
+#    3: result
+#    4: char_list
+#    5: total_chars
+#    6: account_data
+#    7: i
+#    8: char_data
+#    9: char_id
+#   10: char_name
+#   11: char_level
+#   12: char_class
+#   13: char_exp
+#   14: character_info
+#   15: char
+#   16: char_info
+ 39:           0 LOAD_GLOBAL          (config)
+               2 LOAD_ATTR            (login_data)
+               4 LOAD_CONST           ("uid")
+               6 BINARY_SUBSCR
+               8 STORE_FAST           (account_id)
+
+ 40:          10 LOAD_GLOBAL          (config)
+              12 LOAD_ATTR            (login_data)
+              14 LOAD_CONST           ("sessionkey")
+              16 BINARY_SUBSCR
+              18 STORE_FAST           (session_key)
+
+ 42:          20 LOAD_FAST            (account_id)
+              22 LOAD_FAST            (session_key)
+              24 BUILD_LIST           2
+              26 STORE_FAST           (parameters)
+
+ 43:          28 LOAD_GLOBAL          (send_amf_request)
+              30 LOAD_CONST           ("SystemLogin.getAllCharacters")
+              32 LOAD_FAST            (parameters)
+              34 CALL_FUNCTION        (2 positional arguments)
+              36 STORE_FAST           (result)
+
+ 44:          38 LOAD_FAST            (result)
+              40 LOAD_GLOBAL          (config)
+              42 STORE_ATTR           (all_char)
+
+ 46:          44 BUILD_LIST           0
+              46 STORE_FAST           (char_list)
+
+ 48:          48 LOAD_FAST            (result)
+              50 POP_JUMP_IF_FALSE    (to 300)
+              52 LOAD_CONST           ("total_characters")
+              54 LOAD_FAST            (result)
+              56 CONTAINS_OP          (in)
+              58 POP_JUMP_IF_FALSE    (to 300)
+              60 LOAD_CONST           ("account_data")
+              62 LOAD_FAST            (result)
+              64 CONTAINS_OP          (in)
+              66 POP_JUMP_IF_FALSE    (to 300)
+
+ 49:          68 LOAD_FAST            (result)
+              70 LOAD_CONST           ("total_characters")
+              72 BINARY_SUBSCR
+              74 STORE_FAST           (total_chars)
+
+ 50:          76 LOAD_FAST            (result)
+              78 LOAD_CONST           ("account_data")
+              80 BINARY_SUBSCR
+              82 STORE_FAST           (account_data)
+
+ 52:          84 LOAD_GLOBAL          (print)
+              86 LOAD_CONST           ("Total characters found: ")
+              88 LOAD_FAST            (total_chars)
+              90 FORMAT_VALUE         0
+              92 BUILD_STRING         2
+              94 CALL_FUNCTION        (1 positional argument)
+              96 POP_TOP
+
+ 54:          98 LOAD_GLOBAL          (range)
+             100 LOAD_FAST            (total_chars)
+             102 CALL_FUNCTION        (1 positional argument)
+             104 GET_ITER
+         >>  106 FOR_ITER             (to 296)
+             108 STORE_FAST           (i)
+
+ 55:         110 LOAD_FAST            (i)
+             112 LOAD_GLOBAL          (len)
+             114 LOAD_FAST            (account_data)
+             116 CALL_FUNCTION        (1 positional argument)
+             118 COMPARE_OP           (<)
+             120 POP_JUMP_IF_FALSE    (to 278)
+
+ 56:         122 LOAD_FAST            (account_data)
+             124 LOAD_FAST            (i)
+             126 BINARY_SUBSCR
+             128 STORE_FAST           (char_data)
+
+ 58:         130 LOAD_FAST            (char_data)
+             132 LOAD_METHOD          (get)
+             134 LOAD_CONST           ("char_id")
+             136 LOAD_CONST           (0)
+             138 CALL_METHOD          (2 positional arguments)
+             140 STORE_FAST           (char_id)
+
+ 59:         142 LOAD_FAST            (char_data)
+             144 LOAD_METHOD          (get)
+             146 LOAD_CONST           ("character_name")
+             148 LOAD_CONST           ("Character ")
+             150 LOAD_FAST            (i)
+             152 LOAD_CONST           (1)
+             154 BINARY_ADD
+             156 FORMAT_VALUE         0
+             158 BUILD_STRING         2
+             160 CALL_METHOD          (2 positional arguments)
+             162 STORE_FAST           (char_name)
+
+ 60:         164 LOAD_FAST            (char_data)
+             166 LOAD_METHOD          (get)
+             168 LOAD_CONST           ("character_level")
+             170 LOAD_CONST           (0)
+             172 CALL_METHOD          (2 positional arguments)
+             174 STORE_FAST           (char_level)
+
+ 61:         176 LOAD_FAST            (char_data)
+             178 LOAD_METHOD          (get)
+             180 LOAD_CONST           ("class_id")
+             182 LOAD_CONST           (0)
+             184 CALL_METHOD          (2 positional arguments)
+             186 STORE_FAST           (char_class)
+
+ 62:         188 LOAD_FAST            (char_data)
+             190 LOAD_METHOD          (get)
+             192 LOAD_CONST           ("character_xp")
+             194 LOAD_CONST           (0)
+             196 CALL_METHOD          (2 positional arguments)
+             198 STORE_FAST           (char_exp)
+
+ 64:         200 LOAD_GLOBAL          (print)
+             202 LOAD_FAST            (i)
+             204 LOAD_CONST           (1)
+             206 BINARY_ADD
+             208 FORMAT_VALUE         0
+             210 LOAD_CONST           (". ID: ")
+             212 LOAD_FAST            (char_id)
+             214 FORMAT_VALUE         0
+             216 LOAD_CONST           (", Name: ")
+             218 LOAD_FAST            (char_name)
+             220 FORMAT_VALUE         0
+             222 LOAD_CONST           (", Level: ")
+             224 LOAD_FAST            (char_level)
+             226 FORMAT_VALUE         0
+             228 LOAD_CONST           (", Class: ")
+             230 LOAD_FAST            (char_class)
+             232 FORMAT_VALUE         0
+             234 BUILD_STRING         9
+             236 CALL_FUNCTION        (1 positional argument)
+             238 POP_TOP
+
+ 67:         240 LOAD_FAST            (char_id)
+
+ 68:         242 LOAD_FAST            (char_id)
+
+ 69:         244 LOAD_FAST            (char_name)
+
+ 70:         246 LOAD_FAST            (char_name)
+
+ 71:         248 LOAD_FAST            (char_level)
+
+ 72:         250 LOAD_FAST            (char_level)
+
+ 73:         252 LOAD_FAST            (char_class)
+
+ 74:         254 LOAD_FAST            (char_exp)
+
+ 75:         256 LOAD_FAST            (char_exp)
+
+ 76:         258 LOAD_FAST            (i)
+
+ 66:         260 LOAD_CONST           (('char_id', 'character_id', 'character_name', 'name', 'character_level', 'level', 'class_id', 'character_xp', 'xp', 'index'))
+             262 BUILD_CONST_KEY_MAP  10
+             264 STORE_FAST           (character_info)
+
+ 79:         266 LOAD_FAST            (char_list)
+             268 LOAD_METHOD          (append)
+             270 LOAD_FAST            (character_info)
+             272 CALL_METHOD          (1 positional argument)
+             274 POP_TOP
+             276 JUMP_ABSOLUTE        (to 106)
+
+ 81:     >>  278 LOAD_GLOBAL          (print)
+             280 LOAD_CONST           ("Warning: Index ")
+             282 LOAD_FAST            (i)
+             284 FORMAT_VALUE         0
+             286 LOAD_CONST           (" out of range for account_data")
+             288 BUILD_STRING         3
+             290 CALL_FUNCTION        (1 positional argument)
+             292 POP_TOP
+             294 JUMP_ABSOLUTE        (to 106)
+
+ 98:     >>  296 LOAD_FAST            (char_list)
+             298 RETURN_VALUE
+
+ 83:     >>  300 LOAD_GLOBAL          (print)
+             302 LOAD_CONST           ("Unexpected result structure:")
+             304 LOAD_FAST            (result)
+             306 CALL_FUNCTION        (2 positional arguments)
+             308 POP_TOP
+
+ 84:         310 LOAD_GLOBAL          (isinstance)
+             312 LOAD_FAST            (result)
+             314 LOAD_GLOBAL          (list)
+             316 CALL_FUNCTION        (2 positional arguments)
+             318 POP_JUMP_IF_FALSE    (to 446)
+
+ 85:         320 LOAD_GLOBAL          (enumerate)
+             322 LOAD_FAST            (result)
+             324 CALL_FUNCTION        (1 positional argument)
+             326 GET_ITER
+         >>  328 FOR_ITER             (to 446)
+             330 UNPACK_SEQUENCE      2
+             332 STORE_FAST           (i)
+             334 STORE_FAST           (char)
+
+ 86:         336 LOAD_GLOBAL          (isinstance)
+             338 LOAD_FAST            (char)
+             340 LOAD_GLOBAL          (dict)
+             342 CALL_FUNCTION        (2 positional arguments)
+             344 POP_JUMP_IF_FALSE    (to 444)
+
+ 88:         346 LOAD_FAST            (char)
+             348 LOAD_METHOD          (get)
+             350 LOAD_CONST           ("char_id")
+             352 LOAD_FAST            (i)
+             354 CALL_METHOD          (2 positional arguments)
+
+ 89:         356 LOAD_FAST            (char)
+             358 LOAD_METHOD          (get)
+             360 LOAD_CONST           ("char_id")
+             362 LOAD_FAST            (i)
+             364 CALL_METHOD          (2 positional arguments)
+
+ 90:         366 LOAD_FAST            (char)
+             368 LOAD_METHOD          (get)
+             370 LOAD_CONST           ("character_name")
+             372 LOAD_CONST           ("Character ")
+             374 LOAD_FAST            (i)
+             376 LOAD_CONST           (1)
+             378 BINARY_ADD
+             380 FORMAT_VALUE         0
+             382 BUILD_STRING         2
+             384 CALL_METHOD          (2 positional arguments)
+
+ 91:         386 LOAD_FAST            (char)
+             388 LOAD_METHOD          (get)
+             390 LOAD_CONST           ("character_name")
+             392 LOAD_CONST           ("Character ")
+             394 LOAD_FAST            (i)
+             396 LOAD_CONST           (1)
+             398 BINARY_ADD
+             400 FORMAT_VALUE         0
+             402 BUILD_STRING         2
+             404 CALL_METHOD          (2 positional arguments)
+
+ 92:         406 LOAD_FAST            (char)
+             408 LOAD_METHOD          (get)
+             410 LOAD_CONST           ("character_level")
+             412 LOAD_CONST           (0)
+             414 CALL_METHOD          (2 positional arguments)
+
+ 93:         416 LOAD_FAST            (char)
+             418 LOAD_METHOD          (get)
+             420 LOAD_CONST           ("character_level")
+             422 LOAD_CONST           (0)
+             424 CALL_METHOD          (2 positional arguments)
+
+ 94:         426 LOAD_FAST            (i)
+
+ 87:         428 LOAD_CONST           (('char_id', 'character_id', 'character_name', 'name', 'character_level', 'level', 'index'))
+             430 BUILD_CONST_KEY_MAP  7
+             432 STORE_FAST           (char_info)
+
+ 96:         434 LOAD_FAST            (char_list)
+             436 LOAD_METHOD          (append)
+             438 LOAD_FAST            (char_info)
+             440 CALL_METHOD          (1 positional argument)
+             442 POP_TOP
+         >>  444 JUMP_ABSOLUTE        (to 328)
+
+ 98:     >>  446 LOAD_FAST            (char_list)
+             448 RETURN_VALUE
+
+
+# Method Name:       get_character_data
+# Filename:          amf_req.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        101
+# Constants:
+#    0: None
+#    1: 'sessionkey'
+#    2: 'SystemLogin.getCharacterData'
+# Names:
+#    0: config
+#    1: login_data
+#    2: send_amf_request
+#    3: char_data
+# Varnames:
+#	char_id, parameters, result
+# Positional arguments:
+#	char_id
+# Local variables:
+#    1: parameters
+#    2: result
+102:           0 LOAD_FAST            (char_id)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_ATTR            (login_data)
+               6 LOAD_CONST           ("sessionkey")
+               8 BINARY_SUBSCR
+              10 BUILD_LIST           2
+              12 STORE_FAST           (parameters)
+
+103:          14 LOAD_GLOBAL          (send_amf_request)
+              16 LOAD_CONST           ("SystemLogin.getCharacterData")
+              18 LOAD_FAST            (parameters)
+              20 CALL_FUNCTION        (2 positional arguments)
+              22 STORE_FAST           (result)
+
+104:          24 LOAD_FAST            (result)
+              26 LOAD_GLOBAL          (config)
+              28 STORE_ATTR           (char_data)
+
+105:          30 LOAD_FAST            (result)
+              32 RETURN_VALUE
+
+
+# Method Name:       login
+# Filename:          amf_req.py
+# Argument count:    4
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  9
+# Stack size:        6
+# Flags:             0x00000003 (NEWLOCALS | OPTIMIZED)
+# First Line:        108
+# Constants:
+#    0: None
+#    1: '40367c3cc999a9f9e951a1d33211545b84b2d5a63933b0020433000c3bb410fb'
+#    2: <Code310 code object build_params at 0x27c0d911550, file amf_req.py>, line 120
+#    3: 'login.<locals>.build_params'
+#    4: 'SystemLogin.loginUser'
+#    5: 'message'
+#    6: ''
+#    7: 'status'
+#    8: 1
+#    9: 'invalid password'
+#   10: 'Default encryption rejected, retrying with exact encryption mode'
+# Names:
+#    0: _local_login_version_args
+#    1: get_random_n_seed
+#    2: int
+#    3: config
+#    4: BYTES_LOADED
+#    5: Crypt
+#    6: encrypt
+#    7: send_amf_request
+#    8: isinstance
+#    9: dict
+#   10: str
+#   11: get
+#   12: lower
+#   13: print
+#   14: CryptExact
+# Varnames:
+#	username, password, char_dot__, char_dot__underscore, build_params, encrypted_default, result, message, encrypted_exact
+# Positional arguments:
+#	username, password, char_dot__, char_dot__underscore
+# Local variables:
+#    4: build_params
+#    5: encrypted_default
+#    6: result
+#    7: message
+#    8: encrypted_exact
+# Cell variables:
+#    0: char_dot__
+#    1: char_dot__underscore
+#    2: password
+#    3: random_seed
+#    4: specific_item
+#    5: username
+109:           0 LOAD_GLOBAL          (_local_login_version_args)
+               2 LOAD_DEREF           (char_dot__)
+               4 LOAD_DEREF           (char_dot__underscore)
+               6 CALL_FUNCTION        (2 positional arguments)
+               8 UNPACK_SEQUENCE      2
+              10 STORE_DEREF          (char_dot__)
+              12 STORE_DEREF          (char_dot__underscore)
+
+111:          14 LOAD_DEREF           (char_dot__underscore)
+
+112:          16 LOAD_CONST           ("40367c3cc999a9f9e951a1d33211545b84b2d5a63933b0020433000c3bb410fb")
+
+111:          18 BINARY_ADD
+
+113:          20 LOAD_DEREF           (char_dot__underscore)
+
+111:          22 BINARY_ADD
+
+114:          24 LOAD_DEREF           (char_dot__underscore)
+
+111:          26 BINARY_ADD
+
+115:          28 LOAD_DEREF           (char_dot__underscore)
+
+111:          30 BINARY_ADD
+
+116:          32 LOAD_DEREF           (char_dot__underscore)
+
+111:          34 BINARY_ADD
+
+110:          36 STORE_DEREF          (specific_item)
+
+118:          38 LOAD_GLOBAL          (get_random_n_seed)
+              40 LOAD_GLOBAL          (int)
+              42 LOAD_DEREF           (char_dot__underscore)
+              44 CALL_FUNCTION        (1 positional argument)
+              46 LOAD_GLOBAL          (config)
+              48 LOAD_ATTR            (BYTES_LOADED)
+              50 CALL_FUNCTION        (2 positional arguments)
+              52 STORE_DEREF          (random_seed)
+
+120:          54 LOAD_CLOSURE         (char_dot__)
+              56 LOAD_CLOSURE         (char_dot__underscore)
+              58 LOAD_CLOSURE         (password)
+              60 LOAD_CLOSURE         (random_seed)
+              62 LOAD_CLOSURE         (specific_item)
+              64 LOAD_CLOSURE         (username)
+              66 BUILD_TUPLE          6
+              68 LOAD_CONST           (<Code310 code object build_params at 0x27c0d911550, file amf_req.py>, line 120)
+              70 LOAD_CONST           ("login.<locals>.build_params")
+              72 MAKE_FUNCTION        (closure)
+              74 STORE_FAST           (build_params)
+
+133:          76 LOAD_GLOBAL          (Crypt)
+              78 LOAD_METHOD          (encrypt)
+              80 LOAD_DEREF           (password)
+              82 LOAD_DEREF           (char_dot__)
+              84 LOAD_DEREF           (char_dot__underscore)
+              86 CALL_METHOD          (3 positional arguments)
+              88 STORE_FAST           (encrypted_default)
+
+134:          90 LOAD_GLOBAL          (send_amf_request)
+              92 LOAD_CONST           ("SystemLogin.loginUser")
+              94 LOAD_FAST            (build_params)
+              96 LOAD_FAST            (encrypted_default)
+              98 CALL_FUNCTION        (1 positional argument)
+             100 CALL_FUNCTION        (2 positional arguments)
+             102 STORE_FAST           (result)
+
+136:         104 LOAD_GLOBAL          (isinstance)
+             106 LOAD_FAST            (result)
+             108 LOAD_GLOBAL          (dict)
+             110 CALL_FUNCTION        (2 positional arguments)
+             112 POP_JUMP_IF_FALSE    (to 134)
+             114 LOAD_GLOBAL          (str)
+             116 LOAD_FAST            (result)
+             118 LOAD_METHOD          (get)
+             120 LOAD_CONST           ("message")
+             122 LOAD_CONST           ("")
+             124 CALL_METHOD          (2 positional arguments)
+             126 CALL_FUNCTION        (1 positional argument)
+             128 LOAD_METHOD          (lower)
+             130 CALL_METHOD          (0 positional arguments)
+             132 JUMP_FORWARD         (to 136)
+         >>  134 LOAD_CONST           ("")
+         >>  136 STORE_FAST           (message)
+
+137:         138 LOAD_GLOBAL          (isinstance)
+             140 LOAD_FAST            (result)
+             142 LOAD_GLOBAL          (dict)
+             144 CALL_FUNCTION        (2 positional arguments)
+             146 POP_JUMP_IF_FALSE    (to 206)
+             148 LOAD_FAST            (result)
+             150 LOAD_METHOD          (get)
+             152 LOAD_CONST           ("status")
+             154 CALL_METHOD          (1 positional argument)
+             156 LOAD_CONST           (1)
+             158 COMPARE_OP           (!=)
+             160 POP_JUMP_IF_FALSE    (to 206)
+             162 LOAD_CONST           ("invalid password")
+             164 LOAD_FAST            (message)
+             166 CONTAINS_OP          (in)
+             168 POP_JUMP_IF_FALSE    (to 206)
+
+138:         170 LOAD_GLOBAL          (print)
+             172 LOAD_CONST           ("Default encryption rejected, retrying with exact encryption mode")
+             174 CALL_FUNCTION        (1 positional argument)
+             176 POP_TOP
+
+139:         178 LOAD_GLOBAL          (CryptExact)
+             180 LOAD_METHOD          (encrypt)
+             182 LOAD_DEREF           (password)
+             184 LOAD_DEREF           (char_dot__)
+             186 LOAD_DEREF           (char_dot__underscore)
+             188 CALL_METHOD          (3 positional arguments)
+             190 STORE_FAST           (encrypted_exact)
+
+140:         192 LOAD_GLOBAL          (send_amf_request)
+             194 LOAD_CONST           ("SystemLogin.loginUser")
+             196 LOAD_FAST            (build_params)
+             198 LOAD_FAST            (encrypted_exact)
+             200 CALL_FUNCTION        (1 positional argument)
+             202 CALL_FUNCTION        (2 positional arguments)
+             204 STORE_FAST           (result)
+
+142:     >>  206 LOAD_FAST            (result)
+             208 RETURN_VALUE
+
+
+# Method Name:       build_params
+# Filename:          amf_req.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        10
+# Flags:             0x00000013 (NESTED | NEWLOCALS | OPTIMIZED)
+# First Line:        120
+# Constants:
+#    0: None
+# Names:
+#    0: float
+#    1: config
+#    2: BYTES_LOADED
+#    3: BYTES_TOTAL
+#    4: len
+# Varnames:
+#	encrypted_password
+# Positional arguments:
+#	encrypted_password
+# Free variables:
+#    0: char_dot__
+#    1: char_dot__underscore
+#    2: password
+#    3: random_seed
+#    4: specific_item
+#    5: username
+122:           0 LOAD_DEREF           (username)
+
+123:           2 LOAD_FAST            (encrypted_password)
+
+124:           4 LOAD_GLOBAL          (float)
+               6 LOAD_DEREF           (char_dot__underscore)
+               8 CALL_FUNCTION        (1 positional argument)
+
+125:          10 LOAD_GLOBAL          (config)
+              12 LOAD_ATTR            (BYTES_LOADED)
+
+126:          14 LOAD_GLOBAL          (config)
+              16 LOAD_ATTR            (BYTES_TOTAL)
+
+127:          18 LOAD_DEREF           (char_dot__)
+
+128:          20 LOAD_DEREF           (specific_item)
+
+129:          22 LOAD_DEREF           (random_seed)
+
+130:          24 LOAD_GLOBAL          (len)
+              26 LOAD_DEREF           (password)
+              28 CALL_FUNCTION        (1 positional argument)
+
+121:          30 BUILD_LIST           9
+              32 RETURN_VALUE
+

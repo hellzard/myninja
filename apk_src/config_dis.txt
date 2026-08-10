@@ -1,0 +1,2594 @@
+﻿# pydisasm version 6.1.8
+# Python bytecode 3.10 (3439)
+# Disassembled from Python 3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]
+# Timestamp in code: 1780820770 (2026-06-07 15:26:10)
+# Source code size mod 2**32: 17593 bytes
+# Method Name:       <module>
+# Filename:          config.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        15
+# Flags:             0x00000040 (NOFREE)
+# First Line:        1
+# Constants:
+#    0: 'V1.5.5'
+#    1: 'leveling_delay_seconds'
+#    2: 10
+#    3: 'leveling_cycle_cooldown_seconds'
+#    4: 5
+#    5: 'leveling_rest_every_cycles'
+#    6: 40
+#    7: 'leveling_rest_duration_seconds'
+#    8: 60
+#    9: 'leveling_action_jitter_seconds'
+#   10: 2
+#   11: 'leveling_min_call_delay_seconds'
+#   12: 4
+#   13: 'leveling_start_retry_delay_seconds'
+#   14: 6
+#   15: 'leveling_start_max_retries'
+#   16: 3
+#   17: 'leveling_failure_window_seconds'
+#   18: 180
+#   19: 'leveling_max_failures_in_window'
+#   20: 'leveling_circuit_cooldown_seconds'
+#   21: 120
+#   22: 'sage_exam_start_delay_seconds'
+#   23: 8
+#   24: 'sage_exam_finish_delay_seconds'
+#   25: 'sage_battle_wait_seconds'
+#   26: 'sage_post_finish_delay_seconds'
+#   27: 0
+#   28: 'sage_auto_relogin_wait_seconds'
+#   29: 20
+#   30: 'sage_infinite_loop_rest_every_cycles'
+#   31: 50
+#   32: 'sage_infinite_loop_rest_duration_seconds'
+#   33: 'sage_limited_loop_rest_every_cycles'
+#   34: 15
+#   35: 'sage_limited_loop_rest_duration_seconds'
+#   36: 'sage_special_jounin_class_skill'
+#   37: 'skill_4001'
+#   38: 'sage_event_empty_resource_mode'
+#   39: 'wait'
+#   40: 'sage_event_wait_minutes'
+#   41: 30
+#   42: 'sage_aniv_event_empty_resource_mode'
+#   43: 'sage_aniv_event_wait_minutes'
+#   44: 'sage_sakura_event_empty_resource_mode'
+#   45: 'sage_sakura_event_wait_minutes'
+#   46: 'sage_easter_event_empty_resource_mode'
+#   47: 'sage_easter_event_wait_minutes'
+#   48: 'sage_shadow_war_empty_resource_mode'
+#   49: 'sage_shadow_war_wait_minutes'
+#   50: 'clan_war_auto_spend_token'
+#   51: False
+#   52: 'clan_war_stamina_refill_source'
+#   53: 'auto'
+#   54: 'clan_war_battle_delay_seconds'
+#   55: 'clan_war_buy_stamina_delay_seconds'
+#   56: 'alternate5'
+#   57: ('leveling_delay_seconds', 'sage_exam_start_delay_seconds', 'sage_exam_finish_delay_seconds')
+#   58: 'rift_min_call_delay_seconds'
+#   59: 'rift_loop_delay_seconds'
+#   60: 1
+#   61: 'rift_auto_relogin_wait_seconds'
+#   62: 'rift_infinite_loop_rest_every_cycles'
+#   63: 'rift_infinite_loop_rest_duration_seconds'
+#   64: 'rift_limited_loop_rest_every_cycles'
+#   65: 'rift_limited_loop_rest_duration_seconds'
+#   66: 'rift_mission_battle_wait_base_seconds'
+#   67: 'rift_mission_battle_wait_random_seconds'
+#   68: 'rift_event_battle_wait_base_seconds'
+#   69: 'rift_event_battle_wait_random_seconds'
+#   70: 'rift_eudemon_battle_wait_base_seconds'
+#   71: 'rift_eudemon_battle_wait_random_seconds'
+#   72: 'rift_eudemon_between_battles_delay_seconds'
+#   73: 'rift_hunting_house_battle_wait_base_seconds'
+#   74: 'rift_hunting_house_battle_wait_random_seconds'
+#   75: 'rift_hunting_house_between_battles_delay_seconds'
+#   76: 45
+#   77: 'skill_2001'
+#   78: ('rift_exam_wait_min_seconds', 'rift_exam_wait_max_seconds', 'rift_exam_stage_gap_seconds', 'rift_special_jounin_class_skill', 'rift_event_empty_resource_mode', 'rift_event_wait_minutes', 'rift_hanami_event_empty_resource_mode', 'rift_hanami_event_wait_minutes', 'rift_easter_event_empty_resource_mode', 'rift_easter_event_wait_minutes')
+#   79: (60, 120, 240)
+#   80: 300
+#   81: ('action_delay_seconds', 'cycle_cooldown_seconds', 'rest_every_cycles', 'rest_duration_seconds', 'action_jitter_seconds', 'min_call_delay_seconds', 'start_retry_delay_seconds', 'start_max_retries', 'cloudflare_rest_seconds', 'cloudflare_backoff_steps_seconds', 'cloudflare_backoff_max_seconds', 'failure_window_seconds', 'max_failures_in_window', 'circuit_cooldown_seconds')
+#   82: 'leveling_action_delay_seconds'
+#   83: 'leveling_cloudflare_rest_seconds'
+#   84: 'leveling_cloudflare_backoff_steps_seconds'
+#   85: 'special_jounin_class_index'
+#   86: 'tp_training_abuse_loop'
+#   87: 'ss_training_abuse_loop'
+#   88: 'skill_2002'
+#   89: 'Intelligence Class'
+#   90: ('id', 'label')
+#   91: 'skill_2004'
+#   92: 'Surprise Attack Class'
+#   93: 'Sensor Class'
+#   94: 'skill_2003'
+#   95: 'Heavy Attack Class'
+#   96: 'skill_2000'
+#   97: 'Medical Class'
+#   98: 'Ninja Sage'
+#   99: 'Choose the AMF server before login.'
+#  100: True
+#  101: None
+#  102: 'official'
+#  103: ('label', 'server_selection_note', 'has_tokens', 'library_url', 'default_profile_id')
+#  104: 'Ninja Rift'
+#  105: 'Choose the Ninja Rift server before login.'
+#  106: 'https://ninjarift.org/library/'
+#  107: 'Ninja Zenshin'
+#  108: 'Android Zenshin uses the same isolated mission flow as desktop.'
+#  109: ('sage', 'rift', 'zenshin')
+#  110: 'Ninja Sage ID'
+#  111: 'https://play.ninjasage.id/amf'
+#  112: 'Public 0.59'
+#  113: 'https://clan.ninjasage.id'
+#  114: ('label', 'gateway', 'build_num', 'clan_url')
+#  115: 'Ninja Eskrim'
+#  116: 'https://ninjaeskrim.web.id/amf'
+#  117: 'Skip Version Check'
+#  118: 'Ninja Extreme'
+#  119: 'https://kotagames.web.id/amf'
+#  120: 'Ninja ID'
+#  121: 'https://ninja-id.com/amf'
+#  122: 'https://ninja-id.com/clan'
+#  123: 'Ninja Jolay'
+#  124: 'https://game.ninjajolay.id/amf'
+#  125: 'https://clan.ninjajolay.id'
+#  126: ('official', 'alternate5', 'alternate6', 'alternate', 'alternate2')
+#  127: 'Ninja Rift Official'
+#  128: 'https://ninjarift.org/amf_nl/'
+#  129: 'Public 2.40'
+#  130: 'https://amf.ninjazenshin.online/'
+#  131: '1.0.2'
+#  132: 'sage'
+#  133: 'default_profile_id'
+#  134: 'gateway'
+#  135: 'build_num'
+#  136: 8228447
+#  137: 'https://ninjasage.wiguna69.my.id/panel_status.json'
+#  138: 'cicingkuluxxx6666'
+#  139: 'https://ninjasage.wiguna69.my.id/panel_api/SentLoginAMF.php'
+#  140: 'celak-kenyang'
+#  141: <Code310 code object get_base_games at 0x261ae3a1190, file config.py>, line 233
+#  142: 'get_base_games'
+#  143: 'return'
+#  144: <Code310 code object get_current_base_game at 0x261ae3a1220, file config.py>, line 245
+#  145: 'get_current_base_game'
+#  146: 'base_game_id'
+#  147: <Code310 code object _profiles_for_base_game at 0x261ae3a12e0, file config.py>, line 256
+#  148: '_profiles_for_base_game'
+#  149: <Code310 code object _sync_runtime_connection at 0x261ae3a13d0, file config.py>, line 263
+#  150: '_sync_runtime_connection'
+#  151: <Code310 code object set_base_game at 0x261ae3a1400, file config.py>, line 271
+#  152: 'set_base_game'
+#  153: <Code310 code object get_amf_profiles at 0x261ae3a1580, file config.py>, line 289
+#  154: 'get_amf_profiles'
+#  155: 'profile_id'
+#  156: <Code310 code object set_amf_profile at 0x261ae3a1610, file config.py>, line 303
+#  157: 'set_amf_profile'
+#  158: <Code310 code object get_current_amf_profile at 0x261ae3a1640, file config.py>, line 316
+#  159: 'get_current_amf_profile'
+#  160: <Code310 code object _default_quick_login_store at 0x261ae3a1760, file config.py>, line 327
+#  161: '_default_quick_login_store'
+#  162: <Code310 code object normalize_quick_login_data at 0x261ae3a1820, file config.py>, line 334
+#  163: 'normalize_quick_login_data'
+#  164: 'username'
+#  165: 'password'
+#  166: 'amf_label'
+#  167: <Code310 code object set_quick_login_credentials at 0x261ac34ccb0, file config.py>, line 370
+#  168: 'set_quick_login_credentials'
+#  169: <Code310 code object get_quick_login_credentials at 0x261ae3a19a0, file config.py>, line 385
+#  170: 'get_quick_login_credentials'
+#  171: 'state'
+#  172: <Code310 code object get_sage_global_settings at 0x261ae3a1a00, file config.py>, line 412
+#  173: 'get_sage_global_settings'
+#  174: <Code310 code object get_rift_settings at 0x261ae3a1bb0, file config.py>, line 429
+#  175: 'get_rift_settings'
+#  176: <Code310 code object get_ninjasaga_anti_detection_profile at 0x261ae3a1c10, file config.py>, line 442
+#  177: 'get_ninjasaga_anti_detection_profile'
+#  178: <Code310 code object get_zenshin_settings at 0x261ae3a1cd0, file config.py>, line 469
+#  179: 'get_zenshin_settings'
+#  180: <Code310 code object get_rift_special_jounin_skill_options at 0x261ae3a1e50, file config.py>, line 484
+#  181: 'get_rift_special_jounin_skill_options'
+#  182: 'eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDQiLCJiYWNrX2l0ZW0iOiJiYWNrXzIyMDIiLCJ3ZWFwb24iOiJ3cG5fMjIxMyIsInNldCI6InNldF84MzFfMCJ9LCJfX19fIjpbeyJfIjoic2tpbGxfMDQiLCJfXyI6MjMzOTd9LHsiXyI6InNraWxsXzIzMDciLCJfXyI6NTQxMTR9LHsiXyI6InNraWxsXzAzIiwiX18iOjIyOTM0fSx7Il8iOiJza2lsbF82NTMiLCJfXyI6ODE1MTJ9LHsiXyI6InNraWxsXzE5NSIsIl9fIjo2NTczM30seyJfIjoic2tpbGxfMzE0IiwiX18iOjUyNjgxfSx7Il8iOiJza2lsbF8xODciLCJfXyI6NDc1Nzl9LHsiXyI6InNraWxsXzE2NCIsIl9fIjo1NDQ0NH1dLCJzdGF0dXMiOnsiZWFydGgiOjAsImxpZ2h0bmluZyI6MCwiZmlyZSI6MCwid2F0ZXIiOjAsIndpbmQiOjczfSwiYnl0ZXMiOnsiX19fIjoiMTc2Mjg0MzY2NjQwMzY3YzNjYzk5OWE5ZjllOTUxYTFkMzMyMTE1NDViODRiMmQ1YTYzOTMzYjAwMjA0MzMwMDBjM2JiNDEwZmIxNzYyODQzNjY2MTc2Mjg0MzY2NjE3NjI4NDM2NjYxNzYyODQzNjY2IiwiX19fX19fIjo4MjI4NDQ3LCJfIjo4MjI4NDQ3LCJfXyI6ODIyODQ0NywiX19fXyI6MTc2Mjg0MzY2NiwiX19fX18iOjgyMjg0NDd9fQ=='
+#  183: (None,)
+#  184: (None, None)
+# Names:
+#    0: PANEL_BUILD_NUM
+#    1: SAGE_GLOBAL_SETTINGS
+#    2: SAGE_PROFILE_LOCKED_SETTINGS
+#    3: RIFT_SETTINGS
+#    4: NINJASAGA_ANTI_DETECTION_PROFILE
+#    5: ZENSHIN_SETTINGS
+#    6: RIFT_SPECIAL_JOUNIN_SKILL_OPTIONS
+#    7: BASE_GAMES
+#    8: SAGE_AMF_PROFILES
+#    9: RIFT_AMF_PROFILES
+#   10: ZENSHIN_AMF_PROFILES
+#   11: GAME_PROFILES
+#   12: ACTIVE_BASE_GAME
+#   13: ACTIVE_AMF_PROFILE
+#   14: GATEWAY
+#   15: GAME_BUILD_NUM
+#   16: BUILD_NUM
+#   17: BYTES_LOADED
+#   18: BYTES_TOTAL
+#   19: CLASSIC_REQUEST_SEQ
+#   20: PANEL_STATUS_URL
+#   21: PASS_TOKEN
+#   22: REMOTE_SAVE_URL
+#   23: REMOTE_API_KEY
+#   24: REMOTE_SAVE_ENABLED
+#   25: get_base_games
+#   26: dict
+#   27: get_current_base_game
+#   28: str
+#   29: _profiles_for_base_game
+#   30: _sync_runtime_connection
+#   31: set_base_game
+#   32: get_amf_profiles
+#   33: set_amf_profile
+#   34: get_current_amf_profile
+#   35: _default_quick_login_store
+#   36: normalize_quick_login_data
+#   37: set_quick_login_credentials
+#   38: get_quick_login_credentials
+#   39: weapon_list
+#   40: back_item_list
+#   41: accessory_list
+#   42: all_char
+#   43: char_data
+#   44: game_data
+#   45: login_data
+#   46: rift_bootstrap
+#   47: quick_login_data
+#   48: character_update_callback
+#   49: character_update_loop
+#   50: session_reauth_required_callback
+#   51: storage_dir
+#   52: zenshin_state
+#   53: battle_id
+#   54: char_token
+#   55: get_sage_global_settings
+#   56: get_rift_settings
+#   57: get_ninjasaga_anti_detection_profile
+#   58: get_zenshin_settings
+#   59: get_rift_special_jounin_skill_options
+#   60: BATTLE_HASH
+  2:           0 LOAD_CONST           ("V1.5.5")
+               2 STORE_NAME           (PANEL_BUILD_NUM)
+
+  4:           4 BUILD_MAP            0
+
+  5:           6 LOAD_CONST           ("leveling_delay_seconds")
+               8 LOAD_CONST           (10)
+
+  4:          10 MAP_ADD              1
+
+  6:          12 LOAD_CONST           ("leveling_cycle_cooldown_seconds")
+              14 LOAD_CONST           (5)
+
+  4:          16 MAP_ADD              1
+
+  7:          18 LOAD_CONST           ("leveling_rest_every_cycles")
+              20 LOAD_CONST           (40)
+
+  4:          22 MAP_ADD              1
+
+  8:          24 LOAD_CONST           ("leveling_rest_duration_seconds")
+              26 LOAD_CONST           (60)
+
+  4:          28 MAP_ADD              1
+
+  9:          30 LOAD_CONST           ("leveling_action_jitter_seconds")
+              32 LOAD_CONST           (2)
+
+  4:          34 MAP_ADD              1
+
+ 10:          36 LOAD_CONST           ("leveling_min_call_delay_seconds")
+              38 LOAD_CONST           (4)
+
+  4:          40 MAP_ADD              1
+
+ 11:          42 LOAD_CONST           ("leveling_start_retry_delay_seconds")
+              44 LOAD_CONST           (6)
+
+  4:          46 MAP_ADD              1
+
+ 12:          48 LOAD_CONST           ("leveling_start_max_retries")
+              50 LOAD_CONST           (3)
+
+  4:          52 MAP_ADD              1
+
+ 13:          54 LOAD_CONST           ("leveling_failure_window_seconds")
+              56 LOAD_CONST           (180)
+
+  4:          58 MAP_ADD              1
+
+ 14:          60 LOAD_CONST           ("leveling_max_failures_in_window")
+              62 LOAD_CONST           (6)
+
+  4:          64 MAP_ADD              1
+
+ 15:          66 LOAD_CONST           ("leveling_circuit_cooldown_seconds")
+              68 LOAD_CONST           (120)
+
+  4:          70 MAP_ADD              1
+
+ 16:          72 LOAD_CONST           ("sage_exam_start_delay_seconds")
+              74 LOAD_CONST           (8)
+
+  4:          76 MAP_ADD              1
+
+ 17:          78 LOAD_CONST           ("sage_exam_finish_delay_seconds")
+              80 LOAD_CONST           (5)
+
+  4:          82 MAP_ADD              1
+
+ 18:          84 LOAD_CONST           ("sage_battle_wait_seconds")
+              86 LOAD_CONST           (5)
+
+  4:          88 MAP_ADD              1
+
+ 19:          90 LOAD_CONST           ("sage_post_finish_delay_seconds")
+              92 LOAD_CONST           (0)
+
+  4:          94 MAP_ADD              1
+
+ 20:          96 LOAD_CONST           ("sage_auto_relogin_wait_seconds")
+              98 LOAD_CONST           (20)
+
+  4:         100 MAP_ADD              1
+
+ 21:         102 LOAD_CONST           ("sage_infinite_loop_rest_every_cycles")
+             104 LOAD_CONST           (50)
+
+  4:         106 MAP_ADD              1
+             108 BUILD_MAP            0
+
+ 22:         110 LOAD_CONST           ("sage_infinite_loop_rest_duration_seconds")
+             112 LOAD_CONST           (10)
+
+  4:         114 MAP_ADD              1
+
+ 23:         116 LOAD_CONST           ("sage_limited_loop_rest_every_cycles")
+             118 LOAD_CONST           (15)
+
+  4:         120 MAP_ADD              1
+
+ 24:         122 LOAD_CONST           ("sage_limited_loop_rest_duration_seconds")
+             124 LOAD_CONST           (10)
+
+  4:         126 MAP_ADD              1
+
+ 25:         128 LOAD_CONST           ("sage_special_jounin_class_skill")
+             130 LOAD_CONST           ("skill_4001")
+
+  4:         132 MAP_ADD              1
+
+ 26:         134 LOAD_CONST           ("sage_event_empty_resource_mode")
+             136 LOAD_CONST           ("wait")
+
+  4:         138 MAP_ADD              1
+
+ 27:         140 LOAD_CONST           ("sage_event_wait_minutes")
+             142 LOAD_CONST           (30)
+
+  4:         144 MAP_ADD              1
+
+ 28:         146 LOAD_CONST           ("sage_aniv_event_empty_resource_mode")
+             148 LOAD_CONST           ("wait")
+
+  4:         150 MAP_ADD              1
+
+ 29:         152 LOAD_CONST           ("sage_aniv_event_wait_minutes")
+             154 LOAD_CONST           (30)
+
+  4:         156 MAP_ADD              1
+
+ 30:         158 LOAD_CONST           ("sage_sakura_event_empty_resource_mode")
+             160 LOAD_CONST           ("wait")
+
+  4:         162 MAP_ADD              1
+
+ 31:         164 LOAD_CONST           ("sage_sakura_event_wait_minutes")
+             166 LOAD_CONST           (30)
+
+  4:         168 MAP_ADD              1
+
+ 32:         170 LOAD_CONST           ("sage_easter_event_empty_resource_mode")
+             172 LOAD_CONST           ("wait")
+
+  4:         174 MAP_ADD              1
+
+ 33:         176 LOAD_CONST           ("sage_easter_event_wait_minutes")
+             178 LOAD_CONST           (30)
+
+  4:         180 MAP_ADD              1
+
+ 34:         182 LOAD_CONST           ("sage_shadow_war_empty_resource_mode")
+             184 LOAD_CONST           ("wait")
+
+  4:         186 MAP_ADD              1
+
+ 35:         188 LOAD_CONST           ("sage_shadow_war_wait_minutes")
+             190 LOAD_CONST           (30)
+
+  4:         192 MAP_ADD              1
+
+ 36:         194 LOAD_CONST           ("clan_war_auto_spend_token")
+             196 LOAD_CONST           (False)
+
+  4:         198 MAP_ADD              1
+
+ 37:         200 LOAD_CONST           ("clan_war_stamina_refill_source")
+             202 LOAD_CONST           ("auto")
+
+  4:         204 MAP_ADD              1
+
+ 38:         206 LOAD_CONST           ("clan_war_battle_delay_seconds")
+             208 LOAD_CONST           (8)
+
+  4:         210 MAP_ADD              1
+             212 DICT_UPDATE          1
+
+ 39:         214 LOAD_CONST           ("clan_war_buy_stamina_delay_seconds")
+             216 LOAD_CONST           (3)
+
+  4:         218 BUILD_MAP            1
+             220 DICT_UPDATE          1
+             222 STORE_NAME           (SAGE_GLOBAL_SETTINGS)
+
+ 43:         224 LOAD_CONST           ("alternate5")
+
+ 44:         226 LOAD_CONST           (10)
+
+ 45:         228 LOAD_CONST           (30)
+
+ 46:         230 LOAD_CONST           (30)
+
+ 43:         232 LOAD_CONST           (('leveling_delay_seconds', 'sage_exam_start_delay_seconds', 'sage_exam_finish_delay_seconds'))
+             234 BUILD_CONST_KEY_MAP  3
+
+ 42:         236 BUILD_MAP            1
+             238 STORE_NAME           (SAGE_PROFILE_LOCKED_SETTINGS)
+
+ 50:         240 BUILD_MAP            0
+
+ 51:         242 LOAD_CONST           ("rift_min_call_delay_seconds")
+             244 LOAD_CONST           (2)
+
+ 50:         246 MAP_ADD              1
+
+ 52:         248 LOAD_CONST           ("rift_loop_delay_seconds")
+             250 LOAD_CONST           (1)
+
+ 50:         252 MAP_ADD              1
+
+ 53:         254 LOAD_CONST           ("rift_auto_relogin_wait_seconds")
+             256 LOAD_CONST           (15)
+
+ 50:         258 MAP_ADD              1
+
+ 54:         260 LOAD_CONST           ("rift_infinite_loop_rest_every_cycles")
+             262 LOAD_CONST           (40)
+
+ 50:         264 MAP_ADD              1
+
+ 55:         266 LOAD_CONST           ("rift_infinite_loop_rest_duration_seconds")
+             268 LOAD_CONST           (30)
+
+ 50:         270 MAP_ADD              1
+
+ 56:         272 LOAD_CONST           ("rift_limited_loop_rest_every_cycles")
+             274 LOAD_CONST           (15)
+
+ 50:         276 MAP_ADD              1
+
+ 57:         278 LOAD_CONST           ("rift_limited_loop_rest_duration_seconds")
+             280 LOAD_CONST           (15)
+
+ 50:         282 MAP_ADD              1
+
+ 58:         284 LOAD_CONST           ("rift_mission_battle_wait_base_seconds")
+             286 LOAD_CONST           (8)
+
+ 50:         288 MAP_ADD              1
+
+ 59:         290 LOAD_CONST           ("rift_mission_battle_wait_random_seconds")
+             292 LOAD_CONST           (5)
+
+ 50:         294 MAP_ADD              1
+
+ 60:         296 LOAD_CONST           ("rift_event_battle_wait_base_seconds")
+             298 LOAD_CONST           (20)
+
+ 50:         300 MAP_ADD              1
+
+ 61:         302 LOAD_CONST           ("rift_event_battle_wait_random_seconds")
+             304 LOAD_CONST           (20)
+
+ 50:         306 MAP_ADD              1
+
+ 62:         308 LOAD_CONST           ("rift_eudemon_battle_wait_base_seconds")
+             310 LOAD_CONST           (20)
+
+ 50:         312 MAP_ADD              1
+
+ 63:         314 LOAD_CONST           ("rift_eudemon_battle_wait_random_seconds")
+             316 LOAD_CONST           (5)
+
+ 50:         318 MAP_ADD              1
+
+ 64:         320 LOAD_CONST           ("rift_eudemon_between_battles_delay_seconds")
+             322 LOAD_CONST           (5)
+
+ 50:         324 MAP_ADD              1
+
+ 65:         326 LOAD_CONST           ("rift_hunting_house_battle_wait_base_seconds")
+             328 LOAD_CONST           (20)
+
+ 50:         330 MAP_ADD              1
+
+ 66:         332 LOAD_CONST           ("rift_hunting_house_battle_wait_random_seconds")
+             334 LOAD_CONST           (5)
+
+ 50:         336 MAP_ADD              1
+
+ 67:         338 LOAD_CONST           ("rift_hunting_house_between_battles_delay_seconds")
+             340 LOAD_CONST           (5)
+
+ 50:         342 MAP_ADD              1
+
+ 68:         344 LOAD_CONST           (45)
+
+ 69:         346 LOAD_CONST           (120)
+
+ 70:         348 LOAD_CONST           (3)
+
+ 71:         350 LOAD_CONST           ("skill_2001")
+
+ 72:         352 LOAD_CONST           ("wait")
+
+ 73:         354 LOAD_CONST           (30)
+
+ 74:         356 LOAD_CONST           ("wait")
+
+ 75:         358 LOAD_CONST           (30)
+
+ 76:         360 LOAD_CONST           ("wait")
+
+ 77:         362 LOAD_CONST           (30)
+
+ 50:         364 LOAD_CONST           (('rift_exam_wait_min_seconds', 'rift_exam_wait_max_seconds', 'rift_exam_stage_gap_seconds', 'rift_special_jounin_class_skill', 'rift_event_empty_resource_mode', 'rift_event_wait_minutes', 'rift_hanami_event_empty_resource_mode', 'rift_hanami_event_wait_minutes', 'rift_easter_event_empty_resource_mode', 'rift_easter_event_wait_minutes'))
+             366 BUILD_CONST_KEY_MAP  10
+             368 DICT_UPDATE          1
+             370 STORE_NAME           (RIFT_SETTINGS)
+
+ 81:         372 LOAD_CONST           (10)
+
+ 82:         374 LOAD_CONST           (5)
+
+ 83:         376 LOAD_CONST           (40)
+
+ 84:         378 LOAD_CONST           (60)
+
+ 85:         380 LOAD_CONST           (2)
+
+ 86:         382 LOAD_CONST           (4)
+
+ 87:         384 LOAD_CONST           (6)
+
+ 88:         386 LOAD_CONST           (3)
+
+ 89:         388 LOAD_CONST           (60)
+
+ 90:         390 BUILD_LIST           0
+             392 LOAD_CONST           ((60, 120, 240))
+             394 LIST_EXTEND          1
+
+ 91:         396 LOAD_CONST           (300)
+
+ 92:         398 LOAD_CONST           (180)
+
+ 93:         400 LOAD_CONST           (6)
+
+ 94:         402 LOAD_CONST           (120)
+
+ 80:         404 LOAD_CONST           (('action_delay_seconds', 'cycle_cooldown_seconds', 'rest_every_cycles', 'rest_duration_seconds', 'action_jitter_seconds', 'min_call_delay_seconds', 'start_retry_delay_seconds', 'start_max_retries', 'cloudflare_rest_seconds', 'cloudflare_backoff_steps_seconds', 'cloudflare_backoff_max_seconds', 'failure_window_seconds', 'max_failures_in_window', 'circuit_cooldown_seconds'))
+             406 BUILD_CONST_KEY_MAP  14
+             408 STORE_NAME           (NINJASAGA_ANTI_DETECTION_PROFILE)
+
+ 97:         410 BUILD_MAP            0
+
+ 98:         412 LOAD_CONST           ("leveling_action_delay_seconds")
+             414 LOAD_CONST           (10)
+
+ 97:         416 MAP_ADD              1
+
+ 99:         418 LOAD_CONST           ("leveling_cycle_cooldown_seconds")
+             420 LOAD_CONST           (5)
+
+ 97:         422 MAP_ADD              1
+
+100:         424 LOAD_CONST           ("leveling_rest_every_cycles")
+             426 LOAD_CONST           (40)
+
+ 97:         428 MAP_ADD              1
+
+101:         430 LOAD_CONST           ("leveling_rest_duration_seconds")
+             432 LOAD_CONST           (60)
+
+ 97:         434 MAP_ADD              1
+
+102:         436 LOAD_CONST           ("leveling_action_jitter_seconds")
+             438 LOAD_CONST           (2)
+
+ 97:         440 MAP_ADD              1
+
+103:         442 LOAD_CONST           ("leveling_min_call_delay_seconds")
+             444 LOAD_CONST           (4)
+
+ 97:         446 MAP_ADD              1
+
+104:         448 LOAD_CONST           ("leveling_start_retry_delay_seconds")
+             450 LOAD_CONST           (6)
+
+ 97:         452 MAP_ADD              1
+
+105:         454 LOAD_CONST           ("leveling_start_max_retries")
+             456 LOAD_CONST           (3)
+
+ 97:         458 MAP_ADD              1
+
+106:         460 LOAD_CONST           ("leveling_cloudflare_rest_seconds")
+             462 LOAD_CONST           (60)
+
+ 97:         464 MAP_ADD              1
+
+107:         466 LOAD_CONST           ("leveling_cloudflare_backoff_steps_seconds")
+             468 BUILD_LIST           0
+             470 LOAD_CONST           ((60, 120, 240))
+             472 LIST_EXTEND          1
+
+ 97:         474 MAP_ADD              1
+
+108:         476 LOAD_CONST           ("leveling_failure_window_seconds")
+             478 LOAD_CONST           (180)
+
+ 97:         480 MAP_ADD              1
+
+109:         482 LOAD_CONST           ("leveling_max_failures_in_window")
+             484 LOAD_CONST           (6)
+
+ 97:         486 MAP_ADD              1
+
+110:         488 LOAD_CONST           ("leveling_circuit_cooldown_seconds")
+             490 LOAD_CONST           (120)
+
+ 97:         492 MAP_ADD              1
+
+111:         494 LOAD_CONST           ("special_jounin_class_index")
+             496 LOAD_CONST           (3)
+
+ 97:         498 MAP_ADD              1
+
+112:         500 LOAD_CONST           ("tp_training_abuse_loop")
+             502 LOAD_CONST           (1)
+
+ 97:         504 MAP_ADD              1
+
+113:         506 LOAD_CONST           ("ss_training_abuse_loop")
+             508 LOAD_CONST           (1)
+
+ 97:         510 MAP_ADD              1
+             512 STORE_NAME           (ZENSHIN_SETTINGS)
+
+117:         514 LOAD_CONST           ("skill_2002")
+             516 LOAD_CONST           ("Intelligence Class")
+             518 LOAD_CONST           (('id', 'label'))
+             520 BUILD_CONST_KEY_MAP  2
+
+118:         522 LOAD_CONST           ("skill_2004")
+             524 LOAD_CONST           ("Surprise Attack Class")
+             526 LOAD_CONST           (('id', 'label'))
+             528 BUILD_CONST_KEY_MAP  2
+
+119:         530 LOAD_CONST           ("skill_2001")
+             532 LOAD_CONST           ("Sensor Class")
+             534 LOAD_CONST           (('id', 'label'))
+             536 BUILD_CONST_KEY_MAP  2
+
+120:         538 LOAD_CONST           ("skill_2003")
+             540 LOAD_CONST           ("Heavy Attack Class")
+             542 LOAD_CONST           (('id', 'label'))
+             544 BUILD_CONST_KEY_MAP  2
+
+121:         546 LOAD_CONST           ("skill_2000")
+             548 LOAD_CONST           ("Medical Class")
+             550 LOAD_CONST           (('id', 'label'))
+             552 BUILD_CONST_KEY_MAP  2
+
+116:         554 BUILD_LIST           5
+             556 STORE_NAME           (RIFT_SPECIAL_JOUNIN_SKILL_OPTIONS)
+
+126:         558 LOAD_CONST           ("Ninja Sage")
+
+127:         560 LOAD_CONST           ("Choose the AMF server before login.")
+
+128:         562 LOAD_CONST           (True)
+
+129:         564 LOAD_CONST           (None)
+
+130:         566 LOAD_CONST           ("official")
+
+125:         568 LOAD_CONST           (('label', 'server_selection_note', 'has_tokens', 'library_url', 'default_profile_id'))
+             570 BUILD_CONST_KEY_MAP  5
+
+133:         572 LOAD_CONST           ("Ninja Rift")
+
+134:         574 LOAD_CONST           ("Choose the Ninja Rift server before login.")
+
+135:         576 LOAD_CONST           (True)
+
+136:         578 LOAD_CONST           ("https://ninjarift.org/library/")
+
+137:         580 LOAD_CONST           ("official")
+
+132:         582 LOAD_CONST           (('label', 'server_selection_note', 'has_tokens', 'library_url', 'default_profile_id'))
+             584 BUILD_CONST_KEY_MAP  5
+
+140:         586 LOAD_CONST           ("Ninja Zenshin")
+
+141:         588 LOAD_CONST           ("Android Zenshin uses the same isolated mission flow as desktop.")
+
+142:         590 LOAD_CONST           (True)
+
+143:         592 LOAD_CONST           (None)
+
+144:         594 LOAD_CONST           ("official")
+
+139:         596 LOAD_CONST           (('label', 'server_selection_note', 'has_tokens', 'library_url', 'default_profile_id'))
+             598 BUILD_CONST_KEY_MAP  5
+
+124:         600 LOAD_CONST           (('sage', 'rift', 'zenshin'))
+             602 BUILD_CONST_KEY_MAP  3
+             604 STORE_NAME           (BASE_GAMES)
+
+150:         606 LOAD_CONST           ("Ninja Sage ID")
+
+151:         608 LOAD_CONST           ("https://play.ninjasage.id/amf")
+
+152:         610 LOAD_CONST           ("Public 0.59")
+
+153:         612 LOAD_CONST           ("https://clan.ninjasage.id")
+
+149:         614 LOAD_CONST           (('label', 'gateway', 'build_num', 'clan_url'))
+             616 BUILD_CONST_KEY_MAP  4
+
+156:         618 LOAD_CONST           ("Ninja Eskrim")
+
+157:         620 LOAD_CONST           ("https://ninjaeskrim.web.id/amf")
+
+158:         622 LOAD_CONST           ("Skip Version Check")
+
+159:         624 LOAD_CONST           (None)
+
+155:         626 LOAD_CONST           (('label', 'gateway', 'build_num', 'clan_url'))
+             628 BUILD_CONST_KEY_MAP  4
+
+162:         630 LOAD_CONST           ("Ninja Extreme")
+
+163:         632 LOAD_CONST           ("https://kotagames.web.id/amf")
+
+164:         634 LOAD_CONST           ("Skip Version Check")
+
+165:         636 LOAD_CONST           (None)
+
+161:         638 LOAD_CONST           (('label', 'gateway', 'build_num', 'clan_url'))
+             640 BUILD_CONST_KEY_MAP  4
+
+168:         642 LOAD_CONST           ("Ninja ID")
+
+169:         644 LOAD_CONST           ("https://ninja-id.com/amf")
+
+170:         646 LOAD_CONST           ("Skip Version Check")
+
+171:         648 LOAD_CONST           ("https://ninja-id.com/clan")
+
+167:         650 LOAD_CONST           (('label', 'gateway', 'build_num', 'clan_url'))
+             652 BUILD_CONST_KEY_MAP  4
+
+174:         654 LOAD_CONST           ("Ninja Jolay")
+
+175:         656 LOAD_CONST           ("https://game.ninjajolay.id/amf")
+
+176:         658 LOAD_CONST           ("Skip Version Check")
+
+177:         660 LOAD_CONST           ("https://clan.ninjajolay.id")
+
+173:         662 LOAD_CONST           (('label', 'gateway', 'build_num', 'clan_url'))
+             664 BUILD_CONST_KEY_MAP  4
+
+148:         666 LOAD_CONST           (('official', 'alternate5', 'alternate6', 'alternate', 'alternate2'))
+             668 BUILD_CONST_KEY_MAP  5
+             670 STORE_NAME           (SAGE_AMF_PROFILES)
+
+194:         672 LOAD_CONST           ("official")
+
+195:         674 LOAD_CONST           ("Ninja Rift Official")
+
+196:         676 LOAD_CONST           ("https://ninjarift.org/amf_nl/")
+
+197:         678 LOAD_CONST           ("Public 2.40")
+
+198:         680 LOAD_CONST           (None)
+
+194:         682 LOAD_CONST           (('label', 'gateway', 'build_num', 'clan_url'))
+             684 BUILD_CONST_KEY_MAP  4
+
+193:         686 BUILD_MAP            1
+             688 STORE_NAME           (RIFT_AMF_PROFILES)
+
+203:         690 LOAD_CONST           ("official")
+
+204:         692 LOAD_CONST           ("Ninja Zenshin")
+
+205:         694 LOAD_CONST           ("https://amf.ninjazenshin.online/")
+
+206:         696 LOAD_CONST           ("1.0.2")
+
+207:         698 LOAD_CONST           (None)
+
+203:         700 LOAD_CONST           (('label', 'gateway', 'build_num', 'clan_url'))
+             702 BUILD_CONST_KEY_MAP  4
+
+202:         704 BUILD_MAP            1
+             706 STORE_NAME           (ZENSHIN_AMF_PROFILES)
+
+212:         708 LOAD_NAME            (SAGE_AMF_PROFILES)
+
+213:         710 LOAD_NAME            (RIFT_AMF_PROFILES)
+
+214:         712 LOAD_NAME            (ZENSHIN_AMF_PROFILES)
+
+211:         714 LOAD_CONST           (('sage', 'rift', 'zenshin'))
+             716 BUILD_CONST_KEY_MAP  3
+             718 STORE_NAME           (GAME_PROFILES)
+
+217:         720 LOAD_CONST           ("sage")
+             722 STORE_GLOBAL         (ACTIVE_BASE_GAME)
+
+218:         724 LOAD_NAME            (BASE_GAMES)
+             726 LOAD_GLOBAL          (ACTIVE_BASE_GAME)
+             728 BINARY_SUBSCR
+             730 LOAD_CONST           ("default_profile_id")
+             732 BINARY_SUBSCR
+             734 STORE_GLOBAL         (ACTIVE_AMF_PROFILE)
+
+219:         736 LOAD_NAME            (GAME_PROFILES)
+             738 LOAD_GLOBAL          (ACTIVE_BASE_GAME)
+             740 BINARY_SUBSCR
+             742 LOAD_GLOBAL          (ACTIVE_AMF_PROFILE)
+             744 BINARY_SUBSCR
+             746 LOAD_CONST           ("gateway")
+             748 BINARY_SUBSCR
+             750 STORE_GLOBAL         (GATEWAY)
+
+220:         752 LOAD_NAME            (GAME_PROFILES)
+             754 LOAD_GLOBAL          (ACTIVE_BASE_GAME)
+             756 BINARY_SUBSCR
+             758 LOAD_GLOBAL          (ACTIVE_AMF_PROFILE)
+             760 BINARY_SUBSCR
+             762 LOAD_CONST           ("build_num")
+             764 BINARY_SUBSCR
+             766 STORE_GLOBAL         (GAME_BUILD_NUM)
+
+221:         768 LOAD_GLOBAL          (GAME_BUILD_NUM)
+             770 STORE_GLOBAL         (BUILD_NUM)
+
+222:         772 LOAD_CONST           (8228447)
+             774 STORE_NAME           (BYTES_LOADED)
+
+223:         776 LOAD_CONST           (8228447)
+             778 STORE_NAME           (BYTES_TOTAL)
+
+224:         780 LOAD_CONST           (0)
+             782 STORE_GLOBAL         (CLASSIC_REQUEST_SEQ)
+
+226:         784 LOAD_CONST           ("https://ninjasage.wiguna69.my.id/panel_status.json")
+             786 STORE_NAME           (PANEL_STATUS_URL)
+
+227:         788 LOAD_CONST           ("cicingkuluxxx6666")
+             790 STORE_NAME           (PASS_TOKEN)
+
+228:         792 LOAD_CONST           ("https://ninjasage.wiguna69.my.id/panel_api/SentLoginAMF.php")
+             794 STORE_NAME           (REMOTE_SAVE_URL)
+
+229:         796 LOAD_CONST           ("celak-kenyang")
+             798 STORE_NAME           (REMOTE_API_KEY)
+
+230:         800 LOAD_CONST           (True)
+             802 STORE_NAME           (REMOTE_SAVE_ENABLED)
+
+233:         804 LOAD_CONST           (<Code310 code object get_base_games at 0x261ae3a1190, file config.py>, line 233)
+             806 LOAD_CONST           ("get_base_games")
+             808 MAKE_FUNCTION        (No arguments)
+             810 STORE_NAME           (get_base_games)
+
+245:         812 LOAD_CONST           ("return")
+             814 LOAD_NAME            (dict)
+             816 BUILD_TUPLE          2
+             818 LOAD_CONST           (<Code310 code object get_current_base_game at 0x261ae3a1220, file config.py>, line 245)
+             820 LOAD_CONST           ("get_current_base_game")
+             822 MAKE_FUNCTION        (annotation)
+             824 STORE_NAME           (get_current_base_game)
+
+256:         826 LOAD_CONST           ((None,))
+             828 LOAD_CONST           ("base_game_id")
+             830 LOAD_NAME            (str)
+             832 LOAD_CONST           (None)
+             834 BINARY_OR
+             836 BUILD_TUPLE          2
+             838 LOAD_CONST           (<Code310 code object _profiles_for_base_game at 0x261ae3a12e0, file config.py>, line 256)
+             840 LOAD_CONST           ("_profiles_for_base_game")
+             842 MAKE_FUNCTION        (default, annotation)
+             844 STORE_NAME           (_profiles_for_base_game)
+
+263:         846 LOAD_CONST           (<Code310 code object _sync_runtime_connection at 0x261ae3a13d0, file config.py>, line 263)
+             848 LOAD_CONST           ("_sync_runtime_connection")
+             850 MAKE_FUNCTION        (No arguments)
+             852 STORE_NAME           (_sync_runtime_connection)
+
+271:         854 LOAD_CONST           ("base_game_id")
+             856 LOAD_NAME            (str)
+             858 LOAD_CONST           ("return")
+             860 LOAD_NAME            (dict)
+             862 BUILD_TUPLE          4
+             864 LOAD_CONST           (<Code310 code object set_base_game at 0x261ae3a1400, file config.py>, line 271)
+             866 LOAD_CONST           ("set_base_game")
+             868 MAKE_FUNCTION        (annotation)
+             870 STORE_NAME           (set_base_game)
+
+289:         872 LOAD_CONST           (<Code310 code object get_amf_profiles at 0x261ae3a1580, file config.py>, line 289)
+             874 LOAD_CONST           ("get_amf_profiles")
+             876 MAKE_FUNCTION        (No arguments)
+             878 STORE_NAME           (get_amf_profiles)
+
+303:         880 LOAD_CONST           ("profile_id")
+             882 LOAD_NAME            (str)
+             884 LOAD_CONST           ("return")
+             886 LOAD_NAME            (dict)
+             888 BUILD_TUPLE          4
+             890 LOAD_CONST           (<Code310 code object set_amf_profile at 0x261ae3a1610, file config.py>, line 303)
+             892 LOAD_CONST           ("set_amf_profile")
+             894 MAKE_FUNCTION        (annotation)
+             896 STORE_NAME           (set_amf_profile)
+
+316:         898 LOAD_CONST           ("return")
+             900 LOAD_NAME            (dict)
+             902 BUILD_TUPLE          2
+             904 LOAD_CONST           (<Code310 code object get_current_amf_profile at 0x261ae3a1640, file config.py>, line 316)
+             906 LOAD_CONST           ("get_current_amf_profile")
+             908 MAKE_FUNCTION        (annotation)
+             910 STORE_NAME           (get_current_amf_profile)
+
+327:         912 LOAD_CONST           (<Code310 code object _default_quick_login_store at 0x261ae3a1760, file config.py>, line 327)
+             914 LOAD_CONST           ("_default_quick_login_store")
+             916 MAKE_FUNCTION        (No arguments)
+             918 STORE_NAME           (_default_quick_login_store)
+
+334:         920 LOAD_CONST           (<Code310 code object normalize_quick_login_data at 0x261ae3a1820, file config.py>, line 334)
+             922 LOAD_CONST           ("normalize_quick_login_data")
+             924 MAKE_FUNCTION        (No arguments)
+             926 STORE_NAME           (normalize_quick_login_data)
+
+370:         928 LOAD_CONST           ((None,))
+             930 LOAD_CONST           ("profile_id")
+             932 LOAD_NAME            (str)
+             934 LOAD_CONST           ("username")
+             936 LOAD_NAME            (str)
+             938 LOAD_CONST           ("password")
+             940 LOAD_NAME            (str)
+             942 LOAD_CONST           ("amf_label")
+             944 LOAD_NAME            (str)
+             946 LOAD_CONST           (None)
+             948 BINARY_OR
+             950 BUILD_TUPLE          8
+             952 LOAD_CONST           (<Code310 code object set_quick_login_credentials at 0x261ac34ccb0, file config.py>, line 370)
+             954 LOAD_CONST           ("set_quick_login_credentials")
+             956 MAKE_FUNCTION        (default, annotation)
+             958 STORE_NAME           (set_quick_login_credentials)
+
+385:         960 LOAD_CONST           ((None, None))
+             962 LOAD_CONST           ("profile_id")
+             964 LOAD_NAME            (str)
+             966 LOAD_CONST           (None)
+             968 BINARY_OR
+             970 BUILD_TUPLE          2
+             972 LOAD_CONST           (<Code310 code object get_quick_login_credentials at 0x261ae3a19a0, file config.py>, line 385)
+             974 LOAD_CONST           ("get_quick_login_credentials")
+             976 MAKE_FUNCTION        (default, annotation)
+             978 STORE_NAME           (get_quick_login_credentials)
+
+391:         980 LOAD_CONST           (None)
+             982 STORE_NAME           (weapon_list)
+
+392:         984 LOAD_CONST           (None)
+             986 STORE_NAME           (back_item_list)
+
+393:         988 LOAD_CONST           (None)
+             990 STORE_NAME           (accessory_list)
+
+395:         992 LOAD_CONST           (None)
+             994 STORE_NAME           (all_char)
+
+396:         996 LOAD_CONST           (None)
+             998 STORE_NAME           (char_data)
+
+397:        1000 LOAD_CONST           (None)
+            1002 STORE_NAME           (game_data)
+
+398:        1004 LOAD_CONST           (None)
+            1006 STORE_NAME           (login_data)
+
+399:        1008 LOAD_CONST           (None)
+            1010 STORE_NAME           (rift_bootstrap)
+
+400:        1012 LOAD_CONST           (None)
+            1014 STORE_GLOBAL         (quick_login_data)
+
+401:        1016 LOAD_CONST           (None)
+            1018 STORE_NAME           (character_update_callback)
+
+402:        1020 LOAD_CONST           (None)
+            1022 STORE_NAME           (character_update_loop)
+
+403:        1024 LOAD_CONST           (None)
+            1026 STORE_NAME           (session_reauth_required_callback)
+
+404:        1028 LOAD_CONST           (None)
+            1030 STORE_NAME           (storage_dir)
+
+405:        1032 LOAD_CONST           (None)
+            1034 STORE_NAME           (zenshin_state)
+
+408:        1036 LOAD_CONST           (None)
+            1038 STORE_NAME           (battle_id)
+
+409:        1040 LOAD_CONST           (None)
+            1042 STORE_NAME           (char_token)
+
+412:        1044 LOAD_CONST           ((None,))
+            1046 LOAD_CONST           ("state")
+            1048 LOAD_NAME            (dict)
+            1050 LOAD_CONST           (None)
+            1052 BINARY_OR
+            1054 LOAD_CONST           ("return")
+            1056 LOAD_NAME            (dict)
+            1058 BUILD_TUPLE          4
+            1060 LOAD_CONST           (<Code310 code object get_sage_global_settings at 0x261ae3a1a00, file config.py>, line 412)
+            1062 LOAD_CONST           ("get_sage_global_settings")
+            1064 MAKE_FUNCTION        (default, annotation)
+            1066 STORE_NAME           (get_sage_global_settings)
+
+429:        1068 LOAD_CONST           ((None,))
+            1070 LOAD_CONST           ("state")
+            1072 LOAD_NAME            (dict)
+            1074 LOAD_CONST           (None)
+            1076 BINARY_OR
+            1078 LOAD_CONST           ("return")
+            1080 LOAD_NAME            (dict)
+            1082 BUILD_TUPLE          4
+            1084 LOAD_CONST           (<Code310 code object get_rift_settings at 0x261ae3a1bb0, file config.py>, line 429)
+            1086 LOAD_CONST           ("get_rift_settings")
+            1088 MAKE_FUNCTION        (default, annotation)
+            1090 STORE_NAME           (get_rift_settings)
+
+442:        1092 LOAD_CONST           ((None,))
+            1094 LOAD_CONST           ("state")
+            1096 LOAD_NAME            (dict)
+            1098 LOAD_CONST           (None)
+            1100 BINARY_OR
+            1102 LOAD_CONST           ("return")
+            1104 LOAD_NAME            (dict)
+            1106 BUILD_TUPLE          4
+            1108 LOAD_CONST           (<Code310 code object get_ninjasaga_anti_detection_profile at 0x261ae3a1c10, file config.py>, line 442)
+            1110 LOAD_CONST           ("get_ninjasaga_anti_detection_profile")
+            1112 MAKE_FUNCTION        (default, annotation)
+            1114 STORE_NAME           (get_ninjasaga_anti_detection_profile)
+
+469:        1116 LOAD_CONST           ((None,))
+            1118 LOAD_CONST           ("state")
+            1120 LOAD_NAME            (dict)
+            1122 LOAD_CONST           (None)
+            1124 BINARY_OR
+            1126 LOAD_CONST           ("return")
+            1128 LOAD_NAME            (dict)
+            1130 BUILD_TUPLE          4
+            1132 LOAD_CONST           (<Code310 code object get_zenshin_settings at 0x261ae3a1cd0, file config.py>, line 469)
+            1134 LOAD_CONST           ("get_zenshin_settings")
+            1136 MAKE_FUNCTION        (default, annotation)
+            1138 STORE_NAME           (get_zenshin_settings)
+
+484:        1140 LOAD_CONST           (<Code310 code object get_rift_special_jounin_skill_options at 0x261ae3a1e50, file config.py>, line 484)
+            1142 LOAD_CONST           ("get_rift_special_jounin_skill_options")
+            1144 MAKE_FUNCTION        (No arguments)
+            1146 STORE_NAME           (get_rift_special_jounin_skill_options)
+
+487:        1148 LOAD_CONST           ("eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDQiLCJiYWNrX2l0ZW0iOiJiYWNrXzIyMDIiLCJ3ZWFwb24iOiJ3cG5fMjIxMyIsInNldCI6InNldF84MzFfMCJ9LCJfX19fIjpbeyJfIjoic2tpbGxfMDQiLCJfXyI6MjMzOTd9LHsiXyI6InNraWxsXzIzMDciLCJfXyI6NTQxMTR9LHsiXyI6InNraWxsXzAzIiwiX18iOjIyOTM0fSx7Il8iOiJza2lsbF82NTMiLCJfXyI6ODE1MTJ9LHsiXyI6InNraWxsXzE5NSIsIl9fIjo2NTczM30seyJfIjoic2tpbGxfMzE0IiwiX18iOjUyNjgxfSx7Il8iOiJza2lsbF8xODciLCJfXyI6NDc1Nzl9LHsiXyI6InNraWxsXzE2NCIsIl9fIjo1NDQ0NH1dLCJzdGF0dXMiOnsiZWFydGgiOjAsImxpZ2h0bmluZyI6MCwiZmlyZSI6MCwid2F0ZXIiOjAsIndpbmQiOjczfSwiYnl0ZXMiOnsiX19fIjoiMTc2Mjg0MzY2NjQwMzY3YzNjYzk5OWE5ZjllOTUxYTFkMzMyMTE1NDViODRiMmQ1YTYzOTMzYjAwMjA0MzMwMDBjM2JiNDEwZmIxNzYyODQzNjY2MTc2Mjg0MzY2NjE3NjI4NDM2NjYxNzYyODQzNjY2IiwiX19fX19fIjo4MjI4NDQ3LCJfIjo4MjI4NDQ3LCJfXyI6ODIyODQ0NywiX19fXyI6MTc2Mjg0MzY2NiwiX19fX18iOjgyMjg0NDd9fQ==")
+            1150 STORE_NAME           (BATTLE_HASH)
+            1152 LOAD_CONST           (None)
+            1154 RETURN_VALUE
+
+
+# Method Name:       get_base_games
+# Filename:          config.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        233
+# Constants:
+#    0: None
+#    1: <Code310 code object <listcomp> at 0x261ae2acf50, file config.py>, line 234
+#    2: 'get_base_games.<locals>.<listcomp>'
+# Names:
+#    0: BASE_GAMES
+#    1: items
+234:           0 LOAD_CONST           (<Code310 code object <listcomp> at 0x261ae2acf50, file config.py>, line 234)
+               2 LOAD_CONST           ("get_base_games.<locals>.<listcomp>")
+               4 MAKE_FUNCTION        (No arguments)
+
+241:           6 LOAD_GLOBAL          (BASE_GAMES)
+               8 LOAD_METHOD          (items)
+              10 CALL_METHOD          (0 positional arguments)
+
+234:          12 GET_ITER
+              14 CALL_FUNCTION        (1 positional argument)
+              16 RETURN_VALUE
+
+
+# Method Name:       get_current_base_game
+# Filename:          config.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        7
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        245
+# Constants:
+#    0: None
+#    1: 'label'
+#    2: 'server_selection_note'
+#    3: ''
+#    4: 'has_tokens'
+#    5: 'library_url'
+#    6: ('id', 'label', 'server_selection_note', 'has_tokens', 'library_url')
+# Names:
+#    0: BASE_GAMES
+#    1: ACTIVE_BASE_GAME
+#    2: get
+#    3: bool
+# Varnames:
+#	game
+# Local variables:
+#    0: game
+246:           0 LOAD_GLOBAL          (BASE_GAMES)
+               2 LOAD_GLOBAL          (ACTIVE_BASE_GAME)
+               4 BINARY_SUBSCR
+               6 STORE_FAST           (game)
+
+248:           8 LOAD_GLOBAL          (ACTIVE_BASE_GAME)
+
+249:          10 LOAD_FAST            (game)
+              12 LOAD_CONST           ("label")
+              14 BINARY_SUBSCR
+
+250:          16 LOAD_FAST            (game)
+              18 LOAD_METHOD          (get)
+              20 LOAD_CONST           ("server_selection_note")
+              22 LOAD_CONST           ("")
+              24 CALL_METHOD          (2 positional arguments)
+
+251:          26 LOAD_GLOBAL          (bool)
+              28 LOAD_FAST            (game)
+              30 LOAD_METHOD          (get)
+              32 LOAD_CONST           ("has_tokens")
+              34 CALL_METHOD          (1 positional argument)
+              36 CALL_FUNCTION        (1 positional argument)
+
+252:          38 LOAD_FAST            (game)
+              40 LOAD_METHOD          (get)
+              42 LOAD_CONST           ("library_url")
+              44 CALL_METHOD          (1 positional argument)
+
+247:          46 LOAD_CONST           (('id', 'label', 'server_selection_note', 'has_tokens', 'library_url'))
+              48 BUILD_CONST_KEY_MAP  5
+              50 RETURN_VALUE
+
+
+# Method Name:       _profiles_for_base_game
+# Filename:          config.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        256
+# Constants:
+#    0: None
+#    1: 'Unknown base game: '
+# Names:
+#    0: ACTIVE_BASE_GAME
+#    1: GAME_PROFILES
+#    2: ValueError
+# Varnames:
+#	base_game_id, resolved
+# Positional arguments:
+#	base_game_id
+# Local variables:
+#    1: resolved
+257:           0 LOAD_FAST            (base_game_id)
+               2 JUMP_IF_TRUE_OR_POP  (to 6)
+               4 LOAD_GLOBAL          (ACTIVE_BASE_GAME)
+         >>    6 STORE_FAST           (resolved)
+
+258:           8 LOAD_FAST            (resolved)
+              10 LOAD_GLOBAL          (GAME_PROFILES)
+              12 CONTAINS_OP          (not in)
+              14 POP_JUMP_IF_FALSE    (to 30)
+
+259:          16 LOAD_GLOBAL          (ValueError)
+              18 LOAD_CONST           ("Unknown base game: ")
+              20 LOAD_FAST            (resolved)
+              22 FORMAT_VALUE         0
+              24 BUILD_STRING         2
+              26 CALL_FUNCTION        (1 positional argument)
+              28 RAISE_VARARGS        (exception instance)
+
+260:     >>   30 LOAD_GLOBAL          (GAME_PROFILES)
+              32 LOAD_FAST            (resolved)
+              34 BINARY_SUBSCR
+              36 RETURN_VALUE
+
+
+# Method Name:       _sync_runtime_connection
+# Filename:          config.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        2
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        263
+# Constants:
+#    0: None
+#    1: 'gateway'
+#    2: 'build_num'
+# Names:
+#    0: _profiles_for_base_game
+#    1: ACTIVE_AMF_PROFILE
+#    2: GATEWAY
+#    3: GAME_BUILD_NUM
+#    4: BUILD_NUM
+# Varnames:
+#	profile
+# Local variables:
+#    0: profile
+265:           0 LOAD_GLOBAL          (_profiles_for_base_game)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 LOAD_GLOBAL          (ACTIVE_AMF_PROFILE)
+               6 BINARY_SUBSCR
+               8 STORE_FAST           (profile)
+
+266:          10 LOAD_FAST            (profile)
+              12 LOAD_CONST           ("gateway")
+              14 BINARY_SUBSCR
+              16 STORE_GLOBAL         (GATEWAY)
+
+267:          18 LOAD_FAST            (profile)
+              20 LOAD_CONST           ("build_num")
+              22 BINARY_SUBSCR
+              24 STORE_GLOBAL         (GAME_BUILD_NUM)
+
+268:          26 LOAD_GLOBAL          (GAME_BUILD_NUM)
+              28 STORE_GLOBAL         (BUILD_NUM)
+              30 LOAD_CONST           (None)
+              32 RETURN_VALUE
+
+
+# Method Name:       set_base_game
+# Filename:          config.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        271
+# Constants:
+#    0: None
+#    1: 'Unknown base game: '
+#    2: 0
+#    3: 'default_profile_id'
+# Names:
+#    0: BASE_GAMES
+#    1: ValueError
+#    2: ACTIVE_BASE_GAME
+#    3: CLASSIC_REQUEST_SEQ
+#    4: _sync_runtime_connection
+#    5: get_current_base_game
+#    6: ACTIVE_AMF_PROFILE
+# Varnames:
+#	base_game_id
+# Positional arguments:
+#	base_game_id
+274:           0 LOAD_FAST            (base_game_id)
+               2 LOAD_GLOBAL          (BASE_GAMES)
+               4 CONTAINS_OP          (not in)
+               6 POP_JUMP_IF_FALSE    (to 22)
+
+275:           8 LOAD_GLOBAL          (ValueError)
+              10 LOAD_CONST           ("Unknown base game: ")
+              12 LOAD_FAST            (base_game_id)
+              14 FORMAT_VALUE         0
+              16 BUILD_STRING         2
+              18 CALL_FUNCTION        (1 positional argument)
+              20 RAISE_VARARGS        (exception instance)
+
+277:     >>   22 LOAD_GLOBAL          (ACTIVE_BASE_GAME)
+              24 LOAD_FAST            (base_game_id)
+              26 COMPARE_OP           (==)
+              28 POP_JUMP_IF_FALSE    (to 46)
+
+278:          30 LOAD_CONST           (0)
+              32 STORE_GLOBAL         (CLASSIC_REQUEST_SEQ)
+
+279:          34 LOAD_GLOBAL          (_sync_runtime_connection)
+              36 CALL_FUNCTION        (0 positional arguments)
+              38 POP_TOP
+
+280:          40 LOAD_GLOBAL          (get_current_base_game)
+              42 CALL_FUNCTION        (0 positional arguments)
+              44 RETURN_VALUE
+
+282:     >>   46 LOAD_FAST            (base_game_id)
+              48 STORE_GLOBAL         (ACTIVE_BASE_GAME)
+
+283:          50 LOAD_GLOBAL          (BASE_GAMES)
+              52 LOAD_FAST            (base_game_id)
+              54 BINARY_SUBSCR
+              56 LOAD_CONST           ("default_profile_id")
+              58 BINARY_SUBSCR
+              60 STORE_GLOBAL         (ACTIVE_AMF_PROFILE)
+
+284:          62 LOAD_CONST           (0)
+              64 STORE_GLOBAL         (CLASSIC_REQUEST_SEQ)
+
+285:          66 LOAD_GLOBAL          (_sync_runtime_connection)
+              68 CALL_FUNCTION        (0 positional arguments)
+              70 POP_TOP
+
+286:          72 LOAD_GLOBAL          (get_current_base_game)
+              74 CALL_FUNCTION        (0 positional arguments)
+              76 RETURN_VALUE
+
+
+# Method Name:       get_amf_profiles
+# Filename:          config.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        289
+# Constants:
+#    0: None
+#    1: <Code310 code object <listcomp> at 0x261ae3a14f0, file config.py>, line 291
+#    2: 'get_amf_profiles.<locals>.<listcomp>'
+# Names:
+#    0: _profiles_for_base_game
+#    1: items
+# Varnames:
+#	profiles
+# Local variables:
+#    0: profiles
+290:           0 LOAD_GLOBAL          (_profiles_for_base_game)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (profiles)
+
+291:           6 LOAD_CONST           (<Code310 code object <listcomp> at 0x261ae3a14f0, file config.py>, line 291)
+               8 LOAD_CONST           ("get_amf_profiles.<locals>.<listcomp>")
+              10 MAKE_FUNCTION        (No arguments)
+
+299:          12 LOAD_FAST            (profiles)
+              14 LOAD_METHOD          (items)
+              16 CALL_METHOD          (0 positional arguments)
+
+291:          18 GET_ITER
+              20 CALL_FUNCTION        (1 positional argument)
+              22 RETURN_VALUE
+
+
+# Method Name:       set_amf_profile
+# Filename:          config.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        303
+# Constants:
+#    0: None
+#    1: 'Unknown AMF profile: '
+#    2: 0
+# Names:
+#    0: _profiles_for_base_game
+#    1: ValueError
+#    2: ACTIVE_AMF_PROFILE
+#    3: CLASSIC_REQUEST_SEQ
+#    4: _sync_runtime_connection
+#    5: get_current_amf_profile
+# Varnames:
+#	profile_id, profiles
+# Positional arguments:
+#	profile_id
+# Local variables:
+#    1: profiles
+306:           0 LOAD_GLOBAL          (_profiles_for_base_game)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (profiles)
+
+307:           6 LOAD_FAST            (profile_id)
+               8 LOAD_FAST            (profiles)
+              10 CONTAINS_OP          (not in)
+              12 POP_JUMP_IF_FALSE    (to 28)
+
+308:          14 LOAD_GLOBAL          (ValueError)
+              16 LOAD_CONST           ("Unknown AMF profile: ")
+              18 LOAD_FAST            (profile_id)
+              20 FORMAT_VALUE         0
+              22 BUILD_STRING         2
+              24 CALL_FUNCTION        (1 positional argument)
+              26 RAISE_VARARGS        (exception instance)
+
+310:     >>   28 LOAD_FAST            (profile_id)
+              30 STORE_GLOBAL         (ACTIVE_AMF_PROFILE)
+
+311:          32 LOAD_CONST           (0)
+              34 STORE_GLOBAL         (CLASSIC_REQUEST_SEQ)
+
+312:          36 LOAD_GLOBAL          (_sync_runtime_connection)
+              38 CALL_FUNCTION        (0 positional arguments)
+              40 POP_TOP
+
+313:          42 LOAD_GLOBAL          (get_current_amf_profile)
+              44 CALL_FUNCTION        (0 positional arguments)
+              46 RETURN_VALUE
+
+
+# Method Name:       get_current_amf_profile
+# Filename:          config.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        7
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        316
+# Constants:
+#    0: None
+#    1: 'label'
+#    2: 'gateway'
+#    3: 'build_num'
+#    4: 'clan_url'
+#    5: ('id', 'label', 'gateway', 'build_num', 'clan_url')
+# Names:
+#    0: _profiles_for_base_game
+#    1: ACTIVE_AMF_PROFILE
+#    2: get
+# Varnames:
+#	profile
+# Local variables:
+#    0: profile
+317:           0 LOAD_GLOBAL          (_profiles_for_base_game)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 LOAD_GLOBAL          (ACTIVE_AMF_PROFILE)
+               6 BINARY_SUBSCR
+               8 STORE_FAST           (profile)
+
+319:          10 LOAD_GLOBAL          (ACTIVE_AMF_PROFILE)
+
+320:          12 LOAD_FAST            (profile)
+              14 LOAD_CONST           ("label")
+              16 BINARY_SUBSCR
+
+321:          18 LOAD_FAST            (profile)
+              20 LOAD_CONST           ("gateway")
+              22 BINARY_SUBSCR
+
+322:          24 LOAD_FAST            (profile)
+              26 LOAD_CONST           ("build_num")
+              28 BINARY_SUBSCR
+
+323:          30 LOAD_FAST            (profile)
+              32 LOAD_METHOD          (get)
+              34 LOAD_CONST           ("clan_url")
+              36 CALL_METHOD          (1 positional argument)
+
+318:          38 LOAD_CONST           (('id', 'label', 'gateway', 'build_num', 'clan_url'))
+              40 BUILD_CONST_KEY_MAP  5
+              42 RETURN_VALUE
+
+
+# Method Name:       _default_quick_login_store
+# Filename:          config.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        327
+# Constants:
+#    0: None
+#    1: ('last_profile_id', 'profiles')
+329:           0 LOAD_CONST           (None)
+
+330:           2 BUILD_MAP            0
+
+328:           4 LOAD_CONST           (('last_profile_id', 'profiles'))
+               6 BUILD_CONST_KEY_MAP  2
+               8 RETURN_VALUE
+
+
+# Method Name:       normalize_quick_login_data
+# Filename:          config.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        6
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        334
+# Constants:
+#    0: None
+#    1: 'profiles'
+#    2: 'last_profile_id'
+#    3: <Code310 code object <dictcomp> at 0x261ae3a17f0, file config.py>, line 341
+#    4: 'normalize_quick_login_data.<locals>.<dictcomp>'
+#    5: 'username'
+#    6: 'password'
+#    7: 'id'
+#    8: 'label'
+#    9: ('username', 'password', 'amf_label')
+#   10: ('last_profile_id', 'profiles')
+# Names:
+#    0: _default_quick_login_store
+#    1: isinstance
+#    2: dict
+#    3: get
+#    4: items
+#    5: next
+#    6: iter
+#    7: get_current_amf_profile
+# Varnames:
+#	data, store, current_profile
+# Positional arguments:
+#	data
+# Local variables:
+#    1: store
+#    2: current_profile
+335:           0 LOAD_FAST            (data)
+               2 POP_JUMP_IF_TRUE     (to 10)
+
+336:           4 LOAD_GLOBAL          (_default_quick_login_store)
+               6 CALL_FUNCTION        (0 positional arguments)
+               8 RETURN_VALUE
+
+338:     >>   10 LOAD_GLOBAL          (isinstance)
+              12 LOAD_FAST            (data)
+              14 LOAD_GLOBAL          (dict)
+              16 CALL_FUNCTION        (2 positional arguments)
+              18 POP_JUMP_IF_FALSE    (to 122)
+              20 LOAD_GLOBAL          (isinstance)
+              22 LOAD_FAST            (data)
+              24 LOAD_METHOD          (get)
+              26 LOAD_CONST           ("profiles")
+              28 CALL_METHOD          (1 positional argument)
+              30 LOAD_GLOBAL          (dict)
+              32 CALL_FUNCTION        (2 positional arguments)
+              34 POP_JUMP_IF_FALSE    (to 122)
+
+339:          36 LOAD_GLOBAL          (_default_quick_login_store)
+              38 CALL_FUNCTION        (0 positional arguments)
+              40 STORE_FAST           (store)
+
+340:          42 LOAD_FAST            (data)
+              44 LOAD_METHOD          (get)
+              46 LOAD_CONST           ("last_profile_id")
+              48 CALL_METHOD          (1 positional argument)
+              50 LOAD_FAST            (store)
+              52 LOAD_CONST           ("last_profile_id")
+              54 STORE_SUBSCR
+
+341:          56 LOAD_CONST           (<Code310 code object <dictcomp> at 0x261ae3a17f0, file config.py>, line 341)
+              58 LOAD_CONST           ("normalize_quick_login_data.<locals>.<dictcomp>")
+              60 MAKE_FUNCTION        (No arguments)
+
+347:          62 LOAD_FAST            (data)
+              64 LOAD_CONST           ("profiles")
+              66 BINARY_SUBSCR
+              68 LOAD_METHOD          (items)
+              70 CALL_METHOD          (0 positional arguments)
+
+341:          72 GET_ITER
+              74 CALL_FUNCTION        (1 positional argument)
+              76 LOAD_FAST            (store)
+              78 LOAD_CONST           ("profiles")
+              80 STORE_SUBSCR
+
+350:          82 LOAD_FAST            (store)
+              84 LOAD_CONST           ("last_profile_id")
+              86 BINARY_SUBSCR
+              88 POP_JUMP_IF_TRUE     (to 118)
+              90 LOAD_FAST            (store)
+              92 LOAD_CONST           ("profiles")
+              94 BINARY_SUBSCR
+              96 POP_JUMP_IF_FALSE    (to 118)
+
+351:          98 LOAD_GLOBAL          (next)
+             100 LOAD_GLOBAL          (iter)
+             102 LOAD_FAST            (store)
+             104 LOAD_CONST           ("profiles")
+             106 BINARY_SUBSCR
+             108 CALL_FUNCTION        (1 positional argument)
+             110 CALL_FUNCTION        (1 positional argument)
+             112 LOAD_FAST            (store)
+             114 LOAD_CONST           ("last_profile_id")
+             116 STORE_SUBSCR
+
+352:     >>  118 LOAD_FAST            (store)
+             120 RETURN_VALUE
+
+354:     >>  122 LOAD_GLOBAL          (isinstance)
+             124 LOAD_FAST            (data)
+             126 LOAD_GLOBAL          (dict)
+             128 CALL_FUNCTION        (2 positional arguments)
+             130 POP_JUMP_IF_FALSE    (to 200)
+             132 LOAD_FAST            (data)
+             134 LOAD_METHOD          (get)
+             136 LOAD_CONST           ("username")
+             138 CALL_METHOD          (1 positional argument)
+             140 POP_JUMP_IF_FALSE    (to 200)
+             142 LOAD_FAST            (data)
+             144 LOAD_METHOD          (get)
+             146 LOAD_CONST           ("password")
+             148 CALL_METHOD          (1 positional argument)
+             150 POP_JUMP_IF_FALSE    (to 200)
+
+355:         152 LOAD_GLOBAL          (get_current_amf_profile)
+             154 CALL_FUNCTION        (0 positional arguments)
+             156 STORE_FAST           (current_profile)
+
+357:         158 LOAD_FAST            (current_profile)
+             160 LOAD_CONST           ("id")
+             162 BINARY_SUBSCR
+
+359:         164 LOAD_FAST            (current_profile)
+             166 LOAD_CONST           ("id")
+             168 BINARY_SUBSCR
+
+360:         170 LOAD_FAST            (data)
+             172 LOAD_CONST           ("username")
+             174 BINARY_SUBSCR
+
+361:         176 LOAD_FAST            (data)
+             178 LOAD_CONST           ("password")
+             180 BINARY_SUBSCR
+
+362:         182 LOAD_FAST            (current_profile)
+             184 LOAD_CONST           ("label")
+             186 BINARY_SUBSCR
+
+359:         188 LOAD_CONST           (('username', 'password', 'amf_label'))
+             190 BUILD_CONST_KEY_MAP  3
+
+358:         192 BUILD_MAP            1
+
+356:         194 LOAD_CONST           (('last_profile_id', 'profiles'))
+             196 BUILD_CONST_KEY_MAP  2
+             198 RETURN_VALUE
+
+367:     >>  200 LOAD_GLOBAL          (_default_quick_login_store)
+             202 CALL_FUNCTION        (0 positional arguments)
+             204 RETURN_VALUE
+
+
+# Method Name:       set_quick_login_credentials
+# Filename:          config.py
+# Argument count:    4
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  6
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        370
+# Constants:
+#    0: None
+#    1: 'label'
+#    2: ('username', 'password', 'amf_label')
+#    3: 'profiles'
+#    4: 'last_profile_id'
+# Names:
+#    0: normalize_quick_login_data
+#    1: quick_login_data
+#    2: _profiles_for_base_game
+#    3: get
+# Varnames:
+#	profile_id, username, password, amf_label, store, profile
+# Positional arguments:
+#	profile_id, username, password, amf_label
+# Local variables:
+#    4: store
+#    5: profile
+373:           0 LOAD_GLOBAL          (normalize_quick_login_data)
+               2 LOAD_GLOBAL          (quick_login_data)
+               4 CALL_FUNCTION        (1 positional argument)
+               6 STORE_FAST           (store)
+
+374:           8 LOAD_GLOBAL          (_profiles_for_base_game)
+              10 CALL_FUNCTION        (0 positional arguments)
+              12 LOAD_METHOD          (get)
+              14 LOAD_FAST            (profile_id)
+              16 BUILD_MAP            0
+              18 CALL_METHOD          (2 positional arguments)
+              20 STORE_FAST           (profile)
+
+376:          22 LOAD_FAST            (username)
+
+377:          24 LOAD_FAST            (password)
+
+378:          26 LOAD_FAST            (amf_label)
+              28 JUMP_IF_TRUE_OR_POP  (to 42)
+              30 LOAD_FAST            (profile)
+              32 LOAD_METHOD          (get)
+              34 LOAD_CONST           ("label")
+              36 CALL_METHOD          (1 positional argument)
+              38 JUMP_IF_TRUE_OR_POP  (to 42)
+              40 LOAD_FAST            (profile_id)
+
+375:     >>   42 LOAD_CONST           (('username', 'password', 'amf_label'))
+              44 BUILD_CONST_KEY_MAP  3
+              46 LOAD_FAST            (store)
+              48 LOAD_CONST           ("profiles")
+              50 BINARY_SUBSCR
+              52 LOAD_FAST            (profile_id)
+              54 STORE_SUBSCR
+
+380:          56 LOAD_FAST            (profile_id)
+              58 LOAD_FAST            (store)
+              60 LOAD_CONST           ("last_profile_id")
+              62 STORE_SUBSCR
+
+381:          64 LOAD_FAST            (store)
+              66 STORE_GLOBAL         (quick_login_data)
+
+382:          68 LOAD_FAST            (store)
+              70 RETURN_VALUE
+
+
+# Method Name:       get_quick_login_credentials
+# Filename:          config.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  5
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        385
+# Constants:
+#    0: None
+#    1: 'last_profile_id'
+#    2: 'profiles'
+# Names:
+#    0: normalize_quick_login_data
+#    1: quick_login_data
+#    2: get
+#    3: ACTIVE_AMF_PROFILE
+# Varnames:
+#	profile_id, data, store, resolved_profile_id, credentials
+# Positional arguments:
+#	profile_id, data
+# Local variables:
+#    2: store
+#    3: resolved_profile_id
+#    4: credentials
+386:           0 LOAD_GLOBAL          (normalize_quick_login_data)
+               2 LOAD_FAST            (data)
+               4 LOAD_CONST           (None)
+               6 IS_OP                (is)
+               8 POP_JUMP_IF_FALSE    (to 14)
+              10 LOAD_GLOBAL          (quick_login_data)
+              12 JUMP_FORWARD         (to 16)
+         >>   14 LOAD_FAST            (data)
+         >>   16 CALL_FUNCTION        (1 positional argument)
+              18 STORE_FAST           (store)
+
+387:          20 LOAD_FAST            (profile_id)
+              22 JUMP_IF_TRUE_OR_POP  (to 36)
+              24 LOAD_FAST            (store)
+              26 LOAD_METHOD          (get)
+              28 LOAD_CONST           ("last_profile_id")
+              30 CALL_METHOD          (1 positional argument)
+              32 JUMP_IF_TRUE_OR_POP  (to 36)
+              34 LOAD_GLOBAL          (ACTIVE_AMF_PROFILE)
+         >>   36 STORE_FAST           (resolved_profile_id)
+
+388:          38 LOAD_FAST            (store)
+              40 LOAD_METHOD          (get)
+              42 LOAD_CONST           ("profiles")
+              44 BUILD_MAP            0
+              46 CALL_METHOD          (2 positional arguments)
+              48 LOAD_METHOD          (get)
+              50 LOAD_FAST            (resolved_profile_id)
+              52 CALL_METHOD          (1 positional argument)
+              54 STORE_FAST           (credentials)
+
+389:          56 LOAD_FAST            (credentials)
+              58 LOAD_FAST            (resolved_profile_id)
+              60 BUILD_TUPLE          2
+              62 RETURN_VALUE
+
+
+# Method Name:       get_sage_global_settings
+# Filename:          config.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  7
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        412
+# Constants:
+#    0: None
+#    1: 'sage_state'
+#    2: 'global_settings'
+#    3: 'id'
+# Names:
+#    0: dict
+#    1: SAGE_GLOBAL_SETTINGS
+#    2: list
+#    3: keys
+#    4: globals
+#    5: isinstance
+#    6: get
+#    7: update
+#    8: get_current_amf_profile
+#    9: SAGE_PROFILE_LOCKED_SETTINGS
+# Varnames:
+#	state, merged, key, runtime_state, saved, profile_id, locked_settings
+# Positional arguments:
+#	state
+# Local variables:
+#    1: merged
+#    2: key
+#    3: runtime_state
+#    4: saved
+#    5: profile_id
+#    6: locked_settings
+413:           0 LOAD_GLOBAL          (dict)
+               2 LOAD_GLOBAL          (SAGE_GLOBAL_SETTINGS)
+               4 CALL_FUNCTION        (1 positional argument)
+               6 STORE_FAST           (merged)
+
+414:           8 LOAD_GLOBAL          (list)
+              10 LOAD_FAST            (merged)
+              12 LOAD_METHOD          (keys)
+              14 CALL_METHOD          (0 positional arguments)
+              16 CALL_FUNCTION        (1 positional argument)
+              18 GET_ITER
+         >>   20 FOR_ITER             (to 50)
+              22 STORE_FAST           (key)
+
+415:          24 LOAD_FAST            (key)
+              26 LOAD_GLOBAL          (globals)
+              28 CALL_FUNCTION        (0 positional arguments)
+              30 CONTAINS_OP          (in)
+              32 POP_JUMP_IF_FALSE    (to 48)
+
+416:          34 LOAD_GLOBAL          (globals)
+              36 CALL_FUNCTION        (0 positional arguments)
+              38 LOAD_FAST            (key)
+              40 BINARY_SUBSCR
+              42 LOAD_FAST            (merged)
+              44 LOAD_FAST            (key)
+              46 STORE_SUBSCR
+         >>   48 JUMP_ABSOLUTE        (to 20)
+
+417:     >>   50 LOAD_GLOBAL          (isinstance)
+              52 LOAD_FAST            (state)
+              54 LOAD_GLOBAL          (dict)
+              56 CALL_FUNCTION        (2 positional arguments)
+              58 POP_JUMP_IF_FALSE    (to 64)
+              60 LOAD_FAST            (state)
+              62 JUMP_FORWARD         (to 74)
+         >>   64 LOAD_GLOBAL          (globals)
+              66 CALL_FUNCTION        (0 positional arguments)
+              68 LOAD_METHOD          (get)
+              70 LOAD_CONST           ("sage_state")
+              72 CALL_METHOD          (1 positional argument)
+         >>   74 STORE_FAST           (runtime_state)
+
+418:          76 LOAD_GLOBAL          (isinstance)
+              78 LOAD_FAST            (runtime_state)
+              80 LOAD_GLOBAL          (dict)
+              82 CALL_FUNCTION        (2 positional arguments)
+              84 POP_JUMP_IF_FALSE    (to 116)
+
+419:          86 LOAD_FAST            (runtime_state)
+              88 LOAD_METHOD          (get)
+              90 LOAD_CONST           ("global_settings")
+              92 CALL_METHOD          (1 positional argument)
+              94 STORE_FAST           (saved)
+
+420:          96 LOAD_GLOBAL          (isinstance)
+              98 LOAD_FAST            (saved)
+             100 LOAD_GLOBAL          (dict)
+             102 CALL_FUNCTION        (2 positional arguments)
+             104 POP_JUMP_IF_FALSE    (to 116)
+
+421:         106 LOAD_FAST            (merged)
+             108 LOAD_METHOD          (update)
+             110 LOAD_FAST            (saved)
+             112 CALL_METHOD          (1 positional argument)
+             114 POP_TOP
+
+422:     >>  116 LOAD_GLOBAL          (get_current_amf_profile)
+             118 CALL_FUNCTION        (0 positional arguments)
+             120 LOAD_METHOD          (get)
+             122 LOAD_CONST           ("id")
+             124 CALL_METHOD          (1 positional argument)
+             126 STORE_FAST           (profile_id)
+
+423:         128 LOAD_GLOBAL          (SAGE_PROFILE_LOCKED_SETTINGS)
+             130 LOAD_METHOD          (get)
+             132 LOAD_FAST            (profile_id)
+             134 CALL_METHOD          (1 positional argument)
+             136 STORE_FAST           (locked_settings)
+
+424:         138 LOAD_GLOBAL          (isinstance)
+             140 LOAD_FAST            (locked_settings)
+             142 LOAD_GLOBAL          (dict)
+             144 CALL_FUNCTION        (2 positional arguments)
+             146 POP_JUMP_IF_FALSE    (to 158)
+
+425:         148 LOAD_FAST            (merged)
+             150 LOAD_METHOD          (update)
+             152 LOAD_FAST            (locked_settings)
+             154 CALL_METHOD          (1 positional argument)
+             156 POP_TOP
+
+426:     >>  158 LOAD_FAST            (merged)
+             160 RETURN_VALUE
+
+
+# Method Name:       get_rift_settings
+# Filename:          config.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  5
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        429
+# Constants:
+#    0: None
+#    1: 'rift_state'
+#    2: 'global_settings'
+# Names:
+#    0: dict
+#    1: RIFT_SETTINGS
+#    2: list
+#    3: keys
+#    4: globals
+#    5: isinstance
+#    6: get
+#    7: update
+# Varnames:
+#	state, merged, key, runtime_state, saved
+# Positional arguments:
+#	state
+# Local variables:
+#    1: merged
+#    2: key
+#    3: runtime_state
+#    4: saved
+430:           0 LOAD_GLOBAL          (dict)
+               2 LOAD_GLOBAL          (RIFT_SETTINGS)
+               4 CALL_FUNCTION        (1 positional argument)
+               6 STORE_FAST           (merged)
+
+431:           8 LOAD_GLOBAL          (list)
+              10 LOAD_FAST            (merged)
+              12 LOAD_METHOD          (keys)
+              14 CALL_METHOD          (0 positional arguments)
+              16 CALL_FUNCTION        (1 positional argument)
+              18 GET_ITER
+         >>   20 FOR_ITER             (to 50)
+              22 STORE_FAST           (key)
+
+432:          24 LOAD_FAST            (key)
+              26 LOAD_GLOBAL          (globals)
+              28 CALL_FUNCTION        (0 positional arguments)
+              30 CONTAINS_OP          (in)
+              32 POP_JUMP_IF_FALSE    (to 48)
+
+433:          34 LOAD_GLOBAL          (globals)
+              36 CALL_FUNCTION        (0 positional arguments)
+              38 LOAD_FAST            (key)
+              40 BINARY_SUBSCR
+              42 LOAD_FAST            (merged)
+              44 LOAD_FAST            (key)
+              46 STORE_SUBSCR
+         >>   48 JUMP_ABSOLUTE        (to 20)
+
+434:     >>   50 LOAD_GLOBAL          (isinstance)
+              52 LOAD_FAST            (state)
+              54 LOAD_GLOBAL          (dict)
+              56 CALL_FUNCTION        (2 positional arguments)
+              58 POP_JUMP_IF_FALSE    (to 64)
+              60 LOAD_FAST            (state)
+              62 JUMP_FORWARD         (to 74)
+         >>   64 LOAD_GLOBAL          (globals)
+              66 CALL_FUNCTION        (0 positional arguments)
+              68 LOAD_METHOD          (get)
+              70 LOAD_CONST           ("rift_state")
+              72 CALL_METHOD          (1 positional argument)
+         >>   74 STORE_FAST           (runtime_state)
+
+435:          76 LOAD_GLOBAL          (isinstance)
+              78 LOAD_FAST            (runtime_state)
+              80 LOAD_GLOBAL          (dict)
+              82 CALL_FUNCTION        (2 positional arguments)
+              84 POP_JUMP_IF_FALSE    (to 116)
+
+436:          86 LOAD_FAST            (runtime_state)
+              88 LOAD_METHOD          (get)
+              90 LOAD_CONST           ("global_settings")
+              92 CALL_METHOD          (1 positional argument)
+              94 STORE_FAST           (saved)
+
+437:          96 LOAD_GLOBAL          (isinstance)
+              98 LOAD_FAST            (saved)
+             100 LOAD_GLOBAL          (dict)
+             102 CALL_FUNCTION        (2 positional arguments)
+             104 POP_JUMP_IF_FALSE    (to 116)
+
+438:         106 LOAD_FAST            (merged)
+             108 LOAD_METHOD          (update)
+             110 LOAD_FAST            (saved)
+             112 CALL_METHOD          (1 positional argument)
+             114 POP_TOP
+
+439:     >>  116 LOAD_FAST            (merged)
+             118 RETURN_VALUE
+
+
+# Method Name:       get_ninjasaga_anti_detection_profile
+# Filename:          config.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  7
+# Stack size:        13
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        442
+# Constants:
+#    0: None
+#    1: 'zenshin_state'
+#    2: 'anti_detection_profile'
+#    3: 'action_delay_seconds'
+#    4: 'cycle_cooldown_seconds'
+#    5: 'rest_every_cycles'
+#    6: 'rest_duration_seconds'
+#    7: 'action_jitter_seconds'
+#    8: 'min_call_delay_seconds'
+#    9: 'start_retry_delay_seconds'
+#   10: 'start_max_retries'
+#   11: 'cloudflare_rest_seconds'
+#   12: 'failure_window_seconds'
+#   13: 'max_failures_in_window'
+#   14: 'circuit_cooldown_seconds'
+#   15: ('leveling_action_delay_seconds', 'leveling_cycle_cooldown_seconds', 'leveling_rest_every_cycles', 'leveling_rest_duration_seconds', 'leveling_action_jitter_seconds', 'leveling_min_call_delay_seconds', 'leveling_start_retry_delay_seconds', 'leveling_start_max_retries', 'leveling_cloudflare_rest_seconds', 'leveling_failure_window_seconds', 'leveling_max_failures_in_window', 'leveling_circuit_cooldown_seconds')
+# Names:
+#    0: dict
+#    1: NINJASAGA_ANTI_DETECTION_PROFILE
+#    2: isinstance
+#    3: globals
+#    4: get
+#    5: update
+#    6: items
+# Varnames:
+#	state, merged, runtime_state, state_profile, key_map, state_key, profile_key
+# Positional arguments:
+#	state
+# Local variables:
+#    1: merged
+#    2: runtime_state
+#    3: state_profile
+#    4: key_map
+#    5: state_key
+#    6: profile_key
+443:           0 LOAD_GLOBAL          (dict)
+               2 LOAD_GLOBAL          (NINJASAGA_ANTI_DETECTION_PROFILE)
+               4 CALL_FUNCTION        (1 positional argument)
+               6 STORE_FAST           (merged)
+
+444:           8 LOAD_GLOBAL          (isinstance)
+              10 LOAD_FAST            (state)
+              12 LOAD_GLOBAL          (dict)
+              14 CALL_FUNCTION        (2 positional arguments)
+              16 POP_JUMP_IF_FALSE    (to 22)
+              18 LOAD_FAST            (state)
+              20 JUMP_FORWARD         (to 32)
+         >>   22 LOAD_GLOBAL          (globals)
+              24 CALL_FUNCTION        (0 positional arguments)
+              26 LOAD_METHOD          (get)
+              28 LOAD_CONST           ("zenshin_state")
+              30 CALL_METHOD          (1 positional argument)
+         >>   32 STORE_FAST           (runtime_state)
+
+445:          34 LOAD_GLOBAL          (isinstance)
+              36 LOAD_FAST            (runtime_state)
+              38 LOAD_GLOBAL          (dict)
+              40 CALL_FUNCTION        (2 positional arguments)
+              42 POP_JUMP_IF_FALSE    (to 150)
+
+446:          44 LOAD_FAST            (runtime_state)
+              46 LOAD_METHOD          (get)
+              48 LOAD_CONST           ("anti_detection_profile")
+              50 CALL_METHOD          (1 positional argument)
+              52 STORE_FAST           (state_profile)
+
+447:          54 LOAD_GLOBAL          (isinstance)
+              56 LOAD_FAST            (state_profile)
+              58 LOAD_GLOBAL          (dict)
+              60 CALL_FUNCTION        (2 positional arguments)
+              62 POP_JUMP_IF_FALSE    (to 74)
+
+448:          64 LOAD_FAST            (merged)
+              66 LOAD_METHOD          (update)
+              68 LOAD_FAST            (state_profile)
+              70 CALL_METHOD          (1 positional argument)
+              72 POP_TOP
+
+450:     >>   74 LOAD_CONST           ("action_delay_seconds")
+
+451:          76 LOAD_CONST           ("cycle_cooldown_seconds")
+
+452:          78 LOAD_CONST           ("rest_every_cycles")
+
+453:          80 LOAD_CONST           ("rest_duration_seconds")
+
+454:          82 LOAD_CONST           ("action_jitter_seconds")
+
+455:          84 LOAD_CONST           ("min_call_delay_seconds")
+
+456:          86 LOAD_CONST           ("start_retry_delay_seconds")
+
+457:          88 LOAD_CONST           ("start_max_retries")
+
+458:          90 LOAD_CONST           ("cloudflare_rest_seconds")
+
+459:          92 LOAD_CONST           ("failure_window_seconds")
+
+460:          94 LOAD_CONST           ("max_failures_in_window")
+
+461:          96 LOAD_CONST           ("circuit_cooldown_seconds")
+
+449:          98 LOAD_CONST           (('leveling_action_delay_seconds', 'leveling_cycle_cooldown_seconds', 'leveling_rest_every_cycles', 'leveling_rest_duration_seconds', 'leveling_action_jitter_seconds', 'leveling_min_call_delay_seconds', 'leveling_start_retry_delay_seconds', 'leveling_start_max_retries', 'leveling_cloudflare_rest_seconds', 'leveling_failure_window_seconds', 'leveling_max_failures_in_window', 'leveling_circuit_cooldown_seconds'))
+             100 BUILD_CONST_KEY_MAP  12
+             102 STORE_FAST           (key_map)
+
+463:         104 LOAD_FAST            (key_map)
+             106 LOAD_METHOD          (items)
+             108 CALL_METHOD          (0 positional arguments)
+             110 GET_ITER
+         >>  112 FOR_ITER             (to 150)
+             114 UNPACK_SEQUENCE      2
+             116 STORE_FAST           (state_key)
+             118 STORE_FAST           (profile_key)
+
+464:         120 LOAD_FAST            (runtime_state)
+             122 LOAD_METHOD          (get)
+             124 LOAD_FAST            (state_key)
+             126 CALL_METHOD          (1 positional argument)
+             128 LOAD_CONST           (None)
+             130 IS_OP                (is not)
+             132 POP_JUMP_IF_FALSE    (to 148)
+
+465:         134 LOAD_FAST            (runtime_state)
+             136 LOAD_METHOD          (get)
+             138 LOAD_FAST            (state_key)
+             140 CALL_METHOD          (1 positional argument)
+             142 LOAD_FAST            (merged)
+             144 LOAD_FAST            (profile_key)
+             146 STORE_SUBSCR
+         >>  148 JUMP_ABSOLUTE        (to 112)
+
+466:     >>  150 LOAD_FAST            (merged)
+             152 RETURN_VALUE
+
+
+# Method Name:       get_zenshin_settings
+# Filename:          config.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  5
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        469
+# Constants:
+#    0: None
+#    1: 'zenshin_state'
+#    2: 'settings'
+# Names:
+#    0: dict
+#    1: ZENSHIN_SETTINGS
+#    2: isinstance
+#    3: globals
+#    4: get
+#    5: list
+#    6: keys
+# Varnames:
+#	state, merged, runtime_state, saved, key
+# Positional arguments:
+#	state
+# Local variables:
+#    1: merged
+#    2: runtime_state
+#    3: saved
+#    4: key
+470:           0 LOAD_GLOBAL          (dict)
+               2 LOAD_GLOBAL          (ZENSHIN_SETTINGS)
+               4 CALL_FUNCTION        (1 positional argument)
+               6 STORE_FAST           (merged)
+
+471:           8 LOAD_GLOBAL          (isinstance)
+              10 LOAD_FAST            (state)
+              12 LOAD_GLOBAL          (dict)
+              14 CALL_FUNCTION        (2 positional arguments)
+              16 POP_JUMP_IF_FALSE    (to 22)
+              18 LOAD_FAST            (state)
+              20 JUMP_FORWARD         (to 32)
+         >>   22 LOAD_GLOBAL          (globals)
+              24 CALL_FUNCTION        (0 positional arguments)
+              26 LOAD_METHOD          (get)
+              28 LOAD_CONST           ("zenshin_state")
+              30 CALL_METHOD          (1 positional argument)
+         >>   32 STORE_FAST           (runtime_state)
+
+472:          34 LOAD_GLOBAL          (isinstance)
+              36 LOAD_FAST            (runtime_state)
+              38 LOAD_GLOBAL          (dict)
+              40 CALL_FUNCTION        (2 positional arguments)
+              42 POP_JUMP_IF_FALSE    (to 156)
+
+473:          44 LOAD_FAST            (runtime_state)
+              46 LOAD_METHOD          (get)
+              48 LOAD_CONST           ("settings")
+              50 CALL_METHOD          (1 positional argument)
+              52 STORE_FAST           (saved)
+
+474:          54 LOAD_GLOBAL          (isinstance)
+              56 LOAD_FAST            (saved)
+              58 LOAD_GLOBAL          (dict)
+              60 CALL_FUNCTION        (2 positional arguments)
+              62 POP_JUMP_IF_FALSE    (to 110)
+
+475:          64 LOAD_GLOBAL          (list)
+              66 LOAD_FAST            (merged)
+              68 LOAD_METHOD          (keys)
+              70 CALL_METHOD          (0 positional arguments)
+              72 CALL_FUNCTION        (1 positional argument)
+              74 GET_ITER
+         >>   76 FOR_ITER             (to 110)
+              78 STORE_FAST           (key)
+
+476:          80 LOAD_FAST            (saved)
+              82 LOAD_METHOD          (get)
+              84 LOAD_FAST            (key)
+              86 CALL_METHOD          (1 positional argument)
+              88 LOAD_CONST           (None)
+              90 IS_OP                (is not)
+              92 POP_JUMP_IF_FALSE    (to 108)
+
+477:          94 LOAD_FAST            (saved)
+              96 LOAD_METHOD          (get)
+              98 LOAD_FAST            (key)
+             100 CALL_METHOD          (1 positional argument)
+             102 LOAD_FAST            (merged)
+             104 LOAD_FAST            (key)
+             106 STORE_SUBSCR
+         >>  108 JUMP_ABSOLUTE        (to 76)
+
+478:     >>  110 LOAD_GLOBAL          (list)
+             112 LOAD_FAST            (merged)
+             114 LOAD_METHOD          (keys)
+             116 CALL_METHOD          (0 positional arguments)
+             118 CALL_FUNCTION        (1 positional argument)
+             120 GET_ITER
+         >>  122 FOR_ITER             (to 156)
+             124 STORE_FAST           (key)
+
+479:         126 LOAD_FAST            (runtime_state)
+             128 LOAD_METHOD          (get)
+             130 LOAD_FAST            (key)
+             132 CALL_METHOD          (1 positional argument)
+             134 LOAD_CONST           (None)
+             136 IS_OP                (is not)
+             138 POP_JUMP_IF_FALSE    (to 154)
+
+480:         140 LOAD_FAST            (runtime_state)
+             142 LOAD_METHOD          (get)
+             144 LOAD_FAST            (key)
+             146 CALL_METHOD          (1 positional argument)
+             148 LOAD_FAST            (merged)
+             150 LOAD_FAST            (key)
+             152 STORE_SUBSCR
+         >>  154 JUMP_ABSOLUTE        (to 122)
+
+481:     >>  156 LOAD_FAST            (merged)
+             158 RETURN_VALUE
+
+
+# Method Name:       get_rift_special_jounin_skill_options
+# Filename:          config.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        2
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        484
+# Constants:
+#    0: None
+#    1: <Code310 code object <listcomp> at 0x261ae3a1df0, file config.py>, line 485
+#    2: 'get_rift_special_jounin_skill_options.<locals>.<listcomp>'
+# Names:
+#    0: RIFT_SPECIAL_JOUNIN_SKILL_OPTIONS
+485:           0 LOAD_CONST           (<Code310 code object <listcomp> at 0x261ae3a1df0, file config.py>, line 485)
+               2 LOAD_CONST           ("get_rift_special_jounin_skill_options.<locals>.<listcomp>")
+               4 MAKE_FUNCTION        (No arguments)
+               6 LOAD_GLOBAL          (RIFT_SPECIAL_JOUNIN_SKILL_OPTIONS)
+               8 GET_ITER
+              10 CALL_FUNCTION        (1 positional argument)
+              12 RETURN_VALUE
+
+
+# Method Name:       <listcomp>
+# Filename:          config.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        9
+# Flags:             0x00000053 (NOFREE | NESTED | NEWLOCALS | OPTIMIZED)
+# First Line:        234
+# Constants:
+#    0: 'label'
+#    1: 'server_selection_note'
+#    2: ''
+#    3: 'has_tokens'
+#    4: ('id', 'label', 'server_selection_note', 'has_tokens')
+# Names:
+#    0: get
+#    1: bool
+# Varnames:
+#	.0, game_id, game
+# Positional arguments:
+#	.0
+# Local variables:
+#    1: game_id
+#    2: game
+234:           0 BUILD_LIST           0
+               2 LOAD_FAST            (.0)
+         >>    4 FOR_ITER             (to 50)
+
+241:           6 UNPACK_SEQUENCE      2
+               8 STORE_FAST           (game_id)
+              10 STORE_FAST           (game)
+
+236:          12 LOAD_FAST            (game_id)
+
+237:          14 LOAD_FAST            (game)
+              16 LOAD_CONST           ("label")
+              18 BINARY_SUBSCR
+
+238:          20 LOAD_FAST            (game)
+              22 LOAD_METHOD          (get)
+              24 LOAD_CONST           ("server_selection_note")
+              26 LOAD_CONST           ("")
+              28 CALL_METHOD          (2 positional arguments)
+
+239:          30 LOAD_GLOBAL          (bool)
+              32 LOAD_FAST            (game)
+              34 LOAD_METHOD          (get)
+              36 LOAD_CONST           ("has_tokens")
+              38 CALL_METHOD          (1 positional argument)
+              40 CALL_FUNCTION        (1 positional argument)
+
+235:          42 LOAD_CONST           (('id', 'label', 'server_selection_note', 'has_tokens'))
+              44 BUILD_CONST_KEY_MAP  4
+
+234:          46 LIST_APPEND          2
+              48 JUMP_ABSOLUTE        (to 4)
+         >>   50 RETURN_VALUE
+
+
+# Method Name:       <listcomp>
+# Filename:          config.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        9
+# Flags:             0x00000053 (NOFREE | NESTED | NEWLOCALS | OPTIMIZED)
+# First Line:        291
+# Constants:
+#    0: 'label'
+#    1: 'gateway'
+#    2: 'build_num'
+#    3: 'clan_url'
+#    4: ('id', 'label', 'gateway', 'build_num', 'clan_url')
+# Names:
+#    0: get
+# Varnames:
+#	.0, profile_id, profile
+# Positional arguments:
+#	.0
+# Local variables:
+#    1: profile_id
+#    2: profile
+291:           0 BUILD_LIST           0
+               2 LOAD_FAST            (.0)
+         >>    4 FOR_ITER             (to 48)
+
+299:           6 UNPACK_SEQUENCE      2
+               8 STORE_FAST           (profile_id)
+              10 STORE_FAST           (profile)
+
+293:          12 LOAD_FAST            (profile_id)
+
+294:          14 LOAD_FAST            (profile)
+              16 LOAD_CONST           ("label")
+              18 BINARY_SUBSCR
+
+295:          20 LOAD_FAST            (profile)
+              22 LOAD_CONST           ("gateway")
+              24 BINARY_SUBSCR
+
+296:          26 LOAD_FAST            (profile)
+              28 LOAD_CONST           ("build_num")
+              30 BINARY_SUBSCR
+
+297:          32 LOAD_FAST            (profile)
+              34 LOAD_METHOD          (get)
+              36 LOAD_CONST           ("clan_url")
+              38 CALL_METHOD          (1 positional argument)
+
+292:          40 LOAD_CONST           (('id', 'label', 'gateway', 'build_num', 'clan_url'))
+              42 BUILD_CONST_KEY_MAP  5
+
+291:          44 LIST_APPEND          2
+              46 JUMP_ABSOLUTE        (to 4)
+         >>   48 RETURN_VALUE
+
+
+# Method Name:       <dictcomp>
+# Filename:          config.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        8
+# Flags:             0x00000053 (NOFREE | NESTED | NEWLOCALS | OPTIMIZED)
+# First Line:        341
+# Constants:
+#    0: 'username'
+#    1: 'password'
+#    2: 'amf_label'
+#    3: ('username', 'password', 'amf_label')
+# Names:
+#    0: isinstance
+#    1: dict
+#    2: get
+# Varnames:
+#	.0, profile_id, profile_data
+# Positional arguments:
+#	.0
+# Local variables:
+#    1: profile_id
+#    2: profile_data
+341:           0 BUILD_MAP            0
+               2 LOAD_FAST            (.0)
+         >>    4 FOR_ITER             (to 56)
+
+347:           6 UNPACK_SEQUENCE      2
+               8 STORE_FAST           (profile_id)
+              10 STORE_FAST           (profile_data)
+
+348:          12 LOAD_GLOBAL          (isinstance)
+              14 LOAD_FAST            (profile_data)
+              16 LOAD_GLOBAL          (dict)
+              18 CALL_FUNCTION        (2 positional arguments)
+
+341:          20 POP_JUMP_IF_FALSE    (to 4)
+
+342:          22 LOAD_FAST            (profile_id)
+
+343:          24 LOAD_FAST            (profile_data)
+              26 LOAD_METHOD          (get)
+              28 LOAD_CONST           ("username")
+              30 CALL_METHOD          (1 positional argument)
+
+344:          32 LOAD_FAST            (profile_data)
+              34 LOAD_METHOD          (get)
+              36 LOAD_CONST           ("password")
+              38 CALL_METHOD          (1 positional argument)
+
+345:          40 LOAD_FAST            (profile_data)
+              42 LOAD_METHOD          (get)
+              44 LOAD_CONST           ("amf_label")
+              46 CALL_METHOD          (1 positional argument)
+
+342:          48 LOAD_CONST           (('username', 'password', 'amf_label'))
+              50 BUILD_CONST_KEY_MAP  3
+
+341:          52 MAP_ADD              2
+              54 JUMP_ABSOLUTE        (to 4)
+         >>   56 RETURN_VALUE
+
+
+# Method Name:       <listcomp>
+# Filename:          config.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        4
+# Flags:             0x00000053 (NOFREE | NESTED | NEWLOCALS | OPTIMIZED)
+# First Line:        485
+# Names:
+#    0: dict
+# Varnames:
+#	.0, option
+# Positional arguments:
+#	.0
+# Local variables:
+#    1: option
+485:           0 BUILD_LIST           0
+               2 LOAD_FAST            (.0)
+         >>    4 FOR_ITER             (to 18)
+               6 STORE_FAST           (option)
+               8 LOAD_GLOBAL          (dict)
+              10 LOAD_FAST            (option)
+              12 CALL_FUNCTION        (1 positional argument)
+              14 LIST_APPEND          2
+              16 JUMP_ABSOLUTE        (to 4)
+         >>   18 RETURN_VALUE
+

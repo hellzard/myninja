@@ -776,3 +776,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial check
     checkLoginState();
 });
+
+// Settings Logic
+window.loadSettings = async function() {
+    try {
+        const res = await fetch('/api/bot/settings');
+        const data = await res.json();
+        if (data.status === 'success' && data.settings) {
+            document.getElementById('setting-leveling-delay').value = data.settings.leveling_delay_seconds || 10;
+            document.getElementById('setting-shadow-wait').value = data.settings.sage_shadow_war_wait_minutes || 30;
+            document.getElementById('setting-clan-token').checked = !!data.settings.clan_war_auto_spend_token;
+            document.getElementById('setting-clan-refill').value = data.settings.clan_war_stamina_refill_source || 'auto';
+        }
+    } catch(e) {
+        console.error("Error loading settings:", e);
+    }
+}
+
+window.saveSettings = async function() {
+    try {
+        const payload = {
+            leveling_delay_seconds: parseInt(document.getElementById('setting-leveling-delay').value) || 10,
+            sage_shadow_war_wait_minutes: parseInt(document.getElementById('setting-shadow-wait').value) || 30,
+            clan_war_auto_spend_token: document.getElementById('setting-clan-token').checked,
+            clan_war_stamina_refill_source: document.getElementById('setting-clan-refill').value
+        };
+        const res = await fetch('/api/bot/settings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.status === 'success') {
+            alert('Settings saved successfully!');
+            document.getElementById('modal-settings').classList.remove('show');
+        } else {
+            alert('Failed to save settings: ' + data.message);
+        }
+    } catch(e) {
+        alert("Error saving settings: " + e.message);
+    }
+}

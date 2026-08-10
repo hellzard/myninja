@@ -1,0 +1,1166 @@
+﻿# pydisasm version 6.1.8
+# Python bytecode 3.10 (3439)
+# Disassembled from Python 3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]
+# Timestamp in code: 1780820770 (2026-06-07 15:26:10)
+# Source code size mod 2**32: 7465 bytes
+# Method Name:       <module>
+# Filename:          monster_hunting.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        3
+# Flags:             0x00000040 (NOFREE)
+# First Line:        1
+# Constants:
+#    0: 1
+#    1: ('send_amf_request', 'save_to_json', 'open_json_to_dict', 'get_data_by_id', 'save_fight_data', 'CUCSG')
+#    2: ('config',)
+#    3: 0
+#    4: None
+#    5: ('Dict', 'Any', 'Optional', 'Tuple')
+#    6: 30
+#    7: 10
+#    8: 'MonsterHunterEvent2023.getEventData'
+#    9: 'MonsterHunterEvent2023.startBattle'
+#   10: 'MonsterHunterEvent2023.finishBattle'
+#   11: 'data/gamedata.json'
+#   12: <Code310 code object MonsterHunt at 0x2275351b830, file monster_hunting.py>, line 25
+#   13: 'MonsterHunt'
+#   14: <Code310 code object fight_monster_hunt at 0x22754f9d760, file monster_hunting.py>, line 178
+#   15: 'fight_monster_hunt'
+# Names:
+#    0: utils
+#    1: send_amf_request
+#    2: save_to_json
+#    3: open_json_to_dict
+#    4: get_data_by_id
+#    5: save_fight_data
+#    6: CUCSG
+#    7: 
+#    8: config
+#    9: time
+#   10: keyboard
+#   11: typing
+#   12: Dict
+#   13: Any
+#   14: Optional
+#   15: Tuple
+#   16: BATTLE_WAIT_TIME
+#   17: MIN_ENERGY_REQUIRED
+#   18: EVENT_DATA_ENDPOINT
+#   19: START_BATTLE_ENDPOINT
+#   20: FINISH_BATTLE_ENDPOINT
+#   21: gamedata
+#   22: BATTLE_HASH
+#   23: battle_hash
+#   24: MonsterHunt
+#   25: fight_monster_hunt
+  1:           0 LOAD_CONST           (1)
+               2 LOAD_CONST           (('send_amf_request', 'save_to_json', 'open_json_to_dict', 'get_data_by_id', 'save_fight_data', 'CUCSG'))
+               4 IMPORT_NAME          (utils)
+               6 IMPORT_FROM          (send_amf_request)
+               8 STORE_NAME           (send_amf_request)
+              10 IMPORT_FROM          (save_to_json)
+              12 STORE_NAME           (save_to_json)
+              14 IMPORT_FROM          (open_json_to_dict)
+              16 STORE_NAME           (open_json_to_dict)
+              18 IMPORT_FROM          (get_data_by_id)
+              20 STORE_NAME           (get_data_by_id)
+              22 IMPORT_FROM          (save_fight_data)
+              24 STORE_NAME           (save_fight_data)
+              26 IMPORT_FROM          (CUCSG)
+              28 STORE_NAME           (CUCSG)
+              30 POP_TOP
+
+  9:          32 LOAD_CONST           (1)
+              34 LOAD_CONST           (('config',))
+              36 IMPORT_NAME          7
+              38 IMPORT_FROM          (config)
+              40 STORE_NAME           (config)
+              42 POP_TOP
+
+ 10:          44 LOAD_CONST           (0)
+              46 LOAD_CONST           (None)
+              48 IMPORT_NAME          (time)
+              50 STORE_NAME           (time)
+
+ 11:          52 LOAD_CONST           (0)
+              54 LOAD_CONST           (None)
+              56 IMPORT_NAME          (keyboard)
+              58 STORE_NAME           (keyboard)
+
+ 12:          60 LOAD_CONST           (0)
+              62 LOAD_CONST           (('Dict', 'Any', 'Optional', 'Tuple'))
+              64 IMPORT_NAME          (typing)
+              66 IMPORT_FROM          (Dict)
+              68 STORE_NAME           (Dict)
+              70 IMPORT_FROM          (Any)
+              72 STORE_NAME           (Any)
+              74 IMPORT_FROM          (Optional)
+              76 STORE_NAME           (Optional)
+              78 IMPORT_FROM          (Tuple)
+              80 STORE_NAME           (Tuple)
+              82 POP_TOP
+
+ 15:          84 LOAD_CONST           (30)
+              86 STORE_NAME           (BATTLE_WAIT_TIME)
+
+ 16:          88 LOAD_CONST           (10)
+              90 STORE_NAME           (MIN_ENERGY_REQUIRED)
+
+ 17:          92 LOAD_CONST           ("MonsterHunterEvent2023.getEventData")
+              94 STORE_NAME           (EVENT_DATA_ENDPOINT)
+
+ 18:          96 LOAD_CONST           ("MonsterHunterEvent2023.startBattle")
+              98 STORE_NAME           (START_BATTLE_ENDPOINT)
+
+ 19:         100 LOAD_CONST           ("MonsterHunterEvent2023.finishBattle")
+             102 STORE_NAME           (FINISH_BATTLE_ENDPOINT)
+
+ 22:         104 LOAD_NAME            (open_json_to_dict)
+             106 LOAD_CONST           ("data/gamedata.json")
+             108 CALL_FUNCTION        (1 positional argument)
+             110 STORE_NAME           (gamedata)
+
+ 23:         112 LOAD_NAME            (config)
+             114 LOAD_ATTR            (BATTLE_HASH)
+             116 STORE_NAME           (battle_hash)
+
+ 25:         118 LOAD_BUILD_CLASS
+             120 LOAD_CONST           (<Code310 code object MonsterHunt at 0x2275351b830, file monster_hunting.py>, line 25)
+             122 LOAD_CONST           ("MonsterHunt")
+             124 MAKE_FUNCTION        (No arguments)
+             126 LOAD_CONST           ("MonsterHunt")
+             128 CALL_FUNCTION        (2 positional arguments)
+             130 STORE_NAME           (MonsterHunt)
+
+178:         132 LOAD_CONST           (<Code310 code object fight_monster_hunt at 0x22754f9d760, file monster_hunting.py>, line 178)
+             134 LOAD_CONST           ("fight_monster_hunt")
+             136 MAKE_FUNCTION        (No arguments)
+             138 STORE_NAME           (fight_monster_hunt)
+             140 LOAD_CONST           (None)
+             142 RETURN_VALUE
+
+
+# Method Name:       MonsterHunt
+# Filename:          monster_hunting.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        8
+# Flags:             0x00000040 (NOFREE)
+# First Line:        25
+# Constants:
+#    0: 'MonsterHunt'
+#    1: <Code310 code object __init__ at 0x22754f9cb90, file monster_hunting.py>, line 26
+#    2: 'MonsterHunt.__init__'
+#    3: 'return'
+#    4: <Code310 code object check_stop_event at 0x22754f9cdd0, file monster_hunting.py>, line 32
+#    5: 'MonsterHunt.check_stop_event'
+#    6: <Code310 code object _get_equipment_data at 0x22754f9cec0, file monster_hunting.py>, line 43
+#    7: 'MonsterHunt._get_equipment_data'
+#    8: <Code310 code object _get_event_data at 0x22754f9cf80, file monster_hunting.py>, line 48
+#    9: 'MonsterHunt._get_event_data'
+#   10: 'boss_id'
+#   11: <Code310 code object _start_battle at 0x22754f9d040, file monster_hunting.py>, line 59
+#   12: 'MonsterHunt._start_battle'
+#   13: 'battle_id'
+#   14: 'battle_hash_value'
+#   15: <Code310 code object _finish_battle at 0x227527a6360, file monster_hunting.py>, line 71
+#   16: 'MonsterHunt._finish_battle'
+#   17: 'battle_result'
+#   18: <Code310 code object _process_battle_results at 0x227530291f0, file monster_hunting.py>, line 94
+#   19: 'MonsterHunt._process_battle_results'
+#   20: <Code310 code object _wait_for_battle_completion at 0x22754f9d430, file monster_hunting.py>, line 107
+#   21: 'MonsterHunt._wait_for_battle_completion'
+#   22: None
+#   23: <Code310 code object run at 0x22752db82f0, file monster_hunting.py>, line 119
+#   24: 'MonsterHunt.run'
+#   25: ('return', None)
+# Names:
+#    0: __name__
+#    1: __module__
+#    2: __qualname__
+#    3: __init__
+#    4: staticmethod
+#    5: bool
+#    6: check_stop_event
+#    7: str
+#    8: _get_equipment_data
+#    9: Optional
+#   10: Dict
+#   11: Any
+#   12: _get_event_data
+#   13: _start_battle
+#   14: _finish_battle
+#   15: _process_battle_results
+#   16: _wait_for_battle_completion
+#   17: run
+ 25:           0 LOAD_NAME            (__name__)
+               2 STORE_NAME           (__module__)
+               4 LOAD_CONST           ("MonsterHunt")
+               6 STORE_NAME           (__qualname__)
+
+ 26:           8 LOAD_CONST           (<Code310 code object __init__ at 0x22754f9cb90, file monster_hunting.py>, line 26)
+              10 LOAD_CONST           ("MonsterHunt.__init__")
+              12 MAKE_FUNCTION        (No arguments)
+              14 STORE_NAME           (__init__)
+
+ 32:          16 LOAD_NAME            (staticmethod)
+
+ 33:          18 LOAD_CONST           ("return")
+              20 LOAD_NAME            (bool)
+              22 BUILD_TUPLE          2
+              24 LOAD_CONST           (<Code310 code object check_stop_event at 0x22754f9cdd0, file monster_hunting.py>, line 32)
+              26 LOAD_CONST           ("MonsterHunt.check_stop_event")
+              28 MAKE_FUNCTION        (annotation)
+              30 CALL_FUNCTION        (1 positional argument)
+              32 STORE_NAME           (check_stop_event)
+
+ 43:          34 LOAD_NAME            (staticmethod)
+
+ 44:          36 LOAD_CONST           ("return")
+              38 LOAD_NAME            (str)
+              40 BUILD_TUPLE          2
+              42 LOAD_CONST           (<Code310 code object _get_equipment_data at 0x22754f9cec0, file monster_hunting.py>, line 43)
+              44 LOAD_CONST           ("MonsterHunt._get_equipment_data")
+              46 MAKE_FUNCTION        (annotation)
+              48 CALL_FUNCTION        (1 positional argument)
+              50 STORE_NAME           (_get_equipment_data)
+
+ 48:          52 LOAD_CONST           ("return")
+              54 LOAD_NAME            (Optional)
+              56 LOAD_NAME            (Dict)
+              58 LOAD_NAME            (str)
+              60 LOAD_NAME            (Any)
+              62 BUILD_TUPLE          2
+              64 BINARY_SUBSCR
+              66 BINARY_SUBSCR
+              68 BUILD_TUPLE          2
+              70 LOAD_CONST           (<Code310 code object _get_event_data at 0x22754f9cf80, file monster_hunting.py>, line 48)
+              72 LOAD_CONST           ("MonsterHunt._get_event_data")
+              74 MAKE_FUNCTION        (annotation)
+              76 STORE_NAME           (_get_event_data)
+
+ 59:          78 LOAD_CONST           ("boss_id")
+              80 LOAD_NAME            (str)
+              82 LOAD_CONST           ("return")
+              84 LOAD_NAME            (Optional)
+              86 LOAD_NAME            (Dict)
+              88 LOAD_NAME            (str)
+              90 LOAD_NAME            (Any)
+              92 BUILD_TUPLE          2
+              94 BINARY_SUBSCR
+              96 BINARY_SUBSCR
+              98 BUILD_TUPLE          4
+             100 LOAD_CONST           (<Code310 code object _start_battle at 0x22754f9d040, file monster_hunting.py>, line 59)
+             102 LOAD_CONST           ("MonsterHunt._start_battle")
+             104 MAKE_FUNCTION        (annotation)
+             106 STORE_NAME           (_start_battle)
+
+ 71:         108 LOAD_CONST           ("boss_id")
+             110 LOAD_NAME            (str)
+             112 LOAD_CONST           ("battle_id")
+             114 LOAD_NAME            (str)
+             116 LOAD_CONST           ("battle_hash_value")
+             118 LOAD_NAME            (str)
+             120 LOAD_CONST           ("return")
+             122 LOAD_NAME            (bool)
+             124 BUILD_TUPLE          8
+             126 LOAD_CONST           (<Code310 code object _finish_battle at 0x227527a6360, file monster_hunting.py>, line 71)
+             128 LOAD_CONST           ("MonsterHunt._finish_battle")
+             130 MAKE_FUNCTION        (annotation)
+             132 STORE_NAME           (_finish_battle)
+
+ 94:         134 LOAD_CONST           ("battle_result")
+             136 LOAD_NAME            (Dict)
+             138 LOAD_NAME            (str)
+             140 LOAD_NAME            (Any)
+             142 BUILD_TUPLE          2
+             144 BINARY_SUBSCR
+             146 LOAD_CONST           ("return")
+             148 LOAD_NAME            (bool)
+             150 BUILD_TUPLE          4
+             152 LOAD_CONST           (<Code310 code object _process_battle_results at 0x227530291f0, file monster_hunting.py>, line 94)
+             154 LOAD_CONST           ("MonsterHunt._process_battle_results")
+             156 MAKE_FUNCTION        (annotation)
+             158 STORE_NAME           (_process_battle_results)
+
+107:         160 LOAD_CONST           ("return")
+             162 LOAD_NAME            (bool)
+             164 BUILD_TUPLE          2
+             166 LOAD_CONST           (<Code310 code object _wait_for_battle_completion at 0x22754f9d430, file monster_hunting.py>, line 107)
+             168 LOAD_CONST           ("MonsterHunt._wait_for_battle_completion")
+             170 MAKE_FUNCTION        (annotation)
+             172 STORE_NAME           (_wait_for_battle_completion)
+
+119:         174 LOAD_CONST           (('return', None))
+             176 LOAD_CONST           (<Code310 code object run at 0x22752db82f0, file monster_hunting.py>, line 119)
+             178 LOAD_CONST           ("MonsterHunt.run")
+             180 MAKE_FUNCTION        (annotation)
+             182 STORE_NAME           (run)
+             184 LOAD_CONST           (None)
+             186 RETURN_VALUE
+
+
+# Method Name:       fight_monster_hunt
+# Filename:          monster_hunting.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        2
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        178
+# Constants:
+#    0: 'Public interface to start the monster hunt.'
+#    1: None
+# Names:
+#    0: MonsterHunt
+#    1: run
+180:           0 LOAD_GLOBAL          (MonsterHunt)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 LOAD_METHOD          (run)
+               6 CALL_METHOD          (0 positional arguments)
+               8 POP_TOP
+              10 LOAD_CONST           (None)
+              12 RETURN_VALUE
+
+
+# Method Name:       __init__
+# Filename:          monster_hunting.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        2
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        26
+# Constants:
+#    0: None
+#    1: 'character_data'
+#    2: 'character_id'
+#    3: 'sessionkey'
+# Names:
+#    0: config
+#    1: char_data
+#    2: char_id
+#    3: login_data
+#    4: session_key
+#    5: _get_equipment_data
+#    6: equipment_data
+# Varnames:
+#	self
+# Positional arguments:
+#	self
+ 27:           0 LOAD_GLOBAL          (config)
+               2 LOAD_ATTR            (char_data)
+               4 LOAD_FAST            (self)
+               6 STORE_ATTR           (char_data)
+
+ 28:           8 LOAD_FAST            (self)
+              10 LOAD_ATTR            (char_data)
+              12 LOAD_CONST           ("character_data")
+              14 BINARY_SUBSCR
+              16 LOAD_CONST           ("character_id")
+              18 BINARY_SUBSCR
+              20 LOAD_FAST            (self)
+              22 STORE_ATTR           (char_id)
+
+ 29:          24 LOAD_GLOBAL          (config)
+              26 LOAD_ATTR            (login_data)
+              28 LOAD_CONST           ("sessionkey")
+              30 BINARY_SUBSCR
+              32 LOAD_FAST            (self)
+              34 STORE_ATTR           (session_key)
+
+ 30:          36 LOAD_FAST            (self)
+              38 LOAD_METHOD          (_get_equipment_data)
+              40 CALL_METHOD          (0 positional arguments)
+              42 LOAD_FAST            (self)
+              44 STORE_ATTR           (equipment_data)
+              46 LOAD_CONST           (None)
+              48 RETURN_VALUE
+
+
+# Method Name:       check_stop_event
+# Filename:          monster_hunting.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        32
+# Constants:
+#    0: "Check if stop event is set from GUI or 'q' is pressed."
+#    1: 'stop_event'
+#    2: 'Monster hunting stopped by user request'
+#    3: True
+#    4: 'q'
+#    5: 'Operation cancelled by user (q pressed)'
+#    6: False
+# Names:
+#    0: hasattr
+#    1: config
+#    2: stop_event
+#    3: is_set
+#    4: print
+#    5: keyboard
+#    6: is_pressed
+ 35:           0 LOAD_GLOBAL          (hasattr)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_CONST           ("stop_event")
+               6 CALL_FUNCTION        (2 positional arguments)
+               8 POP_JUMP_IF_FALSE    (to 32)
+              10 LOAD_GLOBAL          (config)
+              12 LOAD_ATTR            (stop_event)
+              14 LOAD_METHOD          (is_set)
+              16 CALL_METHOD          (0 positional arguments)
+              18 POP_JUMP_IF_FALSE    (to 32)
+
+ 36:          20 LOAD_GLOBAL          (print)
+              22 LOAD_CONST           ("Monster hunting stopped by user request")
+              24 CALL_FUNCTION        (1 positional argument)
+              26 POP_TOP
+
+ 37:          28 LOAD_CONST           (True)
+              30 RETURN_VALUE
+
+ 38:     >>   32 LOAD_GLOBAL          (keyboard)
+              34 LOAD_METHOD          (is_pressed)
+              36 LOAD_CONST           ("q")
+              38 CALL_METHOD          (1 positional argument)
+              40 POP_JUMP_IF_FALSE    (to 54)
+
+ 39:          42 LOAD_GLOBAL          (print)
+              44 LOAD_CONST           ("Operation cancelled by user (q pressed)")
+              46 CALL_FUNCTION        (1 positional argument)
+              48 POP_TOP
+
+ 40:          50 LOAD_CONST           (True)
+              52 RETURN_VALUE
+
+ 41:     >>   54 LOAD_CONST           (False)
+              56 RETURN_VALUE
+
+
+# Method Name:       _get_equipment_data
+# Filename:          monster_hunting.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        1
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        43
+# Constants:
+#    0: 'Return the base64 encoded equipment data.'
+#    1: 'eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzIzODEiLCJ3ZWFwb24iOiJ3cG5fMjM4MCIsInNldCI6InNldF8yMjU4XzEifSwic3RhdHVzIjp7ImVhcnRoIjowLCJsaWdodG5pbmciOjAsImZpcmUiOjAsIndhdGVyIjowLCJ3aW5kIjo3OH0sImJ5dGVzIjp7Il9fXyI6IjE3NjM4Nzk1ODk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mzg3OTU4OTE3NjM4Nzk1ODkxNzYzODc5NTg5MTc2Mzg3OTU4OSIsIl8iOjgyMjg0NDcsIl9fX18iOjE3NjM4Nzk1ODksIl9fX19fIjo4MjI4NDQ3LCJfXyI6ODIyODQ0NywiX19fX19fIjo4MjI4NDQ3fSwiX19fXyI6W3siXyI6InNraWxsXzIzMTIiLCJfXyI6NTQ2MDV9LHsiXyI6InNraWxsXzM0NSIsIl9fIjo4MDI0M30seyJfIjoic2tpbGxfMjMxMCIsIl9fIjoxMjg0Njl9LHsiXyI6InNraWxsXzIyMTUiLCJfXyI6MjkzNDl9LHsiXyI6InNraWxsXzIyODYiLCJfXyI6NDk0NzR9LHsiXyI6InNraWxsXzIyMDYiLCJfXyI6NjA5NDR9LHsiXyI6InNraWxsXzIzMDgiLCJfXyI6NjUxMDF9LHsiXyI6InNraWxsXzMyOSIsIl9fIjo3NTM1Nn1dfQ=='
+ 46:           0 LOAD_CONST           ("eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzIzODEiLCJ3ZWFwb24iOiJ3cG5fMjM4MCIsInNldCI6InNldF8yMjU4XzEifSwic3RhdHVzIjp7ImVhcnRoIjowLCJsaWdodG5pbmciOjAsImZpcmUiOjAsIndhdGVyIjowLCJ3aW5kIjo3OH0sImJ5dGVzIjp7Il9fXyI6IjE3NjM4Nzk1ODk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mzg3OTU4OTE3NjM4Nzk1ODkxNzYzODc5NTg5MTc2Mzg3OTU4OSIsIl8iOjgyMjg0NDcsIl9fX18iOjE3NjM4Nzk1ODksIl9fX19fIjo4MjI4NDQ3LCJfXyI6ODIyODQ0NywiX19fX19fIjo4MjI4NDQ3fSwiX19fXyI6W3siXyI6InNraWxsXzIzMTIiLCJfXyI6NTQ2MDV9LHsiXyI6InNraWxsXzM0NSIsIl9fIjo4MDI0M30seyJfIjoic2tpbGxfMjMxMCIsIl9fIjoxMjg0Njl9LHsiXyI6InNraWxsXzIyMTUiLCJfXyI6MjkzNDl9LHsiXyI6InNraWxsXzIyODYiLCJfXyI6NDk0NzR9LHsiXyI6InNraWxsXzIyMDYiLCJfXyI6NjA5NDR9LHsiXyI6InNraWxsXzIzMDgiLCJfXyI6NjUxMDF9LHsiXyI6InNraWxsXzMyOSIsIl9fIjo3NTM1Nn1dfQ==")
+               2 RETURN_VALUE
+
+
+# Method Name:       _get_event_data
+# Filename:          monster_hunting.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        48
+# Constants:
+#    0: 'Fetch and return event data from the server.'
+#    1: 'status'
+#    2: 1
+#    3: 'Failed to get monster hunt event data: '
+#    4: None
+# Names:
+#    0: send_amf_request
+#    1: EVENT_DATA_ENDPOINT
+#    2: char_id
+#    3: session_key
+#    4: get
+#    5: print
+# Varnames:
+#	self, response
+# Positional arguments:
+#	self
+# Local variables:
+#    1: response
+ 50:           0 LOAD_GLOBAL          (send_amf_request)
+
+ 51:           2 LOAD_GLOBAL          (EVENT_DATA_ENDPOINT)
+
+ 52:           4 LOAD_FAST            (self)
+               6 LOAD_ATTR            (char_id)
+               8 LOAD_FAST            (self)
+              10 LOAD_ATTR            (session_key)
+              12 BUILD_LIST           2
+
+ 50:          14 CALL_FUNCTION        (2 positional arguments)
+              16 STORE_FAST           (response)
+
+ 54:          18 LOAD_FAST            (response)
+              20 LOAD_METHOD          (get)
+              22 LOAD_CONST           ("status")
+              24 CALL_METHOD          (1 positional argument)
+              26 LOAD_CONST           (1)
+              28 COMPARE_OP           (!=)
+              30 POP_JUMP_IF_FALSE    (to 50)
+
+ 55:          32 LOAD_GLOBAL          (print)
+              34 LOAD_CONST           ("Failed to get monster hunt event data: ")
+              36 LOAD_FAST            (response)
+              38 FORMAT_VALUE         0
+              40 BUILD_STRING         2
+              42 CALL_FUNCTION        (1 positional argument)
+              44 POP_TOP
+
+ 56:          46 LOAD_CONST           (None)
+              48 RETURN_VALUE
+
+ 57:     >>   50 LOAD_FAST            (response)
+              52 RETURN_VALUE
+
+
+# Method Name:       _start_battle
+# Filename:          monster_hunting.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  4
+# Stack size:        6
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        59
+# Constants:
+#    0: 'Start a battle and return the battle data.'
+#    1: 'status'
+#    2: 1
+#    3: 'Failed to start battle: '
+#    4: None
+# Names:
+#    0: CUCSG
+#    1: hash
+#    2: char_id
+#    3: send_amf_request
+#    4: START_BATTLE_ENDPOINT
+#    5: session_key
+#    6: get
+#    7: print
+# Varnames:
+#	self, boss_id, battle_hash, response
+# Positional arguments:
+#	self, boss_id
+# Local variables:
+#    2: battle_hash
+#    3: response
+ 61:           0 LOAD_GLOBAL          (CUCSG)
+               2 LOAD_METHOD          (hash)
+               4 LOAD_FAST            (self)
+               6 LOAD_ATTR            (char_id)
+               8 FORMAT_VALUE         0
+              10 LOAD_FAST            (boss_id)
+              12 FORMAT_VALUE         0
+              14 BUILD_STRING         2
+              16 CALL_METHOD          (1 positional argument)
+              18 STORE_FAST           (battle_hash)
+
+ 62:          20 LOAD_GLOBAL          (send_amf_request)
+
+ 63:          22 LOAD_GLOBAL          (START_BATTLE_ENDPOINT)
+
+ 64:          24 LOAD_FAST            (self)
+              26 LOAD_ATTR            (char_id)
+              28 LOAD_FAST            (boss_id)
+              30 LOAD_FAST            (battle_hash)
+              32 LOAD_FAST            (self)
+              34 LOAD_ATTR            (session_key)
+              36 BUILD_LIST           4
+
+ 62:          38 CALL_FUNCTION        (2 positional arguments)
+              40 STORE_FAST           (response)
+
+ 66:          42 LOAD_FAST            (response)
+              44 LOAD_METHOD          (get)
+              46 LOAD_CONST           ("status")
+              48 CALL_METHOD          (1 positional argument)
+              50 LOAD_CONST           (1)
+              52 COMPARE_OP           (!=)
+              54 POP_JUMP_IF_FALSE    (to 74)
+
+ 67:          56 LOAD_GLOBAL          (print)
+              58 LOAD_CONST           ("Failed to start battle: ")
+              60 LOAD_FAST            (response)
+              62 FORMAT_VALUE         0
+              64 BUILD_STRING         2
+              66 CALL_FUNCTION        (1 positional argument)
+              68 POP_TOP
+
+ 68:          70 LOAD_CONST           (None)
+              72 RETURN_VALUE
+
+ 69:     >>   74 LOAD_FAST            (response)
+              76 RETURN_VALUE
+
+
+# Method Name:       _finish_battle
+# Filename:          monster_hunting.py
+# Argument count:    4
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  7
+# Stack size:        7
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        71
+# Constants:
+#    0: 'Finish the battle and process rewards.'
+#    1: '0'
+#    2: 0
+# Names:
+#    0: CUCSG
+#    1: hash
+#    2: char_id
+#    3: equipment_data
+#    4: session_key
+#    5: send_amf_request
+#    6: FINISH_BATTLE_ENDPOINT
+#    7: save_fight_data
+#    8: _process_battle_results
+# Varnames:
+#	self, boss_id, battle_id, battle_hash_value, battle_completion_hash, params, response
+# Positional arguments:
+#	self, boss_id, battle_id, battle_hash_value
+# Local variables:
+#    4: battle_completion_hash
+#    5: params
+#    6: response
+ 73:           0 LOAD_GLOBAL          (CUCSG)
+               2 LOAD_METHOD          (hash)
+
+ 74:           4 LOAD_FAST            (self)
+               6 LOAD_ATTR            (char_id)
+               8 FORMAT_VALUE         0
+              10 LOAD_FAST            (boss_id)
+              12 FORMAT_VALUE         0
+              14 LOAD_FAST            (battle_id)
+              16 FORMAT_VALUE         0
+              18 LOAD_CONST           ("0")
+              20 LOAD_FAST            (self)
+              22 LOAD_ATTR            (equipment_data)
+              24 FORMAT_VALUE         0
+              26 BUILD_STRING         5
+
+ 73:          28 CALL_METHOD          (1 positional argument)
+              30 STORE_FAST           (battle_completion_hash)
+
+ 77:          32 LOAD_FAST            (self)
+              34 LOAD_ATTR            (char_id)
+
+ 78:          36 LOAD_FAST            (boss_id)
+
+ 79:          38 LOAD_FAST            (battle_id)
+
+ 80:          40 LOAD_CONST           (0)
+
+ 81:          42 LOAD_FAST            (battle_completion_hash)
+
+ 82:          44 LOAD_FAST            (self)
+              46 LOAD_ATTR            (equipment_data)
+
+ 83:          48 LOAD_FAST            (self)
+              50 LOAD_ATTR            (session_key)
+
+ 76:          52 BUILD_LIST           7
+              54 STORE_FAST           (params)
+
+ 86:          56 LOAD_GLOBAL          (send_amf_request)
+
+ 87:          58 LOAD_GLOBAL          (FINISH_BATTLE_ENDPOINT)
+
+ 88:          60 LOAD_FAST            (params)
+
+ 86:          62 CALL_FUNCTION        (2 positional arguments)
+              64 STORE_FAST           (response)
+
+ 91:          66 LOAD_GLOBAL          (save_fight_data)
+              68 LOAD_FAST            (response)
+              70 CALL_FUNCTION        (1 positional argument)
+              72 POP_TOP
+
+ 92:          74 LOAD_FAST            (self)
+              76 LOAD_METHOD          (_process_battle_results)
+              78 LOAD_FAST            (response)
+              80 CALL_METHOD          (1 positional argument)
+              82 RETURN_VALUE
+
+
+# Method Name:       _process_battle_results
+# Filename:          monster_hunting.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        6
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        94
+# Constants:
+#    0: 'Process and display battle results.'
+#    1: 'status'
+#    2: 1
+#    3: 'Battle failed with status: '
+#    4: False
+#    5: 'result'
+#    6: 2
+#    7: 'Battle completed! Gained '
+#    8: 0
+#    9: ' XP and '
+#   10: ' gold'
+#   11: 'Additional rewards: '
+#   12: ', '
+#   13: True
+# Names:
+#    0: get
+#    1: print
+#    2: len
+#    3: isinstance
+#    4: list
+#    5: join
+# Varnames:
+#	self, battle_result, rewards
+# Positional arguments:
+#	self, battle_result
+# Local variables:
+#    2: rewards
+ 96:           0 LOAD_FAST            (battle_result)
+               2 LOAD_METHOD          (get)
+               4 LOAD_CONST           ("status")
+               6 CALL_METHOD          (1 positional argument)
+               8 LOAD_CONST           (1)
+              10 COMPARE_OP           (!=)
+              12 POP_JUMP_IF_FALSE    (to 38)
+
+ 97:          14 LOAD_GLOBAL          (print)
+              16 LOAD_CONST           ("Battle failed with status: ")
+              18 LOAD_FAST            (battle_result)
+              20 LOAD_METHOD          (get)
+              22 LOAD_CONST           ("status")
+              24 CALL_METHOD          (1 positional argument)
+              26 FORMAT_VALUE         0
+              28 BUILD_STRING         2
+              30 CALL_FUNCTION        (1 positional argument)
+              32 POP_TOP
+
+ 98:          34 LOAD_CONST           (False)
+              36 RETURN_VALUE
+
+100:     >>   38 LOAD_FAST            (battle_result)
+              40 LOAD_METHOD          (get)
+              42 LOAD_CONST           ("result")
+              44 BUILD_LIST           0
+              46 CALL_METHOD          (2 positional arguments)
+              48 STORE_FAST           (rewards)
+
+101:          50 LOAD_FAST            (rewards)
+              52 POP_JUMP_IF_FALSE    (to 146)
+              54 LOAD_GLOBAL          (len)
+              56 LOAD_FAST            (rewards)
+              58 CALL_FUNCTION        (1 positional argument)
+              60 LOAD_CONST           (2)
+              62 COMPARE_OP           (>=)
+              64 POP_JUMP_IF_FALSE    (to 146)
+
+102:          66 LOAD_GLOBAL          (print)
+              68 LOAD_CONST           ("Battle completed! Gained ")
+              70 LOAD_FAST            (rewards)
+              72 LOAD_CONST           (0)
+              74 BINARY_SUBSCR
+              76 FORMAT_VALUE         0
+              78 LOAD_CONST           (" XP and ")
+              80 LOAD_FAST            (rewards)
+              82 LOAD_CONST           (1)
+              84 BINARY_SUBSCR
+              86 FORMAT_VALUE         0
+              88 LOAD_CONST           (" gold")
+              90 BUILD_STRING         5
+              92 CALL_FUNCTION        (1 positional argument)
+              94 POP_TOP
+
+103:          96 LOAD_GLOBAL          (len)
+              98 LOAD_FAST            (rewards)
+             100 CALL_FUNCTION        (1 positional argument)
+             102 LOAD_CONST           (2)
+             104 COMPARE_OP           (>)
+             106 POP_JUMP_IF_FALSE    (to 146)
+             108 LOAD_GLOBAL          (isinstance)
+             110 LOAD_FAST            (rewards)
+             112 LOAD_CONST           (2)
+             114 BINARY_SUBSCR
+             116 LOAD_GLOBAL          (list)
+             118 CALL_FUNCTION        (2 positional arguments)
+             120 POP_JUMP_IF_FALSE    (to 146)
+
+104:         122 LOAD_GLOBAL          (print)
+             124 LOAD_CONST           ("Additional rewards: ")
+             126 LOAD_CONST           (", ")
+             128 LOAD_METHOD          (join)
+             130 LOAD_FAST            (rewards)
+             132 LOAD_CONST           (2)
+             134 BINARY_SUBSCR
+             136 CALL_METHOD          (1 positional argument)
+             138 FORMAT_VALUE         0
+             140 BUILD_STRING         2
+             142 CALL_FUNCTION        (1 positional argument)
+             144 POP_TOP
+
+105:     >>  146 LOAD_CONST           (True)
+             148 RETURN_VALUE
+
+
+# Method Name:       _wait_for_battle_completion
+# Filename:          monster_hunting.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        6
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        107
+# Constants:
+#    0: 'Wait for the battle to complete with progress indication.'
+#    1: 'Waiting for battle to complete...'
+#    2: ''
+#    3: True
+#    4: ('end', 'flush')
+#    5: '\nBattle wait interrupted'
+#    6: False
+#    7: '.'
+#    8: 1
+# Names:
+#    0: print
+#    1: range
+#    2: BATTLE_WAIT_TIME
+#    3: check_stop_event
+#    4: time
+#    5: sleep
+# Varnames:
+#	self, _
+# Positional arguments:
+#	self
+# Local variables:
+#    1: _
+109:           0 LOAD_GLOBAL          (print)
+               2 LOAD_CONST           ("Waiting for battle to complete...")
+               4 LOAD_CONST           ("")
+               6 LOAD_CONST           (True)
+               8 LOAD_CONST           (('end', 'flush'))
+              10 CALL_FUNCTION_KW     (3 total positional and keyword args)
+              12 POP_TOP
+
+110:          14 LOAD_GLOBAL          (range)
+              16 LOAD_GLOBAL          (BATTLE_WAIT_TIME)
+              18 CALL_FUNCTION        (1 positional argument)
+              20 GET_ITER
+         >>   22 FOR_ITER             (to 74)
+              24 STORE_FAST           (_)
+
+111:          26 LOAD_FAST            (self)
+              28 LOAD_METHOD          (check_stop_event)
+              30 CALL_METHOD          (0 positional arguments)
+              32 POP_JUMP_IF_FALSE    (to 48)
+
+112:          34 LOAD_GLOBAL          (print)
+              36 LOAD_CONST           ("\nBattle wait interrupted")
+              38 CALL_FUNCTION        (1 positional argument)
+              40 POP_TOP
+
+113:          42 POP_TOP
+              44 LOAD_CONST           (False)
+              46 RETURN_VALUE
+
+114:     >>   48 LOAD_GLOBAL          (print)
+              50 LOAD_CONST           (".")
+              52 LOAD_CONST           ("")
+              54 LOAD_CONST           (True)
+              56 LOAD_CONST           (('end', 'flush'))
+              58 CALL_FUNCTION_KW     (3 total positional and keyword args)
+              60 POP_TOP
+
+115:          62 LOAD_GLOBAL          (time)
+              64 LOAD_METHOD          (sleep)
+              66 LOAD_CONST           (1)
+              68 CALL_METHOD          (1 positional argument)
+              70 POP_TOP
+              72 JUMP_ABSOLUTE        (to 22)
+
+116:     >>   74 LOAD_GLOBAL          (print)
+              76 CALL_FUNCTION        (0 positional arguments)
+              78 POP_TOP
+
+117:          80 LOAD_CONST           (True)
+              82 RETURN_VALUE
+
+
+# Method Name:       run
+# Filename:          monster_hunting.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  8
+# Stack size:        7
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        119
+# Constants:
+#    0: 'Run the monster hunt process.'
+#    1: 'Starting monster hunt process...'
+#    2: 'Failed to get event data, stopping...'
+#    3: 'boss_id'
+#    4: 'energy'
+#    5: 0
+#    6: 'Not enough energy to start battle. Current: '
+#    7: '/'
+#    8: ' required'
+#    9: 'Monster hunt completed (out of energy)'
+#   10: 'Starting battle with '
+#   11: ' (Energy: '
+#   12: ')'
+#   13: 'Failed to start battle, stopping...'
+#   14: 'Battle wait interrupted, stopping...'
+#   15: 'code'
+#   16: 'hash'
+#   17: 'Battle completion failed, stopping...'
+#   18: 'Energy used: '
+#   19: ', Remaining: '
+#   20: 'Not enough energy for another battle. Current: '
+#   21: 'Preparing for next battle...'
+#   22: 2
+#   23: None
+# Names:
+#    0: print
+#    1: check_stop_event
+#    2: _get_event_data
+#    3: get
+#    4: MIN_ENERGY_REQUIRED
+#    5: _start_battle
+#    6: _wait_for_battle_completion
+#    7: _finish_battle
+#    8: time
+#    9: sleep
+# Varnames:
+#	self, event_data, boss_id, energy, battle_start, updated_event_data, new_energy, energy_used
+# Positional arguments:
+#	self
+# Local variables:
+#    1: event_data
+#    2: boss_id
+#    3: energy
+#    4: battle_start
+#    5: updated_event_data
+#    6: new_energy
+#    7: energy_used
+121:           0 LOAD_GLOBAL          (print)
+               2 LOAD_CONST           ("Starting monster hunt process...")
+               4 CALL_FUNCTION        (1 positional argument)
+               6 POP_TOP
+
+123:           8 LOAD_FAST            (self)
+              10 LOAD_METHOD          (check_stop_event)
+              12 CALL_METHOD          (0 positional arguments)
+              14 POP_JUMP_IF_TRUE     (to 326)
+
+125:     >>   16 LOAD_FAST            (self)
+              18 LOAD_METHOD          (_get_event_data)
+              20 CALL_METHOD          (0 positional arguments)
+              22 STORE_FAST           (event_data)
+
+126:          24 LOAD_FAST            (event_data)
+              26 POP_JUMP_IF_TRUE     (to 40)
+
+127:          28 LOAD_GLOBAL          (print)
+              30 LOAD_CONST           ("Failed to get event data, stopping...")
+              32 CALL_FUNCTION        (1 positional argument)
+              34 POP_TOP
+
+128:          36 LOAD_CONST           (None)
+              38 RETURN_VALUE
+
+130:     >>   40 LOAD_FAST            (event_data)
+              42 LOAD_METHOD          (get)
+              44 LOAD_CONST           ("boss_id")
+              46 CALL_METHOD          (1 positional argument)
+              48 STORE_FAST           (boss_id)
+
+131:          50 LOAD_FAST            (event_data)
+              52 LOAD_METHOD          (get)
+              54 LOAD_CONST           ("energy")
+              56 LOAD_CONST           (0)
+              58 CALL_METHOD          (2 positional arguments)
+              60 STORE_FAST           (energy)
+
+134:          62 LOAD_FAST            (energy)
+              64 LOAD_GLOBAL          (MIN_ENERGY_REQUIRED)
+              66 COMPARE_OP           (<)
+              68 POP_JUMP_IF_FALSE    (to 104)
+
+135:          70 LOAD_GLOBAL          (print)
+              72 LOAD_CONST           ("Not enough energy to start battle. Current: ")
+              74 LOAD_FAST            (energy)
+              76 FORMAT_VALUE         0
+              78 LOAD_CONST           ("/")
+              80 LOAD_GLOBAL          (MIN_ENERGY_REQUIRED)
+              82 FORMAT_VALUE         0
+              84 LOAD_CONST           (" required")
+              86 BUILD_STRING         5
+              88 CALL_FUNCTION        (1 positional argument)
+              90 POP_TOP
+
+136:          92 LOAD_GLOBAL          (print)
+              94 LOAD_CONST           ("Monster hunt completed (out of energy)")
+              96 CALL_FUNCTION        (1 positional argument)
+              98 POP_TOP
+
+137:         100 LOAD_CONST           (None)
+             102 RETURN_VALUE
+
+139:     >>  104 LOAD_GLOBAL          (print)
+             106 LOAD_CONST           ("Starting battle with ")
+             108 LOAD_FAST            (boss_id)
+             110 FORMAT_VALUE         0
+             112 LOAD_CONST           (" (Energy: ")
+             114 LOAD_FAST            (energy)
+             116 FORMAT_VALUE         0
+             118 LOAD_CONST           (")")
+             120 BUILD_STRING         5
+             122 CALL_FUNCTION        (1 positional argument)
+             124 POP_TOP
+
+142:         126 LOAD_FAST            (self)
+             128 LOAD_METHOD          (_start_battle)
+             130 LOAD_FAST            (boss_id)
+             132 CALL_METHOD          (1 positional argument)
+             134 STORE_FAST           (battle_start)
+
+143:         136 LOAD_FAST            (battle_start)
+             138 POP_JUMP_IF_TRUE     (to 152)
+
+144:         140 LOAD_GLOBAL          (print)
+             142 LOAD_CONST           ("Failed to start battle, stopping...")
+             144 CALL_FUNCTION        (1 positional argument)
+             146 POP_TOP
+
+145:         148 LOAD_CONST           (None)
+             150 RETURN_VALUE
+
+148:     >>  152 LOAD_FAST            (self)
+             154 LOAD_METHOD          (_wait_for_battle_completion)
+             156 CALL_METHOD          (0 positional arguments)
+             158 POP_JUMP_IF_TRUE     (to 172)
+
+149:         160 LOAD_GLOBAL          (print)
+             162 LOAD_CONST           ("Battle wait interrupted, stopping...")
+             164 CALL_FUNCTION        (1 positional argument)
+             166 POP_TOP
+
+150:         168 LOAD_CONST           (None)
+             170 RETURN_VALUE
+
+153:     >>  172 LOAD_FAST            (self)
+             174 LOAD_METHOD          (_finish_battle)
+
+154:         176 LOAD_FAST            (boss_id)
+
+155:         178 LOAD_FAST            (battle_start)
+             180 LOAD_METHOD          (get)
+             182 LOAD_CONST           ("code")
+             184 CALL_METHOD          (1 positional argument)
+
+156:         186 LOAD_FAST            (battle_start)
+             188 LOAD_METHOD          (get)
+             190 LOAD_CONST           ("hash")
+             192 CALL_METHOD          (1 positional argument)
+
+153:         194 CALL_METHOD          (3 positional arguments)
+             196 POP_JUMP_IF_TRUE     (to 210)
+
+158:         198 LOAD_GLOBAL          (print)
+             200 LOAD_CONST           ("Battle completion failed, stopping...")
+             202 CALL_FUNCTION        (1 positional argument)
+             204 POP_TOP
+
+159:         206 LOAD_CONST           (None)
+             208 RETURN_VALUE
+
+162:     >>  210 LOAD_FAST            (self)
+             212 LOAD_METHOD          (_get_event_data)
+             214 CALL_METHOD          (0 positional arguments)
+             216 STORE_FAST           (updated_event_data)
+
+163:         218 LOAD_FAST            (updated_event_data)
+             220 POP_JUMP_IF_FALSE    (to 296)
+
+164:         222 LOAD_FAST            (updated_event_data)
+             224 LOAD_METHOD          (get)
+             226 LOAD_CONST           ("energy")
+             228 LOAD_CONST           (0)
+             230 CALL_METHOD          (2 positional arguments)
+             232 STORE_FAST           (new_energy)
+
+165:         234 LOAD_FAST            (energy)
+             236 LOAD_FAST            (new_energy)
+             238 BINARY_SUBTRACT
+             240 STORE_FAST           (energy_used)
+
+166:         242 LOAD_GLOBAL          (print)
+             244 LOAD_CONST           ("Energy used: ")
+             246 LOAD_FAST            (energy_used)
+             248 FORMAT_VALUE         0
+             250 LOAD_CONST           (", Remaining: ")
+             252 LOAD_FAST            (new_energy)
+             254 FORMAT_VALUE         0
+             256 BUILD_STRING         4
+             258 CALL_FUNCTION        (1 positional argument)
+             260 POP_TOP
+
+169:         262 LOAD_FAST            (new_energy)
+             264 LOAD_GLOBAL          (MIN_ENERGY_REQUIRED)
+             266 COMPARE_OP           (<)
+             268 POP_JUMP_IF_FALSE    (to 296)
+
+170:         270 LOAD_GLOBAL          (print)
+             272 LOAD_CONST           ("Not enough energy for another battle. Current: ")
+             274 LOAD_FAST            (new_energy)
+             276 FORMAT_VALUE         0
+             278 LOAD_CONST           ("/")
+             280 LOAD_GLOBAL          (MIN_ENERGY_REQUIRED)
+             282 FORMAT_VALUE         0
+             284 LOAD_CONST           (" required")
+             286 BUILD_STRING         5
+             288 CALL_FUNCTION        (1 positional argument)
+             290 POP_TOP
+
+171:         292 LOAD_CONST           (None)
+             294 RETURN_VALUE
+
+174:     >>  296 LOAD_GLOBAL          (print)
+             298 LOAD_CONST           ("Preparing for next battle...")
+             300 CALL_FUNCTION        (1 positional argument)
+             302 POP_TOP
+
+175:         304 LOAD_GLOBAL          (time)
+             306 LOAD_METHOD          (sleep)
+             308 LOAD_CONST           (2)
+             310 CALL_METHOD          (1 positional argument)
+             312 POP_TOP
+
+123:         314 LOAD_FAST            (self)
+             316 LOAD_METHOD          (check_stop_event)
+             318 CALL_METHOD          (0 positional arguments)
+             320 POP_JUMP_IF_FALSE    (to 16)
+             322 LOAD_CONST           (None)
+             324 RETURN_VALUE
+         >>  326 LOAD_CONST           (None)
+             328 RETURN_VALUE
+

@@ -1,0 +1,1529 @@
+﻿# pydisasm version 6.1.8
+# Python bytecode 3.10 (3439)
+# Disassembled from Python 3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]
+# Timestamp in code: 1780820770 (2026-06-07 15:26:10)
+# Source code size mod 2**32: 8179 bytes
+# Method Name:       <module>
+# Filename:          mission_s.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        8
+# Flags:             0x00000040 (NOFREE)
+# First Line:        1
+# Constants:
+#    0: 0
+#    1: None
+#    2: 1
+#    3: ('config',)
+#    4: ('CUCSG', 'StatManager', 'flatten_json', 'get_data_by_id', 'open_json_to_dict', 'save_fight_data', 'send_amf_request')
+#    5: 'data/mission.json'
+#    6: 'data/enemy.json'
+#    7: 'eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzAxIiwid2VhcG9uIjoid3BuXzAxIiwic2V0Ijoic2V0XzAxXzAifSwic3RhdHVzIjp7ImVhcnRoIjowLCJmaXJlIjowLCJ3YXRlciI6MCwibGlnaHRuaW5nIjowLCJ3aW5kIjowfSwiYnl0ZXMiOnsiXyI6ODIyODQ0NywiX18iOjgyMjg0NDcsIl9fXyI6IjE3NjI3NDY2NTk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mjc0NjY1OTE3NjI3NDY2NTkxNzYyNzQ2NjU5MTc2Mjc0NjY1OSIsIl9fX19fIjo4MjI4NDQ3LCJfX19fX18iOjgyMjg0NDcsIl9fX18iOjE3NjI3NDY2NTl9LCJfX19fIjpbeyJfIjoic2tpbGxfMTMiLCJfXyI6MjkxMzR9XX0='
+#    8: 235000
+#    9: 'msn_112'
+#   10: 10
+#   11: 80
+#   12: ('mission_id', 'energy_cost', 'min_level')
+#   13: 'msn_113'
+#   14: 12
+#   15: 81
+#   16: 'msn_114'
+#   17: 14
+#   18: 82
+#   19: 'msn_115'
+#   20: 16
+#   21: 83
+#   22: 'msn_116'
+#   23: 25
+#   24: 84
+#   25: (1, 2, 3, 4, 5)
+#   26: 5
+#   27: <Code310 code object check_stop_event at 0x1e2900ccf50, file mission_s.py>, line 31
+#   28: 'check_stop_event'
+#   29: 'seconds'
+#   30: 'return'
+#   31: <Code310 code object wait_with_stop_check at 0x1e2901c10d0, file mission_s.py>, line 38
+#   32: 'wait_with_stop_check'
+#   33: <Code310 code object response_message at 0x1e2901c1130, file mission_s.py>, line 46
+#   34: 'response_message'
+#   35: 'mission_id'
+#   36: <Code310 code object get_mission_by_id at 0x1e2901c1460, file mission_s.py>, line 63
+#   37: 'get_mission_by_id'
+#   38: <Code310 code object get_character_context at 0x1e2901c1520, file mission_s.py>, line 67
+#   39: 'get_character_context'
+#   40: <Code310 code object get_mission_s_data at 0x1e2901c16d0, file mission_s.py>, line 89
+#   41: 'get_mission_s_data'
+#   42: <Code310 code object build_enemy_attributes at 0x1e29008da30, file mission_s.py>, line 93
+#   43: 'build_enemy_attributes'
+#   44: <Code310 code object start_battle at 0x1e2901c1940, file mission_s.py>, line 106
+#   45: 'start_battle'
+#   46: <Code310 code object finish_battle at 0x1e28e02ccb0, file mission_s.py>, line 136
+#   47: 'finish_battle'
+#   48: 'unlocked_stage'
+#   49: 'energy'
+#   50: 'char_level'
+#   51: <Code310 code object resolve_stage_to_run at 0x1e2901c1b50, file mission_s.py>, line 157
+#   52: 'resolve_stage_to_run'
+#   53: <Code310 code object mission_s at 0x1e2901c1c10, file mission_s.py>, line 169
+#   54: 'mission_s'
+# Names:
+#    0: time
+#    1: 
+#    2: config
+#    3: utils
+#    4: CUCSG
+#    5: StatManager
+#    6: flatten_json
+#    7: get_data_by_id
+#    8: open_json_to_dict
+#    9: save_fight_data
+#   10: send_amf_request
+#   11: mission_list
+#   12: enemy_list
+#   13: battle_hash
+#   14: MISSION_S_FINISH_DAMAGE
+#   15: MISSION_S_STAGE_CONFIG
+#   16: MISSION_S_START_WAIT_SECONDS
+#   17: MISSION_S_BETWEEN_BATTLES_SECONDS
+#   18: check_stop_event
+#   19: int
+#   20: bool
+#   21: wait_with_stop_check
+#   22: str
+#   23: response_message
+#   24: get_mission_by_id
+#   25: get_character_context
+#   26: get_mission_s_data
+#   27: build_enemy_attributes
+#   28: start_battle
+#   29: finish_battle
+#   30: resolve_stage_to_run
+#   31: mission_s
+  1:           0 LOAD_CONST           (0)
+               2 LOAD_CONST           (None)
+               4 IMPORT_NAME          (time)
+               6 STORE_NAME           (time)
+
+  3:           8 LOAD_CONST           (1)
+              10 LOAD_CONST           (('config',))
+              12 IMPORT_NAME          1
+              14 IMPORT_FROM          (config)
+              16 STORE_NAME           (config)
+              18 POP_TOP
+
+  4:          20 LOAD_CONST           (1)
+              22 LOAD_CONST           (('CUCSG', 'StatManager', 'flatten_json', 'get_data_by_id', 'open_json_to_dict', 'save_fight_data', 'send_amf_request'))
+              24 IMPORT_NAME          (utils)
+              26 IMPORT_FROM          (CUCSG)
+              28 STORE_NAME           (CUCSG)
+              30 IMPORT_FROM          (StatManager)
+              32 STORE_NAME           (StatManager)
+              34 IMPORT_FROM          (flatten_json)
+              36 STORE_NAME           (flatten_json)
+              38 IMPORT_FROM          (get_data_by_id)
+              40 STORE_NAME           (get_data_by_id)
+              42 IMPORT_FROM          (open_json_to_dict)
+              44 STORE_NAME           (open_json_to_dict)
+              46 IMPORT_FROM          (save_fight_data)
+              48 STORE_NAME           (save_fight_data)
+              50 IMPORT_FROM          (send_amf_request)
+              52 STORE_NAME           (send_amf_request)
+              54 POP_TOP
+
+ 14:          56 LOAD_NAME            (open_json_to_dict)
+              58 LOAD_CONST           ("data/mission.json")
+              60 CALL_FUNCTION        (1 positional argument)
+              62 STORE_NAME           (mission_list)
+
+ 15:          64 LOAD_NAME            (open_json_to_dict)
+              66 LOAD_CONST           ("data/enemy.json")
+              68 CALL_FUNCTION        (1 positional argument)
+              70 STORE_NAME           (enemy_list)
+
+ 16:          72 LOAD_CONST           ("eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzAxIiwid2VhcG9uIjoid3BuXzAxIiwic2V0Ijoic2V0XzAxXzAifSwic3RhdHVzIjp7ImVhcnRoIjowLCJmaXJlIjowLCJ3YXRlciI6MCwibGlnaHRuaW5nIjowLCJ3aW5kIjowfSwiYnl0ZXMiOnsiXyI6ODIyODQ0NywiX18iOjgyMjg0NDcsIl9fXyI6IjE3NjI3NDY2NTk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mjc0NjY1OTE3NjI3NDY2NTkxNzYyNzQ2NjU5MTc2Mjc0NjY1OSIsIl9fX19fIjo4MjI4NDQ3LCJfX19fX18iOjgyMjg0NDcsIl9fX18iOjE3NjI3NDY2NTl9LCJfX19fIjpbeyJfIjoic2tpbGxfMTMiLCJfXyI6MjkxMzR9XX0=")
+              74 STORE_NAME           (battle_hash)
+
+ 17:          76 LOAD_CONST           (235000)
+              78 STORE_NAME           (MISSION_S_FINISH_DAMAGE)
+
+ 20:          80 LOAD_CONST           ("msn_112")
+              82 LOAD_CONST           (10)
+              84 LOAD_CONST           (80)
+              86 LOAD_CONST           (('mission_id', 'energy_cost', 'min_level'))
+              88 BUILD_CONST_KEY_MAP  3
+
+ 21:          90 LOAD_CONST           ("msn_113")
+              92 LOAD_CONST           (12)
+              94 LOAD_CONST           (81)
+              96 LOAD_CONST           (('mission_id', 'energy_cost', 'min_level'))
+              98 BUILD_CONST_KEY_MAP  3
+
+ 22:         100 LOAD_CONST           ("msn_114")
+             102 LOAD_CONST           (14)
+             104 LOAD_CONST           (82)
+             106 LOAD_CONST           (('mission_id', 'energy_cost', 'min_level'))
+             108 BUILD_CONST_KEY_MAP  3
+
+ 23:         110 LOAD_CONST           ("msn_115")
+             112 LOAD_CONST           (16)
+             114 LOAD_CONST           (83)
+             116 LOAD_CONST           (('mission_id', 'energy_cost', 'min_level'))
+             118 BUILD_CONST_KEY_MAP  3
+
+ 24:         120 LOAD_CONST           ("msn_116")
+             122 LOAD_CONST           (25)
+             124 LOAD_CONST           (84)
+             126 LOAD_CONST           (('mission_id', 'energy_cost', 'min_level'))
+             128 BUILD_CONST_KEY_MAP  3
+
+ 19:         130 LOAD_CONST           ((1, 2, 3, 4, 5))
+             132 BUILD_CONST_KEY_MAP  5
+             134 STORE_NAME           (MISSION_S_STAGE_CONFIG)
+
+ 27:         136 LOAD_CONST           (5)
+             138 STORE_NAME           (MISSION_S_START_WAIT_SECONDS)
+
+ 28:         140 LOAD_CONST           (5)
+             142 STORE_NAME           (MISSION_S_BETWEEN_BATTLES_SECONDS)
+
+ 31:         144 LOAD_CONST           (<Code310 code object check_stop_event at 0x1e2900ccf50, file mission_s.py>, line 31)
+             146 LOAD_CONST           ("check_stop_event")
+             148 MAKE_FUNCTION        (No arguments)
+             150 STORE_NAME           (check_stop_event)
+
+ 38:         152 LOAD_CONST           ("seconds")
+             154 LOAD_NAME            (int)
+             156 LOAD_CONST           ("return")
+             158 LOAD_NAME            (bool)
+             160 BUILD_TUPLE          4
+             162 LOAD_CONST           (<Code310 code object wait_with_stop_check at 0x1e2901c10d0, file mission_s.py>, line 38)
+             164 LOAD_CONST           ("wait_with_stop_check")
+             166 MAKE_FUNCTION        (annotation)
+             168 STORE_NAME           (wait_with_stop_check)
+
+ 46:         170 LOAD_CONST           ("return")
+             172 LOAD_NAME            (str)
+             174 BUILD_TUPLE          2
+             176 LOAD_CONST           (<Code310 code object response_message at 0x1e2901c1130, file mission_s.py>, line 46)
+             178 LOAD_CONST           ("response_message")
+             180 MAKE_FUNCTION        (annotation)
+             182 STORE_NAME           (response_message)
+
+ 63:         184 LOAD_CONST           ("mission_id")
+             186 LOAD_NAME            (str)
+             188 BUILD_TUPLE          2
+             190 LOAD_CONST           (<Code310 code object get_mission_by_id at 0x1e2901c1460, file mission_s.py>, line 63)
+             192 LOAD_CONST           ("get_mission_by_id")
+             194 MAKE_FUNCTION        (annotation)
+             196 STORE_NAME           (get_mission_by_id)
+
+ 67:         198 LOAD_CONST           (<Code310 code object get_character_context at 0x1e2901c1520, file mission_s.py>, line 67)
+             200 LOAD_CONST           ("get_character_context")
+             202 MAKE_FUNCTION        (No arguments)
+             204 STORE_NAME           (get_character_context)
+
+ 89:         206 LOAD_CONST           (<Code310 code object get_mission_s_data at 0x1e2901c16d0, file mission_s.py>, line 89)
+             208 LOAD_CONST           ("get_mission_s_data")
+             210 MAKE_FUNCTION        (No arguments)
+             212 STORE_NAME           (get_mission_s_data)
+
+ 93:         214 LOAD_CONST           (<Code310 code object build_enemy_attributes at 0x1e29008da30, file mission_s.py>, line 93)
+             216 LOAD_CONST           ("build_enemy_attributes")
+             218 MAKE_FUNCTION        (No arguments)
+             220 STORE_NAME           (build_enemy_attributes)
+
+106:         222 LOAD_CONST           (<Code310 code object start_battle at 0x1e2901c1940, file mission_s.py>, line 106)
+             224 LOAD_CONST           ("start_battle")
+             226 MAKE_FUNCTION        (No arguments)
+             228 STORE_NAME           (start_battle)
+
+136:         230 LOAD_CONST           (<Code310 code object finish_battle at 0x1e28e02ccb0, file mission_s.py>, line 136)
+             232 LOAD_CONST           ("finish_battle")
+             234 MAKE_FUNCTION        (No arguments)
+             236 STORE_NAME           (finish_battle)
+
+157:         238 LOAD_CONST           ("unlocked_stage")
+             240 LOAD_NAME            (int)
+             242 LOAD_CONST           ("energy")
+             244 LOAD_NAME            (int)
+             246 LOAD_CONST           ("char_level")
+             248 LOAD_NAME            (int)
+             250 BUILD_TUPLE          6
+             252 LOAD_CONST           (<Code310 code object resolve_stage_to_run at 0x1e2901c1b50, file mission_s.py>, line 157)
+             254 LOAD_CONST           ("resolve_stage_to_run")
+             256 MAKE_FUNCTION        (annotation)
+             258 STORE_NAME           (resolve_stage_to_run)
+
+169:         260 LOAD_CONST           (<Code310 code object mission_s at 0x1e2901c1c10, file mission_s.py>, line 169)
+             262 LOAD_CONST           ("mission_s")
+             264 MAKE_FUNCTION        (No arguments)
+             266 STORE_NAME           (mission_s)
+             268 LOAD_CONST           (None)
+             270 RETURN_VALUE
+
+
+# Method Name:       check_stop_event
+# Filename:          mission_s.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        31
+# Constants:
+#    0: None
+#    1: 'stop_event'
+#    2: 'Mission S stopped by user request'
+#    3: True
+#    4: False
+# Names:
+#    0: hasattr
+#    1: config
+#    2: stop_event
+#    3: is_set
+#    4: print
+ 32:           0 LOAD_GLOBAL          (hasattr)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_CONST           ("stop_event")
+               6 CALL_FUNCTION        (2 positional arguments)
+               8 POP_JUMP_IF_FALSE    (to 32)
+              10 LOAD_GLOBAL          (config)
+              12 LOAD_ATTR            (stop_event)
+              14 LOAD_METHOD          (is_set)
+              16 CALL_METHOD          (0 positional arguments)
+              18 POP_JUMP_IF_FALSE    (to 32)
+
+ 33:          20 LOAD_GLOBAL          (print)
+              22 LOAD_CONST           ("Mission S stopped by user request")
+              24 CALL_FUNCTION        (1 positional argument)
+              26 POP_TOP
+
+ 34:          28 LOAD_CONST           (True)
+              30 RETURN_VALUE
+
+ 35:     >>   32 LOAD_CONST           (False)
+              34 RETURN_VALUE
+
+
+# Method Name:       wait_with_stop_check
+# Filename:          mission_s.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        38
+# Constants:
+#    0: None
+#    1: False
+#    2: 1
+#    3: True
+# Names:
+#    0: range
+#    1: check_stop_event
+#    2: time
+#    3: sleep
+# Varnames:
+#	seconds, _
+# Positional arguments:
+#	seconds
+# Local variables:
+#    1: _
+ 39:           0 LOAD_GLOBAL          (range)
+               2 LOAD_FAST            (seconds)
+               4 CALL_FUNCTION        (1 positional argument)
+               6 GET_ITER
+         >>    8 FOR_ITER             (to 36)
+              10 STORE_FAST           (_)
+
+ 40:          12 LOAD_GLOBAL          (check_stop_event)
+              14 CALL_FUNCTION        (0 positional arguments)
+              16 POP_JUMP_IF_FALSE    (to 24)
+
+ 41:          18 POP_TOP
+              20 LOAD_CONST           (False)
+              22 RETURN_VALUE
+
+ 42:     >>   24 LOAD_GLOBAL          (time)
+              26 LOAD_METHOD          (sleep)
+              28 LOAD_CONST           (1)
+              30 CALL_METHOD          (1 positional argument)
+              32 POP_TOP
+              34 JUMP_ABSOLUTE        (to 8)
+
+ 43:     >>   36 LOAD_CONST           (True)
+              38 RETURN_VALUE
+
+
+# Method Name:       response_message
+# Filename:          mission_s.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        46
+# Constants:
+#    0: None
+#    1: 'No response'
+#    2: 'result'
+#    3: 'message'
+#    4: 'error'
+#    5: ('description', 'message', 'details', 'faultString')
+# Names:
+#    0: isinstance
+#    1: dict
+#    2: str
+#    3: get
+#    4: getattr
+# Varnames:
+#	response, attr, value
+# Positional arguments:
+#	response
+# Local variables:
+#    1: attr
+#    2: value
+ 47:           0 LOAD_FAST            (response)
+               2 LOAD_CONST           (None)
+               4 IS_OP                (is)
+               6 POP_JUMP_IF_FALSE    (to 12)
+
+ 48:           8 LOAD_CONST           ("No response")
+              10 RETURN_VALUE
+
+ 49:     >>   12 LOAD_GLOBAL          (isinstance)
+              14 LOAD_FAST            (response)
+              16 LOAD_GLOBAL          (dict)
+              18 CALL_FUNCTION        (2 positional arguments)
+              20 POP_JUMP_IF_FALSE    (to 60)
+
+ 50:          22 LOAD_GLOBAL          (str)
+
+ 51:          24 LOAD_FAST            (response)
+              26 LOAD_METHOD          (get)
+              28 LOAD_CONST           ("result")
+              30 CALL_METHOD          (1 positional argument)
+              32 JUMP_IF_TRUE_OR_POP  (to 56)
+
+ 52:          34 LOAD_FAST            (response)
+              36 LOAD_METHOD          (get)
+              38 LOAD_CONST           ("message")
+              40 CALL_METHOD          (1 positional argument)
+
+ 51:          42 JUMP_IF_TRUE_OR_POP  (to 56)
+
+ 53:          44 LOAD_FAST            (response)
+              46 LOAD_METHOD          (get)
+              48 LOAD_CONST           ("error")
+              50 CALL_METHOD          (1 positional argument)
+
+ 51:          52 JUMP_IF_TRUE_OR_POP  (to 56)
+
+ 54:          54 LOAD_FAST            (response)
+
+ 50:     >>   56 CALL_FUNCTION        (1 positional argument)
+              58 RETURN_VALUE
+
+ 56:     >>   60 LOAD_CONST           (('description', 'message', 'details', 'faultString'))
+              62 GET_ITER
+         >>   64 FOR_ITER             (to 98)
+              66 STORE_FAST           (attr)
+
+ 57:          68 LOAD_GLOBAL          (getattr)
+              70 LOAD_FAST            (response)
+              72 LOAD_FAST            (attr)
+              74 LOAD_CONST           (None)
+              76 CALL_FUNCTION        (3 positional arguments)
+              78 STORE_FAST           (value)
+
+ 58:          80 LOAD_FAST            (value)
+              82 POP_JUMP_IF_FALSE    (to 96)
+
+ 59:          84 LOAD_GLOBAL          (str)
+              86 LOAD_FAST            (value)
+              88 CALL_FUNCTION        (1 positional argument)
+              90 ROT_TWO
+              92 POP_TOP
+              94 RETURN_VALUE
+
+ 58:     >>   96 JUMP_ABSOLUTE        (to 64)
+
+ 60:     >>   98 LOAD_GLOBAL          (str)
+             100 LOAD_FAST            (response)
+             102 CALL_FUNCTION        (1 positional argument)
+             104 RETURN_VALUE
+
+
+# Method Name:       get_mission_by_id
+# Filename:          mission_s.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        63
+# Constants:
+#    0: None
+# Names:
+#    0: get_data_by_id
+#    1: mission_list
+# Varnames:
+#	mission_id
+# Positional arguments:
+#	mission_id
+ 64:           0 LOAD_GLOBAL          (get_data_by_id)
+               2 LOAD_FAST            (mission_id)
+               4 LOAD_GLOBAL          (mission_list)
+               6 CALL_FUNCTION        (2 positional arguments)
+               8 RETURN_VALUE
+
+
+# Method Name:       get_character_context
+# Filename:          mission_s.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  4
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        67
+# Constants:
+#    0: None
+#    1: 'Character data is not loaded in memory'
+#    2: 'Login data is not loaded in memory'
+#    3: 'character_data'
+#    4: 'Invalid character data snapshot'
+#    5: 'character_id'
+#    6: 'char_id'
+#    7: 'character_level'
+#    8: 'level'
+#    9: 0
+#   10: 'sessionkey'
+#   11: 'Character ID is missing from current character data'
+#   12: 'Session key is missing from login data'
+# Names:
+#    0: isinstance
+#    1: config
+#    2: char_data
+#    3: dict
+#    4: ValueError
+#    5: login_data
+#    6: get
+#    7: int
+# Varnames:
+#	char_snapshot, char_id, char_level, session_key
+# Local variables:
+#    0: char_snapshot
+#    1: char_id
+#    2: char_level
+#    3: session_key
+ 68:           0 LOAD_GLOBAL          (isinstance)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_ATTR            (char_data)
+               6 LOAD_GLOBAL          (dict)
+               8 CALL_FUNCTION        (2 positional arguments)
+              10 POP_JUMP_IF_TRUE     (to 20)
+
+ 69:          12 LOAD_GLOBAL          (ValueError)
+              14 LOAD_CONST           ("Character data is not loaded in memory")
+              16 CALL_FUNCTION        (1 positional argument)
+              18 RAISE_VARARGS        (exception instance)
+
+ 70:     >>   20 LOAD_GLOBAL          (isinstance)
+              22 LOAD_GLOBAL          (config)
+              24 LOAD_ATTR            (login_data)
+              26 LOAD_GLOBAL          (dict)
+              28 CALL_FUNCTION        (2 positional arguments)
+              30 POP_JUMP_IF_TRUE     (to 40)
+
+ 71:          32 LOAD_GLOBAL          (ValueError)
+              34 LOAD_CONST           ("Login data is not loaded in memory")
+              36 CALL_FUNCTION        (1 positional argument)
+              38 RAISE_VARARGS        (exception instance)
+
+ 73:     >>   40 LOAD_GLOBAL          (config)
+              42 LOAD_ATTR            (char_data)
+              44 LOAD_METHOD          (get)
+              46 LOAD_CONST           ("character_data")
+              48 LOAD_GLOBAL          (config)
+              50 LOAD_ATTR            (char_data)
+              52 CALL_METHOD          (2 positional arguments)
+              54 STORE_FAST           (char_snapshot)
+
+ 74:          56 LOAD_GLOBAL          (isinstance)
+              58 LOAD_FAST            (char_snapshot)
+              60 LOAD_GLOBAL          (dict)
+              62 CALL_FUNCTION        (2 positional arguments)
+              64 POP_JUMP_IF_TRUE     (to 74)
+
+ 75:          66 LOAD_GLOBAL          (ValueError)
+              68 LOAD_CONST           ("Invalid character data snapshot")
+              70 CALL_FUNCTION        (1 positional argument)
+              72 RAISE_VARARGS        (exception instance)
+
+ 77:     >>   74 LOAD_FAST            (char_snapshot)
+              76 LOAD_METHOD          (get)
+              78 LOAD_CONST           ("character_id")
+              80 CALL_METHOD          (1 positional argument)
+              82 JUMP_IF_TRUE_OR_POP  (to 92)
+              84 LOAD_FAST            (char_snapshot)
+              86 LOAD_METHOD          (get)
+              88 LOAD_CONST           ("char_id")
+              90 CALL_METHOD          (1 positional argument)
+         >>   92 STORE_FAST           (char_id)
+
+ 78:          94 LOAD_GLOBAL          (int)
+              96 LOAD_FAST            (char_snapshot)
+              98 LOAD_METHOD          (get)
+             100 LOAD_CONST           ("character_level")
+             102 CALL_METHOD          (1 positional argument)
+             104 JUMP_IF_TRUE_OR_POP  (to 118)
+             106 LOAD_FAST            (char_snapshot)
+             108 LOAD_METHOD          (get)
+             110 LOAD_CONST           ("level")
+             112 CALL_METHOD          (1 positional argument)
+             114 JUMP_IF_TRUE_OR_POP  (to 118)
+             116 LOAD_CONST           (0)
+         >>  118 CALL_FUNCTION        (1 positional argument)
+             120 STORE_FAST           (char_level)
+
+ 79:         122 LOAD_GLOBAL          (config)
+             124 LOAD_ATTR            (login_data)
+             126 LOAD_METHOD          (get)
+             128 LOAD_CONST           ("sessionkey")
+             130 CALL_METHOD          (1 positional argument)
+             132 STORE_FAST           (session_key)
+
+ 81:         134 LOAD_FAST            (char_id)
+             136 POP_JUMP_IF_TRUE     (to 146)
+
+ 82:         138 LOAD_GLOBAL          (ValueError)
+             140 LOAD_CONST           ("Character ID is missing from current character data")
+             142 CALL_FUNCTION        (1 positional argument)
+             144 RAISE_VARARGS        (exception instance)
+
+ 83:     >>  146 LOAD_FAST            (session_key)
+             148 POP_JUMP_IF_TRUE     (to 158)
+
+ 84:         150 LOAD_GLOBAL          (ValueError)
+             152 LOAD_CONST           ("Session key is missing from login data")
+             154 CALL_FUNCTION        (1 positional argument)
+             156 RAISE_VARARGS        (exception instance)
+
+ 86:     >>  158 LOAD_FAST            (char_id)
+             160 LOAD_FAST            (char_level)
+             162 LOAD_FAST            (session_key)
+             164 BUILD_TUPLE          3
+             166 RETURN_VALUE
+
+
+# Method Name:       get_mission_s_data
+# Filename:          mission_s.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        89
+# Constants:
+#    0: None
+#    1: 'BattleSystem.getMissionSData'
+# Names:
+#    0: send_amf_request
+# Varnames:
+#	char_id, session_key
+# Positional arguments:
+#	char_id, session_key
+ 90:           0 LOAD_GLOBAL          (send_amf_request)
+               2 LOAD_CONST           ("BattleSystem.getMissionSData")
+               4 LOAD_FAST            (char_id)
+               6 LOAD_FAST            (session_key)
+               8 BUILD_LIST           2
+              10 CALL_FUNCTION        (2 positional arguments)
+              12 RETURN_VALUE
+
+
+# Method Name:       build_enemy_attributes
+# Filename:          mission_s.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  5
+# Stack size:        10
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        93
+# Constants:
+#    0: None
+#    1: 'enemies'
+#    2: 'Missing enemy definition for '
+#    3: 'id:'
+#    4: '|hp:'
+#    5: 'hp'
+#    6: '|agility:'
+#    7: 'agility'
+#    8: '#'
+# Names:
+#    0: get
+#    1: get_data_by_id
+#    2: enemy_list
+#    3: print
+#    4: append
+#    5: join
+# Varnames:
+#	mission, enemies, enemy_attrs, enemy_id, enemy
+# Positional arguments:
+#	mission
+# Local variables:
+#    1: enemies
+#    2: enemy_attrs
+#    3: enemy_id
+#    4: enemy
+ 94:           0 BUILD_LIST           0
+               2 STORE_FAST           (enemies)
+
+ 95:           4 BUILD_LIST           0
+               6 STORE_FAST           (enemy_attrs)
+
+ 96:           8 LOAD_FAST            (mission)
+              10 LOAD_METHOD          (get)
+              12 LOAD_CONST           ("enemies")
+              14 BUILD_LIST           0
+              16 CALL_METHOD          (2 positional arguments)
+              18 GET_ITER
+         >>   20 FOR_ITER             (to 102)
+              22 STORE_FAST           (enemy_id)
+
+ 97:          24 LOAD_GLOBAL          (get_data_by_id)
+              26 LOAD_FAST            (enemy_id)
+              28 LOAD_GLOBAL          (enemy_list)
+              30 CALL_FUNCTION        (2 positional arguments)
+              32 STORE_FAST           (enemy)
+
+ 98:          34 LOAD_FAST            (enemy)
+              36 POP_JUMP_IF_TRUE     (to 54)
+
+ 99:          38 LOAD_GLOBAL          (print)
+              40 LOAD_CONST           ("Missing enemy definition for ")
+              42 LOAD_FAST            (enemy_id)
+              44 FORMAT_VALUE         0
+              46 BUILD_STRING         2
+              48 CALL_FUNCTION        (1 positional argument)
+              50 POP_TOP
+
+100:          52 JUMP_ABSOLUTE        (to 20)
+
+101:     >>   54 LOAD_FAST            (enemies)
+              56 LOAD_METHOD          (append)
+              58 LOAD_FAST            (enemy_id)
+              60 CALL_METHOD          (1 positional argument)
+              62 POP_TOP
+
+102:          64 LOAD_FAST            (enemy_attrs)
+              66 LOAD_METHOD          (append)
+              68 LOAD_CONST           ("id:")
+              70 LOAD_FAST            (enemy_id)
+              72 FORMAT_VALUE         0
+              74 LOAD_CONST           ("|hp:")
+              76 LOAD_FAST            (enemy)
+              78 LOAD_CONST           ("hp")
+              80 BINARY_SUBSCR
+              82 FORMAT_VALUE         0
+              84 LOAD_CONST           ("|agility:")
+              86 LOAD_FAST            (enemy)
+              88 LOAD_CONST           ("agility")
+              90 BINARY_SUBSCR
+              92 FORMAT_VALUE         0
+              94 BUILD_STRING         6
+              96 CALL_METHOD          (1 positional argument)
+              98 POP_TOP
+             100 JUMP_ABSOLUTE        (to 20)
+
+103:     >>  102 LOAD_FAST            (enemies)
+             104 LOAD_CONST           ("#")
+             106 LOAD_METHOD          (join)
+             108 LOAD_FAST            (enemy_attrs)
+             110 CALL_METHOD          (1 positional argument)
+             112 BUILD_TUPLE          2
+             114 RETURN_VALUE
+
+
+# Method Name:       start_battle
+# Filename:          mission_s.py
+# Argument count:    4
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  11
+# Stack size:        8
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        106
+# Constants:
+#    0: None
+#    1: 'Mission S enemy data missing for '
+#    2: 'id'
+#    3: 'agility'
+#    4: ','
+#    5: 'BattleSystem.startMission'
+#    6: 'Started Mission S '
+#    7: 'name'
+#    8: ' (battle id: '
+#    9: ')'
+#   10: 'Waiting '
+#   11: ' seconds before finishing mission...'
+# Names:
+#    0: check_stop_event
+#    1: build_enemy_attributes
+#    2: print
+#    3: StatManager
+#    4: calculate_stats_with_data
+#    5: flatten_json
+#    6: config
+#    7: char_data
+#    8: join
+#    9: str
+#   10: CUCSG
+#   11: hash
+#   12: send_amf_request
+#   13: MISSION_S_START_WAIT_SECONDS
+#   14: wait_with_stop_check
+# Varnames:
+#	mission, char_id, session_key, stage_to_run, enemies, enemy_attrs, agility, hash_input, mission_hash, parameters, battle_id
+# Positional arguments:
+#	mission, char_id, session_key, stage_to_run
+# Local variables:
+#    4: enemies
+#    5: enemy_attrs
+#    6: agility
+#    7: hash_input
+#    8: mission_hash
+#    9: parameters
+#   10: battle_id
+107:           0 LOAD_GLOBAL          (check_stop_event)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 POP_JUMP_IF_FALSE    (to 10)
+
+108:           6 LOAD_CONST           (None)
+               8 RETURN_VALUE
+
+110:     >>   10 LOAD_GLOBAL          (build_enemy_attributes)
+              12 LOAD_FAST            (mission)
+              14 CALL_FUNCTION        (1 positional argument)
+              16 UNPACK_SEQUENCE      2
+              18 STORE_FAST           (enemies)
+              20 STORE_FAST           (enemy_attrs)
+
+111:          22 LOAD_FAST            (enemies)
+              24 POP_JUMP_IF_TRUE     (to 48)
+
+112:          26 LOAD_GLOBAL          (print)
+              28 LOAD_CONST           ("Mission S enemy data missing for ")
+              30 LOAD_FAST            (mission)
+              32 LOAD_CONST           ("id")
+              34 BINARY_SUBSCR
+              36 FORMAT_VALUE         0
+              38 BUILD_STRING         2
+              40 CALL_FUNCTION        (1 positional argument)
+              42 POP_TOP
+
+113:          44 LOAD_CONST           (None)
+              46 RETURN_VALUE
+
+115:     >>   48 LOAD_GLOBAL          (StatManager)
+              50 LOAD_METHOD          (calculate_stats_with_data)
+              52 LOAD_CONST           ("agility")
+              54 LOAD_GLOBAL          (flatten_json)
+              56 LOAD_GLOBAL          (config)
+              58 LOAD_ATTR            (char_data)
+              60 CALL_FUNCTION        (1 positional argument)
+              62 CALL_METHOD          (2 positional arguments)
+              64 STORE_FAST           (agility)
+
+116:          66 LOAD_CONST           (",")
+              68 LOAD_METHOD          (join)
+              70 LOAD_FAST            (enemies)
+              72 CALL_METHOD          (1 positional argument)
+              74 LOAD_FAST            (enemy_attrs)
+              76 BINARY_ADD
+              78 LOAD_GLOBAL          (str)
+              80 LOAD_FAST            (agility)
+              82 CALL_FUNCTION        (1 positional argument)
+              84 BINARY_ADD
+              86 STORE_FAST           (hash_input)
+
+117:          88 LOAD_GLOBAL          (CUCSG)
+              90 LOAD_METHOD          (hash)
+              92 LOAD_FAST            (hash_input)
+              94 CALL_METHOD          (1 positional argument)
+              96 STORE_FAST           (mission_hash)
+
+119:          98 LOAD_FAST            (char_id)
+
+120:         100 LOAD_FAST            (mission)
+             102 LOAD_CONST           ("id")
+             104 BINARY_SUBSCR
+
+121:         106 LOAD_CONST           (",")
+             108 LOAD_METHOD          (join)
+             110 LOAD_FAST            (enemies)
+             112 CALL_METHOD          (1 positional argument)
+
+122:         114 LOAD_FAST            (enemy_attrs)
+
+123:         116 LOAD_FAST            (agility)
+
+124:         118 LOAD_FAST            (mission_hash)
+
+125:         120 LOAD_FAST            (session_key)
+
+126:         122 LOAD_FAST            (stage_to_run)
+
+118:         124 BUILD_LIST           8
+             126 STORE_FAST           (parameters)
+
+128:         128 LOAD_GLOBAL          (send_amf_request)
+             130 LOAD_CONST           ("BattleSystem.startMission")
+             132 LOAD_FAST            (parameters)
+             134 CALL_FUNCTION        (2 positional arguments)
+             136 STORE_FAST           (battle_id)
+
+129:         138 LOAD_GLOBAL          (print)
+             140 LOAD_CONST           ("Started Mission S ")
+             142 LOAD_FAST            (mission)
+             144 LOAD_CONST           ("name")
+             146 BINARY_SUBSCR
+             148 FORMAT_VALUE         0
+             150 LOAD_CONST           (" (battle id: ")
+             152 LOAD_FAST            (battle_id)
+             154 FORMAT_VALUE         0
+             156 LOAD_CONST           (")")
+             158 BUILD_STRING         5
+             160 CALL_FUNCTION        (1 positional argument)
+             162 POP_TOP
+
+130:         164 LOAD_GLOBAL          (print)
+             166 LOAD_CONST           ("Waiting ")
+             168 LOAD_GLOBAL          (MISSION_S_START_WAIT_SECONDS)
+             170 FORMAT_VALUE         0
+             172 LOAD_CONST           (" seconds before finishing mission...")
+             174 BUILD_STRING         3
+             176 CALL_FUNCTION        (1 positional argument)
+             178 POP_TOP
+
+131:         180 LOAD_GLOBAL          (wait_with_stop_check)
+             182 LOAD_GLOBAL          (MISSION_S_START_WAIT_SECONDS)
+             184 CALL_FUNCTION        (1 positional argument)
+             186 POP_JUMP_IF_TRUE     (to 192)
+
+132:         188 LOAD_CONST           (None)
+             190 RETURN_VALUE
+
+133:     >>  192 LOAD_FAST            (battle_id)
+             194 RETURN_VALUE
+
+
+# Method Name:       finish_battle
+# Filename:          mission_s.py
+# Argument count:    4
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  8
+# Stack size:        8
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        136
+# Constants:
+#    0: None
+#    1: 1
+#    2: 'BattleSystem.finishMission'
+# Names:
+#    0: check_stop_event
+#    1: MISSION_S_FINISH_DAMAGE
+#    2: CUCSG
+#    3: hash
+#    4: battle_hash
+#    5: send_amf_request
+#    6: save_fight_data
+# Varnames:
+#	mission_id, char_id, battle_id, session_key, hash_input, finish_hash, parameters, result
+# Positional arguments:
+#	mission_id, char_id, battle_id, session_key
+# Local variables:
+#    4: hash_input
+#    5: finish_hash
+#    6: parameters
+#    7: result
+137:           0 LOAD_GLOBAL          (check_stop_event)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 POP_JUMP_IF_FALSE    (to 10)
+
+138:           6 LOAD_CONST           (None)
+               8 RETURN_VALUE
+
+140:     >>   10 LOAD_FAST            (mission_id)
+              12 FORMAT_VALUE         0
+              14 LOAD_FAST            (char_id)
+              16 FORMAT_VALUE         0
+              18 LOAD_FAST            (battle_id)
+              20 FORMAT_VALUE         0
+              22 LOAD_GLOBAL          (MISSION_S_FINISH_DAMAGE)
+              24 FORMAT_VALUE         0
+              26 BUILD_STRING         4
+              28 STORE_FAST           (hash_input)
+
+141:          30 LOAD_GLOBAL          (CUCSG)
+              32 LOAD_METHOD          (hash)
+              34 LOAD_FAST            (hash_input)
+              36 CALL_METHOD          (1 positional argument)
+              38 STORE_FAST           (finish_hash)
+
+143:          40 LOAD_FAST            (char_id)
+
+144:          42 LOAD_FAST            (mission_id)
+
+145:          44 LOAD_FAST            (battle_id)
+
+146:          46 LOAD_FAST            (finish_hash)
+
+147:          48 LOAD_GLOBAL          (MISSION_S_FINISH_DAMAGE)
+
+148:          50 LOAD_FAST            (session_key)
+
+149:          52 LOAD_GLOBAL          (battle_hash)
+
+150:          54 LOAD_CONST           (1)
+
+142:          56 BUILD_LIST           8
+              58 STORE_FAST           (parameters)
+
+152:          60 LOAD_GLOBAL          (send_amf_request)
+              62 LOAD_CONST           ("BattleSystem.finishMission")
+              64 LOAD_FAST            (parameters)
+              66 CALL_FUNCTION        (2 positional arguments)
+              68 STORE_FAST           (result)
+
+153:          70 LOAD_GLOBAL          (save_fight_data)
+              72 LOAD_FAST            (result)
+              74 CALL_FUNCTION        (1 positional argument)
+              76 POP_TOP
+
+154:          78 LOAD_FAST            (result)
+              80 RETURN_VALUE
+
+
+# Method Name:       resolve_stage_to_run
+# Filename:          mission_s.py
+# Argument count:    3
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  5
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        157
+# Constants:
+#    0: None
+#    1: 5
+#    2: 0
+#    3: -1
+#    4: 'min_level'
+#    5: 'energy_cost'
+# Names:
+#    0: range
+#    1: min
+#    2: MISSION_S_STAGE_CONFIG
+#    3: get
+# Varnames:
+#	unlocked_stage, energy, char_level, stage, stage_cfg
+# Positional arguments:
+#	unlocked_stage, energy, char_level
+# Local variables:
+#    3: stage
+#    4: stage_cfg
+158:           0 LOAD_GLOBAL          (range)
+               2 LOAD_GLOBAL          (min)
+               4 LOAD_FAST            (unlocked_stage)
+               6 LOAD_CONST           (5)
+               8 CALL_FUNCTION        (2 positional arguments)
+              10 LOAD_CONST           (0)
+              12 LOAD_CONST           (-1)
+              14 CALL_FUNCTION        (3 positional arguments)
+              16 GET_ITER
+         >>   18 FOR_ITER             (to 70)
+              20 STORE_FAST           (stage)
+
+159:          22 LOAD_GLOBAL          (MISSION_S_STAGE_CONFIG)
+              24 LOAD_METHOD          (get)
+              26 LOAD_FAST            (stage)
+              28 CALL_METHOD          (1 positional argument)
+              30 STORE_FAST           (stage_cfg)
+
+161:          32 LOAD_FAST            (stage_cfg)
+
+160:          34 POP_JUMP_IF_FALSE    (to 68)
+
+162:          36 LOAD_FAST            (char_level)
+              38 LOAD_FAST            (stage_cfg)
+              40 LOAD_CONST           ("min_level")
+              42 BINARY_SUBSCR
+              44 COMPARE_OP           (>=)
+              46 POP_JUMP_IF_FALSE    (to 68)
+
+163:          48 LOAD_FAST            (energy)
+              50 LOAD_FAST            (stage_cfg)
+              52 LOAD_CONST           ("energy_cost")
+              54 BINARY_SUBSCR
+              56 COMPARE_OP           (>=)
+              58 POP_JUMP_IF_FALSE    (to 68)
+
+165:          60 LOAD_FAST            (stage)
+              62 ROT_TWO
+              64 POP_TOP
+              66 RETURN_VALUE
+         >>   68 JUMP_ABSOLUTE        (to 18)
+
+166:     >>   70 LOAD_CONST           (None)
+              72 RETURN_VALUE
+
+
+# Method Name:       mission_s
+# Filename:          mission_s.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  16
+# Stack size:        9
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        169
+# Constants:
+#    0: None
+#    1: 80
+#    2: 'Mission S requires level 80'
+#    3: 'Starting Mission S automation...'
+#    4: 'Failed to get Mission S data: '
+#    5: 'status'
+#    6: 1
+#    7: 'stage'
+#    8: 0
+#    9: 'energy'
+#   10: 'max_energy'
+#   11: 'Mission S energy: '
+#   12: '/'
+#   13: ' | unlocked stage: '
+#   14: 'Mission S has no unlocked stage available for the current level and energy'
+#   15: 'mission_id'
+#   16: 'Mission S data missing for stage '
+#   17: 'Running Mission S stage '
+#   18: ': '
+#   19: 'name'
+#   20: ' (cost: '
+#   21: 'energy_cost'
+#   22: ')'
+#   23: 'id'
+#   24: 'result'
+#   25: 'n/a'
+#   26: 'level'
+#   27: 'Mission S completed: '
+#   28: ' | EXP: '
+#   29: ', Gold: '
+#   30: ', Level: '
+#   31: 'Mission S finish failed: '
+# Names:
+#    0: get_character_context
+#    1: print
+#    2: check_stop_event
+#    3: get_mission_s_data
+#    4: isinstance
+#    5: dict
+#    6: response_message
+#    7: get
+#    8: int
+#    9: resolve_stage_to_run
+#   10: MISSION_S_STAGE_CONFIG
+#   11: get_mission_by_id
+#   12: start_battle
+#   13: finish_battle
+#   14: len
+#   15: TypeError
+#   16: ValueError
+#   17: wait_with_stop_check
+#   18: MISSION_S_BETWEEN_BATTLES_SECONDS
+# Varnames:
+#	char_id, char_level, session_key, mission_s_data, unlocked_stage, energy, max_energy, stage_to_run, stage_cfg, mission, battle_id, result, rewards, xp, gold, level
+# Local variables:
+#    0: char_id
+#    1: char_level
+#    2: session_key
+#    3: mission_s_data
+#    4: unlocked_stage
+#    5: energy
+#    6: max_energy
+#    7: stage_to_run
+#    8: stage_cfg
+#    9: mission
+#   10: battle_id
+#   11: result
+#   12: rewards
+#   13: xp
+#   14: gold
+#   15: level
+170:           0 LOAD_GLOBAL          (get_character_context)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 UNPACK_SEQUENCE      3
+               6 STORE_FAST           (char_id)
+               8 STORE_FAST           (char_level)
+              10 STORE_FAST           (session_key)
+
+172:          12 LOAD_FAST            (char_level)
+              14 LOAD_CONST           (80)
+              16 COMPARE_OP           (<)
+              18 POP_JUMP_IF_FALSE    (to 32)
+
+173:          20 LOAD_GLOBAL          (print)
+              22 LOAD_CONST           ("Mission S requires level 80")
+              24 CALL_FUNCTION        (1 positional argument)
+              26 POP_TOP
+
+174:          28 LOAD_CONST           (None)
+              30 RETURN_VALUE
+
+176:     >>   32 LOAD_GLOBAL          (print)
+              34 LOAD_CONST           ("Starting Mission S automation...")
+              36 CALL_FUNCTION        (1 positional argument)
+              38 POP_TOP
+
+178:          40 LOAD_GLOBAL          (check_stop_event)
+              42 CALL_FUNCTION        (0 positional arguments)
+              44 EXTENDED_ARG         (256)
+              46 POP_JUMP_IF_TRUE     (to 612)
+
+179:     >>   48 LOAD_GLOBAL          (get_mission_s_data)
+              50 LOAD_FAST            (char_id)
+              52 LOAD_FAST            (session_key)
+              54 CALL_FUNCTION        (2 positional arguments)
+              56 STORE_FAST           (mission_s_data)
+
+180:          58 LOAD_GLOBAL          (isinstance)
+              60 LOAD_FAST            (mission_s_data)
+              62 LOAD_GLOBAL          (dict)
+              64 CALL_FUNCTION        (2 positional arguments)
+              66 POP_JUMP_IF_TRUE     (to 90)
+
+181:          68 LOAD_GLOBAL          (print)
+              70 LOAD_CONST           ("Failed to get Mission S data: ")
+              72 LOAD_GLOBAL          (response_message)
+              74 LOAD_FAST            (mission_s_data)
+              76 CALL_FUNCTION        (1 positional argument)
+              78 FORMAT_VALUE         0
+              80 BUILD_STRING         2
+              82 CALL_FUNCTION        (1 positional argument)
+              84 POP_TOP
+
+182:          86 LOAD_CONST           (None)
+              88 RETURN_VALUE
+
+183:     >>   90 LOAD_FAST            (mission_s_data)
+              92 LOAD_METHOD          (get)
+              94 LOAD_CONST           ("status")
+              96 CALL_METHOD          (1 positional argument)
+              98 LOAD_CONST           (1)
+             100 COMPARE_OP           (!=)
+             102 POP_JUMP_IF_FALSE    (to 126)
+
+184:         104 LOAD_GLOBAL          (print)
+             106 LOAD_CONST           ("Failed to get Mission S data: ")
+             108 LOAD_GLOBAL          (response_message)
+             110 LOAD_FAST            (mission_s_data)
+             112 CALL_FUNCTION        (1 positional argument)
+             114 FORMAT_VALUE         0
+             116 BUILD_STRING         2
+             118 CALL_FUNCTION        (1 positional argument)
+             120 POP_TOP
+
+185:         122 LOAD_CONST           (None)
+             124 RETURN_VALUE
+
+187:     >>  126 LOAD_GLOBAL          (int)
+             128 LOAD_FAST            (mission_s_data)
+             130 LOAD_METHOD          (get)
+             132 LOAD_CONST           ("stage")
+             134 LOAD_CONST           (0)
+             136 CALL_METHOD          (2 positional arguments)
+             138 JUMP_IF_TRUE_OR_POP  (to 142)
+             140 LOAD_CONST           (0)
+         >>  142 CALL_FUNCTION        (1 positional argument)
+             144 STORE_FAST           (unlocked_stage)
+
+188:         146 LOAD_GLOBAL          (int)
+             148 LOAD_FAST            (mission_s_data)
+             150 LOAD_METHOD          (get)
+             152 LOAD_CONST           ("energy")
+             154 LOAD_CONST           (0)
+             156 CALL_METHOD          (2 positional arguments)
+             158 JUMP_IF_TRUE_OR_POP  (to 162)
+             160 LOAD_CONST           (0)
+         >>  162 CALL_FUNCTION        (1 positional argument)
+             164 STORE_FAST           (energy)
+
+189:         166 LOAD_GLOBAL          (int)
+             168 LOAD_FAST            (mission_s_data)
+             170 LOAD_METHOD          (get)
+             172 LOAD_CONST           ("max_energy")
+             174 LOAD_CONST           (0)
+             176 CALL_METHOD          (2 positional arguments)
+             178 JUMP_IF_TRUE_OR_POP  (to 182)
+             180 LOAD_CONST           (0)
+         >>  182 CALL_FUNCTION        (1 positional argument)
+             184 STORE_FAST           (max_energy)
+
+190:         186 LOAD_GLOBAL          (print)
+             188 LOAD_CONST           ("Mission S energy: ")
+             190 LOAD_FAST            (energy)
+             192 FORMAT_VALUE         0
+             194 LOAD_CONST           ("/")
+             196 LOAD_FAST            (max_energy)
+             198 FORMAT_VALUE         0
+             200 LOAD_CONST           (" | unlocked stage: ")
+             202 LOAD_FAST            (unlocked_stage)
+             204 FORMAT_VALUE         0
+             206 BUILD_STRING         6
+             208 CALL_FUNCTION        (1 positional argument)
+             210 POP_TOP
+
+192:         212 LOAD_GLOBAL          (resolve_stage_to_run)
+             214 LOAD_FAST            (unlocked_stage)
+             216 LOAD_FAST            (energy)
+             218 LOAD_FAST            (char_level)
+             220 CALL_FUNCTION        (3 positional arguments)
+             222 STORE_FAST           (stage_to_run)
+
+193:         224 LOAD_FAST            (stage_to_run)
+             226 LOAD_CONST           (None)
+             228 IS_OP                (is)
+             230 POP_JUMP_IF_FALSE    (to 244)
+
+194:         232 LOAD_GLOBAL          (print)
+             234 LOAD_CONST           ("Mission S has no unlocked stage available for the current level and energy")
+             236 CALL_FUNCTION        (1 positional argument)
+             238 POP_TOP
+
+195:         240 LOAD_CONST           (None)
+             242 RETURN_VALUE
+
+197:     >>  244 LOAD_GLOBAL          (MISSION_S_STAGE_CONFIG)
+             246 LOAD_FAST            (stage_to_run)
+             248 BINARY_SUBSCR
+             250 STORE_FAST           (stage_cfg)
+
+198:         252 LOAD_GLOBAL          (get_mission_by_id)
+             254 LOAD_FAST            (stage_cfg)
+             256 LOAD_CONST           ("mission_id")
+             258 BINARY_SUBSCR
+             260 CALL_FUNCTION        (1 positional argument)
+             262 STORE_FAST           (mission)
+
+199:         264 LOAD_FAST            (mission)
+             266 POP_JUMP_IF_TRUE     (to 286)
+
+200:         268 LOAD_GLOBAL          (print)
+             270 LOAD_CONST           ("Mission S data missing for stage ")
+             272 LOAD_FAST            (stage_to_run)
+             274 FORMAT_VALUE         0
+             276 BUILD_STRING         2
+             278 CALL_FUNCTION        (1 positional argument)
+             280 POP_TOP
+
+201:         282 LOAD_CONST           (None)
+             284 RETURN_VALUE
+
+203:     >>  286 LOAD_GLOBAL          (print)
+             288 LOAD_CONST           ("Running Mission S stage ")
+             290 LOAD_FAST            (stage_to_run)
+             292 FORMAT_VALUE         0
+             294 LOAD_CONST           (": ")
+             296 LOAD_FAST            (mission)
+             298 LOAD_CONST           ("name")
+             300 BINARY_SUBSCR
+             302 FORMAT_VALUE         0
+             304 LOAD_CONST           (" (cost: ")
+             306 LOAD_FAST            (stage_cfg)
+             308 LOAD_CONST           ("energy_cost")
+             310 BINARY_SUBSCR
+             312 FORMAT_VALUE         0
+             314 LOAD_CONST           (")")
+             316 BUILD_STRING         7
+             318 CALL_FUNCTION        (1 positional argument)
+             320 POP_TOP
+
+205:         322 LOAD_GLOBAL          (start_battle)
+             324 LOAD_FAST            (mission)
+             326 LOAD_FAST            (char_id)
+             328 LOAD_FAST            (session_key)
+             330 LOAD_FAST            (stage_to_run)
+             332 CALL_FUNCTION        (4 positional arguments)
+             334 STORE_FAST           (battle_id)
+
+206:         336 LOAD_GLOBAL          (check_stop_event)
+             338 CALL_FUNCTION        (0 positional arguments)
+             340 POP_JUMP_IF_TRUE     (to 350)
+             342 LOAD_FAST            (battle_id)
+             344 LOAD_CONST           (None)
+             346 IS_OP                (is)
+             348 POP_JUMP_IF_FALSE    (to 354)
+
+207:     >>  350 LOAD_CONST           (None)
+             352 RETURN_VALUE
+
+209:     >>  354 LOAD_GLOBAL          (finish_battle)
+             356 LOAD_FAST            (mission)
+             358 LOAD_CONST           ("id")
+             360 BINARY_SUBSCR
+             362 LOAD_FAST            (char_id)
+             364 LOAD_FAST            (battle_id)
+             366 LOAD_FAST            (session_key)
+             368 CALL_FUNCTION        (4 positional arguments)
+             370 STORE_FAST           (result)
+
+210:         372 LOAD_GLOBAL          (check_stop_event)
+             374 CALL_FUNCTION        (0 positional arguments)
+             376 POP_JUMP_IF_TRUE     (to 386)
+             378 LOAD_FAST            (result)
+             380 LOAD_CONST           (None)
+             382 IS_OP                (is)
+             384 POP_JUMP_IF_FALSE    (to 390)
+
+211:     >>  386 LOAD_CONST           (None)
+             388 RETURN_VALUE
+
+213:     >>  390 LOAD_GLOBAL          (isinstance)
+             392 LOAD_FAST            (result)
+             394 LOAD_GLOBAL          (dict)
+             396 CALL_FUNCTION        (2 positional arguments)
+             398 EXTENDED_ARG         (256)
+             400 POP_JUMP_IF_FALSE    (to 566)
+             402 LOAD_FAST            (result)
+             404 LOAD_METHOD          (get)
+             406 LOAD_CONST           ("status")
+             408 CALL_METHOD          (1 positional argument)
+             410 LOAD_CONST           (1)
+             412 COMPARE_OP           (==)
+             414 EXTENDED_ARG         (256)
+             416 POP_JUMP_IF_FALSE    (to 566)
+
+214:         418 LOAD_FAST            (result)
+             420 LOAD_METHOD          (get)
+             422 LOAD_CONST           ("result")
+             424 BUILD_LIST           0
+             426 CALL_METHOD          (2 positional arguments)
+             428 STORE_FAST           (rewards)
+
+215:         430 LOAD_GLOBAL          (len)
+             432 LOAD_FAST            (rewards)
+             434 CALL_FUNCTION        (1 positional argument)
+             436 LOAD_CONST           (0)
+             438 COMPARE_OP           (>)
+             440 POP_JUMP_IF_FALSE    (to 450)
+             442 LOAD_FAST            (rewards)
+             444 LOAD_CONST           (0)
+             446 BINARY_SUBSCR
+             448 JUMP_FORWARD         (to 452)
+         >>  450 LOAD_CONST           ("n/a")
+         >>  452 STORE_FAST           (xp)
+
+216:         454 LOAD_GLOBAL          (len)
+             456 LOAD_FAST            (rewards)
+             458 CALL_FUNCTION        (1 positional argument)
+             460 LOAD_CONST           (1)
+             462 COMPARE_OP           (>)
+             464 POP_JUMP_IF_FALSE    (to 474)
+             466 LOAD_FAST            (rewards)
+             468 LOAD_CONST           (1)
+             470 BINARY_SUBSCR
+             472 JUMP_FORWARD         (to 476)
+         >>  474 LOAD_CONST           ("n/a")
+         >>  476 STORE_FAST           (gold)
+
+217:         478 LOAD_FAST            (result)
+             480 LOAD_METHOD          (get)
+             482 LOAD_CONST           ("level")
+             484 LOAD_FAST            (char_level)
+             486 CALL_METHOD          (2 positional arguments)
+             488 STORE_FAST           (level)
+
+218:         490 SETUP_FINALLY        (to 504)
+
+219:         492 LOAD_GLOBAL          (int)
+             494 LOAD_FAST            (level)
+             496 CALL_FUNCTION        (1 positional argument)
+             498 STORE_FAST           (char_level)
+             500 POP_BLOCK
+             502 JUMP_FORWARD         (to 528)
+
+220:     >>  504 DUP_TOP
+             506 LOAD_GLOBAL          (TypeError)
+             508 LOAD_GLOBAL          (ValueError)
+             510 BUILD_TUPLE          2
+             512 EXTENDED_ARG         (256)
+             514 JUMP_IF_NOT_EXC_MATCH (to 526)
+             516 POP_TOP
+             518 POP_TOP
+             520 POP_TOP
+
+221:         522 POP_EXCEPT
+             524 JUMP_FORWARD         (to 528)
+
+220:     >>  526 RERAISE              0
+
+222:     >>  528 LOAD_GLOBAL          (print)
+             530 LOAD_CONST           ("Mission S completed: ")
+             532 LOAD_FAST            (mission)
+             534 LOAD_CONST           ("name")
+             536 BINARY_SUBSCR
+             538 FORMAT_VALUE         0
+             540 LOAD_CONST           (" | EXP: ")
+             542 LOAD_FAST            (xp)
+             544 FORMAT_VALUE         0
+             546 LOAD_CONST           (", Gold: ")
+             548 LOAD_FAST            (gold)
+             550 FORMAT_VALUE         0
+             552 LOAD_CONST           (", Level: ")
+             554 LOAD_FAST            (level)
+             556 FORMAT_VALUE         0
+             558 BUILD_STRING         8
+             560 CALL_FUNCTION        (1 positional argument)
+             562 POP_TOP
+             564 JUMP_FORWARD         (to 588)
+
+224:     >>  566 LOAD_GLOBAL          (print)
+             568 LOAD_CONST           ("Mission S finish failed: ")
+             570 LOAD_GLOBAL          (response_message)
+             572 LOAD_FAST            (result)
+             574 CALL_FUNCTION        (1 positional argument)
+             576 FORMAT_VALUE         0
+             578 BUILD_STRING         2
+             580 CALL_FUNCTION        (1 positional argument)
+             582 POP_TOP
+
+225:         584 LOAD_CONST           (None)
+             586 RETURN_VALUE
+
+227:     >>  588 LOAD_GLOBAL          (wait_with_stop_check)
+             590 LOAD_GLOBAL          (MISSION_S_BETWEEN_BATTLES_SECONDS)
+             592 CALL_FUNCTION        (1 positional argument)
+             594 EXTENDED_ARG         (256)
+             596 POP_JUMP_IF_TRUE     (to 602)
+
+228:         598 LOAD_CONST           (None)
+             600 RETURN_VALUE
+
+178:     >>  602 LOAD_GLOBAL          (check_stop_event)
+             604 CALL_FUNCTION        (0 positional arguments)
+             606 POP_JUMP_IF_FALSE    (to 48)
+             608 LOAD_CONST           (None)
+             610 RETURN_VALUE
+         >>  612 LOAD_CONST           (None)
+             614 RETURN_VALUE
+

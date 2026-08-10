@@ -1,0 +1,4092 @@
+﻿# pydisasm version 6.1.8
+# Python bytecode 3.10 (3439)
+# Disassembled from Python 3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]
+# Timestamp in code: 1780820770 (2026-06-07 15:26:10)
+# Source code size mod 2**32: 20209 bytes
+# Method Name:       <module>
+# Filename:          clan_war.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        6
+# Flags:             0x00000040 (NOFREE)
+# First Line:        1
+# Constants:
+#    0: 0
+#    1: None
+#    2: ('Any', 'Optional')
+#    3: 1
+#    4: ('config',)
+#    5: ('flatten_json', 'save_fight_data', 'send_amf_request')
+#    6: 10
+#    7: 5
+#    8: 1800
+#    9: 8
+#   10: 20
+#   11: 3
+#   12: 'auto'
+#   13: ('battle_delay_seconds', 'buy_stamina_delay_seconds', 'stamina_refill_source')
+#   14: <Code310 code object ClanWarEvent at 0x16c81793380, file clan_war.py>, line 24
+#   15: 'ClanWarEvent'
+#   16: 'params'
+#   17: 'return'
+#   18: <Code310 code object clan_war_event at 0x16c817933e0, file clan_war.py>, line 488
+#   19: 'clan_war_event'
+#   20: (None,)
+# Names:
+#    0: random
+#    1: string
+#    2: time
+#    3: typing
+#    4: Any
+#    5: Optional
+#    6: requests
+#    7: 
+#    8: config
+#    9: utils
+#   10: flatten_json
+#   11: save_fight_data
+#   12: send_amf_request
+#   13: CLAN_BATTLE_STAMINA_COST
+#   14: CLAN_STAMINA_POLL_SECONDS
+#   15: CLAN_STAMINA_MIN_REQUEST_INTERVAL
+#   16: CLAN_IDLE_SECONDS
+#   17: CLAN_BETWEEN_BATTLES_SECONDS
+#   18: REQUEST_TIMEOUT_SECONDS
+#   19: CLAN_WAR_DEFAULT_SETTINGS
+#   20: ClanWarEvent
+#   21: dict
+#   22: str
+#   23: clan_war_event
+  1:           0 LOAD_CONST           (0)
+               2 LOAD_CONST           (None)
+               4 IMPORT_NAME          (random)
+               6 STORE_NAME           (random)
+
+  2:           8 LOAD_CONST           (0)
+              10 LOAD_CONST           (None)
+              12 IMPORT_NAME          (string)
+              14 STORE_NAME           (string)
+
+  3:          16 LOAD_CONST           (0)
+              18 LOAD_CONST           (None)
+              20 IMPORT_NAME          (time)
+              22 STORE_NAME           (time)
+
+  4:          24 LOAD_CONST           (0)
+              26 LOAD_CONST           (('Any', 'Optional'))
+              28 IMPORT_NAME          (typing)
+              30 IMPORT_FROM          (Any)
+              32 STORE_NAME           (Any)
+              34 IMPORT_FROM          (Optional)
+              36 STORE_NAME           (Optional)
+              38 POP_TOP
+
+  6:          40 LOAD_CONST           (0)
+              42 LOAD_CONST           (None)
+              44 IMPORT_NAME          (requests)
+              46 STORE_NAME           (requests)
+
+  8:          48 LOAD_CONST           (1)
+              50 LOAD_CONST           (('config',))
+              52 IMPORT_NAME          7
+              54 IMPORT_FROM          (config)
+              56 STORE_NAME           (config)
+              58 POP_TOP
+
+  9:          60 LOAD_CONST           (1)
+              62 LOAD_CONST           (('flatten_json', 'save_fight_data', 'send_amf_request'))
+              64 IMPORT_NAME          (utils)
+              66 IMPORT_FROM          (flatten_json)
+              68 STORE_NAME           (flatten_json)
+              70 IMPORT_FROM          (save_fight_data)
+              72 STORE_NAME           (save_fight_data)
+              74 IMPORT_FROM          (send_amf_request)
+              76 STORE_NAME           (send_amf_request)
+              78 POP_TOP
+
+ 11:          80 LOAD_CONST           (10)
+              82 STORE_NAME           (CLAN_BATTLE_STAMINA_COST)
+
+ 12:          84 LOAD_CONST           (5)
+              86 STORE_NAME           (CLAN_STAMINA_POLL_SECONDS)
+
+ 13:          88 LOAD_CONST           (10)
+              90 STORE_NAME           (CLAN_STAMINA_MIN_REQUEST_INTERVAL)
+
+ 14:          92 LOAD_CONST           (1800)
+              94 STORE_NAME           (CLAN_IDLE_SECONDS)
+
+ 15:          96 LOAD_CONST           (8)
+              98 STORE_NAME           (CLAN_BETWEEN_BATTLES_SECONDS)
+
+ 16:         100 LOAD_CONST           (20)
+             102 STORE_NAME           (REQUEST_TIMEOUT_SECONDS)
+
+ 18:         104 LOAD_CONST           (8)
+
+ 19:         106 LOAD_CONST           (3)
+
+ 20:         108 LOAD_CONST           ("auto")
+
+ 17:         110 LOAD_CONST           (('battle_delay_seconds', 'buy_stamina_delay_seconds', 'stamina_refill_source'))
+             112 BUILD_CONST_KEY_MAP  3
+             114 STORE_NAME           (CLAN_WAR_DEFAULT_SETTINGS)
+
+ 24:         116 LOAD_BUILD_CLASS
+             118 LOAD_CONST           (<Code310 code object ClanWarEvent at 0x16c81793380, file clan_war.py>, line 24)
+             120 LOAD_CONST           ("ClanWarEvent")
+             122 MAKE_FUNCTION        (No arguments)
+             124 LOAD_CONST           ("ClanWarEvent")
+             126 CALL_FUNCTION        (2 positional arguments)
+             128 STORE_NAME           (ClanWarEvent)
+
+488:         130 LOAD_CONST           ((None,))
+             132 LOAD_CONST           ("params")
+             134 LOAD_NAME            (Optional)
+             136 LOAD_NAME            (dict)
+             138 LOAD_NAME            (str)
+             140 LOAD_NAME            (Any)
+             142 BUILD_TUPLE          2
+             144 BINARY_SUBSCR
+             146 BINARY_SUBSCR
+             148 LOAD_CONST           ("return")
+             150 LOAD_CONST           (None)
+             152 BUILD_TUPLE          4
+             154 LOAD_CONST           (<Code310 code object clan_war_event at 0x16c817933e0, file clan_war.py>, line 488)
+             156 LOAD_CONST           ("clan_war_event")
+             158 MAKE_FUNCTION        (default, annotation)
+             160 STORE_NAME           (clan_war_event)
+             162 LOAD_CONST           (None)
+             164 RETURN_VALUE
+
+
+# Method Name:       ClanWarEvent
+# Filename:          clan_war.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        8
+# Flags:             0x00000040 (NOFREE)
+# First Line:        24
+# Constants:
+#    0: 'ClanWarEvent'
+#    1: False
+#    2: None
+#    3: ('auto_spend_token', 'settings')
+#    4: 'auto_spend_token'
+#    5: 'settings'
+#    6: <Code310 code object __init__ at 0x16c8169cf50, file clan_war.py>, line 25
+#    7: 'ClanWarEvent.__init__'
+#    8: 'return'
+#    9: <Code310 code object _agent_prefix at 0x16c81791100, file clan_war.py>, line 81
+#   10: 'ClanWarEvent._agent_prefix'
+#   11: <Code310 code object _check_stop_event at 0x16c817912e0, file clan_war.py>, line 86
+#   12: 'ClanWarEvent._check_stop_event'
+#   13: 'seconds'
+#   14: <Code310 code object _wait_with_stop_check at 0x16c81791400, file clan_war.py>, line 93
+#   15: 'ClanWarEvent._wait_with_stop_check'
+#   16: 'response'
+#   17: <Code310 code object _response_message at 0x16c817916d0, file clan_war.py>, line 100
+#   18: 'ClanWarEvent._response_message'
+#   19: 'payload'
+#   20: <Code310 code object _extract_token at 0x16cff65ccb0, file clan_war.py>, line 116
+#   21: 'ClanWarEvent._extract_token'
+#   22: 24
+#   23: 'length'
+#   24: <Code310 code object _generate_code at 0x16c81791ca0, file clan_war.py>, line 134
+#   25: 'ClanWarEvent._generate_code'
+#   26: <Code310 code object _walk_values at 0x16c81791d30, file clan_war.py>, line 139
+#   27: 'ClanWarEvent._walk_values'
+#   28: 'value'
+#   29: <Code310 code object _to_int_or_none at 0x16c81791df0, file clan_war.py>, line 149
+#   30: 'ClanWarEvent._to_int_or_none'
+#   31: <Code310 code object _tokens_amount at 0x16c81791eb0, file clan_war.py>, line 156
+#   32: 'ClanWarEvent._tokens_amount'
+#   33: 'item_id'
+#   34: <Code310 code object _inventory_amount at 0x16c81791fa0, file clan_war.py>, line 166
+#   35: 'ClanWarEvent._inventory_amount'
+#   36: <Code310 code object _available_refill_requirements at 0x16c817921b0, file clan_war.py>, line 182
+#   37: 'ClanWarEvent._available_refill_requirements'
+#   38: 'path'
+#   39: <Code310 code object _post_json at 0x16c81792480, file clan_war.py>, line 200
+#   40: 'ClanWarEvent._post_json'
+#   41: <Code310 code object _post_json_with_reauth at 0x16c81792540, file clan_war.py>, line 208
+#   42: 'ClanWarEvent._post_json_with_reauth'
+#   43: <Code310 code object _is_auth_error at 0x16c81792720, file clan_war.py>, line 217
+#   44: 'ClanWarEvent._is_auth_error'
+#   45: <Code310 code object authenticate at 0x16c817928d0, file clan_war.py>, line 235
+#   46: 'ClanWarEvent.authenticate'
+#   47: <Code310 code object get_clan_info at 0x16c81792a20, file clan_war.py>, line 259
+#   48: 'ClanWarEvent.get_clan_info'
+#   49: True
+#   50: 'announce'
+#   51: <Code310 code object get_stamina at 0x16c81792ab0, file clan_war.py>, line 278
+#   52: 'ClanWarEvent.get_stamina'
+#   53: <Code310 code object get_opponents at 0x16c81792bd0, file clan_war.py>, line 313
+#   54: 'ClanWarEvent.get_opponents'
+#   55: <Code310 code object pick_first_opponent at 0x16c81792d20, file clan_war.py>, line 324
+#   56: 'ClanWarEvent.pick_first_opponent'
+#   57: 'opponent_id'
+#   58: <Code310 code object quick_attack at 0x16c81792db0, file clan_war.py>, line 331
+#   59: 'ClanWarEvent.quick_attack'
+#   60: <Code310 code object buy_stamina at 0x16c81792f30, file clan_war.py>, line 337
+#   61: 'ClanWarEvent.buy_stamina'
+#   62: 'result'
+#   63: <Code310 code object _log_quick_result at 0x16cff5536e0, file clan_war.py>, line 359
+#   64: 'ClanWarEvent._log_quick_result'
+#   65: <Code310 code object _apply_battle_result at 0x16c81793050, file clan_war.py>, line 372
+#   66: 'ClanWarEvent._apply_battle_result'
+#   67: <Code310 code object _idle_until_stamina_returns at 0x16c81793170, file clan_war.py>, line 388
+#   68: 'ClanWarEvent._idle_until_stamina_returns'
+#   69: <Code310 code object run at 0x16c81793260, file clan_war.py>, line 419
+#   70: 'ClanWarEvent.run'
+#   71: (24,)
+#   72: (None,)
+#   73: (True,)
+#   74: ('return', None)
+# Names:
+#    0: __name__
+#    1: __module__
+#    2: __qualname__
+#    3: bool
+#    4: Optional
+#    5: dict
+#    6: str
+#    7: Any
+#    8: __init__
+#    9: _agent_prefix
+#   10: staticmethod
+#   11: _check_stop_event
+#   12: int
+#   13: _wait_with_stop_check
+#   14: _response_message
+#   15: _extract_token
+#   16: _generate_code
+#   17: _walk_values
+#   18: _to_int_or_none
+#   19: _tokens_amount
+#   20: _inventory_amount
+#   21: list
+#   22: _available_refill_requirements
+#   23: _post_json
+#   24: _post_json_with_reauth
+#   25: _is_auth_error
+#   26: authenticate
+#   27: get_clan_info
+#   28: get_stamina
+#   29: get_opponents
+#   30: pick_first_opponent
+#   31: quick_attack
+#   32: buy_stamina
+#   33: _log_quick_result
+#   34: _apply_battle_result
+#   35: _idle_until_stamina_returns
+#   36: run
+ 24:           0 LOAD_NAME            (__name__)
+               2 STORE_NAME           (__module__)
+               4 LOAD_CONST           ("ClanWarEvent")
+               6 STORE_NAME           (__qualname__)
+
+ 25:           8 LOAD_CONST           (False)
+              10 LOAD_CONST           (None)
+              12 LOAD_CONST           (('auto_spend_token', 'settings'))
+              14 BUILD_CONST_KEY_MAP  2
+              16 LOAD_CONST           ("auto_spend_token")
+              18 LOAD_NAME            (bool)
+              20 LOAD_CONST           ("settings")
+              22 LOAD_NAME            (Optional)
+              24 LOAD_NAME            (dict)
+              26 LOAD_NAME            (str)
+              28 LOAD_NAME            (Any)
+              30 BUILD_TUPLE          2
+              32 BINARY_SUBSCR
+              34 BINARY_SUBSCR
+              36 BUILD_TUPLE          4
+              38 LOAD_CONST           (<Code310 code object __init__ at 0x16c8169cf50, file clan_war.py>, line 25)
+              40 LOAD_CONST           ("ClanWarEvent.__init__")
+              42 MAKE_FUNCTION        (keyword-only, annotation)
+              44 STORE_NAME           (__init__)
+
+ 81:          46 LOAD_CONST           ("return")
+              48 LOAD_NAME            (str)
+              50 BUILD_TUPLE          2
+              52 LOAD_CONST           (<Code310 code object _agent_prefix at 0x16c81791100, file clan_war.py>, line 81)
+              54 LOAD_CONST           ("ClanWarEvent._agent_prefix")
+              56 MAKE_FUNCTION        (annotation)
+              58 STORE_NAME           (_agent_prefix)
+
+ 86:          60 LOAD_NAME            (staticmethod)
+
+ 87:          62 LOAD_CONST           ("return")
+              64 LOAD_NAME            (bool)
+              66 BUILD_TUPLE          2
+              68 LOAD_CONST           (<Code310 code object _check_stop_event at 0x16c817912e0, file clan_war.py>, line 86)
+              70 LOAD_CONST           ("ClanWarEvent._check_stop_event")
+              72 MAKE_FUNCTION        (annotation)
+              74 CALL_FUNCTION        (1 positional argument)
+              76 STORE_NAME           (_check_stop_event)
+
+ 93:          78 LOAD_CONST           ("seconds")
+              80 LOAD_NAME            (int)
+              82 LOAD_CONST           ("return")
+              84 LOAD_NAME            (bool)
+              86 BUILD_TUPLE          4
+              88 LOAD_CONST           (<Code310 code object _wait_with_stop_check at 0x16c81791400, file clan_war.py>, line 93)
+              90 LOAD_CONST           ("ClanWarEvent._wait_with_stop_check")
+              92 MAKE_FUNCTION        (annotation)
+              94 STORE_NAME           (_wait_with_stop_check)
+
+100:          96 LOAD_NAME            (staticmethod)
+
+101:          98 LOAD_CONST           ("response")
+             100 LOAD_NAME            (Any)
+             102 LOAD_CONST           ("return")
+             104 LOAD_NAME            (str)
+             106 BUILD_TUPLE          4
+             108 LOAD_CONST           (<Code310 code object _response_message at 0x16c817916d0, file clan_war.py>, line 100)
+             110 LOAD_CONST           ("ClanWarEvent._response_message")
+             112 MAKE_FUNCTION        (annotation)
+             114 CALL_FUNCTION        (1 positional argument)
+             116 STORE_NAME           (_response_message)
+
+116:         118 LOAD_NAME            (staticmethod)
+
+117:         120 LOAD_CONST           ("payload")
+             122 LOAD_NAME            (Any)
+             124 LOAD_CONST           ("return")
+             126 LOAD_NAME            (Optional)
+             128 LOAD_NAME            (str)
+             130 BINARY_SUBSCR
+             132 BUILD_TUPLE          4
+             134 LOAD_CONST           (<Code310 code object _extract_token at 0x16cff65ccb0, file clan_war.py>, line 116)
+             136 LOAD_CONST           ("ClanWarEvent._extract_token")
+             138 MAKE_FUNCTION        (annotation)
+             140 CALL_FUNCTION        (1 positional argument)
+             142 STORE_NAME           (_extract_token)
+
+134:         144 LOAD_NAME            (staticmethod)
+
+135:         146 LOAD_CONST           ((24,))
+             148 LOAD_CONST           ("length")
+             150 LOAD_NAME            (int)
+             152 LOAD_CONST           ("return")
+             154 LOAD_NAME            (str)
+             156 BUILD_TUPLE          4
+             158 LOAD_CONST           (<Code310 code object _generate_code at 0x16c81791ca0, file clan_war.py>, line 134)
+             160 LOAD_CONST           ("ClanWarEvent._generate_code")
+             162 MAKE_FUNCTION        (default, annotation)
+             164 CALL_FUNCTION        (1 positional argument)
+             166 STORE_NAME           (_generate_code)
+
+139:         168 LOAD_NAME            (staticmethod)
+
+140:         170 LOAD_CONST           ("payload")
+             172 LOAD_NAME            (Any)
+             174 BUILD_TUPLE          2
+             176 LOAD_CONST           (<Code310 code object _walk_values at 0x16c81791d30, file clan_war.py>, line 139)
+             178 LOAD_CONST           ("ClanWarEvent._walk_values")
+             180 MAKE_FUNCTION        (annotation)
+             182 CALL_FUNCTION        (1 positional argument)
+             184 STORE_NAME           (_walk_values)
+
+149:         186 LOAD_NAME            (staticmethod)
+
+150:         188 LOAD_CONST           ("value")
+             190 LOAD_NAME            (Any)
+             192 LOAD_CONST           ("return")
+             194 LOAD_NAME            (Optional)
+             196 LOAD_NAME            (int)
+             198 BINARY_SUBSCR
+             200 BUILD_TUPLE          4
+             202 LOAD_CONST           (<Code310 code object _to_int_or_none at 0x16c81791df0, file clan_war.py>, line 149)
+             204 LOAD_CONST           ("ClanWarEvent._to_int_or_none")
+             206 MAKE_FUNCTION        (annotation)
+             208 CALL_FUNCTION        (1 positional argument)
+             210 STORE_NAME           (_to_int_or_none)
+
+156:         212 LOAD_CONST           ("return")
+             214 LOAD_NAME            (Optional)
+             216 LOAD_NAME            (int)
+             218 BINARY_SUBSCR
+             220 BUILD_TUPLE          2
+             222 LOAD_CONST           (<Code310 code object _tokens_amount at 0x16c81791eb0, file clan_war.py>, line 156)
+             224 LOAD_CONST           ("ClanWarEvent._tokens_amount")
+             226 MAKE_FUNCTION        (annotation)
+             228 STORE_NAME           (_tokens_amount)
+
+166:         230 LOAD_CONST           ("item_id")
+             232 LOAD_NAME            (str)
+             234 LOAD_CONST           ("return")
+             236 LOAD_NAME            (Optional)
+             238 LOAD_NAME            (int)
+             240 BINARY_SUBSCR
+             242 BUILD_TUPLE          4
+             244 LOAD_CONST           (<Code310 code object _inventory_amount at 0x16c81791fa0, file clan_war.py>, line 166)
+             246 LOAD_CONST           ("ClanWarEvent._inventory_amount")
+             248 MAKE_FUNCTION        (annotation)
+             250 STORE_NAME           (_inventory_amount)
+
+182:         252 LOAD_CONST           ("return")
+             254 LOAD_NAME            (list)
+             256 LOAD_NAME            (str)
+             258 BINARY_SUBSCR
+             260 BUILD_TUPLE          2
+             262 LOAD_CONST           (<Code310 code object _available_refill_requirements at 0x16c817921b0, file clan_war.py>, line 182)
+             264 LOAD_CONST           ("ClanWarEvent._available_refill_requirements")
+             266 MAKE_FUNCTION        (annotation)
+             268 STORE_NAME           (_available_refill_requirements)
+
+200:         270 LOAD_CONST           ((None,))
+             272 LOAD_CONST           ("path")
+             274 LOAD_NAME            (str)
+             276 LOAD_CONST           ("payload")
+             278 LOAD_NAME            (Optional)
+             280 LOAD_NAME            (dict)
+             282 LOAD_NAME            (str)
+             284 LOAD_NAME            (Any)
+             286 BUILD_TUPLE          2
+             288 BINARY_SUBSCR
+             290 BINARY_SUBSCR
+             292 LOAD_CONST           ("return")
+             294 LOAD_NAME            (Any)
+             296 BUILD_TUPLE          6
+             298 LOAD_CONST           (<Code310 code object _post_json at 0x16c81792480, file clan_war.py>, line 200)
+             300 LOAD_CONST           ("ClanWarEvent._post_json")
+             302 MAKE_FUNCTION        (default, annotation)
+             304 STORE_NAME           (_post_json)
+
+208:         306 LOAD_CONST           ((None,))
+             308 LOAD_CONST           ("path")
+             310 LOAD_NAME            (str)
+             312 LOAD_CONST           ("payload")
+             314 LOAD_NAME            (Optional)
+             316 LOAD_NAME            (dict)
+             318 LOAD_NAME            (str)
+             320 LOAD_NAME            (Any)
+             322 BUILD_TUPLE          2
+             324 BINARY_SUBSCR
+             326 BINARY_SUBSCR
+             328 LOAD_CONST           ("return")
+             330 LOAD_NAME            (Any)
+             332 BUILD_TUPLE          6
+             334 LOAD_CONST           (<Code310 code object _post_json_with_reauth at 0x16c81792540, file clan_war.py>, line 208)
+             336 LOAD_CONST           ("ClanWarEvent._post_json_with_reauth")
+             338 MAKE_FUNCTION        (default, annotation)
+             340 STORE_NAME           (_post_json_with_reauth)
+
+217:         342 LOAD_NAME            (staticmethod)
+
+218:         344 LOAD_CONST           ("response")
+             346 LOAD_NAME            (Any)
+             348 LOAD_CONST           ("return")
+             350 LOAD_NAME            (bool)
+             352 BUILD_TUPLE          4
+             354 LOAD_CONST           (<Code310 code object _is_auth_error at 0x16c81792720, file clan_war.py>, line 217)
+             356 LOAD_CONST           ("ClanWarEvent._is_auth_error")
+             358 MAKE_FUNCTION        (annotation)
+             360 CALL_FUNCTION        (1 positional argument)
+             362 STORE_NAME           (_is_auth_error)
+
+235:         364 LOAD_CONST           ("return")
+             366 LOAD_NAME            (bool)
+             368 BUILD_TUPLE          2
+             370 LOAD_CONST           (<Code310 code object authenticate at 0x16c817928d0, file clan_war.py>, line 235)
+             372 LOAD_CONST           ("ClanWarEvent.authenticate")
+             374 MAKE_FUNCTION        (annotation)
+             376 STORE_NAME           (authenticate)
+
+259:         378 LOAD_CONST           ("return")
+             380 LOAD_NAME            (Optional)
+             382 LOAD_NAME            (dict)
+             384 LOAD_NAME            (str)
+             386 LOAD_NAME            (Any)
+             388 BUILD_TUPLE          2
+             390 BINARY_SUBSCR
+             392 BINARY_SUBSCR
+             394 BUILD_TUPLE          2
+             396 LOAD_CONST           (<Code310 code object get_clan_info at 0x16c81792a20, file clan_war.py>, line 259)
+             398 LOAD_CONST           ("ClanWarEvent.get_clan_info")
+             400 MAKE_FUNCTION        (annotation)
+             402 STORE_NAME           (get_clan_info)
+
+278:         404 LOAD_CONST           ((True,))
+             406 LOAD_CONST           ("announce")
+             408 LOAD_NAME            (bool)
+             410 LOAD_CONST           ("return")
+             412 LOAD_NAME            (Optional)
+             414 LOAD_NAME            (int)
+             416 BINARY_SUBSCR
+             418 BUILD_TUPLE          4
+             420 LOAD_CONST           (<Code310 code object get_stamina at 0x16c81792ab0, file clan_war.py>, line 278)
+             422 LOAD_CONST           ("ClanWarEvent.get_stamina")
+             424 MAKE_FUNCTION        (default, annotation)
+             426 STORE_NAME           (get_stamina)
+
+313:         428 LOAD_CONST           ("return")
+             430 LOAD_NAME            (list)
+             432 LOAD_NAME            (dict)
+             434 LOAD_NAME            (str)
+             436 LOAD_NAME            (Any)
+             438 BUILD_TUPLE          2
+             440 BINARY_SUBSCR
+             442 BINARY_SUBSCR
+             444 BUILD_TUPLE          2
+             446 LOAD_CONST           (<Code310 code object get_opponents at 0x16c81792bd0, file clan_war.py>, line 313)
+             448 LOAD_CONST           ("ClanWarEvent.get_opponents")
+             450 MAKE_FUNCTION        (annotation)
+             452 STORE_NAME           (get_opponents)
+
+324:         454 LOAD_CONST           ("return")
+             456 LOAD_NAME            (Optional)
+             458 LOAD_NAME            (dict)
+             460 LOAD_NAME            (str)
+             462 LOAD_NAME            (Any)
+             464 BUILD_TUPLE          2
+             466 BINARY_SUBSCR
+             468 BINARY_SUBSCR
+             470 BUILD_TUPLE          2
+             472 LOAD_CONST           (<Code310 code object pick_first_opponent at 0x16c81792d20, file clan_war.py>, line 324)
+             474 LOAD_CONST           ("ClanWarEvent.pick_first_opponent")
+             476 MAKE_FUNCTION        (annotation)
+             478 STORE_NAME           (pick_first_opponent)
+
+331:         480 LOAD_CONST           ("opponent_id")
+             482 LOAD_NAME            (Any)
+             484 LOAD_CONST           ("return")
+             486 LOAD_NAME            (Any)
+             488 BUILD_TUPLE          4
+             490 LOAD_CONST           (<Code310 code object quick_attack at 0x16c81792db0, file clan_war.py>, line 331)
+             492 LOAD_CONST           ("ClanWarEvent.quick_attack")
+             494 MAKE_FUNCTION        (annotation)
+             496 STORE_NAME           (quick_attack)
+
+337:         498 LOAD_CONST           ("return")
+             500 LOAD_NAME            (bool)
+             502 BUILD_TUPLE          2
+             504 LOAD_CONST           (<Code310 code object buy_stamina at 0x16c81792f30, file clan_war.py>, line 337)
+             506 LOAD_CONST           ("ClanWarEvent.buy_stamina")
+             508 MAKE_FUNCTION        (annotation)
+             510 STORE_NAME           (buy_stamina)
+
+359:         512 LOAD_CONST           ("result")
+             514 LOAD_NAME            (dict)
+             516 LOAD_NAME            (str)
+             518 LOAD_NAME            (Any)
+             520 BUILD_TUPLE          2
+             522 BINARY_SUBSCR
+             524 LOAD_CONST           ("return")
+             526 LOAD_CONST           (None)
+             528 BUILD_TUPLE          4
+             530 LOAD_CONST           (<Code310 code object _log_quick_result at 0x16cff5536e0, file clan_war.py>, line 359)
+             532 LOAD_CONST           ("ClanWarEvent._log_quick_result")
+             534 MAKE_FUNCTION        (annotation)
+             536 STORE_NAME           (_log_quick_result)
+
+372:         538 LOAD_CONST           ("result")
+             540 LOAD_NAME            (dict)
+             542 LOAD_NAME            (str)
+             544 LOAD_NAME            (Any)
+             546 BUILD_TUPLE          2
+             548 BINARY_SUBSCR
+             550 LOAD_CONST           ("return")
+             552 LOAD_CONST           (None)
+             554 BUILD_TUPLE          4
+             556 LOAD_CONST           (<Code310 code object _apply_battle_result at 0x16c81793050, file clan_war.py>, line 372)
+             558 LOAD_CONST           ("ClanWarEvent._apply_battle_result")
+             560 MAKE_FUNCTION        (annotation)
+             562 STORE_NAME           (_apply_battle_result)
+
+388:         564 LOAD_CONST           ("return")
+             566 LOAD_NAME            (bool)
+             568 BUILD_TUPLE          2
+             570 LOAD_CONST           (<Code310 code object _idle_until_stamina_returns at 0x16c81793170, file clan_war.py>, line 388)
+             572 LOAD_CONST           ("ClanWarEvent._idle_until_stamina_returns")
+             574 MAKE_FUNCTION        (annotation)
+             576 STORE_NAME           (_idle_until_stamina_returns)
+
+419:         578 LOAD_CONST           (('return', None))
+             580 LOAD_CONST           (<Code310 code object run at 0x16c81793260, file clan_war.py>, line 419)
+             582 LOAD_CONST           ("ClanWarEvent.run")
+             584 MAKE_FUNCTION        (annotation)
+             586 STORE_NAME           (run)
+             588 LOAD_CONST           (None)
+             590 RETURN_VALUE
+
+
+# Method Name:       clan_war_event
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  4
+# Stack size:        10
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        488
+# Constants:
+#    0: None
+#    1: 'auto_spend_token'
+#    2: 'settings'
+#    3: ('auto_spend_token', 'settings')
+# Names:
+#    0: isinstance
+#    1: dict
+#    2: ClanWarEvent
+#    3: bool
+#    4: get
+#    5: ValueError
+#    6: print
+#    7: str
+#    8: run
+# Varnames:
+#	params, options, event, exc
+# Positional arguments:
+#	params
+# Local variables:
+#    1: options
+#    2: event
+#    3: exc
+489:           0 LOAD_GLOBAL          (isinstance)
+               2 LOAD_FAST            (params)
+               4 LOAD_GLOBAL          (dict)
+               6 CALL_FUNCTION        (2 positional arguments)
+               8 POP_JUMP_IF_FALSE    (to 14)
+              10 LOAD_FAST            (params)
+              12 JUMP_FORWARD         (to 16)
+         >>   14 BUILD_MAP            0
+         >>   16 STORE_FAST           (options)
+
+490:          18 SETUP_FINALLY        (to 56)
+
+491:          20 LOAD_GLOBAL          (ClanWarEvent)
+
+492:          22 LOAD_GLOBAL          (bool)
+              24 LOAD_FAST            (options)
+              26 LOAD_METHOD          (get)
+              28 LOAD_CONST           ("auto_spend_token")
+              30 CALL_METHOD          (1 positional argument)
+              32 CALL_FUNCTION        (1 positional argument)
+
+493:          34 LOAD_FAST            (options)
+              36 LOAD_METHOD          (get)
+              38 LOAD_CONST           ("settings")
+              40 CALL_METHOD          (1 positional argument)
+              42 JUMP_IF_TRUE_OR_POP  (to 46)
+              44 BUILD_MAP            0
+
+491:     >>   46 LOAD_CONST           (('auto_spend_token', 'settings'))
+              48 CALL_FUNCTION_KW     (2 total positional and keyword args)
+              50 STORE_FAST           (event)
+              52 POP_BLOCK
+              54 JUMP_FORWARD         (to 106)
+
+495:     >>   56 DUP_TOP
+              58 LOAD_GLOBAL          (ValueError)
+              60 JUMP_IF_NOT_EXC_MATCH (to 104)
+              62 POP_TOP
+              64 STORE_FAST           (exc)
+              66 POP_TOP
+              68 SETUP_FINALLY        (to 96)
+
+496:          70 LOAD_GLOBAL          (print)
+              72 LOAD_GLOBAL          (str)
+              74 LOAD_FAST            (exc)
+              76 CALL_FUNCTION        (1 positional argument)
+              78 CALL_FUNCTION        (1 positional argument)
+              80 POP_TOP
+
+497:          82 POP_BLOCK
+              84 POP_EXCEPT
+              86 LOAD_CONST           (None)
+              88 STORE_FAST           (exc)
+              90 DELETE_FAST          (exc)
+              92 LOAD_CONST           (None)
+              94 RETURN_VALUE
+         >>   96 LOAD_CONST           (None)
+              98 STORE_FAST           (exc)
+             100 DELETE_FAST          (exc)
+             102 RERAISE              1
+
+495:     >>  104 RERAISE              0
+
+498:     >>  106 LOAD_FAST            (event)
+             108 LOAD_METHOD          (run)
+             110 CALL_METHOD          (0 positional arguments)
+             112 POP_TOP
+             114 LOAD_CONST           (None)
+             116 RETURN_VALUE
+
+
+# Method Name:       __init__
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 2
+# Number of locals:  6
+# Stack size:        7
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        25
+# Constants:
+#    0: None
+#    1: 'Character data is not loaded in memory'
+#    2: 'Login data is not loaded in memory'
+#    3: 'character_data_character_id'
+#    4: 'character_id'
+#    5: 'Character ID is missing from current character data'
+#    6: 'sessionkey'
+#    7: 'Session key is missing from login data'
+#    8: 'character_data_clan_url'
+#    9: 'clan_url'
+#   10: 'Clan war is not available for '
+#   11: 'label'
+#   12: 'service_bridge_token'
+#   13: 'character_data_service_bridge_token'
+#   14: 'application/json'
+#   15: ' '
+#   16: ('Accept', 'Content-Type', 'Agent')
+#   17: 0.0
+# Names:
+#    0: isinstance
+#    1: config
+#    2: char_data
+#    3: dict
+#    4: ValueError
+#    5: login_data
+#    6: flatten_json
+#    7: char_flat
+#    8: get
+#    9: char_id
+#   10: session_key
+#   11: get_current_amf_profile
+#   12: current_profile
+#   13: base_url
+#   14: service_bridge_token
+#   15: requests
+#   16: Session
+#   17: http
+#   18: headers
+#   19: update
+#   20: _agent_prefix
+#   21: GAME_BUILD_NUM
+#   22: auth_token
+#   23: clan_data
+#   24: clan_char_data
+#   25: _last_logged_stamina
+#   26: _last_stamina_value
+#   27: _last_stamina_fetch_at
+#   28: bool
+#   29: auto_spend_token
+#   30: CLAN_WAR_DEFAULT_SETTINGS
+#   31: settings
+# Varnames:
+#	self, auto_spend_token, settings, char_flat, current_profile, merged_settings
+# Positional arguments:
+#	self
+# Local variables:
+#    1: auto_spend_token
+#    2: settings
+#    3: char_flat
+#    4: current_profile
+#    5: merged_settings
+ 26:           0 LOAD_GLOBAL          (isinstance)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_ATTR            (char_data)
+               6 LOAD_GLOBAL          (dict)
+               8 CALL_FUNCTION        (2 positional arguments)
+              10 POP_JUMP_IF_TRUE     (to 20)
+
+ 27:          12 LOAD_GLOBAL          (ValueError)
+              14 LOAD_CONST           ("Character data is not loaded in memory")
+              16 CALL_FUNCTION        (1 positional argument)
+              18 RAISE_VARARGS        (exception instance)
+
+ 28:     >>   20 LOAD_GLOBAL          (isinstance)
+              22 LOAD_GLOBAL          (config)
+              24 LOAD_ATTR            (login_data)
+              26 LOAD_GLOBAL          (dict)
+              28 CALL_FUNCTION        (2 positional arguments)
+              30 POP_JUMP_IF_TRUE     (to 40)
+
+ 29:          32 LOAD_GLOBAL          (ValueError)
+              34 LOAD_CONST           ("Login data is not loaded in memory")
+              36 CALL_FUNCTION        (1 positional argument)
+              38 RAISE_VARARGS        (exception instance)
+
+ 31:     >>   40 LOAD_GLOBAL          (config)
+              42 LOAD_ATTR            (char_data)
+              44 LOAD_FAST            (self)
+              46 STORE_ATTR           (char_data)
+
+ 32:          48 LOAD_GLOBAL          (config)
+              50 LOAD_ATTR            (login_data)
+              52 LOAD_FAST            (self)
+              54 STORE_ATTR           (login_data)
+
+ 33:          56 LOAD_GLOBAL          (flatten_json)
+              58 LOAD_FAST            (self)
+              60 LOAD_ATTR            (char_data)
+              62 CALL_FUNCTION        (1 positional argument)
+              64 STORE_FAST           (char_flat)
+
+ 34:          66 LOAD_FAST            (char_flat)
+              68 LOAD_FAST            (self)
+              70 STORE_ATTR           (char_flat)
+
+ 36:          72 LOAD_FAST            (char_flat)
+              74 LOAD_METHOD          (get)
+              76 LOAD_CONST           ("character_data_character_id")
+              78 CALL_METHOD          (1 positional argument)
+              80 JUMP_IF_TRUE_OR_POP  (to 90)
+
+ 37:          82 LOAD_FAST            (char_flat)
+              84 LOAD_METHOD          (get)
+              86 LOAD_CONST           ("character_id")
+              88 CALL_METHOD          (1 positional argument)
+
+ 35:     >>   90 LOAD_FAST            (self)
+              92 STORE_ATTR           (char_id)
+
+ 39:          94 LOAD_FAST            (self)
+              96 LOAD_ATTR            (char_id)
+              98 POP_JUMP_IF_TRUE     (to 108)
+
+ 40:         100 LOAD_GLOBAL          (ValueError)
+             102 LOAD_CONST           ("Character ID is missing from current character data")
+             104 CALL_FUNCTION        (1 positional argument)
+             106 RAISE_VARARGS        (exception instance)
+
+ 42:     >>  108 LOAD_FAST            (self)
+             110 LOAD_ATTR            (login_data)
+             112 LOAD_METHOD          (get)
+             114 LOAD_CONST           ("sessionkey")
+             116 CALL_METHOD          (1 positional argument)
+             118 LOAD_FAST            (self)
+             120 STORE_ATTR           (session_key)
+
+ 43:         122 LOAD_FAST            (self)
+             124 LOAD_ATTR            (session_key)
+             126 POP_JUMP_IF_TRUE     (to 136)
+
+ 44:         128 LOAD_GLOBAL          (ValueError)
+             130 LOAD_CONST           ("Session key is missing from login data")
+             132 CALL_FUNCTION        (1 positional argument)
+             134 RAISE_VARARGS        (exception instance)
+
+ 46:     >>  136 LOAD_GLOBAL          (config)
+             138 LOAD_METHOD          (get_current_amf_profile)
+             140 CALL_METHOD          (0 positional arguments)
+             142 STORE_FAST           (current_profile)
+
+ 47:         144 LOAD_FAST            (current_profile)
+             146 LOAD_FAST            (self)
+             148 STORE_ATTR           (current_profile)
+
+ 49:         150 LOAD_FAST            (char_flat)
+             152 LOAD_METHOD          (get)
+             154 LOAD_CONST           ("character_data_clan_url")
+             156 CALL_METHOD          (1 positional argument)
+             158 JUMP_IF_TRUE_OR_POP  (to 178)
+
+ 50:         160 LOAD_FAST            (char_flat)
+             162 LOAD_METHOD          (get)
+             164 LOAD_CONST           ("clan_url")
+             166 CALL_METHOD          (1 positional argument)
+
+ 49:         168 JUMP_IF_TRUE_OR_POP  (to 178)
+
+ 51:         170 LOAD_FAST            (current_profile)
+             172 LOAD_METHOD          (get)
+             174 LOAD_CONST           ("clan_url")
+             176 CALL_METHOD          (1 positional argument)
+
+ 48:     >>  178 LOAD_FAST            (self)
+             180 STORE_ATTR           (base_url)
+
+ 53:         182 LOAD_FAST            (self)
+             184 LOAD_ATTR            (base_url)
+             186 POP_JUMP_IF_TRUE     (to 206)
+
+ 54:         188 LOAD_GLOBAL          (ValueError)
+             190 LOAD_CONST           ("Clan war is not available for ")
+             192 LOAD_FAST            (current_profile)
+             194 LOAD_CONST           ("label")
+             196 BINARY_SUBSCR
+             198 FORMAT_VALUE         0
+             200 BUILD_STRING         2
+             202 CALL_FUNCTION        (1 positional argument)
+             204 RAISE_VARARGS        (exception instance)
+
+ 57:     >>  206 LOAD_FAST            (self)
+             208 LOAD_ATTR            (login_data)
+             210 LOAD_METHOD          (get)
+             212 LOAD_CONST           ("service_bridge_token")
+             214 CALL_METHOD          (1 positional argument)
+             216 JUMP_IF_TRUE_OR_POP  (to 236)
+
+ 58:         218 LOAD_FAST            (char_flat)
+             220 LOAD_METHOD          (get)
+             222 LOAD_CONST           ("character_data_service_bridge_token")
+             224 CALL_METHOD          (1 positional argument)
+
+ 57:         226 JUMP_IF_TRUE_OR_POP  (to 236)
+
+ 59:         228 LOAD_FAST            (char_flat)
+             230 LOAD_METHOD          (get)
+             232 LOAD_CONST           ("service_bridge_token")
+             234 CALL_METHOD          (1 positional argument)
+
+ 56:     >>  236 LOAD_FAST            (self)
+             238 STORE_ATTR           (service_bridge_token)
+
+ 62:         240 LOAD_GLOBAL          (requests)
+             242 LOAD_METHOD          (Session)
+             244 CALL_METHOD          (0 positional arguments)
+             246 LOAD_FAST            (self)
+             248 STORE_ATTR           (http)
+
+ 63:         250 LOAD_FAST            (self)
+             252 LOAD_ATTR            (http)
+             254 LOAD_ATTR            (headers)
+             256 LOAD_METHOD          (update)
+
+ 64:         258 LOAD_CONST           ("application/json")
+
+ 65:         260 LOAD_CONST           ("application/json")
+
+ 66:         262 LOAD_FAST            (self)
+             264 LOAD_METHOD          (_agent_prefix)
+             266 CALL_METHOD          (0 positional arguments)
+             268 FORMAT_VALUE         0
+             270 LOAD_CONST           (" ")
+             272 LOAD_GLOBAL          (config)
+             274 LOAD_ATTR            (GAME_BUILD_NUM)
+             276 FORMAT_VALUE         0
+             278 BUILD_STRING         3
+
+ 63:         280 LOAD_CONST           (('Accept', 'Content-Type', 'Agent'))
+             282 BUILD_CONST_KEY_MAP  3
+             284 CALL_METHOD          (1 positional argument)
+             286 POP_TOP
+
+ 69:         288 LOAD_CONST           (None)
+             290 LOAD_FAST            (self)
+             292 STORE_ATTR           (auth_token)
+
+ 70:         294 BUILD_MAP            0
+             296 LOAD_FAST            (self)
+             298 STORE_ATTR           (clan_data)
+
+ 71:         300 BUILD_MAP            0
+             302 LOAD_FAST            (self)
+             304 STORE_ATTR           (clan_char_data)
+
+ 72:         306 LOAD_CONST           (None)
+             308 LOAD_FAST            (self)
+             310 STORE_ATTR           (_last_logged_stamina)
+
+ 73:         312 LOAD_CONST           (None)
+             314 LOAD_FAST            (self)
+             316 STORE_ATTR           (_last_stamina_value)
+
+ 74:         318 LOAD_CONST           (0.0)
+             320 LOAD_FAST            (self)
+             322 STORE_ATTR           (_last_stamina_fetch_at)
+
+ 75:         324 LOAD_GLOBAL          (bool)
+             326 LOAD_FAST            (auto_spend_token)
+             328 CALL_FUNCTION        (1 positional argument)
+             330 LOAD_FAST            (self)
+             332 STORE_ATTR           (auto_spend_token)
+
+ 76:         334 LOAD_GLOBAL          (dict)
+             336 LOAD_GLOBAL          (CLAN_WAR_DEFAULT_SETTINGS)
+             338 CALL_FUNCTION        (1 positional argument)
+             340 STORE_FAST           (merged_settings)
+
+ 77:         342 LOAD_GLOBAL          (isinstance)
+             344 LOAD_FAST            (settings)
+             346 LOAD_GLOBAL          (dict)
+             348 CALL_FUNCTION        (2 positional arguments)
+             350 POP_JUMP_IF_FALSE    (to 362)
+
+ 78:         352 LOAD_FAST            (merged_settings)
+             354 LOAD_METHOD          (update)
+             356 LOAD_FAST            (settings)
+             358 CALL_METHOD          (1 positional argument)
+             360 POP_TOP
+
+ 79:     >>  362 LOAD_FAST            (merged_settings)
+             364 LOAD_FAST            (self)
+             366 STORE_ATTR           (settings)
+             368 LOAD_CONST           (None)
+             370 RETURN_VALUE
+
+
+# Method Name:       _agent_prefix
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        81
+# Constants:
+#    0: None
+#    1: 'id'
+#    2: 'alternate4'
+#    3: 'ClassicNinja'
+#    4: 'NinjaSage'
+# Names:
+#    0: current_profile
+#    1: get
+# Varnames:
+#	self
+# Positional arguments:
+#	self
+ 82:           0 LOAD_FAST            (self)
+               2 LOAD_ATTR            (current_profile)
+               4 LOAD_METHOD          (get)
+               6 LOAD_CONST           ("id")
+               8 CALL_METHOD          (1 positional argument)
+              10 LOAD_CONST           ("alternate4")
+              12 COMPARE_OP           (==)
+              14 POP_JUMP_IF_FALSE    (to 20)
+
+ 83:          16 LOAD_CONST           ("ClassicNinja")
+              18 RETURN_VALUE
+
+ 84:     >>   20 LOAD_CONST           ("NinjaSage")
+              22 RETURN_VALUE
+
+
+# Method Name:       _check_stop_event
+# Filename:          clan_war.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        86
+# Constants:
+#    0: None
+#    1: 'stop_event'
+#    2: 'Clan war stopped by user request'
+#    3: True
+#    4: False
+# Names:
+#    0: hasattr
+#    1: config
+#    2: stop_event
+#    3: is_set
+#    4: print
+ 88:           0 LOAD_GLOBAL          (hasattr)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_CONST           ("stop_event")
+               6 CALL_FUNCTION        (2 positional arguments)
+               8 POP_JUMP_IF_FALSE    (to 32)
+              10 LOAD_GLOBAL          (config)
+              12 LOAD_ATTR            (stop_event)
+              14 LOAD_METHOD          (is_set)
+              16 CALL_METHOD          (0 positional arguments)
+              18 POP_JUMP_IF_FALSE    (to 32)
+
+ 89:          20 LOAD_GLOBAL          (print)
+              22 LOAD_CONST           ("Clan war stopped by user request")
+              24 CALL_FUNCTION        (1 positional argument)
+              26 POP_TOP
+
+ 90:          28 LOAD_CONST           (True)
+              30 RETURN_VALUE
+
+ 91:     >>   32 LOAD_CONST           (False)
+              34 RETURN_VALUE
+
+
+# Method Name:       _wait_with_stop_check
+# Filename:          clan_war.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        93
+# Constants:
+#    0: None
+#    1: False
+#    2: 1
+#    3: True
+# Names:
+#    0: range
+#    1: _check_stop_event
+#    2: time
+#    3: sleep
+# Varnames:
+#	self, seconds, _
+# Positional arguments:
+#	self, seconds
+# Local variables:
+#    2: _
+ 94:           0 LOAD_GLOBAL          (range)
+               2 LOAD_FAST            (seconds)
+               4 CALL_FUNCTION        (1 positional argument)
+               6 GET_ITER
+         >>    8 FOR_ITER             (to 38)
+              10 STORE_FAST           (_)
+
+ 95:          12 LOAD_FAST            (self)
+              14 LOAD_METHOD          (_check_stop_event)
+              16 CALL_METHOD          (0 positional arguments)
+              18 POP_JUMP_IF_FALSE    (to 26)
+
+ 96:          20 POP_TOP
+              22 LOAD_CONST           (False)
+              24 RETURN_VALUE
+
+ 97:     >>   26 LOAD_GLOBAL          (time)
+              28 LOAD_METHOD          (sleep)
+              30 LOAD_CONST           (1)
+              32 CALL_METHOD          (1 positional argument)
+              34 POP_TOP
+              36 JUMP_ABSOLUTE        (to 8)
+
+ 98:     >>   38 LOAD_CONST           (True)
+              40 RETURN_VALUE
+
+
+# Method Name:       _response_message
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  5
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        100
+# Constants:
+#    0: None
+#    1: 'No response'
+#    2: 'faultString'
+#    3: 'fault_string'
+#    4: 'faultCode'
+#    5: 'fault_code'
+#    6: ' '
+#    7: <Code310 code object <genexpr> at 0x16c817916a0, file clan_war.py>, line 107
+#    8: 'ClanWarEvent._response_message.<locals>.<genexpr>'
+#    9: ('errorMessage', 'message', 'error', 'result', 'detail')
+# Names:
+#    0: getattr
+#    1: join
+#    2: isinstance
+#    3: dict
+#    4: get
+#    5: str
+# Varnames:
+#	response, fault_string, fault_code, key, value
+# Positional arguments:
+#	response
+# Local variables:
+#    1: fault_string
+#    2: fault_code
+#    3: key
+#    4: value
+102:           0 LOAD_FAST            (response)
+               2 LOAD_CONST           (None)
+               4 IS_OP                (is)
+               6 POP_JUMP_IF_FALSE    (to 12)
+
+103:           8 LOAD_CONST           ("No response")
+              10 RETURN_VALUE
+
+104:     >>   12 LOAD_GLOBAL          (getattr)
+              14 LOAD_FAST            (response)
+              16 LOAD_CONST           ("faultString")
+              18 LOAD_CONST           (None)
+              20 CALL_FUNCTION        (3 positional arguments)
+              22 JUMP_IF_TRUE_OR_POP  (to 34)
+              24 LOAD_GLOBAL          (getattr)
+              26 LOAD_FAST            (response)
+              28 LOAD_CONST           ("fault_string")
+              30 LOAD_CONST           (None)
+              32 CALL_FUNCTION        (3 positional arguments)
+         >>   34 STORE_FAST           (fault_string)
+
+105:          36 LOAD_GLOBAL          (getattr)
+              38 LOAD_FAST            (response)
+              40 LOAD_CONST           ("faultCode")
+              42 LOAD_CONST           (None)
+              44 CALL_FUNCTION        (3 positional arguments)
+              46 JUMP_IF_TRUE_OR_POP  (to 58)
+              48 LOAD_GLOBAL          (getattr)
+              50 LOAD_FAST            (response)
+              52 LOAD_CONST           ("fault_code")
+              54 LOAD_CONST           (None)
+              56 CALL_FUNCTION        (3 positional arguments)
+         >>   58 STORE_FAST           (fault_code)
+
+106:          60 LOAD_FAST            (fault_string)
+              62 POP_JUMP_IF_TRUE     (to 68)
+              64 LOAD_FAST            (fault_code)
+              66 POP_JUMP_IF_FALSE    (to 92)
+
+107:     >>   68 LOAD_CONST           (" ")
+              70 LOAD_METHOD          (join)
+              72 LOAD_CONST           (<Code310 code object <genexpr> at 0x16c817916a0, file clan_war.py>, line 107)
+              74 LOAD_CONST           ("ClanWarEvent._response_message.<locals>.<genexpr>")
+              76 MAKE_FUNCTION        (No arguments)
+              78 LOAD_FAST            (fault_code)
+              80 LOAD_FAST            (fault_string)
+              82 BUILD_TUPLE          2
+              84 GET_ITER
+              86 CALL_FUNCTION        (1 positional argument)
+              88 CALL_METHOD          (1 positional argument)
+              90 RETURN_VALUE
+
+108:     >>   92 LOAD_GLOBAL          (isinstance)
+              94 LOAD_FAST            (response)
+              96 LOAD_GLOBAL          (dict)
+              98 CALL_FUNCTION        (2 positional arguments)
+             100 POP_JUMP_IF_FALSE    (to 146)
+
+109:         102 LOAD_CONST           (('errorMessage', 'message', 'error', 'result', 'detail'))
+             104 GET_ITER
+         >>  106 FOR_ITER             (to 138)
+             108 STORE_FAST           (key)
+
+110:         110 LOAD_FAST            (response)
+             112 LOAD_METHOD          (get)
+             114 LOAD_FAST            (key)
+             116 CALL_METHOD          (1 positional argument)
+             118 STORE_FAST           (value)
+
+111:         120 LOAD_FAST            (value)
+             122 POP_JUMP_IF_FALSE    (to 136)
+
+112:         124 LOAD_GLOBAL          (str)
+             126 LOAD_FAST            (value)
+             128 CALL_FUNCTION        (1 positional argument)
+             130 ROT_TWO
+             132 POP_TOP
+             134 RETURN_VALUE
+
+111:     >>  136 JUMP_ABSOLUTE        (to 106)
+
+113:     >>  138 LOAD_GLOBAL          (str)
+             140 LOAD_FAST            (response)
+             142 CALL_FUNCTION        (1 positional argument)
+             144 RETURN_VALUE
+
+114:     >>  146 LOAD_GLOBAL          (str)
+             148 LOAD_FAST            (response)
+             150 CALL_FUNCTION        (1 positional argument)
+             152 RETURN_VALUE
+
+
+# Method Name:       _extract_token
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  5
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        116
+# Constants:
+#    0: None
+#    1: ('token', 'access_token', 'accessToken', 'bearer', 'jwt')
+# Names:
+#    0: isinstance
+#    1: dict
+#    2: get
+#    3: str
+#    4: strip
+#    5: values
+#    6: ClanWarEvent
+#    7: _extract_token
+#    8: list
+# Varnames:
+#	payload, key, value, token, item
+# Positional arguments:
+#	payload
+# Local variables:
+#    1: key
+#    2: value
+#    3: token
+#    4: item
+118:           0 LOAD_GLOBAL          (isinstance)
+               2 LOAD_FAST            (payload)
+               4 LOAD_GLOBAL          (dict)
+               6 CALL_FUNCTION        (2 positional arguments)
+               8 POP_JUMP_IF_FALSE    (to 100)
+
+119:          10 LOAD_CONST           (('token', 'access_token', 'accessToken', 'bearer', 'jwt'))
+              12 GET_ITER
+         >>   14 FOR_ITER             (to 60)
+              16 STORE_FAST           (key)
+
+120:          18 LOAD_FAST            (payload)
+              20 LOAD_METHOD          (get)
+              22 LOAD_FAST            (key)
+              24 CALL_METHOD          (1 positional argument)
+              26 STORE_FAST           (value)
+
+121:          28 LOAD_GLOBAL          (isinstance)
+              30 LOAD_FAST            (value)
+              32 LOAD_GLOBAL          (str)
+              34 CALL_FUNCTION        (2 positional arguments)
+              36 POP_JUMP_IF_FALSE    (to 58)
+              38 LOAD_FAST            (value)
+              40 LOAD_METHOD          (strip)
+              42 CALL_METHOD          (0 positional arguments)
+              44 POP_JUMP_IF_FALSE    (to 58)
+
+122:          46 LOAD_FAST            (value)
+              48 LOAD_METHOD          (strip)
+              50 CALL_METHOD          (0 positional arguments)
+              52 ROT_TWO
+              54 POP_TOP
+              56 RETURN_VALUE
+         >>   58 JUMP_ABSOLUTE        (to 14)
+
+123:     >>   60 LOAD_FAST            (payload)
+              62 LOAD_METHOD          (values)
+              64 CALL_METHOD          (0 positional arguments)
+              66 GET_ITER
+         >>   68 FOR_ITER             (to 96)
+              70 STORE_FAST           (value)
+
+124:          72 LOAD_GLOBAL          (ClanWarEvent)
+              74 LOAD_METHOD          (_extract_token)
+              76 LOAD_FAST            (value)
+              78 CALL_METHOD          (1 positional argument)
+              80 STORE_FAST           (token)
+
+125:          82 LOAD_FAST            (token)
+              84 POP_JUMP_IF_FALSE    (to 94)
+
+126:          86 LOAD_FAST            (token)
+              88 ROT_TWO
+              90 POP_TOP
+              92 RETURN_VALUE
+
+125:     >>   94 JUMP_ABSOLUTE        (to 68)
+
+132:     >>   96 LOAD_CONST           (None)
+              98 RETURN_VALUE
+
+127:     >>  100 LOAD_GLOBAL          (isinstance)
+             102 LOAD_FAST            (payload)
+             104 LOAD_GLOBAL          (list)
+             106 CALL_FUNCTION        (2 positional arguments)
+             108 POP_JUMP_IF_FALSE    (to 142)
+
+128:         110 LOAD_FAST            (payload)
+             112 GET_ITER
+         >>  114 FOR_ITER             (to 142)
+             116 STORE_FAST           (item)
+
+129:         118 LOAD_GLOBAL          (ClanWarEvent)
+             120 LOAD_METHOD          (_extract_token)
+             122 LOAD_FAST            (item)
+             124 CALL_METHOD          (1 positional argument)
+             126 STORE_FAST           (token)
+
+130:         128 LOAD_FAST            (token)
+             130 POP_JUMP_IF_FALSE    (to 140)
+
+131:         132 LOAD_FAST            (token)
+             134 ROT_TWO
+             136 POP_TOP
+             138 RETURN_VALUE
+
+130:     >>  140 JUMP_ABSOLUTE        (to 114)
+
+132:     >>  142 LOAD_CONST           (None)
+             144 RETURN_VALUE
+
+
+# Method Name:       _generate_code
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        5
+# Flags:             0x00000003 (NEWLOCALS | OPTIMIZED)
+# First Line:        134
+# Constants:
+#    0: None
+#    1: ''
+#    2: <Code310 code object <genexpr> at 0x16c81791be0, file clan_war.py>, line 137
+#    3: 'ClanWarEvent._generate_code.<locals>.<genexpr>'
+# Names:
+#    0: string
+#    1: ascii_letters
+#    2: digits
+#    3: join
+#    4: range
+# Varnames:
+#	length
+# Positional arguments:
+#	length
+# Cell variables:
+#    0: alphabet
+136:           0 LOAD_GLOBAL          (string)
+               2 LOAD_ATTR            (ascii_letters)
+               4 LOAD_GLOBAL          (string)
+               6 LOAD_ATTR            (digits)
+               8 BINARY_ADD
+              10 STORE_DEREF          (alphabet)
+
+137:          12 LOAD_CONST           ("")
+              14 LOAD_METHOD          (join)
+              16 LOAD_CLOSURE         (alphabet)
+              18 BUILD_TUPLE          1
+              20 LOAD_CONST           (<Code310 code object <genexpr> at 0x16c81791be0, file clan_war.py>, line 137)
+              22 LOAD_CONST           ("ClanWarEvent._generate_code.<locals>.<genexpr>")
+              24 MAKE_FUNCTION        (closure)
+              26 LOAD_GLOBAL          (range)
+              28 LOAD_FAST            (length)
+              30 CALL_FUNCTION        (1 positional argument)
+              32 GET_ITER
+              34 CALL_FUNCTION        (1 positional argument)
+              36 CALL_METHOD          (1 positional argument)
+              38 RETURN_VALUE
+
+
+# Method Name:       _walk_values
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        4
+# Flags:             0x00000063 (NOFREE | GENERATOR | NEWLOCALS | OPTIMIZED)
+# First Line:        139
+# Constants:
+#    0: None
+# Names:
+#    0: isinstance
+#    1: dict
+#    2: values
+#    3: ClanWarEvent
+#    4: _walk_values
+#    5: list
+# Varnames:
+#	payload, value, item
+# Positional arguments:
+#	payload
+# Local variables:
+#    1: value
+#    2: item
+               0 GEN_START            0
+
+141:           2 LOAD_GLOBAL          (isinstance)
+               4 LOAD_FAST            (payload)
+               6 LOAD_GLOBAL          (dict)
+               8 CALL_FUNCTION        (2 positional arguments)
+              10 POP_JUMP_IF_FALSE    (to 52)
+
+142:          12 LOAD_FAST            (payload)
+              14 YIELD_VALUE
+              16 POP_TOP
+
+143:          18 LOAD_FAST            (payload)
+              20 LOAD_METHOD          (values)
+              22 CALL_METHOD          (0 positional arguments)
+              24 GET_ITER
+         >>   26 FOR_ITER             (to 48)
+              28 STORE_FAST           (value)
+
+144:          30 LOAD_GLOBAL          (ClanWarEvent)
+              32 LOAD_METHOD          (_walk_values)
+              34 LOAD_FAST            (value)
+              36 CALL_METHOD          (1 positional argument)
+              38 GET_YIELD_FROM_ITER
+              40 LOAD_CONST           (None)
+              42 YIELD_FROM
+              44 POP_TOP
+              46 JUMP_ABSOLUTE        (to 26)
+
+143:     >>   48 LOAD_CONST           (None)
+              50 RETURN_VALUE
+
+145:     >>   52 LOAD_GLOBAL          (isinstance)
+              54 LOAD_FAST            (payload)
+              56 LOAD_GLOBAL          (list)
+              58 CALL_FUNCTION        (2 positional arguments)
+              60 POP_JUMP_IF_FALSE    (to 88)
+
+146:          62 LOAD_FAST            (payload)
+              64 GET_ITER
+         >>   66 FOR_ITER             (to 92)
+              68 STORE_FAST           (item)
+
+147:          70 LOAD_GLOBAL          (ClanWarEvent)
+              72 LOAD_METHOD          (_walk_values)
+              74 LOAD_FAST            (item)
+              76 CALL_METHOD          (1 positional argument)
+              78 GET_YIELD_FROM_ITER
+              80 LOAD_CONST           (None)
+              82 YIELD_FROM
+              84 POP_TOP
+              86 JUMP_ABSOLUTE        (to 66)
+
+145:     >>   88 LOAD_CONST           (None)
+              90 RETURN_VALUE
+
+146:     >>   92 LOAD_CONST           (None)
+              94 RETURN_VALUE
+
+
+# Method Name:       _to_int_or_none
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        8
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        149
+# Constants:
+#    0: None
+# Names:
+#    0: int
+#    1: Exception
+# Varnames:
+#	value
+# Positional arguments:
+#	value
+151:           0 SETUP_FINALLY        (to 12)
+
+152:           2 LOAD_GLOBAL          (int)
+               4 LOAD_FAST            (value)
+               6 CALL_FUNCTION        (1 positional argument)
+               8 POP_BLOCK
+              10 RETURN_VALUE
+
+153:     >>   12 DUP_TOP
+              14 LOAD_GLOBAL          (Exception)
+              16 JUMP_IF_NOT_EXC_MATCH (to 30)
+              18 POP_TOP
+              20 POP_TOP
+              22 POP_TOP
+
+154:          24 POP_EXCEPT
+              26 LOAD_CONST           (None)
+              28 RETURN_VALUE
+
+153:     >>   30 RERAISE              0
+
+
+# Method Name:       _tokens_amount
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  5
+# Stack size:        8
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        156
+# Constants:
+#    0: None
+#    1: 'all_char'
+#    2: ('tokens', 'account_tokens', 'token')
+# Names:
+#    0: char_data
+#    1: login_data
+#    2: getattr
+#    3: config
+#    4: _walk_values
+#    5: _to_int_or_none
+#    6: get
+# Varnames:
+#	self, payload, item, key, amount
+# Positional arguments:
+#	self
+# Local variables:
+#    1: payload
+#    2: item
+#    3: key
+#    4: amount
+157:           0 LOAD_FAST            (self)
+               2 LOAD_ATTR            (char_data)
+               4 LOAD_FAST            (self)
+               6 LOAD_ATTR            (login_data)
+               8 LOAD_GLOBAL          (getattr)
+              10 LOAD_GLOBAL          (config)
+              12 LOAD_CONST           ("all_char")
+              14 LOAD_CONST           (None)
+              16 CALL_FUNCTION        (3 positional arguments)
+              18 BUILD_TUPLE          3
+              20 GET_ITER
+         >>   22 FOR_ITER             (to 102)
+              24 STORE_FAST           (payload)
+
+158:          26 LOAD_FAST            (self)
+              28 LOAD_METHOD          (_walk_values)
+              30 LOAD_FAST            (payload)
+              32 CALL_METHOD          (1 positional argument)
+              34 GET_ITER
+         >>   36 FOR_ITER             (to 100)
+              38 STORE_FAST           (item)
+
+159:          40 LOAD_CONST           (('tokens', 'account_tokens', 'token'))
+              42 GET_ITER
+         >>   44 FOR_ITER             (to 98)
+              46 STORE_FAST           (key)
+
+160:          48 LOAD_FAST            (key)
+              50 LOAD_FAST            (item)
+              52 CONTAINS_OP          (in)
+              54 POP_JUMP_IF_FALSE    (to 96)
+
+161:          56 LOAD_FAST            (self)
+              58 LOAD_METHOD          (_to_int_or_none)
+              60 LOAD_FAST            (item)
+              62 LOAD_METHOD          (get)
+              64 LOAD_FAST            (key)
+              66 CALL_METHOD          (1 positional argument)
+              68 CALL_METHOD          (1 positional argument)
+              70 STORE_FAST           (amount)
+
+162:          72 LOAD_FAST            (amount)
+              74 LOAD_CONST           (None)
+              76 IS_OP                (is not)
+              78 POP_JUMP_IF_FALSE    (to 96)
+
+163:          80 LOAD_FAST            (amount)
+              82 ROT_TWO
+              84 POP_TOP
+              86 ROT_TWO
+              88 POP_TOP
+              90 ROT_TWO
+              92 POP_TOP
+              94 RETURN_VALUE
+         >>   96 JUMP_ABSOLUTE        (to 44)
+
+159:     >>   98 JUMP_ABSOLUTE        (to 36)
+
+158:     >>  100 JUMP_ABSOLUTE        (to 22)
+
+164:     >>  102 LOAD_CONST           (None)
+             104 RETURN_VALUE
+
+
+# Method Name:       _inventory_amount
+# Filename:          clan_war.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  8
+# Stack size:        9
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        166
+# Constants:
+#    0: None
+#    1: ''
+#    2: 'all_char'
+#    3: ('id', 'item_id', 'material_id', 'essential_id', 'name', 'code')
+#    4: ('amount', 'quantity', 'qty', 'count', 'num', 'value')
+# Names:
+#    0: str
+#    1: char_data
+#    2: login_data
+#    3: getattr
+#    4: config
+#    5: isinstance
+#    6: dict
+#    7: _to_int_or_none
+#    8: get
+#    9: _walk_values
+# Varnames:
+#	self, item_id, payload, direct, item, key, amount_key, amount
+# Positional arguments:
+#	self, item_id
+# Local variables:
+#    2: payload
+#    3: direct
+#    4: item
+#    5: key
+#    6: amount_key
+#    7: amount
+167:           0 LOAD_GLOBAL          (str)
+               2 LOAD_FAST            (item_id)
+               4 JUMP_IF_TRUE_OR_POP  (to 8)
+               6 LOAD_CONST           ("")
+         >>    8 CALL_FUNCTION        (1 positional argument)
+              10 STORE_FAST           (item_id)
+
+168:          12 LOAD_FAST            (self)
+              14 LOAD_ATTR            (char_data)
+              16 LOAD_FAST            (self)
+              18 LOAD_ATTR            (login_data)
+              20 LOAD_GLOBAL          (getattr)
+              22 LOAD_GLOBAL          (config)
+              24 LOAD_CONST           ("all_char")
+              26 LOAD_CONST           (None)
+              28 CALL_FUNCTION        (3 positional arguments)
+              30 BUILD_TUPLE          3
+              32 GET_ITER
+         >>   34 FOR_ITER             (to 184)
+              36 STORE_FAST           (payload)
+
+169:          38 LOAD_GLOBAL          (isinstance)
+              40 LOAD_FAST            (payload)
+              42 LOAD_GLOBAL          (dict)
+              44 CALL_FUNCTION        (2 positional arguments)
+              46 POP_JUMP_IF_FALSE    (to 80)
+
+170:          48 LOAD_FAST            (self)
+              50 LOAD_METHOD          (_to_int_or_none)
+              52 LOAD_FAST            (payload)
+              54 LOAD_METHOD          (get)
+              56 LOAD_FAST            (item_id)
+              58 CALL_METHOD          (1 positional argument)
+              60 CALL_METHOD          (1 positional argument)
+              62 STORE_FAST           (direct)
+
+171:          64 LOAD_FAST            (direct)
+              66 LOAD_CONST           (None)
+              68 IS_OP                (is not)
+              70 POP_JUMP_IF_FALSE    (to 80)
+
+172:          72 LOAD_FAST            (direct)
+              74 ROT_TWO
+              76 POP_TOP
+              78 RETURN_VALUE
+
+173:     >>   80 LOAD_FAST            (self)
+              82 LOAD_METHOD          (_walk_values)
+              84 LOAD_FAST            (payload)
+              86 CALL_METHOD          (1 positional argument)
+              88 GET_ITER
+         >>   90 FOR_ITER             (to 182)
+              92 STORE_FAST           (item)
+
+174:          94 LOAD_CONST           (('id', 'item_id', 'material_id', 'essential_id', 'name', 'code'))
+              96 GET_ITER
+         >>   98 FOR_ITER             (to 180)
+             100 STORE_FAST           (key)
+
+175:         102 LOAD_GLOBAL          (str)
+             104 LOAD_FAST            (item)
+             106 LOAD_METHOD          (get)
+             108 LOAD_FAST            (key)
+             110 CALL_METHOD          (1 positional argument)
+             112 JUMP_IF_TRUE_OR_POP  (to 116)
+             114 LOAD_CONST           ("")
+         >>  116 CALL_FUNCTION        (1 positional argument)
+             118 LOAD_FAST            (item_id)
+             120 COMPARE_OP           (==)
+             122 POP_JUMP_IF_FALSE    (to 178)
+
+176:         124 LOAD_CONST           (('amount', 'quantity', 'qty', 'count', 'num', 'value'))
+             126 GET_ITER
+         >>  128 FOR_ITER             (to 178)
+             130 STORE_FAST           (amount_key)
+
+177:         132 LOAD_FAST            (self)
+             134 LOAD_METHOD          (_to_int_or_none)
+             136 LOAD_FAST            (item)
+             138 LOAD_METHOD          (get)
+             140 LOAD_FAST            (amount_key)
+             142 CALL_METHOD          (1 positional argument)
+             144 CALL_METHOD          (1 positional argument)
+             146 STORE_FAST           (amount)
+
+178:         148 LOAD_FAST            (amount)
+             150 LOAD_CONST           (None)
+             152 IS_OP                (is not)
+             154 POP_JUMP_IF_FALSE    (to 176)
+
+179:         156 LOAD_FAST            (amount)
+             158 ROT_TWO
+             160 POP_TOP
+             162 ROT_TWO
+             164 POP_TOP
+             166 ROT_TWO
+             168 POP_TOP
+             170 ROT_TWO
+             172 POP_TOP
+             174 RETURN_VALUE
+
+178:     >>  176 JUMP_ABSOLUTE        (to 128)
+         >>  178 JUMP_ABSOLUTE        (to 98)
+
+174:     >>  180 JUMP_ABSOLUTE        (to 90)
+
+173:     >>  182 JUMP_ABSOLUTE        (to 34)
+
+180:     >>  184 LOAD_CONST           (None)
+             186 RETURN_VALUE
+
+
+# Method Name:       _available_refill_requirements
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  5
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        182
+# Constants:
+#    0: None
+#    1: 'stamina_refill_source'
+#    2: 'auto'
+#    3: 'material_69'
+#    4: 'token'
+#    5: 10
+#    6: 'tokens_10'
+#    7: {'onigiri', 'stamina_roll', 'roll'}
+#    8: 1
+# Names:
+#    0: str
+#    1: settings
+#    2: get
+#    3: strip
+#    4: lower
+#    5: _inventory_amount
+#    6: _tokens_amount
+#    7: append
+# Varnames:
+#	self, refill_source, material_amount, token_amount, requirements
+# Positional arguments:
+#	self
+# Local variables:
+#    1: refill_source
+#    2: material_amount
+#    3: token_amount
+#    4: requirements
+183:           0 LOAD_GLOBAL          (str)
+               2 LOAD_FAST            (self)
+               4 LOAD_ATTR            (settings)
+               6 LOAD_METHOD          (get)
+               8 LOAD_CONST           ("stamina_refill_source")
+              10 CALL_METHOD          (1 positional argument)
+              12 JUMP_IF_TRUE_OR_POP  (to 16)
+              14 LOAD_CONST           ("auto")
+         >>   16 CALL_FUNCTION        (1 positional argument)
+              18 LOAD_METHOD          (strip)
+              20 CALL_METHOD          (0 positional arguments)
+              22 LOAD_METHOD          (lower)
+              24 CALL_METHOD          (0 positional arguments)
+              26 STORE_FAST           (refill_source)
+
+184:          28 LOAD_FAST            (self)
+              30 LOAD_METHOD          (_inventory_amount)
+              32 LOAD_CONST           ("material_69")
+              34 CALL_METHOD          (1 positional argument)
+              36 STORE_FAST           (material_amount)
+
+185:          38 LOAD_FAST            (self)
+              40 LOAD_METHOD          (_tokens_amount)
+              42 CALL_METHOD          (0 positional arguments)
+              44 STORE_FAST           (token_amount)
+
+187:          46 LOAD_FAST            (refill_source)
+              48 LOAD_CONST           ("token")
+              50 COMPARE_OP           (==)
+              52 POP_JUMP_IF_FALSE    (to 80)
+
+188:          54 LOAD_FAST            (token_amount)
+              56 LOAD_CONST           (None)
+              58 IS_OP                (is)
+              60 POP_JUMP_IF_TRUE     (to 70)
+              62 LOAD_FAST            (token_amount)
+              64 LOAD_CONST           (10)
+              66 COMPARE_OP           (>=)
+              68 POP_JUMP_IF_FALSE    (to 76)
+         >>   70 LOAD_CONST           ("tokens_10")
+              72 BUILD_LIST           1
+              74 RETURN_VALUE
+         >>   76 BUILD_LIST           0
+              78 RETURN_VALUE
+
+190:     >>   80 LOAD_FAST            (refill_source)
+              82 LOAD_CONST           ({'onigiri', 'stamina_roll', 'roll'})
+              84 CONTAINS_OP          (in)
+              86 POP_JUMP_IF_FALSE    (to 114)
+
+191:          88 LOAD_FAST            (material_amount)
+              90 LOAD_CONST           (None)
+              92 IS_OP                (is)
+              94 POP_JUMP_IF_TRUE     (to 104)
+              96 LOAD_FAST            (material_amount)
+              98 LOAD_CONST           (1)
+             100 COMPARE_OP           (>=)
+             102 POP_JUMP_IF_FALSE    (to 110)
+         >>  104 LOAD_CONST           ("material_69")
+             106 BUILD_LIST           1
+             108 RETURN_VALUE
+         >>  110 BUILD_LIST           0
+             112 RETURN_VALUE
+
+193:     >>  114 BUILD_LIST           0
+             116 STORE_FAST           (requirements)
+
+194:         118 LOAD_FAST            (material_amount)
+             120 LOAD_CONST           (None)
+             122 IS_OP                (is)
+             124 POP_JUMP_IF_TRUE     (to 134)
+             126 LOAD_FAST            (material_amount)
+             128 LOAD_CONST           (1)
+             130 COMPARE_OP           (>=)
+             132 POP_JUMP_IF_FALSE    (to 144)
+
+195:     >>  134 LOAD_FAST            (requirements)
+             136 LOAD_METHOD          (append)
+             138 LOAD_CONST           ("material_69")
+             140 CALL_METHOD          (1 positional argument)
+             142 POP_TOP
+
+196:     >>  144 LOAD_FAST            (token_amount)
+             146 LOAD_CONST           (None)
+             148 IS_OP                (is)
+             150 POP_JUMP_IF_TRUE     (to 160)
+             152 LOAD_FAST            (token_amount)
+             154 LOAD_CONST           (10)
+             156 COMPARE_OP           (>=)
+             158 POP_JUMP_IF_FALSE    (to 170)
+
+197:     >>  160 LOAD_FAST            (requirements)
+             162 LOAD_METHOD          (append)
+             164 LOAD_CONST           ("tokens_10")
+             166 CALL_METHOD          (1 positional argument)
+             168 POP_TOP
+
+198:     >>  170 LOAD_FAST            (requirements)
+             172 RETURN_VALUE
+
+
+# Method Name:       _post_json
+# Filename:          clan_war.py
+# Argument count:    3
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  5
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        200
+# Constants:
+#    0: None
+#    1: ('json', 'timeout')
+# Names:
+#    0: base_url
+#    1: http
+#    2: post
+#    3: REQUEST_TIMEOUT_SECONDS
+#    4: raise_for_status
+#    5: content
+#    6: json
+# Varnames:
+#	self, path, payload, url, response
+# Positional arguments:
+#	self, path, payload
+# Local variables:
+#    3: url
+#    4: response
+201:           0 LOAD_FAST            (self)
+               2 LOAD_ATTR            (base_url)
+               4 FORMAT_VALUE         0
+               6 LOAD_FAST            (path)
+               8 FORMAT_VALUE         0
+              10 BUILD_STRING         2
+              12 STORE_FAST           (url)
+
+202:          14 LOAD_FAST            (self)
+              16 LOAD_ATTR            (http)
+              18 LOAD_ATTR            (post)
+              20 LOAD_FAST            (url)
+              22 LOAD_FAST            (payload)
+              24 JUMP_IF_TRUE_OR_POP  (to 28)
+              26 BUILD_MAP            0
+         >>   28 LOAD_GLOBAL          (REQUEST_TIMEOUT_SECONDS)
+              30 LOAD_CONST           (('json', 'timeout'))
+              32 CALL_FUNCTION_KW     (3 total positional and keyword args)
+              34 STORE_FAST           (response)
+
+203:          36 LOAD_FAST            (response)
+              38 LOAD_METHOD          (raise_for_status)
+              40 CALL_METHOD          (0 positional arguments)
+              42 POP_TOP
+
+204:          44 LOAD_FAST            (response)
+              46 LOAD_ATTR            (content)
+              48 POP_JUMP_IF_TRUE     (to 54)
+
+205:          50 BUILD_MAP            0
+              52 RETURN_VALUE
+
+206:     >>   54 LOAD_FAST            (response)
+              56 LOAD_METHOD          (json)
+              58 CALL_METHOD          (0 positional arguments)
+              60 RETURN_VALUE
+
+
+# Method Name:       _post_json_with_reauth
+# Filename:          clan_war.py
+# Argument count:    3
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  4
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        208
+# Constants:
+#    0: None
+#    1: 'Clan session expired, re-authenticating...'
+# Names:
+#    0: _post_json
+#    1: _is_auth_error
+#    2: print
+#    3: authenticate
+# Varnames:
+#	self, path, payload, response
+# Positional arguments:
+#	self, path, payload
+# Local variables:
+#    3: response
+209:           0 LOAD_FAST            (self)
+               2 LOAD_METHOD          (_post_json)
+               4 LOAD_FAST            (path)
+               6 LOAD_FAST            (payload)
+               8 CALL_METHOD          (2 positional arguments)
+              10 STORE_FAST           (response)
+
+210:          12 LOAD_FAST            (self)
+              14 LOAD_METHOD          (_is_auth_error)
+              16 LOAD_FAST            (response)
+              18 CALL_METHOD          (1 positional argument)
+              20 POP_JUMP_IF_FALSE    (to 54)
+
+211:          22 LOAD_GLOBAL          (print)
+              24 LOAD_CONST           ("Clan session expired, re-authenticating...")
+              26 CALL_FUNCTION        (1 positional argument)
+              28 POP_TOP
+
+212:          30 LOAD_FAST            (self)
+              32 LOAD_METHOD          (authenticate)
+              34 CALL_METHOD          (0 positional arguments)
+              36 POP_JUMP_IF_TRUE     (to 42)
+
+213:          38 LOAD_FAST            (response)
+              40 RETURN_VALUE
+
+214:     >>   42 LOAD_FAST            (self)
+              44 LOAD_METHOD          (_post_json)
+              46 LOAD_FAST            (path)
+              48 LOAD_FAST            (payload)
+              50 CALL_METHOD          (2 positional arguments)
+              52 STORE_FAST           (response)
+
+215:     >>   54 LOAD_FAST            (response)
+              56 RETURN_VALUE
+
+
+# Method Name:       _is_auth_error
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        4
+# Flags:             0x00000003 (NEWLOCALS | OPTIMIZED)
+# First Line:        217
+# Constants:
+#    0: None
+#    1: False
+#    2: 'statusCode'
+#    3: (401, 403)
+#    4: True
+#    5: 'errorMessage'
+#    6: 'message'
+#    7: 'error'
+#    8: ''
+#    9: <Code310 code object <genexpr> at 0x16c817926f0, file clan_war.py>, line 230
+#   10: 'ClanWarEvent._is_auth_error.<locals>.<genexpr>'
+#   11: ('unauthorized', 'token', 'auth', 'forbidden', 'expired')
+# Names:
+#    0: isinstance
+#    1: dict
+#    2: get
+#    3: str
+#    4: lower
+#    5: any
+# Varnames:
+#	response, status_code
+# Positional arguments:
+#	response
+# Local variables:
+#    1: status_code
+# Cell variables:
+#    0: message
+219:           0 LOAD_GLOBAL          (isinstance)
+               2 LOAD_FAST            (response)
+               4 LOAD_GLOBAL          (dict)
+               6 CALL_FUNCTION        (2 positional arguments)
+               8 POP_JUMP_IF_TRUE     (to 14)
+
+220:          10 LOAD_CONST           (False)
+              12 RETURN_VALUE
+
+221:     >>   14 LOAD_FAST            (response)
+              16 LOAD_METHOD          (get)
+              18 LOAD_CONST           ("statusCode")
+              20 CALL_METHOD          (1 positional argument)
+              22 STORE_FAST           (status_code)
+
+222:          24 LOAD_FAST            (status_code)
+              26 LOAD_CONST           ((401, 403))
+              28 CONTAINS_OP          (in)
+              30 POP_JUMP_IF_FALSE    (to 36)
+
+223:          32 LOAD_CONST           (True)
+              34 RETURN_VALUE
+
+224:     >>   36 LOAD_GLOBAL          (str)
+
+225:          38 LOAD_FAST            (response)
+              40 LOAD_METHOD          (get)
+              42 LOAD_CONST           ("errorMessage")
+              44 CALL_METHOD          (1 positional argument)
+              46 JUMP_IF_TRUE_OR_POP  (to 70)
+
+226:          48 LOAD_FAST            (response)
+              50 LOAD_METHOD          (get)
+              52 LOAD_CONST           ("message")
+              54 CALL_METHOD          (1 positional argument)
+
+225:          56 JUMP_IF_TRUE_OR_POP  (to 70)
+
+227:          58 LOAD_FAST            (response)
+              60 LOAD_METHOD          (get)
+              62 LOAD_CONST           ("error")
+              64 CALL_METHOD          (1 positional argument)
+
+225:          66 JUMP_IF_TRUE_OR_POP  (to 70)
+
+228:          68 LOAD_CONST           ("")
+
+224:     >>   70 CALL_FUNCTION        (1 positional argument)
+
+229:          72 LOAD_METHOD          (lower)
+              74 CALL_METHOD          (0 positional arguments)
+
+224:          76 STORE_DEREF          (message)
+
+230:          78 LOAD_GLOBAL          (any)
+              80 LOAD_CLOSURE         (message)
+              82 BUILD_TUPLE          1
+              84 LOAD_CONST           (<Code310 code object <genexpr> at 0x16c817926f0, file clan_war.py>, line 230)
+              86 LOAD_CONST           ("ClanWarEvent._is_auth_error.<locals>.<genexpr>")
+              88 MAKE_FUNCTION        (closure)
+
+232:          90 LOAD_CONST           (('unauthorized', 'token', 'auth', 'forbidden', 'expired'))
+
+230:          92 GET_ITER
+              94 CALL_FUNCTION        (1 positional argument)
+              96 CALL_FUNCTION        (1 positional argument)
+              98 RETURN_VALUE
+
+
+# Method Name:       authenticate
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  5
+# Stack size:        10
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        235
+# Constants:
+#    0: None
+#    1: 'Authenticating clan war session...'
+#    2: ('char_id', 'session_key')
+#    3: 'id'
+#    4: 'alternate4'
+#    5: 'service_bridge_token'
+#    6: '/auth/login'
+#    7: 'Failed to authenticate clan war session: '
+#    8: False
+#    9: 'Clan war auth failed: '
+#   10: 'Bearer '
+#   11: 'Authorization'
+#   12: 'Clan war session authenticated'
+#   13: True
+# Names:
+#    0: print
+#    1: char_id
+#    2: session_key
+#    3: current_profile
+#    4: get
+#    5: service_bridge_token
+#    6: _post_json
+#    7: Exception
+#    8: _extract_token
+#    9: _response_message
+#   10: auth_token
+#   11: http
+#   12: headers
+# Varnames:
+#	self, payload, response, exc, token
+# Positional arguments:
+#	self
+# Local variables:
+#    1: payload
+#    2: response
+#    3: exc
+#    4: token
+236:           0 LOAD_GLOBAL          (print)
+               2 LOAD_CONST           ("Authenticating clan war session...")
+               4 CALL_FUNCTION        (1 positional argument)
+               6 POP_TOP
+
+237:           8 SETUP_FINALLY        (to 72)
+
+239:          10 LOAD_FAST            (self)
+              12 LOAD_ATTR            (char_id)
+
+240:          14 LOAD_FAST            (self)
+              16 LOAD_ATTR            (session_key)
+
+238:          18 LOAD_CONST           (('char_id', 'session_key'))
+              20 BUILD_CONST_KEY_MAP  2
+              22 STORE_FAST           (payload)
+
+242:          24 LOAD_FAST            (self)
+              26 LOAD_ATTR            (current_profile)
+              28 LOAD_METHOD          (get)
+              30 LOAD_CONST           ("id")
+              32 CALL_METHOD          (1 positional argument)
+              34 LOAD_CONST           ("alternate4")
+              36 COMPARE_OP           (==)
+              38 POP_JUMP_IF_FALSE    (to 56)
+              40 LOAD_FAST            (self)
+              42 LOAD_ATTR            (service_bridge_token)
+              44 POP_JUMP_IF_FALSE    (to 56)
+
+243:          46 LOAD_FAST            (self)
+              48 LOAD_ATTR            (service_bridge_token)
+              50 LOAD_FAST            (payload)
+              52 LOAD_CONST           ("service_bridge_token")
+              54 STORE_SUBSCR
+
+244:     >>   56 LOAD_FAST            (self)
+              58 LOAD_METHOD          (_post_json)
+              60 LOAD_CONST           ("/auth/login")
+              62 LOAD_FAST            (payload)
+              64 CALL_METHOD          (2 positional arguments)
+              66 STORE_FAST           (response)
+              68 POP_BLOCK
+              70 JUMP_FORWARD         (to 124)
+
+245:     >>   72 DUP_TOP
+              74 LOAD_GLOBAL          (Exception)
+              76 JUMP_IF_NOT_EXC_MATCH (to 122)
+              78 POP_TOP
+              80 STORE_FAST           (exc)
+              82 POP_TOP
+              84 SETUP_FINALLY        (to 114)
+
+246:          86 LOAD_GLOBAL          (print)
+              88 LOAD_CONST           ("Failed to authenticate clan war session: ")
+              90 LOAD_FAST            (exc)
+              92 FORMAT_VALUE         0
+              94 BUILD_STRING         2
+              96 CALL_FUNCTION        (1 positional argument)
+              98 POP_TOP
+
+247:         100 POP_BLOCK
+             102 POP_EXCEPT
+             104 LOAD_CONST           (None)
+             106 STORE_FAST           (exc)
+             108 DELETE_FAST          (exc)
+             110 LOAD_CONST           (False)
+             112 RETURN_VALUE
+         >>  114 LOAD_CONST           (None)
+             116 STORE_FAST           (exc)
+             118 DELETE_FAST          (exc)
+             120 RERAISE              1
+
+245:     >>  122 RERAISE              0
+
+249:     >>  124 LOAD_FAST            (self)
+             126 LOAD_METHOD          (_extract_token)
+             128 LOAD_FAST            (response)
+             130 CALL_METHOD          (1 positional argument)
+             132 STORE_FAST           (token)
+
+250:         134 LOAD_FAST            (token)
+             136 POP_JUMP_IF_TRUE     (to 162)
+
+251:         138 LOAD_GLOBAL          (print)
+             140 LOAD_CONST           ("Clan war auth failed: ")
+             142 LOAD_FAST            (self)
+             144 LOAD_METHOD          (_response_message)
+             146 LOAD_FAST            (response)
+             148 CALL_METHOD          (1 positional argument)
+             150 FORMAT_VALUE         0
+             152 BUILD_STRING         2
+             154 CALL_FUNCTION        (1 positional argument)
+             156 POP_TOP
+
+252:         158 LOAD_CONST           (False)
+             160 RETURN_VALUE
+
+254:     >>  162 LOAD_FAST            (token)
+             164 LOAD_FAST            (self)
+             166 STORE_ATTR           (auth_token)
+
+255:         168 LOAD_CONST           ("Bearer ")
+             170 LOAD_FAST            (token)
+             172 FORMAT_VALUE         0
+             174 BUILD_STRING         2
+             176 LOAD_FAST            (self)
+             178 LOAD_ATTR            (http)
+             180 LOAD_ATTR            (headers)
+             182 LOAD_CONST           ("Authorization")
+             184 STORE_SUBSCR
+
+256:         186 LOAD_GLOBAL          (print)
+             188 LOAD_CONST           ("Clan war session authenticated")
+             190 CALL_FUNCTION        (1 positional argument)
+             192 POP_TOP
+
+257:         194 LOAD_CONST           (True)
+             196 RETURN_VALUE
+
+
+# Method Name:       get_clan_info
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        10
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        259
+# Constants:
+#    0: None
+#    1: '/player/clan'
+#    2: 'Failed to get clan data: '
+#    3: 'clan'
+#    4: 'char'
+#    5: 'statusCode'
+#    6: 404
+#    7: 'Character is not in a clan'
+# Names:
+#    0: _post_json_with_reauth
+#    1: Exception
+#    2: print
+#    3: isinstance
+#    4: dict
+#    5: clan_data
+#    6: clan_char_data
+#    7: get
+#    8: _response_message
+# Varnames:
+#	self, response, exc
+# Positional arguments:
+#	self
+# Local variables:
+#    1: response
+#    2: exc
+260:           0 SETUP_FINALLY        (to 16)
+
+261:           2 LOAD_FAST            (self)
+               4 LOAD_METHOD          (_post_json_with_reauth)
+               6 LOAD_CONST           ("/player/clan")
+               8 CALL_METHOD          (1 positional argument)
+              10 STORE_FAST           (response)
+              12 POP_BLOCK
+              14 JUMP_FORWARD         (to 68)
+
+262:     >>   16 DUP_TOP
+              18 LOAD_GLOBAL          (Exception)
+              20 JUMP_IF_NOT_EXC_MATCH (to 66)
+              22 POP_TOP
+              24 STORE_FAST           (exc)
+              26 POP_TOP
+              28 SETUP_FINALLY        (to 58)
+
+263:          30 LOAD_GLOBAL          (print)
+              32 LOAD_CONST           ("Failed to get clan data: ")
+              34 LOAD_FAST            (exc)
+              36 FORMAT_VALUE         0
+              38 BUILD_STRING         2
+              40 CALL_FUNCTION        (1 positional argument)
+              42 POP_TOP
+
+264:          44 POP_BLOCK
+              46 POP_EXCEPT
+              48 LOAD_CONST           (None)
+              50 STORE_FAST           (exc)
+              52 DELETE_FAST          (exc)
+              54 LOAD_CONST           (None)
+              56 RETURN_VALUE
+         >>   58 LOAD_CONST           (None)
+              60 STORE_FAST           (exc)
+              62 DELETE_FAST          (exc)
+              64 RERAISE              1
+
+262:     >>   66 RERAISE              0
+
+266:     >>   68 LOAD_GLOBAL          (isinstance)
+              70 LOAD_FAST            (response)
+              72 LOAD_GLOBAL          (dict)
+              74 CALL_FUNCTION        (2 positional arguments)
+              76 POP_JUMP_IF_FALSE    (to 126)
+              78 LOAD_CONST           ("clan")
+              80 LOAD_FAST            (response)
+              82 CONTAINS_OP          (in)
+              84 POP_JUMP_IF_FALSE    (to 126)
+              86 LOAD_CONST           ("char")
+              88 LOAD_FAST            (response)
+              90 CONTAINS_OP          (in)
+              92 POP_JUMP_IF_FALSE    (to 126)
+
+267:          94 LOAD_FAST            (response)
+              96 LOAD_CONST           ("clan")
+              98 BINARY_SUBSCR
+             100 JUMP_IF_TRUE_OR_POP  (to 104)
+             102 BUILD_MAP            0
+         >>  104 LOAD_FAST            (self)
+             106 STORE_ATTR           (clan_data)
+
+268:         108 LOAD_FAST            (response)
+             110 LOAD_CONST           ("char")
+             112 BINARY_SUBSCR
+             114 JUMP_IF_TRUE_OR_POP  (to 118)
+             116 BUILD_MAP            0
+         >>  118 LOAD_FAST            (self)
+             120 STORE_ATTR           (clan_char_data)
+
+269:         122 LOAD_FAST            (response)
+             124 RETURN_VALUE
+
+271:     >>  126 LOAD_GLOBAL          (isinstance)
+             128 LOAD_FAST            (response)
+             130 LOAD_GLOBAL          (dict)
+             132 CALL_FUNCTION        (2 positional arguments)
+             134 POP_JUMP_IF_FALSE    (to 162)
+             136 LOAD_FAST            (response)
+             138 LOAD_METHOD          (get)
+             140 LOAD_CONST           ("statusCode")
+             142 CALL_METHOD          (1 positional argument)
+             144 LOAD_CONST           (404)
+             146 COMPARE_OP           (==)
+             148 POP_JUMP_IF_FALSE    (to 162)
+
+272:         150 LOAD_GLOBAL          (print)
+             152 LOAD_CONST           ("Character is not in a clan")
+             154 CALL_FUNCTION        (1 positional argument)
+             156 POP_TOP
+
+273:         158 LOAD_CONST           (None)
+             160 RETURN_VALUE
+
+275:     >>  162 LOAD_GLOBAL          (print)
+             164 LOAD_CONST           ("Failed to get clan data: ")
+             166 LOAD_FAST            (self)
+             168 LOAD_METHOD          (_response_message)
+             170 LOAD_FAST            (response)
+             172 CALL_METHOD          (1 positional argument)
+             174 FORMAT_VALUE         0
+             176 BUILD_STRING         2
+             178 CALL_FUNCTION        (1 positional argument)
+             180 POP_TOP
+
+276:         182 LOAD_CONST           (None)
+             184 RETURN_VALUE
+
+
+# Method Name:       get_stamina
+# Filename:          clan_war.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  8
+# Stack size:        10
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        278
+# Constants:
+#    0: None
+#    1: 'max_stamina'
+#    2: 0
+#    3: 'Clan stamina: '
+#    4: ' / '
+#    5: '/player/stamina'
+#    6: 'Failed to refresh clan stamina: '
+#    7: 'char'
+#    8: 'stamina'
+# Names:
+#    0: time
+#    1: _last_stamina_value
+#    2: _last_stamina_fetch_at
+#    3: CLAN_STAMINA_MIN_REQUEST_INTERVAL
+#    4: clan_char_data
+#    5: get
+#    6: _last_logged_stamina
+#    7: print
+#    8: _post_json_with_reauth
+#    9: Exception
+#   10: isinstance
+#   11: dict
+#   12: _response_message
+# Varnames:
+#	self, announce, now, stamina, max_stamina, stamina_pair, response, exc
+# Positional arguments:
+#	self, announce
+# Local variables:
+#    2: now
+#    3: stamina
+#    4: max_stamina
+#    5: stamina_pair
+#    6: response
+#    7: exc
+279:           0 LOAD_GLOBAL          (time)
+               2 LOAD_METHOD          (time)
+               4 CALL_METHOD          (0 positional arguments)
+               6 STORE_FAST           (now)
+
+281:           8 LOAD_FAST            (self)
+              10 LOAD_ATTR            (_last_stamina_value)
+              12 LOAD_CONST           (None)
+              14 IS_OP                (is not)
+              16 POP_JUMP_IF_FALSE    (to 104)
+
+282:          18 LOAD_FAST            (now)
+              20 LOAD_FAST            (self)
+              22 LOAD_ATTR            (_last_stamina_fetch_at)
+              24 BINARY_SUBTRACT
+              26 LOAD_GLOBAL          (CLAN_STAMINA_MIN_REQUEST_INTERVAL)
+              28 COMPARE_OP           (<)
+              30 POP_JUMP_IF_FALSE    (to 104)
+
+284:          32 LOAD_FAST            (self)
+              34 LOAD_ATTR            (_last_stamina_value)
+              36 STORE_FAST           (stamina)
+
+285:          38 LOAD_FAST            (self)
+              40 LOAD_ATTR            (clan_char_data)
+              42 LOAD_METHOD          (get)
+              44 LOAD_CONST           ("max_stamina")
+              46 LOAD_CONST           (0)
+              48 CALL_METHOD          (2 positional arguments)
+              50 STORE_FAST           (max_stamina)
+
+286:          52 LOAD_FAST            (stamina)
+              54 LOAD_FAST            (max_stamina)
+              56 BUILD_TUPLE          2
+              58 STORE_FAST           (stamina_pair)
+
+287:          60 LOAD_FAST            (announce)
+              62 POP_JUMP_IF_FALSE    (to 100)
+              64 LOAD_FAST            (stamina_pair)
+              66 LOAD_FAST            (self)
+              68 LOAD_ATTR            (_last_logged_stamina)
+              70 COMPARE_OP           (!=)
+              72 POP_JUMP_IF_FALSE    (to 100)
+
+288:          74 LOAD_GLOBAL          (print)
+              76 LOAD_CONST           ("Clan stamina: ")
+              78 LOAD_FAST            (stamina)
+              80 FORMAT_VALUE         0
+              82 LOAD_CONST           (" / ")
+              84 LOAD_FAST            (max_stamina)
+              86 FORMAT_VALUE         0
+              88 BUILD_STRING         4
+              90 CALL_FUNCTION        (1 positional argument)
+              92 POP_TOP
+
+289:          94 LOAD_FAST            (stamina_pair)
+              96 LOAD_FAST            (self)
+              98 STORE_ATTR           (_last_logged_stamina)
+
+290:     >>  100 LOAD_FAST            (stamina)
+             102 RETURN_VALUE
+
+292:     >>  104 SETUP_FINALLY        (to 120)
+
+293:         106 LOAD_FAST            (self)
+             108 LOAD_METHOD          (_post_json_with_reauth)
+             110 LOAD_CONST           ("/player/stamina")
+             112 CALL_METHOD          (1 positional argument)
+             114 STORE_FAST           (response)
+             116 POP_BLOCK
+             118 JUMP_FORWARD         (to 172)
+
+294:     >>  120 DUP_TOP
+             122 LOAD_GLOBAL          (Exception)
+             124 JUMP_IF_NOT_EXC_MATCH (to 170)
+             126 POP_TOP
+             128 STORE_FAST           (exc)
+             130 POP_TOP
+             132 SETUP_FINALLY        (to 162)
+
+295:         134 LOAD_GLOBAL          (print)
+             136 LOAD_CONST           ("Failed to refresh clan stamina: ")
+             138 LOAD_FAST            (exc)
+             140 FORMAT_VALUE         0
+             142 BUILD_STRING         2
+             144 CALL_FUNCTION        (1 positional argument)
+             146 POP_TOP
+
+296:         148 POP_BLOCK
+             150 POP_EXCEPT
+             152 LOAD_CONST           (None)
+             154 STORE_FAST           (exc)
+             156 DELETE_FAST          (exc)
+             158 LOAD_CONST           (None)
+             160 RETURN_VALUE
+         >>  162 LOAD_CONST           (None)
+             164 STORE_FAST           (exc)
+             166 DELETE_FAST          (exc)
+             168 RERAISE              1
+
+294:     >>  170 RERAISE              0
+
+298:     >>  172 LOAD_GLOBAL          (isinstance)
+             174 LOAD_FAST            (response)
+             176 LOAD_GLOBAL          (dict)
+             178 CALL_FUNCTION        (2 positional arguments)
+             180 POP_JUMP_IF_FALSE    (to 190)
+             182 LOAD_CONST           ("char")
+             184 LOAD_FAST            (response)
+             186 CONTAINS_OP          (not in)
+             188 POP_JUMP_IF_FALSE    (to 214)
+
+299:     >>  190 LOAD_GLOBAL          (print)
+             192 LOAD_CONST           ("Failed to refresh clan stamina: ")
+             194 LOAD_FAST            (self)
+             196 LOAD_METHOD          (_response_message)
+             198 LOAD_FAST            (response)
+             200 CALL_METHOD          (1 positional argument)
+             202 FORMAT_VALUE         0
+             204 BUILD_STRING         2
+             206 CALL_FUNCTION        (1 positional argument)
+             208 POP_TOP
+
+300:         210 LOAD_CONST           (None)
+             212 RETURN_VALUE
+
+302:     >>  214 LOAD_FAST            (response)
+             216 LOAD_CONST           ("char")
+             218 BINARY_SUBSCR
+             220 JUMP_IF_TRUE_OR_POP  (to 224)
+             222 BUILD_MAP            0
+         >>  224 LOAD_FAST            (self)
+             226 STORE_ATTR           (clan_char_data)
+
+303:         228 LOAD_FAST            (self)
+             230 LOAD_ATTR            (clan_char_data)
+             232 LOAD_METHOD          (get)
+             234 LOAD_CONST           ("stamina")
+             236 LOAD_CONST           (0)
+             238 CALL_METHOD          (2 positional arguments)
+             240 STORE_FAST           (stamina)
+
+304:         242 LOAD_FAST            (stamina)
+             244 LOAD_FAST            (self)
+             246 STORE_ATTR           (_last_stamina_value)
+
+305:         248 LOAD_GLOBAL          (time)
+             250 LOAD_METHOD          (time)
+             252 CALL_METHOD          (0 positional arguments)
+             254 LOAD_FAST            (self)
+             256 STORE_ATTR           (_last_stamina_fetch_at)
+
+306:         258 LOAD_FAST            (self)
+             260 LOAD_ATTR            (clan_char_data)
+             262 LOAD_METHOD          (get)
+             264 LOAD_CONST           ("max_stamina")
+             266 LOAD_CONST           (0)
+             268 CALL_METHOD          (2 positional arguments)
+             270 STORE_FAST           (max_stamina)
+
+307:         272 LOAD_FAST            (stamina)
+             274 LOAD_FAST            (max_stamina)
+             276 BUILD_TUPLE          2
+             278 STORE_FAST           (stamina_pair)
+
+308:         280 LOAD_FAST            (announce)
+             282 POP_JUMP_IF_FALSE    (to 320)
+             284 LOAD_FAST            (stamina_pair)
+             286 LOAD_FAST            (self)
+             288 LOAD_ATTR            (_last_logged_stamina)
+             290 COMPARE_OP           (!=)
+             292 POP_JUMP_IF_FALSE    (to 320)
+
+309:         294 LOAD_GLOBAL          (print)
+             296 LOAD_CONST           ("Clan stamina: ")
+             298 LOAD_FAST            (stamina)
+             300 FORMAT_VALUE         0
+             302 LOAD_CONST           (" / ")
+             304 LOAD_FAST            (max_stamina)
+             306 FORMAT_VALUE         0
+             308 BUILD_STRING         4
+             310 CALL_FUNCTION        (1 positional argument)
+             312 POP_TOP
+
+310:         314 LOAD_FAST            (stamina_pair)
+             316 LOAD_FAST            (self)
+             318 STORE_ATTR           (_last_logged_stamina)
+
+311:     >>  320 LOAD_FAST            (stamina)
+             322 RETURN_VALUE
+
+
+# Method Name:       get_opponents
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        10
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        313
+# Constants:
+#    0: None
+#    1: '/battle/opponents'
+#    2: 'Failed to get clan battle opponents: '
+#    3: 'clans'
+# Names:
+#    0: _post_json_with_reauth
+#    1: Exception
+#    2: print
+#    3: isinstance
+#    4: dict
+#    5: get
+#    6: list
+#    7: _response_message
+# Varnames:
+#	self, response, exc
+# Positional arguments:
+#	self
+# Local variables:
+#    1: response
+#    2: exc
+314:           0 SETUP_FINALLY        (to 16)
+
+315:           2 LOAD_FAST            (self)
+               4 LOAD_METHOD          (_post_json_with_reauth)
+               6 LOAD_CONST           ("/battle/opponents")
+               8 CALL_METHOD          (1 positional argument)
+              10 STORE_FAST           (response)
+              12 POP_BLOCK
+              14 JUMP_FORWARD         (to 70)
+
+316:     >>   16 DUP_TOP
+              18 LOAD_GLOBAL          (Exception)
+              20 JUMP_IF_NOT_EXC_MATCH (to 68)
+              22 POP_TOP
+              24 STORE_FAST           (exc)
+              26 POP_TOP
+              28 SETUP_FINALLY        (to 60)
+
+317:          30 LOAD_GLOBAL          (print)
+              32 LOAD_CONST           ("Failed to get clan battle opponents: ")
+              34 LOAD_FAST            (exc)
+              36 FORMAT_VALUE         0
+              38 BUILD_STRING         2
+              40 CALL_FUNCTION        (1 positional argument)
+              42 POP_TOP
+
+318:          44 BUILD_LIST           0
+              46 POP_BLOCK
+              48 ROT_FOUR
+              50 POP_EXCEPT
+              52 LOAD_CONST           (None)
+              54 STORE_FAST           (exc)
+              56 DELETE_FAST          (exc)
+              58 RETURN_VALUE
+         >>   60 LOAD_CONST           (None)
+              62 STORE_FAST           (exc)
+              64 DELETE_FAST          (exc)
+              66 RERAISE              1
+
+316:     >>   68 RERAISE              0
+
+319:     >>   70 LOAD_GLOBAL          (isinstance)
+              72 LOAD_FAST            (response)
+              74 LOAD_GLOBAL          (dict)
+              76 CALL_FUNCTION        (2 positional arguments)
+              78 POP_JUMP_IF_FALSE    (to 104)
+              80 LOAD_GLOBAL          (isinstance)
+              82 LOAD_FAST            (response)
+              84 LOAD_METHOD          (get)
+              86 LOAD_CONST           ("clans")
+              88 CALL_METHOD          (1 positional argument)
+              90 LOAD_GLOBAL          (list)
+              92 CALL_FUNCTION        (2 positional arguments)
+              94 POP_JUMP_IF_FALSE    (to 104)
+
+320:          96 LOAD_FAST            (response)
+              98 LOAD_CONST           ("clans")
+             100 BINARY_SUBSCR
+             102 RETURN_VALUE
+
+321:     >>  104 LOAD_GLOBAL          (print)
+             106 LOAD_CONST           ("Failed to get clan battle opponents: ")
+             108 LOAD_FAST            (self)
+             110 LOAD_METHOD          (_response_message)
+             112 LOAD_FAST            (response)
+             114 CALL_METHOD          (1 positional argument)
+             116 FORMAT_VALUE         0
+             118 BUILD_STRING         2
+             120 CALL_FUNCTION        (1 positional argument)
+             122 POP_TOP
+
+322:         124 BUILD_LIST           0
+             126 RETURN_VALUE
+
+
+# Method Name:       pick_first_opponent
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        324
+# Constants:
+#    0: None
+#    1: 'id'
+#    2: 'clan_id'
+# Names:
+#    0: clan_data
+#    1: get
+#    2: get_opponents
+# Varnames:
+#	self, own_clan_id, clan
+# Positional arguments:
+#	self
+# Local variables:
+#    1: own_clan_id
+#    2: clan
+325:           0 LOAD_FAST            (self)
+               2 LOAD_ATTR            (clan_data)
+               4 LOAD_METHOD          (get)
+               6 LOAD_CONST           ("id")
+               8 CALL_METHOD          (1 positional argument)
+              10 JUMP_IF_TRUE_OR_POP  (to 22)
+              12 LOAD_FAST            (self)
+              14 LOAD_ATTR            (clan_data)
+              16 LOAD_METHOD          (get)
+              18 LOAD_CONST           ("clan_id")
+              20 CALL_METHOD          (1 positional argument)
+         >>   22 STORE_FAST           (own_clan_id)
+
+326:          24 LOAD_FAST            (self)
+              26 LOAD_METHOD          (get_opponents)
+              28 CALL_METHOD          (0 positional arguments)
+              30 GET_ITER
+         >>   32 FOR_ITER             (to 60)
+              34 STORE_FAST           (clan)
+
+327:          36 LOAD_FAST            (clan)
+              38 LOAD_METHOD          (get)
+              40 LOAD_CONST           ("id")
+              42 CALL_METHOD          (1 positional argument)
+              44 LOAD_FAST            (own_clan_id)
+              46 COMPARE_OP           (!=)
+              48 POP_JUMP_IF_FALSE    (to 58)
+
+328:          50 LOAD_FAST            (clan)
+              52 ROT_TWO
+              54 POP_TOP
+              56 RETURN_VALUE
+
+327:     >>   58 JUMP_ABSOLUTE        (to 32)
+
+329:     >>   60 LOAD_CONST           (None)
+              62 RETURN_VALUE
+
+
+# Method Name:       quick_attack
+# Filename:          clan_war.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        7
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        331
+# Constants:
+#    0: None
+#    1: '/battle/quick/'
+#    2: 'code'
+#    3: 24
+# Names:
+#    0: _post_json_with_reauth
+#    1: _generate_code
+# Varnames:
+#	self, opponent_id
+# Positional arguments:
+#	self, opponent_id
+332:           0 LOAD_FAST            (self)
+               2 LOAD_METHOD          (_post_json_with_reauth)
+
+333:           4 LOAD_CONST           ("/battle/quick/")
+               6 LOAD_FAST            (opponent_id)
+               8 FORMAT_VALUE         0
+              10 BUILD_STRING         2
+
+334:          12 LOAD_CONST           ("code")
+              14 LOAD_FAST            (self)
+              16 LOAD_METHOD          (_generate_code)
+              18 LOAD_CONST           (24)
+              20 CALL_METHOD          (1 positional argument)
+              22 BUILD_MAP            1
+
+332:          24 CALL_METHOD          (2 positional arguments)
+              26 RETURN_VALUE
+
+
+# Method Name:       buy_stamina
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  5
+# Stack size:        10
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        337
+# Constants:
+#    0: None
+#    1: 'No clan stamina refill item/token is available (needs material_69 or 10 tokens).'
+#    2: False
+#    3: 0
+#    4: 'material_69'
+#    5: 'Onigiri / Stamina Roll'
+#    6: '10 tokens'
+#    7: 'Buying clan stamina refill with '
+#    8: '...'
+#    9: '/player/stamina/refill'
+#   10: 'Failed to buy clan stamina with '
+#   11: ': '
+#   12: 'ok'
+#   13: 'status'
+#   14: '1'
+#   15: 0.0
+#   16: True
+#   17: ('announce',)
+# Names:
+#    0: _available_refill_requirements
+#    1: print
+#    2: _post_json_with_reauth
+#    3: Exception
+#    4: isinstance
+#    5: dict
+#    6: str
+#    7: get
+#    8: _last_stamina_fetch_at
+#    9: get_stamina
+#   10: _response_message
+# Varnames:
+#	self, requirements, label, response, exc
+# Positional arguments:
+#	self
+# Local variables:
+#    1: requirements
+#    2: label
+#    3: response
+#    4: exc
+338:           0 LOAD_FAST            (self)
+               2 LOAD_METHOD          (_available_refill_requirements)
+               4 CALL_METHOD          (0 positional arguments)
+               6 STORE_FAST           (requirements)
+
+339:           8 LOAD_FAST            (requirements)
+              10 POP_JUMP_IF_TRUE     (to 24)
+
+340:          12 LOAD_GLOBAL          (print)
+              14 LOAD_CONST           ("No clan stamina refill item/token is available (needs material_69 or 10 tokens).")
+              16 CALL_FUNCTION        (1 positional argument)
+              18 POP_TOP
+
+341:          20 LOAD_CONST           (False)
+              22 RETURN_VALUE
+
+343:     >>   24 LOAD_FAST            (requirements)
+              26 LOAD_CONST           (0)
+              28 BINARY_SUBSCR
+              30 LOAD_CONST           ("material_69")
+              32 COMPARE_OP           (==)
+              34 POP_JUMP_IF_FALSE    (to 40)
+              36 LOAD_CONST           ("Onigiri / Stamina Roll")
+              38 JUMP_FORWARD         (to 42)
+         >>   40 LOAD_CONST           ("10 tokens")
+         >>   42 STORE_FAST           (label)
+
+344:          44 SETUP_FINALLY        (to 76)
+
+345:          46 LOAD_GLOBAL          (print)
+              48 LOAD_CONST           ("Buying clan stamina refill with ")
+              50 LOAD_FAST            (label)
+              52 FORMAT_VALUE         0
+              54 LOAD_CONST           ("...")
+              56 BUILD_STRING         3
+              58 CALL_FUNCTION        (1 positional argument)
+              60 POP_TOP
+
+346:          62 LOAD_FAST            (self)
+              64 LOAD_METHOD          (_post_json_with_reauth)
+              66 LOAD_CONST           ("/player/stamina/refill")
+              68 CALL_METHOD          (1 positional argument)
+              70 STORE_FAST           (response)
+              72 POP_BLOCK
+              74 JUMP_FORWARD         (to 134)
+
+347:     >>   76 DUP_TOP
+              78 LOAD_GLOBAL          (Exception)
+              80 JUMP_IF_NOT_EXC_MATCH (to 132)
+              82 POP_TOP
+              84 STORE_FAST           (exc)
+              86 POP_TOP
+              88 SETUP_FINALLY        (to 124)
+
+348:          90 LOAD_GLOBAL          (print)
+              92 LOAD_CONST           ("Failed to buy clan stamina with ")
+              94 LOAD_FAST            (label)
+              96 FORMAT_VALUE         0
+              98 LOAD_CONST           (": ")
+             100 LOAD_FAST            (exc)
+             102 FORMAT_VALUE         0
+             104 BUILD_STRING         4
+             106 CALL_FUNCTION        (1 positional argument)
+             108 POP_TOP
+
+349:         110 POP_BLOCK
+             112 POP_EXCEPT
+             114 LOAD_CONST           (None)
+             116 STORE_FAST           (exc)
+             118 DELETE_FAST          (exc)
+             120 LOAD_CONST           (False)
+             122 RETURN_VALUE
+         >>  124 LOAD_CONST           (None)
+             126 STORE_FAST           (exc)
+             128 DELETE_FAST          (exc)
+             130 RERAISE              1
+
+347:     >>  132 RERAISE              0
+
+351:     >>  134 LOAD_FAST            (response)
+             136 LOAD_CONST           ("ok")
+             138 COMPARE_OP           (==)
+             140 POP_JUMP_IF_TRUE     (to 170)
+             142 LOAD_GLOBAL          (isinstance)
+             144 LOAD_FAST            (response)
+             146 LOAD_GLOBAL          (dict)
+             148 CALL_FUNCTION        (2 positional arguments)
+             150 POP_JUMP_IF_FALSE    (to 192)
+             152 LOAD_GLOBAL          (str)
+             154 LOAD_FAST            (response)
+             156 LOAD_METHOD          (get)
+             158 LOAD_CONST           ("status")
+             160 CALL_METHOD          (1 positional argument)
+             162 CALL_FUNCTION        (1 positional argument)
+             164 LOAD_CONST           ("1")
+             166 COMPARE_OP           (==)
+             168 POP_JUMP_IF_FALSE    (to 192)
+
+352:     >>  170 LOAD_CONST           (0.0)
+             172 LOAD_FAST            (self)
+             174 STORE_ATTR           (_last_stamina_fetch_at)
+
+353:         176 LOAD_FAST            (self)
+             178 LOAD_ATTR            (get_stamina)
+             180 LOAD_CONST           (True)
+             182 LOAD_CONST           (('announce',))
+             184 CALL_FUNCTION_KW     (1 total positional and keyword args)
+             186 POP_TOP
+
+354:         188 LOAD_CONST           (True)
+             190 RETURN_VALUE
+
+356:     >>  192 LOAD_GLOBAL          (print)
+             194 LOAD_CONST           ("Failed to buy clan stamina with ")
+             196 LOAD_FAST            (label)
+             198 FORMAT_VALUE         0
+             200 LOAD_CONST           (": ")
+             202 LOAD_FAST            (self)
+             204 LOAD_METHOD          (_response_message)
+             206 LOAD_FAST            (response)
+             208 CALL_METHOD          (1 positional argument)
+             210 FORMAT_VALUE         0
+             212 BUILD_STRING         4
+             214 CALL_FUNCTION        (1 positional argument)
+             216 POP_TOP
+
+357:         218 LOAD_CONST           (False)
+             220 RETURN_VALUE
+
+
+# Method Name:       _log_quick_result
+# Filename:          clan_war.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  8
+# Stack size:        13
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        359
+# Constants:
+#    0: None
+#    1: 'opponent_name'
+#    2: 'Unknown Clan'
+#    3: 'gain'
+#    4: 'n/a'
+#    5: 'reputation'
+#    6: 'prestige'
+#    7: 'stamina'
+#    8: 'opponent_reputation'
+#    9: 'Clan battle result vs '
+#   10: ': Gain '
+#   11: ', Reputation '
+#   12: ', Prestige '
+#   13: ', Opponent Reputation '
+#   14: ', Stamina '
+# Names:
+#    0: get
+#    1: clan_char_data
+#    2: print
+# Varnames:
+#	self, result, opponent_name, gain, reputation, prestige, stamina, opponent_reputation
+# Positional arguments:
+#	self, result
+# Local variables:
+#    2: opponent_name
+#    3: gain
+#    4: reputation
+#    5: prestige
+#    6: stamina
+#    7: opponent_reputation
+360:           0 LOAD_FAST            (result)
+               2 LOAD_METHOD          (get)
+               4 LOAD_CONST           ("opponent_name")
+               6 LOAD_CONST           ("Unknown Clan")
+               8 CALL_METHOD          (2 positional arguments)
+              10 STORE_FAST           (opponent_name)
+
+361:          12 LOAD_FAST            (result)
+              14 LOAD_METHOD          (get)
+              16 LOAD_CONST           ("gain")
+              18 LOAD_CONST           ("n/a")
+              20 CALL_METHOD          (2 positional arguments)
+              22 STORE_FAST           (gain)
+
+362:          24 LOAD_FAST            (result)
+              26 LOAD_METHOD          (get)
+              28 LOAD_CONST           ("reputation")
+              30 LOAD_CONST           ("n/a")
+              32 CALL_METHOD          (2 positional arguments)
+              34 STORE_FAST           (reputation)
+
+363:          36 LOAD_FAST            (result)
+              38 LOAD_METHOD          (get)
+              40 LOAD_CONST           ("prestige")
+              42 LOAD_CONST           ("n/a")
+              44 CALL_METHOD          (2 positional arguments)
+              46 STORE_FAST           (prestige)
+
+364:          48 LOAD_FAST            (result)
+              50 LOAD_METHOD          (get)
+              52 LOAD_CONST           ("stamina")
+              54 LOAD_FAST            (self)
+              56 LOAD_ATTR            (clan_char_data)
+              58 LOAD_METHOD          (get)
+              60 LOAD_CONST           ("stamina")
+              62 LOAD_CONST           ("n/a")
+              64 CALL_METHOD          (2 positional arguments)
+              66 CALL_METHOD          (2 positional arguments)
+              68 STORE_FAST           (stamina)
+
+365:          70 LOAD_FAST            (result)
+              72 LOAD_METHOD          (get)
+              74 LOAD_CONST           ("opponent_reputation")
+              76 LOAD_CONST           ("n/a")
+              78 CALL_METHOD          (2 positional arguments)
+              80 STORE_FAST           (opponent_reputation)
+
+366:          82 LOAD_GLOBAL          (print)
+
+367:          84 LOAD_CONST           ("Clan battle result vs ")
+              86 LOAD_FAST            (opponent_name)
+              88 FORMAT_VALUE         0
+              90 LOAD_CONST           (": Gain ")
+
+368:          92 LOAD_FAST            (gain)
+
+367:          94 FORMAT_VALUE         0
+              96 LOAD_CONST           (", Reputation ")
+
+368:          98 LOAD_FAST            (reputation)
+
+367:         100 FORMAT_VALUE         0
+             102 LOAD_CONST           (", Prestige ")
+
+368:         104 LOAD_FAST            (prestige)
+
+367:         106 FORMAT_VALUE         0
+             108 LOAD_CONST           (", Opponent Reputation ")
+
+369:         110 LOAD_FAST            (opponent_reputation)
+
+367:         112 FORMAT_VALUE         0
+             114 LOAD_CONST           (", Stamina ")
+
+369:         116 LOAD_FAST            (stamina)
+
+367:         118 FORMAT_VALUE         0
+             120 BUILD_STRING         12
+
+366:         122 CALL_FUNCTION        (1 positional argument)
+             124 POP_TOP
+             126 LOAD_CONST           (None)
+             128 RETURN_VALUE
+
+
+# Method Name:       _apply_battle_result
+# Filename:          clan_war.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  4
+# Stack size:        8
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        372
+# Constants:
+#    0: None
+#    1: 'reputation'
+#    2: 'stamina'
+#    3: 'prestige'
+#    4: 0
+# Names:
+#    0: clan_data
+#    1: clan_char_data
+#    2: _last_stamina_value
+#    3: time
+#    4: _last_stamina_fetch_at
+#    5: get
+#    6: int
+#    7: Exception
+# Varnames:
+#	self, result, prestige, current_prestige
+# Positional arguments:
+#	self, result
+# Local variables:
+#    2: prestige
+#    3: current_prestige
+373:           0 LOAD_CONST           ("reputation")
+               2 LOAD_FAST            (result)
+               4 CONTAINS_OP          (in)
+               6 POP_JUMP_IF_FALSE    (to 22)
+
+374:           8 LOAD_FAST            (result)
+              10 LOAD_CONST           ("reputation")
+              12 BINARY_SUBSCR
+              14 LOAD_FAST            (self)
+              16 LOAD_ATTR            (clan_data)
+              18 LOAD_CONST           ("reputation")
+              20 STORE_SUBSCR
+
+375:     >>   22 LOAD_CONST           ("stamina")
+              24 LOAD_FAST            (result)
+              26 CONTAINS_OP          (in)
+              28 POP_JUMP_IF_FALSE    (to 64)
+
+376:          30 LOAD_FAST            (result)
+              32 LOAD_CONST           ("stamina")
+              34 BINARY_SUBSCR
+              36 LOAD_FAST            (self)
+              38 LOAD_ATTR            (clan_char_data)
+              40 LOAD_CONST           ("stamina")
+              42 STORE_SUBSCR
+
+377:          44 LOAD_FAST            (result)
+              46 LOAD_CONST           ("stamina")
+              48 BINARY_SUBSCR
+              50 LOAD_FAST            (self)
+              52 STORE_ATTR           (_last_stamina_value)
+
+378:          54 LOAD_GLOBAL          (time)
+              56 LOAD_METHOD          (time)
+              58 CALL_METHOD          (0 positional arguments)
+              60 LOAD_FAST            (self)
+              62 STORE_ATTR           (_last_stamina_fetch_at)
+
+380:     >>   64 LOAD_FAST            (result)
+              66 LOAD_METHOD          (get)
+              68 LOAD_CONST           ("prestige")
+              70 CALL_METHOD          (1 positional argument)
+              72 STORE_FAST           (prestige)
+
+381:          74 LOAD_FAST            (prestige)
+              76 LOAD_CONST           (None)
+              78 IS_OP                (is not)
+              80 POP_JUMP_IF_FALSE    (to 150)
+
+382:          82 LOAD_GLOBAL          (int)
+              84 LOAD_FAST            (self)
+              86 LOAD_ATTR            (clan_char_data)
+              88 LOAD_METHOD          (get)
+              90 LOAD_CONST           ("prestige")
+              92 LOAD_CONST           (0)
+              94 CALL_METHOD          (2 positional arguments)
+              96 JUMP_IF_TRUE_OR_POP  (to 100)
+              98 LOAD_CONST           (0)
+         >>  100 CALL_FUNCTION        (1 positional argument)
+             102 STORE_FAST           (current_prestige)
+
+383:         104 SETUP_FINALLY        (to 130)
+
+384:         106 LOAD_FAST            (current_prestige)
+             108 LOAD_GLOBAL          (int)
+             110 LOAD_FAST            (prestige)
+             112 CALL_FUNCTION        (1 positional argument)
+             114 BINARY_ADD
+             116 LOAD_FAST            (self)
+             118 LOAD_ATTR            (clan_char_data)
+             120 LOAD_CONST           ("prestige")
+             122 STORE_SUBSCR
+             124 POP_BLOCK
+             126 LOAD_CONST           (None)
+             128 RETURN_VALUE
+
+385:     >>  130 DUP_TOP
+             132 LOAD_GLOBAL          (Exception)
+             134 JUMP_IF_NOT_EXC_MATCH (to 148)
+             136 POP_TOP
+             138 POP_TOP
+             140 POP_TOP
+
+386:         142 POP_EXCEPT
+             144 LOAD_CONST           (None)
+             146 RETURN_VALUE
+
+385:     >>  148 RERAISE              0
+
+381:     >>  150 LOAD_CONST           (None)
+             152 RETURN_VALUE
+
+
+# Method Name:       _idle_until_stamina_returns
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  6
+# Stack size:        6
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        388
+# Constants:
+#    0: None
+#    1: 'Clan stamina is below 10. Idling for 30 minutes while checking every 5 seconds...'
+#    2: False
+#    3: True
+#    4: ('announce',)
+#    5: 'Clan stamina is ready again, resuming battles'
+#    6: 0
+#    7: 60
+#    8: 'Clan war idle time remaining: '
+#    9: ' minute(s)'
+#   10: '30 minutes passed and clan stamina recovered'
+#   11: '30 minutes passed but stamina is still below 10, continuing to wait...'
+# Names:
+#    0: print
+#    1: time
+#    2: CLAN_IDLE_SECONDS
+#    3: _check_stop_event
+#    4: get_stamina
+#    5: CLAN_BATTLE_STAMINA_COST
+#    6: max
+#    7: int
+#    8: CLAN_STAMINA_POLL_SECONDS
+#    9: _wait_with_stop_check
+# Varnames:
+#	self, end_time, last_minute_logged, stamina, remaining_seconds, remaining_minutes
+# Positional arguments:
+#	self
+# Local variables:
+#    1: end_time
+#    2: last_minute_logged
+#    3: stamina
+#    4: remaining_seconds
+#    5: remaining_minutes
+389:           0 LOAD_GLOBAL          (print)
+               2 LOAD_CONST           ("Clan stamina is below 10. Idling for 30 minutes while checking every 5 seconds...")
+               4 CALL_FUNCTION        (1 positional argument)
+               6 POP_TOP
+
+390:           8 LOAD_GLOBAL          (time)
+              10 LOAD_METHOD          (time)
+              12 CALL_METHOD          (0 positional arguments)
+              14 LOAD_GLOBAL          (CLAN_IDLE_SECONDS)
+              16 BINARY_ADD
+              18 STORE_FAST           (end_time)
+
+391:          20 LOAD_CONST           (None)
+              22 STORE_FAST           (last_minute_logged)
+
+393:          24 LOAD_GLOBAL          (time)
+              26 LOAD_METHOD          (time)
+              28 CALL_METHOD          (0 positional arguments)
+              30 LOAD_FAST            (end_time)
+              32 COMPARE_OP           (<)
+              34 POP_JUMP_IF_FALSE    (to 184)
+
+394:     >>   36 LOAD_FAST            (self)
+              38 LOAD_METHOD          (_check_stop_event)
+              40 CALL_METHOD          (0 positional arguments)
+              42 POP_JUMP_IF_FALSE    (to 48)
+
+395:          44 LOAD_CONST           (False)
+              46 RETURN_VALUE
+
+397:     >>   48 LOAD_FAST            (self)
+              50 LOAD_ATTR            (get_stamina)
+              52 LOAD_CONST           (True)
+              54 LOAD_CONST           (('announce',))
+              56 CALL_FUNCTION_KW     (1 total positional and keyword args)
+              58 STORE_FAST           (stamina)
+
+398:          60 LOAD_FAST            (stamina)
+              62 LOAD_CONST           (None)
+              64 IS_OP                (is not)
+              66 POP_JUMP_IF_FALSE    (to 88)
+              68 LOAD_FAST            (stamina)
+              70 LOAD_GLOBAL          (CLAN_BATTLE_STAMINA_COST)
+              72 COMPARE_OP           (>=)
+              74 POP_JUMP_IF_FALSE    (to 88)
+
+399:          76 LOAD_GLOBAL          (print)
+              78 LOAD_CONST           ("Clan stamina is ready again, resuming battles")
+              80 CALL_FUNCTION        (1 positional argument)
+              82 POP_TOP
+
+400:          84 LOAD_CONST           (True)
+              86 RETURN_VALUE
+
+402:     >>   88 LOAD_GLOBAL          (max)
+              90 LOAD_CONST           (0)
+              92 LOAD_GLOBAL          (int)
+              94 LOAD_FAST            (end_time)
+              96 LOAD_GLOBAL          (time)
+              98 LOAD_METHOD          (time)
+             100 CALL_METHOD          (0 positional arguments)
+             102 BINARY_SUBTRACT
+             104 CALL_FUNCTION        (1 positional argument)
+             106 CALL_FUNCTION        (2 positional arguments)
+             108 STORE_FAST           (remaining_seconds)
+
+403:         110 LOAD_FAST            (remaining_seconds)
+             112 LOAD_CONST           (60)
+             114 BINARY_FLOOR_DIVIDE
+             116 STORE_FAST           (remaining_minutes)
+
+404:         118 LOAD_FAST            (remaining_minutes)
+             120 LOAD_FAST            (last_minute_logged)
+             122 COMPARE_OP           (!=)
+             124 POP_JUMP_IF_FALSE    (to 158)
+             126 LOAD_FAST            (remaining_seconds)
+             128 LOAD_CONST           (60)
+             130 BINARY_MODULO
+             132 LOAD_GLOBAL          (CLAN_STAMINA_POLL_SECONDS)
+             134 COMPARE_OP           (<)
+             136 POP_JUMP_IF_FALSE    (to 158)
+
+405:         138 LOAD_GLOBAL          (print)
+             140 LOAD_CONST           ("Clan war idle time remaining: ")
+             142 LOAD_FAST            (remaining_minutes)
+             144 FORMAT_VALUE         0
+             146 LOAD_CONST           (" minute(s)")
+             148 BUILD_STRING         3
+             150 CALL_FUNCTION        (1 positional argument)
+             152 POP_TOP
+
+406:         154 LOAD_FAST            (remaining_minutes)
+             156 STORE_FAST           (last_minute_logged)
+
+408:     >>  158 LOAD_FAST            (self)
+             160 LOAD_METHOD          (_wait_with_stop_check)
+             162 LOAD_GLOBAL          (CLAN_STAMINA_POLL_SECONDS)
+             164 CALL_METHOD          (1 positional argument)
+             166 POP_JUMP_IF_TRUE     (to 172)
+
+409:         168 LOAD_CONST           (False)
+             170 RETURN_VALUE
+
+393:     >>  172 LOAD_GLOBAL          (time)
+             174 LOAD_METHOD          (time)
+             176 CALL_METHOD          (0 positional arguments)
+             178 LOAD_FAST            (end_time)
+             180 COMPARE_OP           (<)
+             182 POP_JUMP_IF_TRUE     (to 36)
+
+411:     >>  184 LOAD_FAST            (self)
+             186 LOAD_ATTR            (get_stamina)
+             188 LOAD_CONST           (True)
+             190 LOAD_CONST           (('announce',))
+             192 CALL_FUNCTION_KW     (1 total positional and keyword args)
+             194 STORE_FAST           (stamina)
+
+412:         196 LOAD_FAST            (stamina)
+             198 LOAD_CONST           (None)
+             200 IS_OP                (is not)
+             202 POP_JUMP_IF_FALSE    (to 224)
+             204 LOAD_FAST            (stamina)
+             206 LOAD_GLOBAL          (CLAN_BATTLE_STAMINA_COST)
+             208 COMPARE_OP           (>=)
+             210 POP_JUMP_IF_FALSE    (to 224)
+
+413:         212 LOAD_GLOBAL          (print)
+             214 LOAD_CONST           ("30 minutes passed and clan stamina recovered")
+             216 CALL_FUNCTION        (1 positional argument)
+             218 POP_TOP
+
+414:         220 LOAD_CONST           (True)
+             222 RETURN_VALUE
+
+416:     >>  224 LOAD_GLOBAL          (print)
+             226 LOAD_CONST           ("30 minutes passed but stamina is still below 10, continuing to wait...")
+             228 CALL_FUNCTION        (1 positional argument)
+             230 POP_TOP
+
+417:         232 LOAD_CONST           (True)
+             234 RETURN_VALUE
+
+
+# Method Name:       run
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  12
+# Stack size:        10
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        419
+# Constants:
+#    0: None
+#    1: 'name'
+#    2: 'Unknown Clan'
+#    3: 'reputation'
+#    4: 'n/a'
+#    5: 'Clan war ready for clan: '
+#    6: ' | Reputation: '
+#    7: True
+#    8: ('announce',)
+#    9: 'Unable to read clan stamina, retrying in 5 seconds...'
+#   10: 'Clan stamina is below 10. Trying to refill stamina...'
+#   11: 1
+#   12: 'buy_stamina_delay_seconds'
+#   13: 3
+#   14: 'No clan opponents available right now, retrying in 30 seconds...'
+#   15: 30
+#   16: 'id'
+#   17: 'Attacking first available clan: '
+#   18: ' (ID: '
+#   19: ', Reputation: '
+#   20: ')'
+#   21: 'Clan quick battle failed: '
+#   22: 'battle_delay_seconds'
+# Names:
+#    0: _check_stop_event
+#    1: authenticate
+#    2: get_clan_info
+#    3: clan_data
+#    4: get
+#    5: print
+#    6: get_stamina
+#    7: _wait_with_stop_check
+#    8: CLAN_STAMINA_POLL_SECONDS
+#    9: CLAN_BATTLE_STAMINA_COST
+#   10: auto_spend_token
+#   11: buy_stamina
+#   12: max
+#   13: int
+#   14: settings
+#   15: _idle_until_stamina_returns
+#   16: pick_first_opponent
+#   17: quick_attack
+#   18: Exception
+#   19: save_fight_data
+#   20: isinstance
+#   21: dict
+#   22: _apply_battle_result
+#   23: _log_quick_result
+#   24: _response_message
+#   25: _is_auth_error
+#   26: CLAN_BETWEEN_BATTLES_SECONDS
+# Varnames:
+#	self, clan_info, clan_name, clan_reputation, stamina, delay_seconds, opponent, opponent_id, opponent_name, opponent_rep, result, exc
+# Positional arguments:
+#	self
+# Local variables:
+#    1: clan_info
+#    2: clan_name
+#    3: clan_reputation
+#    4: stamina
+#    5: delay_seconds
+#    6: opponent
+#    7: opponent_id
+#    8: opponent_name
+#    9: opponent_rep
+#   10: result
+#   11: exc
+420:           0 LOAD_FAST            (self)
+               2 LOAD_METHOD          (_check_stop_event)
+               4 CALL_METHOD          (0 positional arguments)
+               6 POP_JUMP_IF_FALSE    (to 12)
+
+421:           8 LOAD_CONST           (None)
+              10 RETURN_VALUE
+
+422:     >>   12 LOAD_FAST            (self)
+              14 LOAD_METHOD          (authenticate)
+              16 CALL_METHOD          (0 positional arguments)
+              18 POP_JUMP_IF_TRUE     (to 24)
+
+423:          20 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+425:     >>   24 LOAD_FAST            (self)
+              26 LOAD_METHOD          (get_clan_info)
+              28 CALL_METHOD          (0 positional arguments)
+              30 STORE_FAST           (clan_info)
+
+426:          32 LOAD_FAST            (clan_info)
+              34 POP_JUMP_IF_TRUE     (to 40)
+
+427:          36 LOAD_CONST           (None)
+              38 RETURN_VALUE
+
+429:     >>   40 LOAD_FAST            (self)
+              42 LOAD_ATTR            (clan_data)
+              44 LOAD_METHOD          (get)
+              46 LOAD_CONST           ("name")
+              48 LOAD_CONST           ("Unknown Clan")
+              50 CALL_METHOD          (2 positional arguments)
+              52 STORE_FAST           (clan_name)
+
+430:          54 LOAD_FAST            (self)
+              56 LOAD_ATTR            (clan_data)
+              58 LOAD_METHOD          (get)
+              60 LOAD_CONST           ("reputation")
+              62 LOAD_CONST           ("n/a")
+              64 CALL_METHOD          (2 positional arguments)
+              66 STORE_FAST           (clan_reputation)
+
+431:          68 LOAD_GLOBAL          (print)
+              70 LOAD_CONST           ("Clan war ready for clan: ")
+              72 LOAD_FAST            (clan_name)
+              74 FORMAT_VALUE         0
+              76 LOAD_CONST           (" | Reputation: ")
+              78 LOAD_FAST            (clan_reputation)
+              80 FORMAT_VALUE         0
+              82 BUILD_STRING         4
+              84 CALL_FUNCTION        (1 positional argument)
+              86 POP_TOP
+
+433:     >>   88 LOAD_FAST            (self)
+              90 LOAD_METHOD          (_check_stop_event)
+              92 CALL_METHOD          (0 positional arguments)
+              94 EXTENDED_ARG         (256)
+              96 POP_JUMP_IF_TRUE     (to 556)
+
+434:     >>   98 LOAD_FAST            (self)
+             100 LOAD_ATTR            (get_stamina)
+             102 LOAD_CONST           (True)
+             104 LOAD_CONST           (('announce',))
+             106 CALL_FUNCTION_KW     (1 total positional and keyword args)
+             108 STORE_FAST           (stamina)
+
+435:         110 LOAD_FAST            (stamina)
+             112 LOAD_CONST           (None)
+             114 IS_OP                (is)
+             116 POP_JUMP_IF_FALSE    (to 142)
+
+436:         118 LOAD_GLOBAL          (print)
+             120 LOAD_CONST           ("Unable to read clan stamina, retrying in 5 seconds...")
+             122 CALL_FUNCTION        (1 positional argument)
+             124 POP_TOP
+
+437:         126 LOAD_FAST            (self)
+             128 LOAD_METHOD          (_wait_with_stop_check)
+             130 LOAD_GLOBAL          (CLAN_STAMINA_POLL_SECONDS)
+             132 CALL_METHOD          (1 positional argument)
+             134 POP_JUMP_IF_TRUE     (to 140)
+
+438:         136 LOAD_CONST           (None)
+             138 RETURN_VALUE
+
+439:     >>  140 JUMP_ABSOLUTE        (to 88)
+
+441:     >>  142 LOAD_FAST            (stamina)
+             144 LOAD_GLOBAL          (CLAN_BATTLE_STAMINA_COST)
+             146 COMPARE_OP           (<)
+             148 POP_JUMP_IF_FALSE    (to 226)
+
+442:         150 LOAD_FAST            (self)
+             152 LOAD_ATTR            (auto_spend_token)
+             154 POP_JUMP_IF_FALSE    (to 212)
+
+443:         156 LOAD_GLOBAL          (print)
+             158 LOAD_CONST           ("Clan stamina is below 10. Trying to refill stamina...")
+             160 CALL_FUNCTION        (1 positional argument)
+             162 POP_TOP
+
+444:         164 LOAD_FAST            (self)
+             166 LOAD_METHOD          (buy_stamina)
+             168 CALL_METHOD          (0 positional arguments)
+             170 POP_JUMP_IF_FALSE    (to 212)
+
+445:         172 LOAD_GLOBAL          (max)
+             174 LOAD_CONST           (1)
+             176 LOAD_GLOBAL          (int)
+             178 LOAD_FAST            (self)
+             180 LOAD_ATTR            (settings)
+             182 LOAD_METHOD          (get)
+             184 LOAD_CONST           ("buy_stamina_delay_seconds")
+             186 LOAD_CONST           (3)
+             188 CALL_METHOD          (2 positional arguments)
+             190 CALL_FUNCTION        (1 positional argument)
+             192 CALL_FUNCTION        (2 positional arguments)
+             194 STORE_FAST           (delay_seconds)
+
+446:         196 LOAD_FAST            (self)
+             198 LOAD_METHOD          (_wait_with_stop_check)
+             200 LOAD_FAST            (delay_seconds)
+             202 CALL_METHOD          (1 positional argument)
+             204 POP_JUMP_IF_TRUE     (to 210)
+
+447:         206 LOAD_CONST           (None)
+             208 RETURN_VALUE
+
+448:     >>  210 JUMP_ABSOLUTE        (to 88)
+
+449:     >>  212 LOAD_FAST            (self)
+             214 LOAD_METHOD          (_idle_until_stamina_returns)
+             216 CALL_METHOD          (0 positional arguments)
+             218 POP_JUMP_IF_TRUE     (to 224)
+
+450:         220 LOAD_CONST           (None)
+             222 RETURN_VALUE
+
+451:     >>  224 JUMP_ABSOLUTE        (to 88)
+
+453:     >>  226 LOAD_FAST            (self)
+             228 LOAD_METHOD          (pick_first_opponent)
+             230 CALL_METHOD          (0 positional arguments)
+             232 STORE_FAST           (opponent)
+
+454:         234 LOAD_FAST            (opponent)
+             236 POP_JUMP_IF_TRUE     (to 262)
+
+455:         238 LOAD_GLOBAL          (print)
+             240 LOAD_CONST           ("No clan opponents available right now, retrying in 30 seconds...")
+             242 CALL_FUNCTION        (1 positional argument)
+             244 POP_TOP
+
+456:         246 LOAD_FAST            (self)
+             248 LOAD_METHOD          (_wait_with_stop_check)
+             250 LOAD_CONST           (30)
+             252 CALL_METHOD          (1 positional argument)
+             254 POP_JUMP_IF_TRUE     (to 260)
+
+457:         256 LOAD_CONST           (None)
+             258 RETURN_VALUE
+
+458:     >>  260 JUMP_ABSOLUTE        (to 88)
+
+460:     >>  262 LOAD_FAST            (opponent)
+             264 LOAD_METHOD          (get)
+             266 LOAD_CONST           ("id")
+             268 CALL_METHOD          (1 positional argument)
+             270 STORE_FAST           (opponent_id)
+
+461:         272 LOAD_FAST            (opponent)
+             274 LOAD_METHOD          (get)
+             276 LOAD_CONST           ("name")
+             278 LOAD_CONST           ("Unknown Clan")
+             280 CALL_METHOD          (2 positional arguments)
+             282 STORE_FAST           (opponent_name)
+
+462:         284 LOAD_FAST            (opponent)
+             286 LOAD_METHOD          (get)
+             288 LOAD_CONST           ("reputation")
+             290 LOAD_CONST           ("n/a")
+             292 CALL_METHOD          (2 positional arguments)
+             294 STORE_FAST           (opponent_rep)
+
+463:         296 LOAD_GLOBAL          (print)
+             298 LOAD_CONST           ("Attacking first available clan: ")
+             300 LOAD_FAST            (opponent_name)
+             302 FORMAT_VALUE         0
+             304 LOAD_CONST           (" (ID: ")
+             306 LOAD_FAST            (opponent_id)
+             308 FORMAT_VALUE         0
+             310 LOAD_CONST           (", Reputation: ")
+             312 LOAD_FAST            (opponent_rep)
+             314 FORMAT_VALUE         0
+             316 LOAD_CONST           (")")
+             318 BUILD_STRING         7
+             320 CALL_FUNCTION        (1 positional argument)
+             322 POP_TOP
+
+465:         324 SETUP_FINALLY        (to 340)
+
+466:         326 LOAD_FAST            (self)
+             328 LOAD_METHOD          (quick_attack)
+             330 LOAD_FAST            (opponent_id)
+             332 CALL_METHOD          (1 positional argument)
+             334 STORE_FAST           (result)
+             336 POP_BLOCK
+             338 JUMP_FORWARD         (to 414)
+
+467:     >>  340 DUP_TOP
+             342 LOAD_GLOBAL          (Exception)
+             344 JUMP_IF_NOT_EXC_MATCH (to 412)
+             346 POP_TOP
+             348 STORE_FAST           (exc)
+             350 POP_TOP
+             352 SETUP_FINALLY        (to 404)
+
+468:         354 LOAD_GLOBAL          (print)
+             356 LOAD_CONST           ("Clan quick battle failed: ")
+             358 LOAD_FAST            (exc)
+             360 FORMAT_VALUE         0
+             362 BUILD_STRING         2
+             364 CALL_FUNCTION        (1 positional argument)
+             366 POP_TOP
+
+469:         368 LOAD_FAST            (self)
+             370 LOAD_METHOD          (_wait_with_stop_check)
+             372 LOAD_GLOBAL          (CLAN_STAMINA_POLL_SECONDS)
+             374 CALL_METHOD          (1 positional argument)
+             376 POP_JUMP_IF_TRUE     (to 392)
+
+470:         378 POP_BLOCK
+             380 POP_EXCEPT
+             382 LOAD_CONST           (None)
+             384 STORE_FAST           (exc)
+             386 DELETE_FAST          (exc)
+             388 LOAD_CONST           (None)
+             390 RETURN_VALUE
+
+471:     >>  392 POP_BLOCK
+             394 POP_EXCEPT
+             396 LOAD_CONST           (None)
+             398 STORE_FAST           (exc)
+             400 DELETE_FAST          (exc)
+             402 JUMP_ABSOLUTE        (to 88)
+         >>  404 LOAD_CONST           (None)
+             406 STORE_FAST           (exc)
+             408 DELETE_FAST          (exc)
+             410 RERAISE              1
+
+467:     >>  412 RERAISE              0
+
+473:     >>  414 LOAD_GLOBAL          (save_fight_data)
+             416 LOAD_FAST            (result)
+             418 CALL_FUNCTION        (1 positional argument)
+             420 POP_TOP
+
+474:         422 LOAD_GLOBAL          (isinstance)
+             424 LOAD_FAST            (result)
+             426 LOAD_GLOBAL          (dict)
+             428 CALL_FUNCTION        (2 positional arguments)
+             430 POP_JUMP_IF_FALSE    (to 462)
+             432 LOAD_CONST           ("reputation")
+             434 LOAD_FAST            (result)
+             436 CONTAINS_OP          (in)
+             438 POP_JUMP_IF_FALSE    (to 462)
+
+475:         440 LOAD_FAST            (self)
+             442 LOAD_METHOD          (_apply_battle_result)
+             444 LOAD_FAST            (result)
+             446 CALL_METHOD          (1 positional argument)
+             448 POP_TOP
+
+476:         450 LOAD_FAST            (self)
+             452 LOAD_METHOD          (_log_quick_result)
+             454 LOAD_FAST            (result)
+             456 CALL_METHOD          (1 positional argument)
+             458 POP_TOP
+             460 JUMP_FORWARD         (to 504)
+
+478:     >>  462 LOAD_GLOBAL          (print)
+             464 LOAD_CONST           ("Clan quick battle failed: ")
+             466 LOAD_FAST            (self)
+             468 LOAD_METHOD          (_response_message)
+             470 LOAD_FAST            (result)
+             472 CALL_METHOD          (1 positional argument)
+             474 FORMAT_VALUE         0
+             476 BUILD_STRING         2
+             478 CALL_FUNCTION        (1 positional argument)
+             480 POP_TOP
+
+479:         482 LOAD_FAST            (self)
+             484 LOAD_METHOD          (_is_auth_error)
+             486 LOAD_FAST            (result)
+             488 CALL_METHOD          (1 positional argument)
+             490 POP_JUMP_IF_FALSE    (to 504)
+
+480:         492 LOAD_FAST            (self)
+             494 LOAD_METHOD          (authenticate)
+             496 CALL_METHOD          (0 positional arguments)
+             498 POP_JUMP_IF_TRUE     (to 504)
+
+481:         500 LOAD_CONST           (None)
+             502 RETURN_VALUE
+
+483:     >>  504 LOAD_GLOBAL          (max)
+             506 LOAD_CONST           (1)
+             508 LOAD_GLOBAL          (int)
+             510 LOAD_FAST            (self)
+             512 LOAD_ATTR            (settings)
+             514 LOAD_METHOD          (get)
+             516 LOAD_CONST           ("battle_delay_seconds")
+             518 LOAD_GLOBAL          (CLAN_BETWEEN_BATTLES_SECONDS)
+             520 CALL_METHOD          (2 positional arguments)
+             522 CALL_FUNCTION        (1 positional argument)
+             524 CALL_FUNCTION        (2 positional arguments)
+             526 STORE_FAST           (delay_seconds)
+
+484:         528 LOAD_FAST            (self)
+             530 LOAD_METHOD          (_wait_with_stop_check)
+             532 LOAD_FAST            (delay_seconds)
+             534 CALL_METHOD          (1 positional argument)
+             536 EXTENDED_ARG         (256)
+             538 POP_JUMP_IF_TRUE     (to 544)
+
+485:         540 LOAD_CONST           (None)
+             542 RETURN_VALUE
+
+433:     >>  544 LOAD_FAST            (self)
+             546 LOAD_METHOD          (_check_stop_event)
+             548 CALL_METHOD          (0 positional arguments)
+             550 POP_JUMP_IF_FALSE    (to 98)
+             552 LOAD_CONST           (None)
+             554 RETURN_VALUE
+         >>  556 LOAD_CONST           (None)
+             558 RETURN_VALUE
+
+
+# Method Name:       <genexpr>
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        3
+# Flags:             0x00000073 (NOFREE | GENERATOR | NESTED | NEWLOCALS | OPTIMIZED)
+# First Line:        107
+# Constants:
+#    0: None
+# Names:
+#    0: str
+# Varnames:
+#	.0, item
+# Positional arguments:
+#	.0
+# Local variables:
+#    1: item
+               0 GEN_START            0
+
+107:           2 LOAD_FAST            (.0)
+         >>    4 FOR_ITER             (to 24)
+               6 STORE_FAST           (item)
+               8 LOAD_FAST            (item)
+              10 POP_JUMP_IF_FALSE    (to 4)
+              12 LOAD_GLOBAL          (str)
+              14 LOAD_FAST            (item)
+              16 CALL_FUNCTION        (1 positional argument)
+              18 YIELD_VALUE
+              20 POP_TOP
+              22 JUMP_ABSOLUTE        (to 4)
+         >>   24 LOAD_CONST           (None)
+              26 RETURN_VALUE
+
+
+# Method Name:       <genexpr>
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        4
+# Flags:             0x00000033 (GENERATOR | NESTED | NEWLOCALS | OPTIMIZED)
+# First Line:        137
+# Constants:
+#    0: None
+# Names:
+#    0: random
+#    1: choice
+# Varnames:
+#	.0, _
+# Positional arguments:
+#	.0
+# Local variables:
+#    1: _
+# Free variables:
+#    0: alphabet
+               0 GEN_START            0
+
+137:           2 LOAD_FAST            (.0)
+         >>    4 FOR_ITER             (to 22)
+               6 STORE_FAST           (_)
+               8 LOAD_GLOBAL          (random)
+              10 LOAD_METHOD          (choice)
+              12 LOAD_DEREF           (alphabet)
+              14 CALL_METHOD          (1 positional argument)
+              16 YIELD_VALUE
+              18 POP_TOP
+              20 JUMP_ABSOLUTE        (to 4)
+         >>   22 LOAD_CONST           (None)
+              24 RETURN_VALUE
+
+
+# Method Name:       <genexpr>
+# Filename:          clan_war.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        3
+# Flags:             0x00000033 (GENERATOR | NESTED | NEWLOCALS | OPTIMIZED)
+# First Line:        230
+# Constants:
+#    0: None
+# Varnames:
+#	.0, marker
+# Positional arguments:
+#	.0
+# Local variables:
+#    1: marker
+# Free variables:
+#    0: message
+               0 GEN_START            0
+
+230:           2 LOAD_FAST            (.0)
+         >>    4 FOR_ITER             (to 20)
+
+232:           6 STORE_FAST           (marker)
+
+231:           8 LOAD_FAST            (marker)
+              10 LOAD_DEREF           (message)
+              12 CONTAINS_OP          (in)
+
+230:          14 YIELD_VALUE
+              16 POP_TOP
+              18 JUMP_ABSOLUTE        (to 4)
+         >>   20 LOAD_CONST           (None)
+              22 RETURN_VALUE
+

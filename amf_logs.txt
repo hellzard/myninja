@@ -1,0 +1,655 @@
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+Target: /1
+Data: [['Public 0.61']]
+===================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+Target: /2
+Data: [['Public 0.61']]
+===================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+Target: /3
+Data: [['Public 0.61']]
+===================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+Target: /4
+Data: [['Public 0.61']]
+===================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+Target: /1
+Data: [['Public 0.61']]
+===================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+Target (targetURI): /2
+AMF Decode Error: 'Request' object has no attribute 'response'
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+Target (targetURI): /1
+AMF Decode Error: 'Request' object has no attribute 'response'
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+TargetURI: /1
+Body: [['Public 0.61']]
+===================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /1
+Method (targetURI): qgnNJXdbTxOLTF3S.6zWoiSDdFxW3
+Body: [['Public 0.61']]
+===================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /1
+Method (targetURI): qgnNJXdbTxOLTF3S.6zWoiSDdFxW3
+Body: [['Public 0.61']]
+===================
+Failed to decode real server response: Malformed stream (amfVersion=15393)
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /2
+Method (targetURI): qgnNJXdbTxOLTF3S.6zWoiSDdFxW3
+Body: [['Public 0.61']]
+===================
+Failed to decode real server response: Malformed stream (amfVersion=15393)
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /3
+Method (targetURI): qgnNJXdbTxOLTF3S.6zWoiSDdFxW3
+Body: [['Public 0.61']]
+===================
+Failed to decode real server response: Malformed stream (amfVersion=15393)
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /4
+Method (targetURI): qgnNJXdbTxOLTF3S.6zWoiSDdFxW3
+Body: [['Public 0.61']]
+===================
+Failed to decode real server response: Malformed stream (amfVersion=15393)
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /1
+Method (targetURI): qgnNJXdbTxOLTF3S.6zWoiSDdFxW3
+Body: [['Public 0.61']]
+===================
+Failed to decode real server response: Malformed stream (amfVersion=15393)
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /2
+Method (targetURI): qgnNJXdbTxOLTF3S.6zWoiSDdFxW3
+Body: [['Public 0.61']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /2
+Body: {'status': 1, 'error': 0, 'cdn': 'https://ns-assets.ninjasage.id/static/releases/cdn/assets/', '_': 1786283199.0, '__': '0CZcEzGnTwLYBfTK', '_rm': False}
+============================
+[GET] Requested path: /api/id-custom-color
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /3
+Method (targetURI): 0KarDls5w35giAP7.Gj8OdFY7bfva
+Body: [[<pyamf.amf3.ByteArray object at 0x00000140BBAF8EF0>]]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /3
+Body: {'status': 1, 'error': 0}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /1
+Method (targetURI): qgnNJXdbTxOLTF3S.6zWoiSDdFxW3
+Body: [['Public 0.61']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /1
+Body: {'status': 1, 'error': 0, 'cdn': 'https://ns-assets.ninjasage.id/static/releases/cdn/assets/', '_': 1786283351.0, '__': 'MT23Q8NZhWo0e6yX', '_rm': False}
+============================
+[POST] Requested path: /play/arnf
+[GET] Requested path: /api/id-custom-color
+=== AMF PAYLOAD ===
+ResponseURI: /2
+Method (targetURI): 0KarDls5w35giAP7.Gj8OdFY7bfva
+Body: [[<pyamf.amf3.ByteArray object at 0x0000019367DD1CA0>]]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /2
+Body: {'status': 1, 'error': 0}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /3
+Method (targetURI): P82btEvICVSugCUp.N3M3nS3I5og3
+Body: [None]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /3
+Body: {'status': 1, 'error': 0, 'events': {'seasonal': [{'name': 'Shadow Circus: Nightmare Under the Big Top', 'desc': 'A mysterious circus appears in the village out of nowhere on a moonless night. No one knows where it came from, but those who enter never return.', 'date': '04/08 - 04/10, 2026', 'img': 'https://ns-assets.ninjasage.id/tmp/circus2026.jpg', 'panel': 'ShadowCircusMenu'}, {'name': 'Summer Night: Battle Against Yokai', 'desc': 'The Yokai, who are usually peaceful, go on a rampage because an evil force. Fight them!', 'date': '05/07 - 05/09, 2026', 'img': 'https://ns-assets.ninjasage.id/tmp/summer2026.jpg', 'panel': 'SummerMenu'}], 'event:permanent': [{'name': 'Monster Hunter', 'icon': 'monsterhunter', 'panel': 'MonsterHunter', 'time': -1}, {'name': 'Dragon Hunt', 'icon': 'dragonhunt', 'panel': 'DragonHunt', 'time': -1}, {'name': 'Justice Badge', 'icon': 'justicebadge', 'panel': 'JusticeBadge', 'time': -1}], 'features': [{'name': 'Giveaway Center', 'icon': 'giveaway', 'panel': 'GiveawayCenter', 'time': -1}, {'name': 'Leaderboard', 'icon': 'leaderboard', 'panel': 'Leaderboard', 'time': -1}, {'name': 'Tailed Beast', 'icon': 'tailedbeast', 'panel': 'TailedBeast', 'inside': True, 'time': -1}, {'name': 'Daily Gacha', 'icon': 'dailygacha', 'panel': 'DailyGacha', 'time': -1}, {'name': 'Dragon Gacha', 'icon': 'dragongacha', 'panel': 'DragonGacha', 'time': -1}, {'name': 'Exotic Package', 'icon': 'exotic', 'panel': 'ExoticPackage', 'time': -1}], 'packages': [{'code': 'chaosarchangel', 'name': 'Chaos Archangel', 'date': '27/02 - 04/09, 2026', 'content': [{'name': 'Chaos Fragment', 'price': 'IDR. 100,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s'], 'back': ['back_2463'], 'hair': ['hair_2420_%s'], 'skill': [None], 'weapon': ['wpn_2453'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'set_2461_%s', 'back_2463', 'wpn_2453', 'emblem', 'tokens_4500']}, {'name': 'Dark Ascension', 'price': 'IDR. 250,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2370'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'skill_2370', 'emblem', 'tokens_10250']}, {'name': 'Harbinger of Chaos', 'price': 'IDR. 500,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2368', 'skill_2370'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'skill_2370', 'skill_2368', 'emblem', 'tokens_21000']}, {'name': 'Supreme Chaos Sanctum', 'price': 'IDR. 1,000,000', 'outfits': {'ani': [None], 'pet': ['pet_chaosangel'], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2368', 'skill_2370', 'skill_2369'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'pet_chaosangel', 'skill_2370', 'skill_2368', 'skill_2369', 'emblem', 'tokens_45000']}]}]}}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /1
+Method (targetURI): qgnNJXdbTxOLTF3S.6zWoiSDdFxW3
+Body: [['Public 0.61']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /1
+Body: {'status': 1, 'error': 0, 'cdn': 'https://ns-assets.ninjasage.id/static/releases/cdn/assets/', '_': 1786283499.0, '__': 'wjMYlzTfeXIVsWl9', '_rm': False}
+============================
+[GET] Requested path: /api/id-custom-color
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /2
+Method (targetURI): 0KarDls5w35giAP7.Gj8OdFY7bfva
+Body: [[<pyamf.amf3.ByteArray object at 0x00000194D3B1BF80>]]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /2
+Body: {'status': 1, 'error': 0}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /3
+Method (targetURI): P82btEvICVSugCUp.N3M3nS3I5og3
+Body: [None]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /3
+Body: {'status': 1, 'error': 0, 'events': {'seasonal': [], 'event:permanent': [{'name': 'Monster Hunter', 'icon': 'monsterhunter', 'panel': 'MonsterHunter', 'time': -1}, {'name': 'Dragon Hunt', 'icon': 'dragonhunt', 'panel': 'DragonHunt', 'time': -1}, {'name': 'Justice Badge', 'icon': 'justicebadge', 'panel': 'JusticeBadge', 'time': -1}], 'features': [{'name': 'Giveaway Center', 'icon': 'giveaway', 'panel': 'GiveawayCenter', 'time': -1}, {'name': 'Leaderboard', 'icon': 'leaderboard', 'panel': 'Leaderboard', 'time': -1}, {'name': 'Tailed Beast', 'icon': 'tailedbeast', 'panel': 'TailedBeast', 'inside': True, 'time': -1}, {'name': 'Daily Gacha', 'icon': 'dailygacha', 'panel': 'DailyGacha', 'time': -1}, {'name': 'Dragon Gacha', 'icon': 'dragongacha', 'panel': 'DragonGacha', 'time': -1}, {'name': 'Exotic Package', 'icon': 'exotic', 'panel': 'ExoticPackage', 'time': -1}], 'packages': [{'code': 'chaosarchangel', 'name': 'Chaos Archangel', 'date': '27/02 - 04/09, 2026', 'content': [{'name': 'Chaos Fragment', 'price': 'IDR. 100,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s'], 'back': ['back_2463'], 'hair': ['hair_2420_%s'], 'skill': [None], 'weapon': ['wpn_2453'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'set_2461_%s', 'back_2463', 'wpn_2453', 'emblem', 'tokens_4500']}, {'name': 'Dark Ascension', 'price': 'IDR. 250,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2370'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'skill_2370', 'emblem', 'tokens_10250']}, {'name': 'Harbinger of Chaos', 'price': 'IDR. 500,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2368', 'skill_2370'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'skill_2370', 'skill_2368', 'emblem', 'tokens_21000']}, {'name': 'Supreme Chaos Sanctum', 'price': 'IDR. 1,000,000', 'outfits': {'ani': [None], 'pet': ['pet_chaosangel'], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2368', 'skill_2370', 'skill_2369'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'pet_chaosangel', 'skill_2370', 'skill_2368', 'skill_2369', 'emblem', 'tokens_45000']}]}]}}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /4
+Method (targetURI): qgnNJXdbTxOLTF3S.n2znaFWme0q6
+Body: [['mulyono', 'QaA2lDIAh8/wbNCGo5bshw==', 1786283499.0, 14252961, 14252961, 'wjMYlzTfeXIVsWl9', '178628349940367c3cc999a9f9e951a1d33211545b84b2d5a63933b0020433000c3bb410fb1786283499178628349917862834991786283499', '10679155261935407503459101812215410613', 10]]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /4
+Body: {'status': 2, 'error': 0, 'result': 'Invalid password'}
+============================
+[POST] Requested path: /play/arnf
+[POST] Requested path: /api/bot/check-version
+[POST] Requested path: /bot-api/check-version
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /1
+Method (targetURI): qgnNJXdbTxOLTF3S.6zWoiSDdFxW3
+Body: [['Public 0.61']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /1
+Body: {'status': 1, 'error': 0, 'cdn': 'https://ns-assets.ninjasage.id/static/releases/cdn/assets/', '_': 1786284648.0, '__': 'erWQBcHyOG0GxaQH', '_rm': False}
+============================
+[POST] Requested path: /play/arnf
+[GET] Requested path: /api/id-custom-color
+=== AMF PAYLOAD ===
+ResponseURI: /2
+Method (targetURI): 0KarDls5w35giAP7.Gj8OdFY7bfva
+Body: [[<pyamf.amf3.ByteArray object at 0x000002394BA0ABA0>]]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /2
+Body: {'status': 1, 'error': 0}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /3
+Method (targetURI): P82btEvICVSugCUp.N3M3nS3I5og3
+Body: [None]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /3
+Body: {'status': 1, 'error': 0, 'events': {'seasonal': [], 'event:permanent': [{'name': 'Monster Hunter', 'icon': 'monsterhunter', 'panel': 'MonsterHunter', 'time': -1}, {'name': 'Dragon Hunt', 'icon': 'dragonhunt', 'panel': 'DragonHunt', 'time': -1}, {'name': 'Justice Badge', 'icon': 'justicebadge', 'panel': 'JusticeBadge', 'time': -1}], 'features': [{'name': 'Giveaway Center', 'icon': 'giveaway', 'panel': 'GiveawayCenter', 'time': -1}, {'name': 'Leaderboard', 'icon': 'leaderboard', 'panel': 'Leaderboard', 'time': -1}, {'name': 'Tailed Beast', 'icon': 'tailedbeast', 'panel': 'TailedBeast', 'inside': True, 'time': -1}, {'name': 'Daily Gacha', 'icon': 'dailygacha', 'panel': 'DailyGacha', 'time': -1}, {'name': 'Dragon Gacha', 'icon': 'dragongacha', 'panel': 'DragonGacha', 'time': -1}, {'name': 'Exotic Package', 'icon': 'exotic', 'panel': 'ExoticPackage', 'time': -1}], 'packages': [{'code': 'chaosarchangel', 'name': 'Chaos Archangel', 'date': '27/02 - 04/09, 2026', 'content': [{'name': 'Chaos Fragment', 'price': 'IDR. 100,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s'], 'back': ['back_2463'], 'hair': ['hair_2420_%s'], 'skill': [None], 'weapon': ['wpn_2453'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'set_2461_%s', 'back_2463', 'wpn_2453', 'emblem', 'tokens_4500']}, {'name': 'Dark Ascension', 'price': 'IDR. 250,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2370'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'skill_2370', 'emblem', 'tokens_10250']}, {'name': 'Harbinger of Chaos', 'price': 'IDR. 500,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2368', 'skill_2370'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'skill_2370', 'skill_2368', 'emblem', 'tokens_21000']}, {'name': 'Supreme Chaos Sanctum', 'price': 'IDR. 1,000,000', 'outfits': {'ani': [None], 'pet': ['pet_chaosangel'], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2368', 'skill_2370', 'skill_2369'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'pet_chaosangel', 'skill_2370', 'skill_2368', 'skill_2369', 'emblem', 'tokens_45000']}]}]}}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /4
+Method (targetURI): qgnNJXdbTxOLTF3S.v4I13USXaFgI
+Body: [['mulyono', 'priasolomelawan@gmail.com', 'mulyono123', 'A=t&SA=t&SV=t&EV=t&MP3=t&AE=t&VE=t&ACC=t&PR=t&SP=f&SB=f&DEB=f&V=WIN%2051%2C3%2C3%2C2&M=Adobe%20Windows&R=1366x768&COL=color&AR=1.0&OS=Windows%2011&ARCH=x86&L=en&IME=t&PR32=t&PR64=t&CAS=32&LS=en-US&PT=Desktop&AVD=f&LFD=f&WD=f&TLS=t&ML=5.1&DP=96']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /4
+Body: {'status': 2, 'error': 0, 'result': 'That username is already taken. Try another one.'}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /5
+Method (targetURI): qgnNJXdbTxOLTF3S.v4I13USXaFgI
+Body: [['pria solo', 'priasolomelawan@gmail.com', 'mulyono123', 'A=t&SA=t&SV=t&EV=t&MP3=t&AE=t&VE=t&ACC=t&PR=t&SP=f&SB=f&DEB=f&V=WIN%2051%2C3%2C3%2C2&M=Adobe%20Windows&R=1366x768&COL=color&AR=1.0&OS=Windows%2011&ARCH=x86&L=en&IME=t&PR32=t&PR64=t&CAS=32&LS=en-US&PT=Desktop&AVD=f&LFD=f&WD=f&TLS=t&ML=5.1&DP=96']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /5
+Body: {'status': 2, 'error': 0, 'result': 'That username is already taken. Try another one.'}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /6
+Method (targetURI): qgnNJXdbTxOLTF3S.v4I13USXaFgI
+Body: [['pria solo akan lawan', 'priasolomelawan@gmail.com', 'mulyono123', 'A=t&SA=t&SV=t&EV=t&MP3=t&AE=t&VE=t&ACC=t&PR=t&SP=f&SB=f&DEB=f&V=WIN%2051%2C3%2C3%2C2&M=Adobe%20Windows&R=1366x768&COL=color&AR=1.0&OS=Windows%2011&ARCH=x86&L=en&IME=t&PR32=t&PR64=t&CAS=32&LS=en-US&PT=Desktop&AVD=f&LFD=f&WD=f&TLS=t&ML=5.1&DP=96']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /6
+Body: {'status': 1, 'error': 0}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /7
+Method (targetURI): qgnNJXdbTxOLTF3S.n2znaFWme0q6
+Body: [['hellzard', 'EquDB/j/kz4BUpIFCf3WIA==', 1786284648.0, 14252961, 14252961, 'erWQBcHyOG0GxaQH', '178628464840367c3cc999a9f9e951a1d33211545b84b2d5a63933b0020433000c3bb410fb1786284648178628464817862846481786284648', '108722676981954260868230093191791686', 11]]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /7
+Body: {'status': 1, 'error': 0, 'uid': 247851, 'sessionkey': 'f4a30c37d1c2d0a6c6dabdb026bd72f80bfc0728', 'hash': '2740eb41323c19570bf2de22638461e8f2c5bf5b540fc27fe50d2fafbfb5f790', 'system_time': 'MTc4NjI4NDcyMw==', 'banners': [[{'url': 'https://ns-assets.ninjasage.id/tmp/crew_minotaur.png', 'menu': 'Crew', 'title': 'Minotaur is Available', 'action': 'open:menu'}]], 'events': ['welcome_bonus', 'mysterious-market', 'chunin_package', 'special-deals', 'monster_hunter_2023', 'dragon_hunt_2024', 'justice-badge2024', 'giveaway-center', 'leaderboard', 'tailedbeast', 'dailygacha', 'dragongacha', 'exoticpackage', 'chaosarchangel', 'summer2026', 'circus2026'], 'clan_season': '52', 'crew_season': '21', 'sw_season': '0', '__': 'erWQBcHyOG0GxaQH'}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /8
+Method (targetURI): qgnNJXdbTxOLTF3S.bBtq6fiQnFeZ
+Body: [['247851', 'f4a30c37d1c2d0a6c6dabdb026bd72f80bfc0728']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /8
+Body: {'status': 1, 'error': 0, 'account_type': 1, 'emblem_duration': -1, 'tokens': 429, 'total_characters': 1, 'account_data': [{'char_id': 312610, 'acc_id': 247851, 'character_name': 'hellzard', 'character_level': 76, 'character_xp': 9867224, 'character_gender': 0, 'character_rank': 7, 'character_prestige': 0, 'character_element_1': 1, 'character_element_2': 3, 'character_element_3': 5, 'character_talent_1': 'saint', 'character_talent_2': 'wood', 'character_talent_3': 'shadow', 'character_gold': 41221796, 'character_tp': 70, 'character_sets': {'weapon': 'wpn_2451', 'back_item': 'back_2463', 'accessory': 'accessory_10', 'hairstyle': 'hair_2246_0', 'clothing': 'set_2470_0', 'hair_color': '0|0', 'skin_color': 'null|null', 'face': 'face_01_0'}}]}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /9
+Method (targetURI): qgnNJXdbTxOLTF3S.n2znaFWme0q6
+Body: [['pria solo akan lawan', 'zwXerLa7dpoOAByH6g7DAg==', 1786284648.0, 14252961, 14252961, 'erWQBcHyOG0GxaQH', '178628464840367c3cc999a9f9e951a1d33211545b84b2d5a63933b0020433000c3bb410fb1786284648178628464817862846481786284648', '108722676981954260868230093191791686', 10]]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /9
+Body: {'status': 1, 'error': 0, 'uid': 248343, 'sessionkey': '3dadff1d0a035c2c490300e8510e61959ef87ced', 'hash': '30ba5e3d0b4f486fa7afaf634a5f1b95706d5c996b5af65905fd9efd30945df3', 'system_time': 'MTc4NjI4NDc0OA==', 'banners': [[{'url': 'https://ns-assets.ninjasage.id/tmp/crew_minotaur.png', 'menu': 'Crew', 'title': 'Minotaur is Available', 'action': 'open:menu'}]], 'events': ['welcome_bonus', 'mysterious-market', 'chunin_package', 'special-deals', 'monster_hunter_2023', 'dragon_hunt_2024', 'justice-badge2024', 'giveaway-center', 'leaderboard', 'tailedbeast', 'dailygacha', 'dragongacha', 'exoticpackage', 'chaosarchangel', 'summer2026', 'circus2026'], 'clan_season': '52', 'crew_season': '21', 'sw_season': '0', '__': 'erWQBcHyOG0GxaQH'}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /10
+Method (targetURI): qgnNJXdbTxOLTF3S.bBtq6fiQnFeZ
+Body: [['248343', '3dadff1d0a035c2c490300e8510e61959ef87ced']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /10
+Body: {'status': 1, 'error': 0, 'account_type': 0, 'emblem_duration': -1, 'tokens': 0, 'total_characters': 0, 'account_data': []}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /11
+Method (targetURI): 36a62s4oZ7iYRJjd.4ojsZyXghftc
+Body: [[['248343', '425ef67e2e8fe1e9e453d7bad6e6a42ade6fa43a929803ef1ddf39d1c8034305', 'Pria Solo', 0, '1', '0|0', 1]]]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /11
+Body: {'status': 1, 'error': 0}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /12
+Method (targetURI): qgnNJXdbTxOLTF3S.n2znaFWme0q6
+Body: [['pria solo akan lawan', 'zwXerLa7dpoOAByH6g7DAg==', 1786284648.0, 14252961, 14252961, 'erWQBcHyOG0GxaQH', '178628464840367c3cc999a9f9e951a1d33211545b84b2d5a63933b0020433000c3bb410fb1786284648178628464817862846481786284648', '108722676981954260868230093191791686', 10]]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /12
+Body: {'status': 1, 'error': 0, 'uid': 248343, 'sessionkey': '6808db924ad2a0ccaafc645a4094229c5dad4615', 'hash': '5c4e04219c1834542d5e3ab0d9f0e5322316dc97059876c178067ad63198c885', 'system_time': 'MTc4NjI4NDgyOA==', 'banners': [[{'url': 'https://ns-assets.ninjasage.id/tmp/crew_minotaur.png', 'menu': 'Crew', 'title': 'Minotaur is Available', 'action': 'open:menu'}]], 'events': ['welcome_bonus', 'mysterious-market', 'chunin_package', 'special-deals', 'monster_hunter_2023', 'dragon_hunt_2024', 'justice-badge2024', 'giveaway-center', 'leaderboard', 'tailedbeast', 'dailygacha', 'dragongacha', 'exoticpackage', 'chaosarchangel', 'summer2026', 'circus2026'], 'clan_season': '52', 'crew_season': '21', 'sw_season': '0', '__': 'erWQBcHyOG0GxaQH'}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /13
+Method (targetURI): qgnNJXdbTxOLTF3S.bBtq6fiQnFeZ
+Body: [['248343', '6808db924ad2a0ccaafc645a4094229c5dad4615']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /13
+Body: {'status': 1, 'error': 0, 'account_type': 0, 'emblem_duration': -1, 'tokens': 0, 'total_characters': 1, 'account_data': [{'char_id': 313196, 'acc_id': 248343, 'character_name': 'Pria Solo', 'character_level': 1, 'character_xp': 0, 'character_gender': 0, 'character_rank': 1, 'character_prestige': 0, 'character_element_1': 1, 'character_element_2': None, 'character_element_3': None, 'character_talent_1': None, 'character_talent_2': None, 'character_talent_3': None, 'character_gold': 1000, 'character_tp': 0, 'character_sets': {'weapon': 'wpn_01', 'back_item': 'back_01', 'accessory': 'accessory_01', 'hairstyle': 'hair_01_0', 'clothing': 'set_01_0', 'hair_color': '0|0', 'skin_color': 'null|null', 'face': 'face_01_0'}}]}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /14
+Method (targetURI): qgnNJXdbTxOLTF3S.6GumltvphQ5W
+Body: [[313196, '6808db924ad2a0ccaafc645a4094229c5dad4615']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /14
+Body: {'status': 1, 'error': 0, 'announcements': 'Welcome to Ninja Sage \r\nVersion 0.61 is available:\r\nPatch Note v0.61\r\nAdded Shadow Circus Event\r\nAdded PvP allow pets option on custom mode\r\nAdded Elemental Kinjutsu level 80 on Academy\r\nOptimized some enemy\r\nA lot of bug fixes\r\nSee more changelog at https://forum.ninjasage.id/d/903\r\nRe-download or click check button via Ninja Sage Launcher to get the latest update.', 'account_type': 0, 'emblem_duration': -1, 'events': {}, 'has_unread_mails': False, 'character_data': {'character_id': 313196, 'character_name': 'Pria Solo', 'character_level': 1, 'character_xp': 0, 'character_gender': 0, 'character_rank': 1, 'character_merit': 0, 'character_prestige': 0, 'character_element_1': 1, 'character_element_2': 0, 'character_element_3': 0, 'character_talent_1': None, 'character_talent_2': None, 'character_talent_3': None, 'character_gold': 1000, 'character_tp': 0, 'character_ss': 0, 'character_class': None, 'character_senjutsu': None, 'character_pvp_points': 0}, 'character_points': {'atrrib_wind': 0, 'atrrib_fire': 0, 'atrrib_lightning': 0, 'atrrib_water': 0, 'atrrib_earth': 0, 'atrrib_free': 1}, 'character_slots': {'weapons': 100, 'back_items': 100, 'accessories': 100, 'hairstyles': 100, 'clothing': 100}, 'character_sets': {'weapon': 'wpn_01', 'back_item': 'back_01', 'accessory': 'accessory_01', 'hairstyle': 'hair_01_0', 'clothing': 'set_01_0', 'skills': 'skill_13', 'senjutsu_skills': None, 'hair_color': '0|0', 'skin_color': 'null|null', 'face': 'face_01_0', 'pet': None, 'anims': []}, 'character_inventory': {'char_weapons': 'wpn_01:1', 'char_back_items': 'back_01:1', 'char_accessories': 'accessory_01:1', 'char_sets': 'set_01_0', 'char_hairs': 'hair_01_0', 'char_skills': 'skill_13', 'char_talent_skills': '', 'char_senjutsu_skills': '', 'char_materials': 'material_55:1', 'char_items': 'item_01:1', 'char_essentials': '', 'char_animations': '', 'char_pets': '', 'char_item_favorites': ''}, 'features': ['pvp'], 'recruiters': [], 'recruit_data': [], 'pet_data': [], 'clan': None}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /1
+Method (targetURI): qgnNJXdbTxOLTF3S.6zWoiSDdFxW3
+Body: [['Public 0.61']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /1
+Body: {'status': 1, 'error': 0, 'cdn': 'https://ns-assets.ninjasage.id/static/releases/cdn/assets/', '_': 1786284881.0, '__': 'MqVZngcW9WYlYyI0', '_rm': False}
+============================
+[POST] Requested path: /play/arnf
+[GET] Requested path: /api/id-custom-color
+=== AMF PAYLOAD ===
+ResponseURI: /2
+Method (targetURI): 0KarDls5w35giAP7.Gj8OdFY7bfva
+Body: [[<pyamf.amf3.ByteArray object at 0x000002394BB35310>]]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /2
+Body: {'status': 1, 'error': 0}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /3
+Method (targetURI): P82btEvICVSugCUp.N3M3nS3I5og3
+Body: [None]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /3
+Body: {'status': 1, 'error': 0, 'events': {'seasonal': [], 'event:permanent': [{'name': 'Monster Hunter', 'icon': 'monsterhunter', 'panel': 'MonsterHunter', 'time': -1}, {'name': 'Dragon Hunt', 'icon': 'dragonhunt', 'panel': 'DragonHunt', 'time': -1}, {'name': 'Justice Badge', 'icon': 'justicebadge', 'panel': 'JusticeBadge', 'time': -1}], 'features': [{'name': 'Giveaway Center', 'icon': 'giveaway', 'panel': 'GiveawayCenter', 'time': -1}, {'name': 'Leaderboard', 'icon': 'leaderboard', 'panel': 'Leaderboard', 'time': -1}, {'name': 'Tailed Beast', 'icon': 'tailedbeast', 'panel': 'TailedBeast', 'inside': True, 'time': -1}, {'name': 'Daily Gacha', 'icon': 'dailygacha', 'panel': 'DailyGacha', 'time': -1}, {'name': 'Dragon Gacha', 'icon': 'dragongacha', 'panel': 'DragonGacha', 'time': -1}, {'name': 'Exotic Package', 'icon': 'exotic', 'panel': 'ExoticPackage', 'time': -1}], 'packages': [{'code': 'chaosarchangel', 'name': 'Chaos Archangel', 'date': '27/02 - 04/09, 2026', 'content': [{'name': 'Chaos Fragment', 'price': 'IDR. 100,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s'], 'back': ['back_2463'], 'hair': ['hair_2420_%s'], 'skill': [None], 'weapon': ['wpn_2453'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'set_2461_%s', 'back_2463', 'wpn_2453', 'emblem', 'tokens_4500']}, {'name': 'Dark Ascension', 'price': 'IDR. 250,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2370'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'skill_2370', 'emblem', 'tokens_10250']}, {'name': 'Harbinger of Chaos', 'price': 'IDR. 500,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2368', 'skill_2370'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'skill_2370', 'skill_2368', 'emblem', 'tokens_21000']}, {'name': 'Supreme Chaos Sanctum', 'price': 'IDR. 1,000,000', 'outfits': {'ani': [None], 'pet': ['pet_chaosangel'], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2368', 'skill_2370', 'skill_2369'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'pet_chaosangel', 'skill_2370', 'skill_2368', 'skill_2369', 'emblem', 'tokens_45000']}]}]}}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /4
+Method (targetURI): qgnNJXdbTxOLTF3S.n2znaFWme0q6
+Body: [['pria solo akan lawan', 'HofYsqD30i7bRT8NGi2i+A==', 1786284881.0, 14252961, 14252961, 'MqVZngcW9WYlYyI0', '178628488140367c3cc999a9f9e951a1d33211545b84b2d5a63933b0020433000c3bb410fb1786284881178628488117862848811786284881', '109114280014741778679885752302050397418', 10]]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /4
+Body: {'status': 1, 'error': 0, 'uid': 248343, 'sessionkey': 'aa73850eb0406b35a6dd0f8e7f7c0818f3abd8e6', 'hash': 'b6aed32c6caca20f237b7afd8081cd91ea2194be9bc2eee62ace2620d3903d78', 'system_time': 'MTc4NjI4NDg4OA==', 'banners': [[{'url': 'https://ns-assets.ninjasage.id/tmp/crew_minotaur.png', 'menu': 'Crew', 'title': 'Minotaur is Available', 'action': 'open:menu'}]], 'events': ['welcome_bonus', 'mysterious-market', 'chunin_package', 'special-deals', 'monster_hunter_2023', 'dragon_hunt_2024', 'justice-badge2024', 'giveaway-center', 'leaderboard', 'tailedbeast', 'dailygacha', 'dragongacha', 'exoticpackage', 'chaosarchangel', 'summer2026', 'circus2026'], 'clan_season': '52', 'crew_season': '21', 'sw_season': '0', '__': 'MqVZngcW9WYlYyI0'}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /5
+Method (targetURI): qgnNJXdbTxOLTF3S.bBtq6fiQnFeZ
+Body: [['248343', 'aa73850eb0406b35a6dd0f8e7f7c0818f3abd8e6']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /5
+Body: {'status': 1, 'error': 0, 'account_type': 0, 'emblem_duration': -1, 'tokens': 0, 'total_characters': 1, 'account_data': [{'char_id': 313196, 'acc_id': 248343, 'character_name': 'Pria Solo', 'character_level': 1, 'character_xp': 0, 'character_gender': 0, 'character_rank': 1, 'character_prestige': 0, 'character_element_1': 1, 'character_element_2': None, 'character_element_3': None, 'character_talent_1': None, 'character_talent_2': None, 'character_talent_3': None, 'character_gold': 1000, 'character_tp': 0, 'character_sets': {'weapon': 'wpn_01', 'back_item': 'back_01', 'accessory': 'accessory_01', 'hairstyle': 'hair_01_0', 'clothing': 'set_01_0', 'hair_color': '0|0', 'skin_color': 'null|null', 'face': 'face_01_0'}}]}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /6
+Method (targetURI): qgnNJXdbTxOLTF3S.6GumltvphQ5W
+Body: [[313196, 'aa73850eb0406b35a6dd0f8e7f7c0818f3abd8e6']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /6
+Body: {'status': 1, 'error': 0, 'announcements': '', 'account_type': 0, 'emblem_duration': -1, 'events': {}, 'has_unread_mails': False, 'character_data': {'character_id': 313196, 'character_name': 'Pria Solo', 'character_level': 1, 'character_xp': 0, 'character_gender': 0, 'character_rank': 1, 'character_merit': 0, 'character_prestige': 0, 'character_element_1': 1, 'character_element_2': 0, 'character_element_3': 0, 'character_talent_1': None, 'character_talent_2': None, 'character_talent_3': None, 'character_gold': 1000, 'character_tp': 0, 'character_ss': 0, 'character_class': None, 'character_senjutsu': None, 'character_pvp_points': 0}, 'character_points': {'atrrib_wind': 0, 'atrrib_fire': 0, 'atrrib_lightning': 0, 'atrrib_water': 0, 'atrrib_earth': 0, 'atrrib_free': 1}, 'character_slots': {'weapons': 100, 'back_items': 100, 'accessories': 100, 'hairstyles': 100, 'clothing': 100}, 'character_sets': {'weapon': 'wpn_01', 'back_item': 'back_01', 'accessory': 'accessory_01', 'hairstyle': 'hair_01_0', 'clothing': 'set_01_0', 'skills': 'skill_13', 'senjutsu_skills': None, 'hair_color': '0|0', 'skin_color': 'null|null', 'face': 'face_01_0', 'pet': None, 'anims': []}, 'character_inventory': {'char_weapons': 'wpn_01:1', 'char_back_items': 'back_01:1', 'char_accessories': 'accessory_01:1', 'char_sets': 'set_01_0', 'char_hairs': 'hair_01_0', 'char_skills': 'skill_13', 'char_talent_skills': '', 'char_senjutsu_skills': '', 'char_materials': 'material_55:1', 'char_items': 'item_01:1', 'char_essentials': '', 'char_animations': '', 'char_pets': '', 'char_item_favorites': ''}, 'features': ['pvp'], 'recruiters': [], 'recruit_data': [], 'pet_data': [], 'clan': None}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /1
+Method (targetURI): qgnNJXdbTxOLTF3S.6zWoiSDdFxW3
+Body: [['Public 0.61']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /1
+Body: {'status': 1, 'error': 0, 'cdn': 'https://ns-assets.ninjasage.id/static/releases/cdn/assets/', '_': 1786284973.0, '__': 'q8VSrVrrhBkn9dIS', '_rm': False}
+============================
+[POST] Requested path: /play/arnf
+[GET] Requested path: /api/id-custom-color
+=== AMF PAYLOAD ===
+ResponseURI: /2
+Method (targetURI): 0KarDls5w35giAP7.Gj8OdFY7bfva
+Body: [[<pyamf.amf3.ByteArray object at 0x000001C21ED57D40>]]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /2
+Body: {'status': 1, 'error': 0}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /3
+Method (targetURI): P82btEvICVSugCUp.N3M3nS3I5og3
+Body: [None]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /3
+Body: {'status': 1, 'error': 0, 'events': {'seasonal': [], 'event:permanent': [{'name': 'Monster Hunter', 'icon': 'monsterhunter', 'panel': 'MonsterHunter', 'time': -1}, {'name': 'Dragon Hunt', 'icon': 'dragonhunt', 'panel': 'DragonHunt', 'time': -1}, {'name': 'Justice Badge', 'icon': 'justicebadge', 'panel': 'JusticeBadge', 'time': -1}], 'features': [{'name': 'Giveaway Center', 'icon': 'giveaway', 'panel': 'GiveawayCenter', 'time': -1}, {'name': 'Leaderboard', 'icon': 'leaderboard', 'panel': 'Leaderboard', 'time': -1}, {'name': 'Tailed Beast', 'icon': 'tailedbeast', 'panel': 'TailedBeast', 'inside': True, 'time': -1}, {'name': 'Daily Gacha', 'icon': 'dailygacha', 'panel': 'DailyGacha', 'time': -1}, {'name': 'Dragon Gacha', 'icon': 'dragongacha', 'panel': 'DragonGacha', 'time': -1}, {'name': 'Exotic Package', 'icon': 'exotic', 'panel': 'ExoticPackage', 'time': -1}], 'packages': [{'code': 'chaosarchangel', 'name': 'Chaos Archangel', 'date': '27/02 - 04/09, 2026', 'content': [{'name': 'Chaos Fragment', 'price': 'IDR. 100,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s'], 'back': ['back_2463'], 'hair': ['hair_2420_%s'], 'skill': [None], 'weapon': ['wpn_2453'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'set_2461_%s', 'back_2463', 'wpn_2453', 'emblem', 'tokens_4500']}, {'name': 'Dark Ascension', 'price': 'IDR. 250,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2370'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'skill_2370', 'emblem', 'tokens_10250']}, {'name': 'Harbinger of Chaos', 'price': 'IDR. 500,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2368', 'skill_2370'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'skill_2370', 'skill_2368', 'emblem', 'tokens_21000']}, {'name': 'Supreme Chaos Sanctum', 'price': 'IDR. 1,000,000', 'outfits': {'ani': [None], 'pet': ['pet_chaosangel'], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2368', 'skill_2370', 'skill_2369'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'pet_chaosangel', 'skill_2370', 'skill_2368', 'skill_2369', 'emblem', 'tokens_45000']}]}]}}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /4
+Method (targetURI): qgnNJXdbTxOLTF3S.n2znaFWme0q6
+Body: [['pria solo akan lawan', 'DLb6XFPQstOw64ohuEjC4Q==', 1786284973.0, 14252961, 14252961, 'q8VSrVrrhBkn9dIS', '178628497340367c3cc999a9f9e951a1d33211545b84b2d5a63933b0020433000c3bb410fb1786284973178628497317862849731786284973', '109268904416920970112096010303323417133', 10]]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /4
+Body: {'status': 1, 'error': 0, 'uid': 248343, 'sessionkey': '04ed6dfe0ad695fde35d5b6e7e476ea451fbd9d1', 'hash': '52f130c79d05f8871d5d8343cc8dde1f70451dfacb2e93ad03f3e0b4d2415f51', 'system_time': 'MTc4NjI4NTA2NQ==', 'banners': [[{'url': 'https://ns-assets.ninjasage.id/tmp/crew_minotaur.png', 'menu': 'Crew', 'title': 'Minotaur is Available', 'action': 'open:menu'}]], 'events': ['welcome_bonus', 'mysterious-market', 'chunin_package', 'special-deals', 'monster_hunter_2023', 'dragon_hunt_2024', 'justice-badge2024', 'giveaway-center', 'leaderboard', 'tailedbeast', 'dailygacha', 'dragongacha', 'exoticpackage', 'chaosarchangel', 'summer2026', 'circus2026'], 'clan_season': '52', 'crew_season': '21', 'sw_season': '0', '__': 'q8VSrVrrhBkn9dIS'}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /5
+Method (targetURI): qgnNJXdbTxOLTF3S.bBtq6fiQnFeZ
+Body: [['248343', '04ed6dfe0ad695fde35d5b6e7e476ea451fbd9d1']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /5
+Body: {'status': 1, 'error': 0, 'account_type': 0, 'emblem_duration': -1, 'tokens': 0, 'total_characters': 1, 'account_data': [{'char_id': 313196, 'acc_id': 248343, 'character_name': 'Pria Solo', 'character_level': 1, 'character_xp': 0, 'character_gender': 0, 'character_rank': 1, 'character_prestige': 0, 'character_element_1': 1, 'character_element_2': None, 'character_element_3': None, 'character_talent_1': None, 'character_talent_2': None, 'character_talent_3': None, 'character_gold': 1000, 'character_tp': 0, 'character_sets': {'weapon': 'wpn_01', 'back_item': 'back_01', 'accessory': 'accessory_01', 'hairstyle': 'hair_01_0', 'clothing': 'set_01_0', 'hair_color': '0|0', 'skin_color': 'null|null', 'face': 'face_01_0'}}]}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /6
+Method (targetURI): qgnNJXdbTxOLTF3S.6GumltvphQ5W
+Body: [[313196, '04ed6dfe0ad695fde35d5b6e7e476ea451fbd9d1']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /6
+Body: {'status': 1, 'error': 0, 'announcements': '', 'account_type': 0, 'emblem_duration': -1, 'events': {}, 'has_unread_mails': False, 'character_data': {'character_id': 313196, 'character_name': 'Pria Solo', 'character_level': 1, 'character_xp': 0, 'character_gender': 0, 'character_rank': 1, 'character_merit': 0, 'character_prestige': 0, 'character_element_1': 1, 'character_element_2': 0, 'character_element_3': 0, 'character_talent_1': None, 'character_talent_2': None, 'character_talent_3': None, 'character_gold': 1000, 'character_tp': 0, 'character_ss': 0, 'character_class': None, 'character_senjutsu': None, 'character_pvp_points': 0}, 'character_points': {'atrrib_wind': 0, 'atrrib_fire': 0, 'atrrib_lightning': 0, 'atrrib_water': 0, 'atrrib_earth': 0, 'atrrib_free': 1}, 'character_slots': {'weapons': 100, 'back_items': 100, 'accessories': 100, 'hairstyles': 100, 'clothing': 100}, 'character_sets': {'weapon': 'wpn_01', 'back_item': 'back_01', 'accessory': 'accessory_01', 'hairstyle': 'hair_01_0', 'clothing': 'set_01_0', 'skills': 'skill_13', 'senjutsu_skills': None, 'hair_color': '0|0', 'skin_color': 'null|null', 'face': 'face_01_0', 'pet': None, 'anims': []}, 'character_inventory': {'char_weapons': 'wpn_01:1', 'char_back_items': 'back_01:1', 'char_accessories': 'accessory_01:1', 'char_sets': 'set_01_0', 'char_hairs': 'hair_01_0', 'char_skills': 'skill_13', 'char_talent_skills': '', 'char_senjutsu_skills': '', 'char_materials': 'material_55:1', 'char_items': 'item_01:1', 'char_essentials': '', 'char_animations': '', 'char_pets': '', 'char_item_favorites': ''}, 'features': ['pvp'], 'recruiters': [], 'recruit_data': [], 'pet_data': [], 'clan': None}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /1
+Method (targetURI): qgnNJXdbTxOLTF3S.6zWoiSDdFxW3
+Body: [['Public 0.61']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /1
+Body: {'status': 1, 'error': 0, 'cdn': 'https://ns-assets.ninjasage.id/static/releases/cdn/assets/', '_': 1786285168.0, '__': '7FqozoDBGfZ82I4O', '_rm': False}
+============================
+[POST] Requested path: /play/arnf
+[GET] Requested path: /api/id-custom-color
+=== AMF PAYLOAD ===
+ResponseURI: /2
+Method (targetURI): 0KarDls5w35giAP7.Gj8OdFY7bfva
+Body: [[<pyamf.amf3.ByteArray object at 0x000001C21F0FEA80>]]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /2
+Body: {'status': 1, 'error': 0}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /3
+Method (targetURI): P82btEvICVSugCUp.N3M3nS3I5og3
+Body: [None]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /3
+Body: {'status': 1, 'error': 0, 'events': {'seasonal': [], 'event:permanent': [{'name': 'Monster Hunter', 'icon': 'monsterhunter', 'panel': 'MonsterHunter', 'time': -1}, {'name': 'Dragon Hunt', 'icon': 'dragonhunt', 'panel': 'DragonHunt', 'time': -1}, {'name': 'Justice Badge', 'icon': 'justicebadge', 'panel': 'JusticeBadge', 'time': -1}], 'features': [{'name': 'Giveaway Center', 'icon': 'giveaway', 'panel': 'GiveawayCenter', 'time': -1}, {'name': 'Leaderboard', 'icon': 'leaderboard', 'panel': 'Leaderboard', 'time': -1}, {'name': 'Tailed Beast', 'icon': 'tailedbeast', 'panel': 'TailedBeast', 'inside': True, 'time': -1}, {'name': 'Daily Gacha', 'icon': 'dailygacha', 'panel': 'DailyGacha', 'time': -1}, {'name': 'Dragon Gacha', 'icon': 'dragongacha', 'panel': 'DragonGacha', 'time': -1}, {'name': 'Exotic Package', 'icon': 'exotic', 'panel': 'ExoticPackage', 'time': -1}], 'packages': [{'code': 'chaosarchangel', 'name': 'Chaos Archangel', 'date': '27/02 - 04/09, 2026', 'content': [{'name': 'Chaos Fragment', 'price': 'IDR. 100,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s'], 'back': ['back_2463'], 'hair': ['hair_2420_%s'], 'skill': [None], 'weapon': ['wpn_2453'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'set_2461_%s', 'back_2463', 'wpn_2453', 'emblem', 'tokens_4500']}, {'name': 'Dark Ascension', 'price': 'IDR. 250,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2370'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'skill_2370', 'emblem', 'tokens_10250']}, {'name': 'Harbinger of Chaos', 'price': 'IDR. 500,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2368', 'skill_2370'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'skill_2370', 'skill_2368', 'emblem', 'tokens_21000']}, {'name': 'Supreme Chaos Sanctum', 'price': 'IDR. 1,000,000', 'outfits': {'ani': [None], 'pet': ['pet_chaosangel'], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2368', 'skill_2370', 'skill_2369'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'pet_chaosangel', 'skill_2370', 'skill_2368', 'skill_2369', 'emblem', 'tokens_45000']}]}]}}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /4
+Method (targetURI): qgnNJXdbTxOLTF3S.n2znaFWme0q6
+Body: [['pria solo akan lawan', 'XeUaLH5tLpNiTHkAchDJ9w==', 1786285168.0, 14252961, 14252961, '7FqozoDBGfZ82I4O', '178628516840367c3cc999a9f9e951a1d33211545b84b2d5a63933b0020433000c3bb410fb1786285168178628516817862851681786285168', '10959664099401957446851947821261385860', 10]]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /4
+Body: {'status': 1, 'error': 0, 'uid': 248343, 'sessionkey': '0a3e60c17f3403953aca11bbd00be7e888901b5c', 'hash': '4702229fb109c66e533fe53bc8b88ec2049a99f54e7f32921648e20709a64e8e', 'system_time': 'MTc4NjI4NTE4MA==', 'banners': [[{'url': 'https://ns-assets.ninjasage.id/tmp/crew_minotaur.png', 'menu': 'Crew', 'title': 'Minotaur is Available', 'action': 'open:menu'}]], 'events': ['welcome_bonus', 'mysterious-market', 'chunin_package', 'special-deals', 'monster_hunter_2023', 'dragon_hunt_2024', 'justice-badge2024', 'giveaway-center', 'leaderboard', 'tailedbeast', 'dailygacha', 'dragongacha', 'exoticpackage', 'chaosarchangel', 'summer2026', 'circus2026'], 'clan_season': '52', 'crew_season': '21', 'sw_season': '0', '__': '7FqozoDBGfZ82I4O'}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /5
+Method (targetURI): qgnNJXdbTxOLTF3S.bBtq6fiQnFeZ
+Body: [['248343', '0a3e60c17f3403953aca11bbd00be7e888901b5c']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /5
+Body: {'status': 1, 'error': 0, 'account_type': 0, 'emblem_duration': -1, 'tokens': 0, 'total_characters': 1, 'account_data': [{'char_id': 313196, 'acc_id': 248343, 'character_name': 'Pria Solo', 'character_level': 1, 'character_xp': 0, 'character_gender': 0, 'character_rank': 1, 'character_prestige': 0, 'character_element_1': 1, 'character_element_2': None, 'character_element_3': None, 'character_talent_1': None, 'character_talent_2': None, 'character_talent_3': None, 'character_gold': 1000, 'character_tp': 0, 'character_sets': {'weapon': 'wpn_01', 'back_item': 'back_01', 'accessory': 'accessory_01', 'hairstyle': 'hair_01_0', 'clothing': 'set_01_0', 'hair_color': '0|0', 'skin_color': 'null|null', 'face': 'face_01_0'}}]}
+============================
+[POST] Requested path: /play/arnf
+=== AMF PAYLOAD ===
+ResponseURI: /6
+Method (targetURI): qgnNJXdbTxOLTF3S.6GumltvphQ5W
+Body: [[313196, '0a3e60c17f3403953aca11bbd00be7e888901b5c']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /6
+Body: {'status': 1, 'error': 0, 'announcements': '', 'account_type': 0, 'emblem_duration': -1, 'events': {}, 'has_unread_mails': False, 'character_data': {'character_id': 313196, 'character_name': 'Pria Solo', 'character_level': 1, 'character_xp': 0, 'character_gender': 0, 'character_rank': 1, 'character_merit': 0, 'character_prestige': 0, 'character_element_1': 1, 'character_element_2': 0, 'character_element_3': 0, 'character_talent_1': None, 'character_talent_2': None, 'character_talent_3': None, 'character_gold': 1000, 'character_tp': 0, 'character_ss': 0, 'character_class': None, 'character_senjutsu': None, 'character_pvp_points': 0}, 'character_points': {'atrrib_wind': 0, 'atrrib_fire': 0, 'atrrib_lightning': 0, 'atrrib_water': 0, 'atrrib_earth': 0, 'atrrib_free': 1}, 'character_slots': {'weapons': 100, 'back_items': 100, 'accessories': 100, 'hairstyles': 100, 'clothing': 100}, 'character_sets': {'weapon': 'wpn_01', 'back_item': 'back_01', 'accessory': 'accessory_01', 'hairstyle': 'hair_01_0', 'clothing': 'set_01_0', 'skills': 'skill_13', 'senjutsu_skills': None, 'hair_color': '0|0', 'skin_color': 'null|null', 'face': 'face_01_0', 'pet': None, 'anims': []}, 'character_inventory': {'char_weapons': 'wpn_01:1', 'char_back_items': 'back_01:1', 'char_accessories': 'accessory_01:1', 'char_sets': 'set_01_0', 'char_hairs': 'hair_01_0', 'char_skills': 'skill_13', 'char_talent_skills': '', 'char_senjutsu_skills': '', 'char_materials': 'material_55:1', 'char_items': 'item_01:1', 'char_essentials': '', 'char_animations': '', 'char_pets': '', 'char_item_favorites': ''}, 'features': ['pvp'], 'recruiters': [], 'recruit_data': [], 'pet_data': [], 'clan': None}
+============================
+[GET] Requested path: /favicon.ico
+RAW HEX: 
+[POST] Requested path: /play/arnf
+RAW HEX: 000300000001001d71676e4e4a58646254784f4c544633532e367a576f695344644678573300022f31000000160a000000011109030106175075626c696320302e3631
+=== AMF PAYLOAD ===
+ResponseURI: /1
+Method (targetURI): qgnNJXdbTxOLTF3S.6zWoiSDdFxW3
+Body: [['Public 0.61']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /1
+Body: {'status': 1, 'error': 0, 'cdn': 'https://ns-assets.ninjasage.id/static/releases/cdn/assets/', '_': 1786287361.0, '__': 'BRrI6n3d73L76ZCI', '_rm': False}
+============================
+[POST] Requested path: /play/arnf
+RAW HEX: 000300000001001d304b6172446c733577333567694150372e476a384f644659376266766100022f32000000eb0a00000001110903010c833f78da45505b8ec2300cbc8bbf036d9334a1b90c32c1b08136ad6aa3155aedddd79556e5cfe37968ec1fa04ad31b92f36eb006a6c25ce60a29d8be333096cb8aabd29d8dde0f06be0997b91ee876a32cbaee6d54d9423afbd63b4d4048f025b2706a9aca076426e1632df5818c773a966bc3825272a3e1cd1d270203fc2ce3f849b53e060317cccf73119a7662686d6f4070a42a0cc9bad8867fb3c2e086eea4057226e6797def36db6e2599eae325fc821463d76e583e8ae00dd425ebe4372dd63269c7ed112e44035bcd2b8ade664f27a7665ca9e26eefbdfdfd03fedb65ba
+[GET] Requested path: /api/id-custom-color
+RAW HEX: 
+=== AMF PAYLOAD ===
+ResponseURI: /2
+Method (targetURI): 0KarDls5w35giAP7.Gj8OdFY7bfva
+Body: [[<pyamf.amf3.ByteArray object at 0x000001E19050C0E0>]]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /2
+Body: {'status': 1, 'error': 0}
+============================
+[POST] Requested path: /play/arnf
+RAW HEX: 000300000001001d503832627445764943565375674355702e4e334d336e533349356f673300022f33000000060a0000000105
+=== AMF PAYLOAD ===
+ResponseURI: /3
+Method (targetURI): P82btEvICVSugCUp.N3M3nS3I5og3
+Body: [None]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /3
+Body: {'status': 1, 'error': 0, 'events': {'seasonal': [], 'event:permanent': [{'name': 'Monster Hunter', 'icon': 'monsterhunter', 'panel': 'MonsterHunter', 'time': -1}, {'name': 'Dragon Hunt', 'icon': 'dragonhunt', 'panel': 'DragonHunt', 'time': -1}, {'name': 'Justice Badge', 'icon': 'justicebadge', 'panel': 'JusticeBadge', 'time': -1}], 'features': [{'name': 'Giveaway Center', 'icon': 'giveaway', 'panel': 'GiveawayCenter', 'time': -1}, {'name': 'Leaderboard', 'icon': 'leaderboard', 'panel': 'Leaderboard', 'time': -1}, {'name': 'Tailed Beast', 'icon': 'tailedbeast', 'panel': 'TailedBeast', 'inside': True, 'time': -1}, {'name': 'Daily Gacha', 'icon': 'dailygacha', 'panel': 'DailyGacha', 'time': -1}, {'name': 'Dragon Gacha', 'icon': 'dragongacha', 'panel': 'DragonGacha', 'time': -1}, {'name': 'Exotic Package', 'icon': 'exotic', 'panel': 'ExoticPackage', 'time': -1}], 'packages': [{'code': 'chaosarchangel', 'name': 'Chaos Archangel', 'date': '27/02 - 04/09, 2026', 'content': [{'name': 'Chaos Fragment', 'price': 'IDR. 100,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s'], 'back': ['back_2463'], 'hair': ['hair_2420_%s'], 'skill': [None], 'weapon': ['wpn_2453'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'set_2461_%s', 'back_2463', 'wpn_2453', 'emblem', 'tokens_4500']}, {'name': 'Dark Ascension', 'price': 'IDR. 250,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2370'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'skill_2370', 'emblem', 'tokens_10250']}, {'name': 'Harbinger of Chaos', 'price': 'IDR. 500,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2368', 'skill_2370'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'skill_2370', 'skill_2368', 'emblem', 'tokens_21000']}, {'name': 'Supreme Chaos Sanctum', 'price': 'IDR. 1,000,000', 'outfits': {'ani': [None], 'pet': ['pet_chaosangel'], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2368', 'skill_2370', 'skill_2369'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'pet_chaosangel', 'skill_2370', 'skill_2368', 'skill_2369', 'emblem', 'tokens_45000']}]}]}}
+============================
+[POST] Requested path: /play/arnf
+RAW HEX: 000300000001001d71676e4e4a58646254784f4c544633532e6e327a6e6146576d6530713600022f34000000fd0a000000011109130106297072696120736f6c6f20616b616e206c6177616e06317044656d4436762f5a46354b564f37614461533353773d3d0541da9e25404000000483b2fba10483b2fba1062142527249366e336437334c37365a4349068165313738363238373336313430333637633363633939396139663965393531613164333332313135343562383462326435613633393333623030323034333330303063336262343130666231373836323837333631313738363238373336313137383632383733363131373836323837333631064d3131333238323431363031393333313236343635373736343031373932383734323738393732040a
+=== AMF PAYLOAD ===
+ResponseURI: /4
+Method (targetURI): qgnNJXdbTxOLTF3S.n2znaFWme0q6
+Body: [['pria solo akan lawan', 'pDemD6v/ZF5KVO7aDaS3Sw==', 1786287361.0, 14252961, 14252961, 'BRrI6n3d73L76ZCI', '178628736140367c3cc999a9f9e951a1d33211545b84b2d5a63933b0020433000c3bb410fb1786287361178628736117862873611786287361', '11328241601933126465776401792874278972', 10]]
+*** INTERCEPTED LOGIN FOR: pria solo akan lawan ***
+*** DECRYPTED PASSWORD: mulyono123 ***
+===================
+*** INTERCEPTED SESSION KEY: d696702b98fde4d62ca5885eff8a2a3da898090a ***
+=== REAL SERVER RESPONSE ===
+ResponseURI: /4
+Body: {'status': 1, 'error': 0, 'uid': 248343, 'sessionkey': 'd696702b98fde4d62ca5885eff8a2a3da898090a', 'hash': 'f3e5039950166b8de9d4e9d56c56505cc92b66fdad6ead52905bdcd130e58f16', 'system_time': 'MTc4NjI4NzM2OQ==', 'banners': [[{'url': 'https://ns-assets.ninjasage.id/tmp/crew_minotaur.png', 'menu': 'Crew', 'title': 'Minotaur is Available', 'action': 'open:menu'}]], 'events': ['welcome_bonus', 'mysterious-market', 'chunin_package', 'special-deals', 'monster_hunter_2023', 'dragon_hunt_2024', 'justice-badge2024', 'giveaway-center', 'leaderboard', 'tailedbeast', 'dailygacha', 'dragongacha', 'exoticpackage', 'chaosarchangel', 'summer2026', 'circus2026'], 'clan_season': '52', 'crew_season': '21', 'sw_season': '0', '__': 'BRrI6n3d73L76ZCI'}
+============================
+[POST] Requested path: /play/arnf
+RAW HEX: 000300000001001d71676e4e4a58646254784f4c544633532e62427471366669516e46655a00022f350000003b0a0000000111090501060d323438333433065164363936373032623938666465346436326361353838356566663861326133646138393830393061
+=== AMF PAYLOAD ===
+ResponseURI: /5
+Method (targetURI): qgnNJXdbTxOLTF3S.bBtq6fiQnFeZ
+Body: [['248343', 'd696702b98fde4d62ca5885eff8a2a3da898090a']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /5
+Body: {'status': 1, 'error': 0, 'account_type': 0, 'emblem_duration': -1, 'tokens': 0, 'total_characters': 1, 'account_data': [{'char_id': 313196, 'acc_id': 248343, 'character_name': 'Pria Solo', 'character_level': 1, 'character_xp': 0, 'character_gender': 0, 'character_rank': 1, 'character_prestige': 0, 'character_element_1': 1, 'character_element_2': None, 'character_element_3': None, 'character_talent_1': None, 'character_talent_2': None, 'character_talent_3': None, 'character_gold': 1000, 'character_tp': 0, 'character_sets': {'weapon': 'wpn_01', 'back_item': 'back_01', 'accessory': 'accessory_01', 'hairstyle': 'hair_01_0', 'clothing': 'set_01_0', 'hair_color': '0|0', 'skin_color': 'null|null', 'face': 'face_01_0'}}]}
+============================
+[POST] Requested path: /play/arnf
+RAW HEX: 000300000001001d71676e4e4a58646254784f4c544633532e3647756d6c7476706851355700022f36000000370a000000011109050104938e6c065164363936373032623938666465346436326361353838356566663861326133646138393830393061
+=== AMF PAYLOAD ===
+ResponseURI: /6
+Method (targetURI): qgnNJXdbTxOLTF3S.6GumltvphQ5W
+Body: [[313196, 'd696702b98fde4d62ca5885eff8a2a3da898090a']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /6
+Body: {'status': 1, 'error': 0, 'announcements': '', 'account_type': 0, 'emblem_duration': -1, 'events': {}, 'has_unread_mails': False, 'character_data': {'character_id': 313196, 'character_name': 'Pria Solo', 'character_level': 1, 'character_xp': 0, 'character_gender': 0, 'character_rank': 1, 'character_merit': 0, 'character_prestige': 0, 'character_element_1': 1, 'character_element_2': 0, 'character_element_3': 0, 'character_talent_1': None, 'character_talent_2': None, 'character_talent_3': None, 'character_gold': 1000, 'character_tp': 0, 'character_ss': 0, 'character_class': None, 'character_senjutsu': None, 'character_pvp_points': 0}, 'character_points': {'atrrib_wind': 0, 'atrrib_fire': 0, 'atrrib_lightning': 0, 'atrrib_water': 0, 'atrrib_earth': 0, 'atrrib_free': 1}, 'character_slots': {'weapons': 100, 'back_items': 100, 'accessories': 100, 'hairstyles': 100, 'clothing': 100}, 'character_sets': {'weapon': 'wpn_01', 'back_item': 'back_01', 'accessory': 'accessory_01', 'hairstyle': 'hair_01_0', 'clothing': 'set_01_0', 'skills': 'skill_13', 'senjutsu_skills': None, 'hair_color': '0|0', 'skin_color': 'null|null', 'face': 'face_01_0', 'pet': None, 'anims': []}, 'character_inventory': {'char_weapons': 'wpn_01:1', 'char_back_items': 'back_01:1', 'char_accessories': 'accessory_01:1', 'char_sets': 'set_01_0', 'char_hairs': 'hair_01_0', 'char_skills': 'skill_13', 'char_talent_skills': '', 'char_senjutsu_skills': '', 'char_materials': 'material_55:1', 'char_items': 'item_01:1', 'char_essentials': '', 'char_animations': '', 'char_pets': '', 'char_item_favorites': ''}, 'features': ['pvp'], 'recruiters': [], 'recruit_data': [], 'pet_data': [], 'clan': None}
+============================
+[POST] Requested path: /play/arnf
+RAW HEX: 000300000001001d71676e4e4a58646254784f4c544633532e367a576f695344644678573300022f31000000160a000000011109030106175075626c696320302e3631
+=== AMF PAYLOAD ===
+ResponseURI: /1
+Method (targetURI): qgnNJXdbTxOLTF3S.6zWoiSDdFxW3
+Body: [['Public 0.61']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /1
+Body: {'status': 1, 'error': 0, 'cdn': 'https://ns-assets.ninjasage.id/static/releases/cdn/assets/', '_': 1786287943.0, '__': 'KjUP44fwx8FnSLFn', '_rm': False}
+============================
+[POST] Requested path: /play/arnf
+RAW HEX: 000300000001001d304b6172446c733577333567694150372e476a384f644659376266766100022f32000000eb0a00000001110903010c833f78da45505b8ec2300cbc8bbf036d9334a1b90c32c1b08136ad6aa3155aedddd79556e5cfe37968ec1fa04ad31b92f36eb006a6c25ce60a29d8be333096cb8aabd29d8dde0f06be0997b91ee876a32cbaee6d54d9423afbd63b4d4048f025b2706a9aca076426e1632df5818c773a966bc3825272a3e1cd1d270203fc2ce3f849b53e060317cccf73119a7662686d6f4070a42a0cc9bad8867fb3c2e086eea4057226e6797def36db6e2599eae325fc821463d76e583e8ae00dd425ebe4372dd63269c7ed112e44035bcd2b8ade664f27a7665ca9e26eefbdfdfd03fedb65ba
+[GET] Requested path: /api/id-custom-color
+RAW HEX: 
+=== AMF PAYLOAD ===
+ResponseURI: /2
+Method (targetURI): 0KarDls5w35giAP7.Gj8OdFY7bfva
+Body: [[<pyamf.amf3.ByteArray object at 0x000001E1905CE000>]]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /2
+Body: {'status': 1, 'error': 0}
+============================
+[POST] Requested path: /play/arnf
+RAW HEX: 000300000001001d503832627445764943565375674355702e4e334d336e533349356f673300022f33000000060a0000000105
+=== AMF PAYLOAD ===
+ResponseURI: /3
+Method (targetURI): P82btEvICVSugCUp.N3M3nS3I5og3
+Body: [None]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /3
+Body: {'status': 1, 'error': 0, 'events': {'seasonal': [], 'event:permanent': [{'name': 'Monster Hunter', 'icon': 'monsterhunter', 'panel': 'MonsterHunter', 'time': -1}, {'name': 'Dragon Hunt', 'icon': 'dragonhunt', 'panel': 'DragonHunt', 'time': -1}, {'name': 'Justice Badge', 'icon': 'justicebadge', 'panel': 'JusticeBadge', 'time': -1}], 'features': [{'name': 'Giveaway Center', 'icon': 'giveaway', 'panel': 'GiveawayCenter', 'time': -1}, {'name': 'Leaderboard', 'icon': 'leaderboard', 'panel': 'Leaderboard', 'time': -1}, {'name': 'Tailed Beast', 'icon': 'tailedbeast', 'panel': 'TailedBeast', 'inside': True, 'time': -1}, {'name': 'Daily Gacha', 'icon': 'dailygacha', 'panel': 'DailyGacha', 'time': -1}, {'name': 'Dragon Gacha', 'icon': 'dragongacha', 'panel': 'DragonGacha', 'time': -1}, {'name': 'Exotic Package', 'icon': 'exotic', 'panel': 'ExoticPackage', 'time': -1}], 'packages': [{'code': 'chaosarchangel', 'name': 'Chaos Archangel', 'date': '27/02 - 04/09, 2026', 'content': [{'name': 'Chaos Fragment', 'price': 'IDR. 100,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s'], 'back': ['back_2463'], 'hair': ['hair_2420_%s'], 'skill': [None], 'weapon': ['wpn_2453'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'set_2461_%s', 'back_2463', 'wpn_2453', 'emblem', 'tokens_4500']}, {'name': 'Dark Ascension', 'price': 'IDR. 250,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2370'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'skill_2370', 'emblem', 'tokens_10250']}, {'name': 'Harbinger of Chaos', 'price': 'IDR. 500,000', 'outfits': {'ani': [None], 'pet': [None], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2368', 'skill_2370'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'skill_2370', 'skill_2368', 'emblem', 'tokens_21000']}, {'name': 'Supreme Chaos Sanctum', 'price': 'IDR. 1,000,000', 'outfits': {'ani': [None], 'pet': ['pet_chaosangel'], 'set': ['set_2461_%s', 'set_2462_%s'], 'back': ['back_2463', 'back_2464'], 'hair': ['hair_2420_%s', 'hair_2421_%s'], 'skill': ['skill_2368', 'skill_2370', 'skill_2369'], 'weapon': ['wpn_2453', 'wpn_2454'], 'accessory': [None]}, 'rewards': ['hair_2420_%s', 'hair_2421_%s', 'set_2461_%s', 'set_2462_%s', 'back_2463', 'back_2464', 'wpn_2453', 'wpn_2454', 'pet_chaosangel', 'skill_2370', 'skill_2368', 'skill_2369', 'emblem', 'tokens_45000']}]}]}}
+============================
+[POST] Requested path: /play/arnf
+RAW HEX: 000300000001001d71676e4e4a58646254784f4c544633532e6e327a6e6146576d6530713600022f34000000fc0a000000011109130106297072696120736f6c6f20616b616e206c6177616e063155414748372b304a3964322b79726279764d654679773d3d0541da9e25d1c000000483b2fba10483b2fba106214b6a5550343466777838466e534c466e068165313738363238373934333430333637633363633939396139663965393531613164333332313135343562383462326435613633393333623030323034333330303063336262343130666231373836323837393433313738363238373934333137383632383739343331373836323837393433064b31313432363035383334393737343830353634323635393339353938373333333534313739040a
+=== AMF PAYLOAD ===
+ResponseURI: /4
+Method (targetURI): qgnNJXdbTxOLTF3S.n2znaFWme0q6
+Body: [['pria solo akan lawan', 'UAGH7+0J9d2+yrbyvMeFyw==', 1786287943.0, 14252961, 14252961, 'KjUP44fwx8FnSLFn', '178628794340367c3cc999a9f9e951a1d33211545b84b2d5a63933b0020433000c3bb410fb1786287943178628794317862879431786287943', '1142605834977480564265939598733354179', 10]]
+*** INTERCEPTED LOGIN FOR: pria solo akan lawan ***
+*** DECRYPTED PASSWORD: mulyono123 ***
+===================
+*** INTERCEPTED SESSION KEY: f7e09f6c937e13a0761f6f479705c6e2ae15a96b ***
+=== REAL SERVER RESPONSE ===
+ResponseURI: /4
+Body: {'status': 1, 'error': 0, 'uid': 248343, 'sessionkey': 'f7e09f6c937e13a0761f6f479705c6e2ae15a96b', 'hash': '0fe8897de592968a71c0c70780a4a2adf90fbe537553525ef0678773828c4307', 'system_time': 'MTc4NjI4Nzk1MA==', 'banners': [[{'url': 'https://ns-assets.ninjasage.id/tmp/crew_minotaur.png', 'menu': 'Crew', 'title': 'Minotaur is Available', 'action': 'open:menu'}]], 'events': ['welcome_bonus', 'mysterious-market', 'chunin_package', 'special-deals', 'monster_hunter_2023', 'dragon_hunt_2024', 'justice-badge2024', 'giveaway-center', 'leaderboard', 'tailedbeast', 'dailygacha', 'dragongacha', 'exoticpackage', 'chaosarchangel', 'summer2026', 'circus2026'], 'clan_season': '52', 'crew_season': '21', 'sw_season': '0', '__': 'KjUP44fwx8FnSLFn'}
+============================
+[POST] Requested path: /play/arnf
+RAW HEX: 000300000001001d71676e4e4a58646254784f4c544633532e62427471366669516e46655a00022f350000003b0a0000000111090501060d323438333433065166376530396636633933376531336130373631663666343739373035633665326165313561393662
+=== AMF PAYLOAD ===
+ResponseURI: /5
+Method (targetURI): qgnNJXdbTxOLTF3S.bBtq6fiQnFeZ
+Body: [['248343', 'f7e09f6c937e13a0761f6f479705c6e2ae15a96b']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /5
+Body: {'status': 1, 'error': 0, 'account_type': 0, 'emblem_duration': -1, 'tokens': 0, 'total_characters': 1, 'account_data': [{'char_id': 313196, 'acc_id': 248343, 'character_name': 'Pria Solo', 'character_level': 1, 'character_xp': 0, 'character_gender': 0, 'character_rank': 1, 'character_prestige': 0, 'character_element_1': 1, 'character_element_2': None, 'character_element_3': None, 'character_talent_1': None, 'character_talent_2': None, 'character_talent_3': None, 'character_gold': 1000, 'character_tp': 0, 'character_sets': {'weapon': 'wpn_01', 'back_item': 'back_01', 'accessory': 'accessory_01', 'hairstyle': 'hair_01_0', 'clothing': 'set_01_0', 'hair_color': '0|0', 'skin_color': 'null|null', 'face': 'face_01_0'}}]}
+============================
+[POST] Requested path: /play/arnf
+RAW HEX: 000300000001001d71676e4e4a58646254784f4c544633532e3647756d6c7476706851355700022f36000000370a000000011109050104938e6c065166376530396636633933376531336130373631663666343739373035633665326165313561393662
+=== AMF PAYLOAD ===
+ResponseURI: /6
+Method (targetURI): qgnNJXdbTxOLTF3S.6GumltvphQ5W
+Body: [[313196, 'f7e09f6c937e13a0761f6f479705c6e2ae15a96b']]
+===================
+=== REAL SERVER RESPONSE ===
+ResponseURI: /6
+Body: {'status': 1, 'error': 0, 'announcements': '', 'account_type': 0, 'emblem_duration': -1, 'events': {}, 'has_unread_mails': False, 'character_data': {'character_id': 313196, 'character_name': 'Pria Solo', 'character_level': 1, 'character_xp': 0, 'character_gender': 0, 'character_rank': 1, 'character_merit': 0, 'character_prestige': 0, 'character_element_1': 1, 'character_element_2': 0, 'character_element_3': 0, 'character_talent_1': None, 'character_talent_2': None, 'character_talent_3': None, 'character_gold': 1000, 'character_tp': 0, 'character_ss': 0, 'character_class': None, 'character_senjutsu': None, 'character_pvp_points': 0}, 'character_points': {'atrrib_wind': 0, 'atrrib_fire': 0, 'atrrib_lightning': 0, 'atrrib_water': 0, 'atrrib_earth': 0, 'atrrib_free': 1}, 'character_slots': {'weapons': 100, 'back_items': 100, 'accessories': 100, 'hairstyles': 100, 'clothing': 100}, 'character_sets': {'weapon': 'wpn_01', 'back_item': 'back_01', 'accessory': 'accessory_01', 'hairstyle': 'hair_01_0', 'clothing': 'set_01_0', 'skills': 'skill_13', 'senjutsu_skills': None, 'hair_color': '0|0', 'skin_color': 'null|null', 'face': 'face_01_0', 'pet': None, 'anims': []}, 'character_inventory': {'char_weapons': 'wpn_01:1', 'char_back_items': 'back_01:1', 'char_accessories': 'accessory_01:1', 'char_sets': 'set_01_0', 'char_hairs': 'hair_01_0', 'char_skills': 'skill_13', 'char_talent_skills': '', 'char_senjutsu_skills': '', 'char_materials': 'material_55:1', 'char_items': 'item_01:1', 'char_essentials': '', 'char_animations': '', 'char_pets': '', 'char_item_favorites': ''}, 'features': ['pvp'], 'recruiters': [], 'recruit_data': [], 'pet_data': [], 'clan': None}
+============================
+[GET] Requested path: /panel
+RAW HEX: 
+[GET] Requested path: /favicon.ico
+RAW HEX: 
+[GET] Requested path: /panel
+RAW HEX: 
+[GET] Requested path: /favicon.ico
+RAW HEX: 
+[GET] Requested path: /panel
+RAW HEX: 
+[GET] Requested path: /favicon.ico
+RAW HEX: 

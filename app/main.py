@@ -220,3 +220,20 @@ async def bot_command(req: BotCommandRequest):
         return {"status": "success", "result": result}
     except Exception as e:
         return {"status": "error", "message": str(e)}
+
+from .services.settings_manager import load_settings, save_settings
+
+@app.get("/api/bot/settings")
+async def api_get_settings():
+    return {"status": "success", "settings": load_settings()}
+
+@app.post("/api/bot/settings")
+async def api_save_settings(req: Request):
+    try:
+        settings = await req.json()
+        success = save_settings(settings)
+        if success:
+            return {"status": "success", "message": "Settings saved successfully"}
+        return {"status": "error", "message": "Failed to save settings"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
