@@ -767,9 +767,40 @@ document.addEventListener('DOMContentLoaded', () => {
     // Refresh Stats Button
     const btnRefreshStats = document.getElementById('btn-refresh-stats');
     if (btnRefreshStats) {
-        btnRefreshStats.addEventListener('click', () => {
-            addLog("Stats refreshed successfully.");
-            checkLoginState();
+        btnRefreshStats.addEventListener('click', async () => {
+            const stored = localStorage.getItem('ns_quick_login');
+            if (stored) {
+                addLog("Refreshing Session Token via Quick Login...");
+                const creds = JSON.parse(stored);
+                try {
+                    const res = await fetch('/api/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: creds.user, password: creds.pass })
+                    });
+                    const data = await res.json();
+                    if (data.status === 'success') {
+                        sessionState = {
+                            sessionkey: data.sessionkey,
+                            char_id: data.char_id,
+                            char_name: data.char_name,
+                            level: data.level || '--',
+                            xp: data.xp || '--',
+                            gold: data.gold || '--',
+                            tokens: data.tokens || '--'
+                        };
+                        localStorage.setItem('ns_session', JSON.stringify(sessionState));
+                        addLog("Session refreshed successfully! ✅");
+                        checkLoginState();
+                    } else {
+                        addLog("Failed to refresh session: " + data.message, "err");
+                    }
+                } catch(e) {
+                    addLog("Error refreshing session: " + e.message, "err");
+                }
+            } else {
+                addLog("No quick login credentials found. Please logout and login manually.", "err");
+            }
         });
     }
 
