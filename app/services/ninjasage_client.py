@@ -43,6 +43,9 @@ class NinjaSageClient:
         try:
             resp_envelope = remoting.decode(resp.content)
             for resp_uri, msg in resp_envelope.bodies:
+                import pyamf.remoting
+                if isinstance(msg.body, pyamf.remoting.ErrorFault):
+                    return {"status": 0, "error": f"{msg.body.code}: {msg.body.description}"}
                 return msg.body
         except Exception as e:
             raise Exception(f"Failed to decode official AMF response: {e}")
