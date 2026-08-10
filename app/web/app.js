@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('login-user').value = creds.user;
                 document.getElementById('login-pass').value = creds.pass;
                 addStartupLog("Quick login credentials loaded", 'ok');
-                loginBtn.click();
+                document.getElementById('login-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
             } else {
                 addStartupLog("No saved credentials for Quick Login", 'warn');
             }

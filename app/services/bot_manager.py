@@ -54,13 +54,28 @@ async def run_hunting(client: NinjaSageClient, sessionkey: str, char_id: int, zo
         return f"Failed to start hunting: {start_res}"
 
 async def auto_shadow_war(client: NinjaSageClient, sessionkey: str, char_id: int):
-    # Placeholder for actual Shadow War AMF route
-    start_res = await client.send_amf_request("ShadowWar.startMatch", [char_id, sessionkey])
-    if start_res.get('status') == 1 and 'battle_code' in start_res:
-        battle_code = start_res['battle_code']
+    # Get shadow war enemies
+    enemies_res = await client.send_amf_request("ShadowWar.executeService", [["getEnemies", [char_id, sessionkey]]])
+    if not isinstance(enemies_res, dict) or 'enemies' not in enemies_res or not enemies_res['enemies']:
+        return "Failed to get Shadow War enemies or no enemies available."
+        
+    enemy = enemies_res['enemies'][0]
+    enemy_id = enemy['id']
+    enemy_name = enemy.get('name', 'Unknown')
+    
+    # Start match
+    start_res = await client.send_amf_request("ShadowWar.executeService", [["startBattle", [char_id, sessionkey, enemy_id]]])
+    if start_res.get('status') == 1 and 'id' in start_res:
+        battle_id = start_res['id']
         await asyncio.sleep(1)
-        finish_res = await client.send_amf_request("ShadowWar.finishMatch", [char_id, battle_code, 1, sessionkey])
-        return f"Shadow War Complete! Reward: {finish_res}"
+        
+        # Finish match
+        battle_hash_const = "e89c256038cc9603" # BATTLE_HASH from apk config
+        hash_str = f"{char_id}{battle_id}0{battle_hash_const}"
+        mission_hash = hashlib.sha256(hash_str.encode('utf-8')).hexdigest()
+        
+        finish_res = await client.send_amf_request("ShadowWar.executeService", [["finishBattle", [char_id, sessionkey, battle_id, 0, battle_hash_const, mission_hash]]])
+        return f"Shadow War Complete against {enemy_name}! Reward: {finish_res}"
     else:
         return f"Failed to start Shadow War: {start_res}"
 
@@ -75,15 +90,49 @@ async def auto_mission_s(client: NinjaSageClient, sessionkey: str, char_id: int)
     return await run_mission(client, sessionkey, char_id, "msn_s1")
 
 async def auto_clan_war(client: NinjaSageClient, sessionkey: str, char_id: int):
-    # Placeholder for actual Clan War AMF route
-    start_res = await client.send_amf_request("ClanWar.startMatch", [char_id, sessionkey])
-    if start_res.get('status') == 1 and 'battle_code' in start_res:
-        battle_code = start_res['battle_code']
-        await asyncio.sleep(1)
-        finish_res = await client.send_amf_request("ClanWar.finishMatch", [char_id, battle_code, 1, sessionkey])
-        return f"Clan War Complete! Reward: {finish_res}"
-    else:
-        return f"Failed to start Clan War: {start_res}"
+    import httpx
+    import random
+    import string
+    
+    clan_base_url = "https://clan.ninjasage.id"
+    # Ninja Sage ID Clan War uses a separate REST API
+    async with httpx.AsyncClient(verify=False) as http:
+        # 1. Authenticate to Clan API
+        auth_resp = await http.post(f"{clan_base_url}/auth/login", json={"char_id": char_id, "session_key": sessionkey})
+        if auth_resp.status_code != 200:
+            return f"Clan War Auth Failed: {auth_resp.text}"
+            
+        auth_data = auth_resp.json()
+        token = auth_data.get("token") or auth_data.get("access_token")
+        if not token:
+            return "Clan War Auth Failed: No token received"
+            
+        headers = {"Authorization": f"Bearer {token}"}
+        
+        # 2. Get opponents
+        opp_resp = await http.post(f"{clan_base_url}/battle/opponents", json={}, headers=headers)
+        if opp_resp.status_code != 200:
+            return f"Failed to get Clan War opponents: {opp_resp.text}"
+            
+        opp_data = opp_resp.json()
+        clans = opp_data.get("clans", [])
+        if not clans:
+            return "No clan opponents found"
+            
+        # Pick the first opponent clan
+        opponent = clans[0]
+        opponent_id = opponent['id']
+        opponent_name = opponent.get('name', str(opponent_id))
+        
+        # 3. Quick battle
+        code = "".join(random.choices(string.ascii_letters + string.digits, k=24))
+        battle_resp = await http.post(f"{clan_base_url}/battle/quick/{opponent_id}", json={"code": code}, headers=headers)
+        
+        if battle_resp.status_code == 200:
+            reward_data = battle_resp.json()
+            return f"Clan War against {opponent_name} Complete! Reward: {reward_data}"
+        else:
+            return f"Clan War failed: {battle_resp.text}"
 
 async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: int, boss_type: str = "ringmaster"):
     # 1. Get Character Data to calculate agility and _loc6_
@@ -282,8 +331,7 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
     hash_start = hashlib.sha256(hash_start_str.encode('utf-8')).hexdigest()
     
     try:
-        # NOTE: Yokai uses MTpVa9K3yFwo instead of QBUJb0w3NBsX
-        start_res = await client.send_amf_request("urUAcOuL6PahuoEd.MTpVa9K3yFwo", [[
+        start_res = await client.send_amf_request("urUACOuL6PahuoEd.MTpVa9K3yFwo", [[
             char_id, ene_id, char_agility, enemy_info_str, hash_start, sessionkey
         ]])
     except Exception as e:
@@ -314,8 +362,7 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
     hash_end = hashlib.sha256(hash_end_str.encode('utf-8')).hexdigest()
     
     try:
-        # NOTE: Yokai uses iETwupoGdQMO instead of fRGiPcIczAbE
-        finish_res = await client.send_amf_request("urUAcOuL6PahuoEd.iETwupoGdQMO", [[
+        finish_res = await client.send_amf_request("urUACOuL6PahuoEd.4nI6yGEvtUni", [[
             char_id, ene_id, battle_code, damage_done, hash_end, loc6_str, sessionkey
         ]])
     except Exception as e:
