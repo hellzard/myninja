@@ -793,7 +793,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         addLog("Session refreshed successfully! ✅");
                         checkLoginState();
                     } else {
-                        addLog("Failed to refresh session: " + data.message, "err");
+                        const errMsg = data.message || (data.detail ? JSON.stringify(data.detail) : "Unknown error");
+                        addLog("Failed to refresh session: " + errMsg, "err");
                     }
                 } catch(e) {
                     addLog("Error refreshing session: " + e.message, "err");
