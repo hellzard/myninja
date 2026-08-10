@@ -479,8 +479,8 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
                 
             battle_id = str(start_res.get("code", ""))
             
-            # Wait for battle (simulate realistic fight time to avoid rate limit)
-            await asyncio.sleep(8)
+            # Wait for battle (simulate realistic fight time to avoid rate limit - APK waits 30s)
+            await asyncio.sleep(25)
             
             # Finish Hunting
             # Hash logic: md5(str(boss_index) + str(char_id) + battle_id)
@@ -500,7 +500,7 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
                 results.append(f"Failed to defeat {boss_name}: {finish_res}")
                 
             # Delay between attempts to avoid rate limit
-            await asyncio.sleep(3)
+            await asyncio.sleep(6)
                 
     if not results:
         return f"No Eudemon Bosses fought. Parsed Level: {char_level}. Attempts: {avail_raw}"
