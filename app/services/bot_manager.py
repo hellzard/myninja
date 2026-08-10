@@ -89,7 +89,7 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
         enemy_attrs.append(f"id:{enemy}|hp:{hp}|agility:{ene_agi}")
         
     hash_input = ",".join(enemies) + "".join(enemy_attrs) + str(agility)
-    mission_hash = hashlib.md5(hash_input.encode()).hexdigest()
+    mission_hash = hashlib.sha256(hash_input.encode()).hexdigest()
     
     start_params = [char_id, mission_id, ",".join(enemies), "#".join(enemy_attrs), agility, mission_hash, sessionkey]
     
@@ -99,7 +99,7 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
         await asyncio.sleep(1)
         
         finish_hash_input = f"{mission_id}{char_id}{battle_id}0"
-        finish_mission_hash = hashlib.md5(finish_hash_input.encode()).hexdigest()
+        finish_mission_hash = hashlib.sha256(finish_hash_input.encode()).hexdigest()
         
         finish_params = [char_id, mission_id, battle_id, finish_mission_hash, 0, sessionkey, BATTLE_HASH, 0]
         finish_res = await client.send_amf_request("BattleSystem.finishMission", finish_params)
@@ -151,7 +151,7 @@ async def auto_shadow_war(client: NinjaSageClient, sessionkey: str, char_id: int
     
     # 4. Finish Battle
     hash_input = f"{char_id}{battle_id}0{BATTLE_HASH}"
-    mission_hash = hashlib.md5(hash_input.encode()).hexdigest()
+    mission_hash = hashlib.sha256(hash_input.encode()).hexdigest()
     
     finish_params = [char_id, sessionkey, battle_id, 0, BATTLE_HASH, mission_hash]
     finish_res = await client.send_amf_request("ShadowWar.executeService", ["finishBattle", finish_params])
@@ -186,7 +186,7 @@ async def auto_monster_hunt(client: NinjaSageClient, sessionkey: str, char_id: i
     # 2. Start Battle
     # hash(char_id + boss_id)
     start_hash_str = str(char_id) + str(boss_id)
-    start_hash = hashlib.md5(start_hash_str.encode()).hexdigest()
+    start_hash = hashlib.sha256(start_hash_str.encode()).hexdigest()
     
     start_res = await client.send_amf_request("MonsterHunterEvent2023.startBattle", [char_id, boss_id, start_hash, sessionkey])
     if start_res.get("status") != 1:
@@ -198,7 +198,7 @@ async def auto_monster_hunt(client: NinjaSageClient, sessionkey: str, char_id: i
     # 3. Finish Battle
     # hash(char_id + boss_id + battle_id + "0" + equipment_data)
     finish_hash_str = str(char_id) + str(boss_id) + battle_id + "0" + EQUIPMENT_DATA
-    finish_hash = hashlib.md5(finish_hash_str.encode()).hexdigest()
+    finish_hash = hashlib.sha256(finish_hash_str.encode()).hexdigest()
     
     finish_res = await client.send_amf_request("MonsterHunterEvent2023.finishBattle", [
         char_id, boss_id, battle_id, 0, finish_hash, EQUIPMENT_DATA, sessionkey
@@ -275,7 +275,7 @@ async def auto_mission_s(client: NinjaSageClient, sessionkey: str, char_id: int)
         enemy_attrs.append(f"id:{enemy}|hp:{hp}|agility:{ene_agi}")
         
     hash_input = ",".join(enemies) + "".join(enemy_attrs) + str(agility)
-    mission_hash = hashlib.md5(hash_input.encode()).hexdigest()
+    mission_hash = hashlib.sha256(hash_input.encode()).hexdigest()
     
     # 4. Start Battle
     start_params = [char_id, mission_id, ",".join(enemies), "#".join(enemy_attrs), agility, mission_hash, sessionkey, stage_to_run]
@@ -289,7 +289,7 @@ async def auto_mission_s(client: NinjaSageClient, sessionkey: str, char_id: int)
     
     # 5. Finish Battle
     finish_hash_input = f"{mission_id}{char_id}{battle_id}{MISSION_S_FINISH_DAMAGE}"
-    finish_mission_hash = hashlib.md5(finish_hash_input.encode()).hexdigest()
+    finish_mission_hash = hashlib.sha256(finish_hash_input.encode()).hexdigest()
     
     finish_params = [char_id, mission_id, battle_id, finish_mission_hash, MISSION_S_FINISH_DAMAGE, sessionkey, BATTLE_HASH, 1]
     finish_res = await client.send_amf_request("BattleSystem.finishMission", finish_params)
@@ -479,13 +479,13 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
                 
             battle_id = str(start_res.get("code", ""))
             
-            # Wait for battle (2 seconds simulate)
-            await asyncio.sleep(2)
+            # Wait for battle (simulate realistic fight time to avoid rate limit)
+            await asyncio.sleep(8)
             
             # Finish Hunting
             # Hash logic: md5(str(boss_index) + str(char_id) + battle_id)
             loc2_str = str(boss_index) + str(char_id) + battle_id
-            loc2 = hashlib.md5(loc2_str.encode()).hexdigest()
+            loc2 = hashlib.sha256(loc2_str.encode()).hexdigest()
             
             BATTLE_HASH = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzAxIiwid2VhcG9uIjoid3BuXzAxIiwic2V0Ijoic2V0XzAxXzAifSwic3RhdHVzIjp7ImVhcnRoIjowLCJmaXJlIjowLCJ3YXRlciI6MCwibGlnaHRuaW5nIjowLCJ3aW5kIjowfSwiYnl0ZXMiOnsiXyI6ODIyODQ0NywiX18iOjgyMjg0NDcsIl9fXyI6IjE3NjI3NDY2NTk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mjc0NjY1OTE3NjI3NDY2NTkxNzYyNzQ2NjU5MTc2Mjc0NjY1OSIsIl9fX19fIjo4MjI4NDQ3LCJfX19fX18iOjgyMjg0NDcsIl9fX18iOjE3NjI3NDY2NTl9LCJfX19fIjpbeyJfIjoic2tpbGxfMTMiLCJfXyI6MjkxMzR9XX0="
             
@@ -498,6 +498,9 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
                 results.append(f"Defeated {boss_name} {i+1}/{attempts} - Gained XP: {xp}, Gold: {gold}")
             else:
                 results.append(f"Failed to defeat {boss_name}: {finish_res}")
+                
+            # Delay between attempts to avoid rate limit
+            await asyncio.sleep(3)
                 
     if not results:
         return f"No Eudemon Bosses fought. Parsed Level: {char_level}. Attempts: {avail_raw}"
