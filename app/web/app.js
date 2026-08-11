@@ -360,10 +360,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                 });
                 const data = await res.json();
-                if (data.status === 'success' && !data.message.includes("Failed")) {
+                if (data.status === 'success' && !data.message.includes("Failed") && !data.message.includes("Unknown boss")) {
                     addLog(`[AutoHunt] Zone ${currentHuntZone} Success: ${data.message}`);
                 } else {
-                    addLog(`[AutoHunt] Zone ${currentHuntZone} Failed. Moving to next zone...`);
+                    addLog(`[AutoHunt] Zone ${currentHuntZone} Failed: ${data.message || data.status}. Moving to next zone...`);
                     currentHuntZone++;
                     if (currentHuntZone > 50) { // Safety break
                         addLog("Max hunting zones reached. Stopping.");
