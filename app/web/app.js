@@ -209,6 +209,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Automation Loops (Smart Client) ---
     
+    // Global Bot Status Manager
+    let currentRunningBotBtn = null;
+    const statusText = document.getElementById('bot-status-text');
+    const stopGlobalBtn = document.getElementById('global-stop-btn');
+
+    window.stopCurrentBot = function() {
+        if (currentRunningBotBtn) {
+            currentRunningBotBtn.click();
+        }
+    };
+
+    document.querySelectorAll('.btn-toggle').forEach(btn => {
+        btn.addEventListener('click', function() {
+            setTimeout(() => {
+                if (this.textContent === "STOP") {
+                    if (currentRunningBotBtn && currentRunningBotBtn !== this) {
+                        currentRunningBotBtn.click();
+                    }
+                    currentRunningBotBtn = this;
+                    let botName = this.previousElementSibling.querySelector('h4').textContent;
+                    if (statusText) {
+                        statusText.textContent = "Running: " + botName;
+                        statusText.style.color = "#10b981";
+                    }
+                    if (stopGlobalBtn) stopGlobalBtn.style.display = "block";
+                } else {
+                    if (currentRunningBotBtn === this) {
+                        currentRunningBotBtn = null;
+                        if (statusText) {
+                            statusText.textContent = "Idle - No bot is currently running.";
+                            statusText.style.color = "#eee";
+                        }
+                        if (stopGlobalBtn) stopGlobalBtn.style.display = "none";
+                    }
+                }
+            }, 10);
+        });
+    });
+    
     // Auto Leveling
     let autoLevelInterval = null;
     let autoLevelTarget = 0;
@@ -449,6 +488,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     const data = await res.json();
                     addLog(`[Ringmaster] Response: ${data.message}`);
+                    if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket'))) {
+                        btnAutoRingmaster.click();
+                    }
                 } catch(e) {
                     addLog(`[Ringmaster] Error: ${e.message}`);
                 }
@@ -488,6 +530,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     const data = await res.json();
                     addLog(`[Jester] Response: ${data.message}`);
+                    if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket'))) {
+                        btnAutoJester.click();
+                    }
                 } catch(e) {
                     addLog(`[Jester] Error: ${e.message}`);
                 }
@@ -527,6 +572,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     const data = await res.json();
                     addLog(`[Kitsune] Response: ${data.message}`);
+                    if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket'))) {
+                        btnAutoKitsune.click();
+                    }
                 } catch(e) {
                     addLog(`[Kitsune] Error: ${e.message}`);
                 }
@@ -566,6 +614,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     const data = await res.json();
                     addLog(`[Tengu] Response: ${data.message}`);
+                    if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket'))) {
+                        btnAutoTengu.click();
+                    }
                 } catch(e) {
                     addLog(`[Tengu] Error: ${e.message}`);
                 }
@@ -605,6 +656,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     const data = await res.json();
                     addLog(`[Nurarihyon] Response: ${data.message}`);
+                    if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket'))) {
+                        btnAutoNurarihyon.click();
+                    }
                 } catch(e) {
                     addLog(`[Nurarihyon] Error: ${e.message}`);
                 }

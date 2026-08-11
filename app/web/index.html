@@ -470,6 +470,20 @@
           </div>
         </div>
 
+        <!-- Bot Status -->
+        <div class="bento-card" style="margin-bottom: 15px; border-color: #fbbf24; background: rgba(217, 119, 6, 0.05);">
+          <div class="card-header" style="border-bottom: 1px solid rgba(251, 191, 36, 0.2); padding-bottom: 12px; margin-bottom: 12px;">
+             <h3 style="display:flex; align-items:center; gap:8px; color: #fbbf24;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                Current Status
+             </h3>
+             <button id="global-stop-btn" class="bento-btn-small" style="background: #ff5252; color: #fff; border: none; display: none;" onclick="window.stopCurrentBot()">Stop Bot</button>
+          </div>
+          <div style="color: #eee; font-weight: 500; font-size: 14px;" id="bot-status-text">
+            Idle - No bot is currently running.
+          </div>
+        </div>
+
         <!-- Terminal Log -->
         <div class="bento-card bento-terminal">
           <div class="card-header">
