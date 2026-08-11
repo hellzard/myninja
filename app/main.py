@@ -165,6 +165,8 @@ async def api_auto_clan_war_step(req: BasicBotRequest):
     except Exception as e:
         return {"status": "error", "message": str(e)}
 
+import traceback
+
 @app.post("/api/bot/auto_exam_step")
 async def api_auto_exam_step(req: BasicBotRequest):
     client = NinjaSageClient()
@@ -172,6 +174,8 @@ async def api_auto_exam_step(req: BasicBotRequest):
         res = await auto_exam(client, req.sessionkey, req.char_id)
         return {"status": "success", "message": res}
     except Exception as e:
+        error_trace = traceback.format_exc()
+        print(f"API AUTO EXAM ERROR:\n{error_trace}")
         return {"status": "error", "message": str(e)}
 
 @app.post("/api/bot/auto_eudemon")
