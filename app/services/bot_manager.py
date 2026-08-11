@@ -982,6 +982,20 @@ async def run_auto_mission(client: NinjaSageClient, sessionkey: str, char_id: in
     import hashlib
     import asyncio
     
+    if not mission_id or mission_id.lower() == "auto":
+        try:
+            char_data_res = await client.send_amf_request("CharacterDAO.getCharacterData", [char_id])
+            if isinstance(char_data_res, dict) and char_data_res.get('status') == 1:
+                level = int(char_data_res.get('character_level', 1))
+                if level >= 40: mission_id = "msn_60"
+                elif level >= 20: mission_id = "msn_35"
+                elif level >= 10: mission_id = "msn_22"
+                else: mission_id = "msn_11"
+            else:
+                return "Failed to fetch character data for auto-selection."
+        except Exception as e:
+            return f"Failed to get character level: {e}"
+
     # Dummy enemy parameters for starting the mission
     _loc2_ = "enm_302"
     _loc3_ = "id:enm_302|hp:100|agility:10"

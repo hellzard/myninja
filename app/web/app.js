@@ -953,7 +953,7 @@ document.getElementById('toggle-automission-farmer').addEventListener('click', (
     const targetMissionId = missionIdInput.value.trim();
     
     if (!targetMissionId) {
-        addLog("[AutoMission] Error: Please enter a valid mission ID (e.g. msn_11).", "error");
+        addLog("[AutoMission] Error: Please enter a valid mission ID (e.g. msn_11 or auto).", "error");
         return;
     }
     
