@@ -438,37 +438,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Eudemon Boss (Desktop & Mobile share same logic if we use querySelectorAll)
-    const eudemonBtns = document.querySelectorAll('#btnAutoEudemon');
+        const eudemonBtns = document.querySelectorAll('#btnAutoEudemon');
+    let autoEudemonInterval = null;
+    
     eudemonBtns.forEach(btn => {
         btn.addEventListener('click', async () => {
             if (!sessionState.sessionkey) return;
-            const originalText = btn.innerHTML;
-            btn.innerHTML = 'WAIT...';
-            btn.disabled = true;
             
-            try {
-                addLog(`[Eudemon] Starting auto Eudemon boss fights...`);
-                const res = await fetch('/api/bot/auto_eudemon', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        sessionkey: sessionState.sessionkey,
-                        char_id: sessionState.char_id
-                    })
-                });
-                const data = await res.json();
-                
-                if (data.status === 'success') {
-                    addLog(`[Eudemon] Result:\n${data.message}`, 'ok');
-                } else {
-                    addLog(`[Eudemon] Failed: ${data.message}`, 'error');
-                }
-            } catch (e) {
-                addLog(`[Eudemon] Error: ${e.message}`, 'error');
+            if (autoEudemonInterval) {
+                clearInterval(autoEudemonInterval);
+                autoEudemonInterval = null;
+                btn.textContent = "START";
+                btn.style.background = ""; // reset color
+                addLog(`Auto Eudemon STOPPED.`);
+                return;
             }
             
-            btn.innerHTML = originalText;
-            btn.disabled = false;
+            btn.textContent = "STOP";
+            btn.style.background = "#ff5252";
+            addLog(`Auto Eudemon STARTED...`);
+            
+            autoEudemonInterval = setInterval(async () => {
+                try {
+                    const res = await fetch('/api/bot/auto_eudemon', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            sessionkey: sessionState.sessionkey,
+                            char_id: sessionState.char_id
+                        })
+                    });
+                    const data = await res.json();
+                    
+                    if (data.status === 'success') {
+                        addLog(`[Eudemon] ${data.message}`, 'ok');
+                        if (data.message.includes("No available Eudemon bosses")) {
+                            btn.click();
+                        }
+                    } else {
+                        addLog(`[Eudemon] Failed: ${data.message}`, 'error');
+                        btn.click();
+                    }
+                } catch (e) {
+                    addLog(`[Eudemon] Error: ${e.message}`, 'error');
+                    btn.click();
+                }
+            }, 5000);
         });
     });
 

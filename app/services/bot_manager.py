@@ -646,7 +646,6 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
     if not avail_raw:
         return "No boss entries"
         
-    # avail_bosses is a list of integers representing how many times we can fight each boss
     avail_bosses = list(map(int, avail_raw.split(",")))
     
     # 3. Load gamedata.json
@@ -663,58 +662,56 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
         return "Eudemon gamedata not found"
         
     bosses = eudemon_entry["data"]["bosses"]
-    results = []
+    
+    target_boss_index = -1
+    target_boss_name = ""
     
     for b in bosses:
         if int(b["lvl"]) > char_level:
             break
             
         boss_index = b.get("num", 0)
-        boss_name = b.get("name", "Unknown Boss")
         
-        # If boss_index is out of range, skip
         if boss_index >= len(avail_bosses):
             continue
             
         attempts = avail_bosses[boss_index]
-        for i in range(attempts):
-            import asyncio
-            import hashlib
+        if attempts > 0:
+            target_boss_index = boss_index
+            target_boss_name = b.get("name", "Unknown Boss")
+            break
             
-            # Start Hunting
-            start_res = await client.send_amf_request("EudemonGarden.startHunting", [char_id, boss_index, sessionkey])
-            if start_res.get("status") != 1:
-                results.append(f"Failed to start {boss_name}: {start_res}")
-                continue
-                
-            battle_id = str(start_res.get("code", ""))
-            
-            # Wait for battle (simulate realistic fight time to avoid rate limit - APK waits 30s)
-            await asyncio.sleep(25)
-            
-            # Finish Hunting
-            # Hash logic: md5(str(boss_index) + str(char_id) + battle_id)
-            loc2_str = str(boss_index) + str(char_id) + battle_id
-            loc2 = hashlib.sha256(loc2_str.encode()).hexdigest()
-            
-            BATTLE_HASH = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzAxIiwid2VhcG9uIjoid3BuXzAxIiwic2V0Ijoic2V0XzAxXzAifSwic3RhdHVzIjp7ImVhcnRoIjowLCJmaXJlIjowLCJ3YXRlciI6MCwibGlnaHRuaW5nIjowLCJ3aW5kIjowfSwiYnl0ZXMiOnsiXyI6ODIyODQ0NywiX18iOjgyMjg0NDcsIl9fXyI6IjE3NjI3NDY2NTk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mjc0NjY1OTE3NjI3NDY2NTkxNzYyNzQ2NjU5MTc2Mjc0NjY1OSIsIl9fX19fIjo4MjI4NDQ3LCJfX19fX18iOjgyMjg0NDcsIl9fX18iOjE3NjI3NDY2NTl9LCJfX19fIjpbeyJfIjoic2tpbGxfMTMiLCJfXyI6MjkxMzR9XX0="
-            
-            finish_params = [char_id, boss_index, battle_id, loc2, sessionkey, BATTLE_HASH]
-            finish_res = await client.send_amf_request("EudemonGarden.finishHunting", finish_params)
-            
-            if finish_res.get("status") == 1:
-                xp = finish_res.get("result", [0,0])[0]
-                gold = finish_res.get("result", [0,0])[1]
-                results.append(f"Defeated {boss_name} {i+1}/{attempts} - Gained XP: {xp}, Gold: {gold}")
-            else:
-                results.append(f"Failed to defeat {boss_name}: {finish_res}")
-                
-            # Delay between attempts to avoid rate limit
-            await asyncio.sleep(6)
-                
-    if not results:
-        return f"No Eudemon Bosses fought. Parsed Level: {char_level}. Attempts: {avail_raw}"
-    return " | ".join(results)
+    if target_boss_index == -1:
+        return "No available Eudemon bosses (or failed to fetch)"
+        
+    import asyncio
+    import hashlib
+    
+    # Start Hunting
+    start_res = await client.send_amf_request("EudemonGarden.startHunting", [char_id, target_boss_index, sessionkey])
+    if start_res.get("status") != 1:
+        return f"Failed to start {target_boss_name}: {start_res}"
+        
+    battle_id = str(start_res.get("code", ""))
+    
+    # Wait for battle
+    await asyncio.sleep(2)
+    
+    # Finish Hunting
+    loc2_str = str(target_boss_index) + str(char_id) + battle_id
+    loc2 = hashlib.sha256(loc2_str.encode()).hexdigest()
+    
+    BATTLE_HASH = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzAxIiwid2VhcG9uIjoid3BuXzAxIiwic2V0Ijoic2V0XzAxXzAifSwic3RhdHVzIjp7ImVhcnRoIjowLCJmaXJlIjowLCJ3YXRlciI6MCwibGlnaHRuaW5nIjowLCJ3aW5kIjowfSwiYnl0ZXMiOnsiXyI6ODIyODQ0NywiX18iOjgyMjg0NDcsIl9fXyI6IjE3NjI3NDY2NTk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mjc0NjY1OTE3NjI3NDY2NTkxNzYyNzQ2NjU5MTc2Mjc0NjY1OSIsIl9fX19fIjo4MjI4NDQ3LCJfX19fX18iOjgyMjg0NDcsIl9fX18iOjE3NjI3NDY2NTl9LCJfX19fIjpbeyJfIjoic2tpbGxfMTMiLCJfXyI6MjkxMzR9XX0="
+    
+    finish_params = [char_id, target_boss_index, battle_id, loc2, sessionkey, BATTLE_HASH]
+    finish_res = await client.send_amf_request("EudemonGarden.finishHunting", finish_params)
+    
+    if finish_res.get("status") == 1:
+        xp = finish_res.get("result", [0,0])[0]
+        gold = finish_res.get("result", [0,0])[1]
+        return f"Defeated {target_boss_name} - Gained XP: {xp}, Gold: {gold}"
+    else:
+        return f"Failed to defeat {target_boss_name}: {finish_res}"
 
 async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: int, boss_type: str = "ringmaster"):
     # 1. Get Character Data to calculate agility and _loc6_
