@@ -176,7 +176,7 @@ async def api_auto_exam_step(req: BasicBotRequest):
     except Exception as e:
         error_trace = traceback.format_exc()
         print(f"API AUTO EXAM ERROR:\n{error_trace}")
-        return {"status": "error", "message": str(e)}
+        return {"status": "error", "message": f"{str(e)} | TRACE: {error_trace}"}
 
 @app.post("/api/bot/auto_eudemon")
 async def api_auto_eudemon(req: BasicBotRequest):
