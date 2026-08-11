@@ -207,7 +207,7 @@ async def run_hunting(client: NinjaSageClient, sessionkey: str, char_id: int, zo
         return f"Unknown boss zone: {zone}"
         
     # Call getData first as the server might require it to initialize the session for Hunting House
-    get_data_res = await client.send_amf_request("HuntingHouse.getData", [sessionkey, char_id])
+    get_data_res = await client.send_amf_request("HuntingHouse.getData", [char_id, sessionkey])
     print(f"[DEBUG] HuntingHouse.getData for boss {boss_num}: {get_data_res}")
     
     start_res = await client.send_amf_request("HuntingHouse.startHunting", [char_id, boss_num, sessionkey])
