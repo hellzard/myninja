@@ -779,11 +779,12 @@ async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: in
         ticket_item = "item_47"
         
     try:
-        item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [sessionkey, char_id, ticket_item])
-        if not isinstance(item_res, dict) or item_res.get('status') != 1:
-            return f"Failed to use ticket ({ticket_item}). Server responded: {item_res}. Stopped to prevent token deduction."
+        char_full_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
+        ticket_count = get_inventory_amount(char_full_res, ticket_item)
+        if ticket_count <= 0:
+            return f"No {boss_type.capitalize()} tickets left ({ticket_item}). Stopped to prevent token deduction."
     except Exception as e:
-        return f"Failed to use {boss_type.capitalize()} ticket: {e}"
+        return f"Failed to check {boss_type.capitalize()} ticket inventory: {e}"
     
     enemy_info_str = f"id:{ene_id}|hp:{hp}|agility:{enemy_agility}"
     
@@ -878,13 +879,13 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
     else:
         return f"Unknown yokai boss type: {boss_type}"
         
-    # Attempt to use ticket first to prevent token deduction
     try:
-        item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [sessionkey, char_id, ticket_item])
-        if not isinstance(item_res, dict) or item_res.get('status') != 1:
-            return f"Failed to use ticket ({ticket_item}). Server responded: {item_res}. Stopped to prevent token deduction."
+        char_full_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
+        ticket_count = get_inventory_amount(char_full_res, ticket_item)
+        if ticket_count <= 0:
+            return f"No {boss_type.capitalize()} tickets left ({ticket_item}). Stopped to prevent token deduction."
     except Exception as e:
-        return f"Failed to use {boss_type.capitalize()} ticket: {e}"
+        return f"Failed to check {boss_type.capitalize()} ticket inventory: {e}"
     
     enemy_info_str = f"id:{ene_id}|hp:{hp}|agility:{enemy_agility}"
     
