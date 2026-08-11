@@ -392,38 +392,64 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
     
     # 1. Genin -> Chunin (Level 20)
     if level >= 20 and rank < 2:
-        exam_data = await client.send_amf_request("ChuninExam.getData", [sessionkey, char_id])
-        if exam_data.get('status') == 1:
-            stage = exam_data.get('progress', 0)
-            if stage < 5:
-                # Need to complete stages 1-5 (index 0 to 4)
-                await client.send_amf_request("ChuninExam.startStage", [char_id, stage, sessionkey])
+        exam_res = await client.send_amf_request("ChuninExam.getData", [sessionkey, char_id])
+        exam_data = exam_res.get('data', {}) if isinstance(exam_res, dict) else {}
+        
+        if exam_res.get('status') == 1:
+            progress = exam_data.get('progress', 0)
+            if progress < 5:
+                stage_num = progress + 1
+                
+                # startStage expects [sessionkey, char_id, stage_num]
+                await client.send_amf_request("ChuninExam.startStage", [sessionkey, char_id, stage_num])
                 await asyncio.sleep(1)
-                # Stage 1 needs special payload (2, 0, 0, 0), others might just need empty or none
-                finish_params = [sessionkey, char_id, 2, 0, 0, 0] if stage == 0 else [sessionkey, char_id]
+                
+                # finishStage expects different arrays per stage
+                if stage_num == 1:
+                    finish_params = [sessionkey, char_id, 1, 1, [], []]
+                elif stage_num == 2:
+                    finish_params = [sessionkey, char_id, 2, 0, 0, 0]
+                elif stage_num in (3, 4, 5):
+                    finish_params = [sessionkey, char_id, stage_num, 0, []]
+                else:
+                    finish_params = [sessionkey, char_id]
+                    
                 res = await client.send_amf_request("ChuninExam.finishStage", finish_params)
-                return f"Chunin Exam Stage {stage+1} completed! {res}"
+                
+                if isinstance(res, dict) and res.get('status') == 2:
+                    return f"Chunin Exam Stage {stage_num} failed! {res}"
+                else:
+                    return f"Chunin Exam Stage {stage_num} completed! {res}"
             else:
-                # All stages done, promote!
+                # All stages done (progress == 5), promote!
                 res = await client.send_amf_request("ChuninExam.promoteToChunin", [sessionkey, char_id])
                 return f"Promoted to Chunin! {res}"
-        return f"Chunin Exam data: {exam_data}"
+        return f"Chunin Exam data: {exam_res}"
         
     # 2. Chunin -> Jounin (Level 40)
     elif level >= 40 and rank < 3:
-        # Simplistic implementation logic based on APK decompilation
-        exam_data = await client.send_amf_request("JouninExam.getData", [sessionkey, char_id])
-        if exam_data.get('status') == 1:
-            stage = exam_data.get('progress', 0)
-            if stage < 6:
-                await client.send_amf_request("JouninExam.startStage", [char_id, stage, sessionkey])
+        exam_res = await client.send_amf_request("JouninExam.getData", [sessionkey, char_id])
+        exam_data = exam_res.get('data', {}) if isinstance(exam_res, dict) else {}
+        
+        if exam_res.get('status') == 1:
+            progress = exam_data.get('progress', 0)
+            if progress < 5:
+                stage_num = progress + 6 # Jounin exam uses stages 6 to 10 internally
+                await client.send_amf_request("JouninExam.startStage", [sessionkey, char_id, stage_num])
                 await asyncio.sleep(1)
-                res = await client.send_amf_request("JouninExam.finishStage", [sessionkey, char_id])
-                return f"Jounin Exam Stage {stage+1} completed! {res}"
+                
+                # Jounin finish parameters follow the template [stage_num, 1, []]
+                res = await client.send_amf_request("JouninExam.finishStage", [sessionkey, char_id, stage_num, 1, []])
+                
+                if isinstance(res, dict) and res.get('status') == 2:
+                    return f"Jounin Exam Stage {progress+1} failed! {res}"
+                else:
+                    return f"Jounin Exam Stage {progress+1} completed! {res}"
             else:
+                # All stages done, promote!
                 res = await client.send_amf_request("JouninExam.promoteToJounin", [sessionkey, char_id])
                 return f"Promoted to Jounin! {res}"
-        return f"Jounin Exam data: {exam_data}"
+        return f"Jounin Exam data: {exam_res}"
         
     # Add higher exams (Special Jounin, Ninja Tutor) similarly if needed...
     
