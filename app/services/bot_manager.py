@@ -64,6 +64,16 @@ def get_inventory_amount(payload, item_id: str) -> int:
                 return int(payload[item_id])
             except:
                 pass
+                
+        id_keys = ('id', 'item_id', 'material_id', 'essential_id', 'name', 'code')
+        amount_keys = ('amount', 'quantity', 'qty', 'count', 'num', 'value')
+        for k in id_keys:
+            if str(payload.get(k, "")) == item_id:
+                for ak in amount_keys:
+                    if ak in payload:
+                        try: return int(payload[ak])
+                        except: pass
+                        
         for k, v in payload.items():
             if isinstance(v, (dict, list)):
                 res = get_inventory_amount(v, item_id)
