@@ -183,12 +183,50 @@ async def auto_daily_event(client: NinjaSageClient, sessionkey: str, char_id: in
     return "Daily missions completed"
 
 async def run_hunting(client: NinjaSageClient, sessionkey: str, char_id: int, zone: int):
-    start_res = await client.send_amf_request("JDEUnbiWJXOtHxVv.CCQV8v8GpKBY", [char_id, zone, sessionkey])
-    if start_res.get('status') == 1 and 'battle_code' in start_res:
-        battle_code = start_res['battle_code']
-        await asyncio.sleep(1)
-        finish_res = await client.send_amf_request("JDEUnbiWJXOtHxVv.wrlPOTLOEWFE", [char_id, zone, battle_code, 1, sessionkey, []])
-        return f"Boss Defeated! Drop: {finish_res}"
+    import hashlib
+    import asyncio
+    
+    RIFT_HUNTING_HOUSE_BOSSES = [
+        {'num': 0, 'name': 'Ginkotsu'},
+        {'num': 1, 'name': 'Shikigami Yanki'},
+        {'num': 2, 'name': 'Gedo Sessho Seki'},
+        {'num': 3, 'name': 'Tengu'},
+        {'num': 4, 'name': 'Byakko'},
+        {'num': 5, 'name': 'Ape King'},
+        {'num': 6, 'name': 'Battle Turtle'},
+        {'num': 7, 'name': 'Soul General Mutoh'},
+        {'num': 8, 'name': 'Calamity Serpent'},
+        {'num': 9, 'name': 'Kojima'},
+        {'num': 16, 'name': 'The Mother & Father of Ghosts'},
+        {'num': 17, 'name': 'Moon Princess & Black Puppets'}
+    ]
+    
+    boss_num = zone - 1
+    boss_info = next((b for b in RIFT_HUNTING_HOUSE_BOSSES if b['num'] == boss_num), None)
+    if not boss_info:
+        return f"Unknown boss zone: {zone}"
+        
+    start_res = await client.send_amf_request("HuntingHouse.startHunting", [char_id, boss_num, sessionkey])
+    
+    if start_res and isinstance(start_res, str) and len(start_res) == 10:
+        battle_code = start_res
+        await asyncio.sleep(2)
+        
+        # Finish hash: md5(str(boss_num) + str(char_id) + str(battle_code))
+        finish_hash_str = str(boss_num) + str(char_id) + str(battle_code)
+        finish_hash = hashlib.md5(finish_hash_str.encode()).hexdigest()
+        
+        finish_res = await client.send_amf_request("HuntingHouse.finishHunting", [
+            char_id, boss_num, battle_code, finish_hash, sessionkey
+        ])
+        
+        if isinstance(finish_res, dict) and finish_res.get('status') == 1:
+            rewards = finish_res.get('result', [])
+            exp = rewards[0] if len(rewards) > 0 else 0
+            gold = rewards[1] if len(rewards) > 1 else 0
+            return f"Hunting House Boss {boss_info['name']} Defeated! Gained {exp} EXP, {gold} Gold."
+        else:
+            return f"Failed to finish hunting: {finish_res}"
     else:
         return f"Failed to start hunting: {start_res}"
 
