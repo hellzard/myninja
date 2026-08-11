@@ -57,6 +57,25 @@ def calculate_agility(char_data_res: dict) -> int:
     # Note: real calculation includes gear, but often server accepts it if no gear is equipped or hash isn't strictly validated on agility
     return agility
 
+def get_inventory_amount(payload, item_id: str) -> int:
+    if isinstance(payload, dict):
+        if item_id in payload:
+            try:
+                return int(payload[item_id])
+            except:
+                pass
+        for k, v in payload.items():
+            if isinstance(v, (dict, list)):
+                res = get_inventory_amount(v, item_id)
+                if res > 0:
+                    return res
+    elif isinstance(payload, list):
+        for item in payload:
+            res = get_inventory_amount(item, item_id)
+            if res > 0:
+                return res
+    return 0
+
 BATTLE_HASH = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzAxIiwid2VhcG9uIjoid3BuXzAxIiwic2V0Ijoic2V0XzAxXzAifSwic3RhdHVzIjp7ImVhcnRoIjowLCJmaXJlIjowLCJ3YXRlciI6MCwibGlnaHRuaW5nIjowLCJ3aW5kIjowfSwiYnl0ZXMiOnsiXyI6ODIyODQ0NywiX18iOjgyMjg0NDcsIl9fXyI6IjE3NjI3NDY2NTk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mjc0NjY1OTE3NjI3NDY2NTkxNzYyNzQ2NjU5MTc2Mjc0NjY1OSIsIl9fX19fIjo4MjI4NDQ3LCJfX19fX18iOjgyMjg0NDcsIl9fX18iOjE3NjI3NDY2NTl9LCJfX19fIjpbeyJfIjoic2tpbGxfMTMiLCJfXyI6MjkxMzR9XX0="
 
 async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mission_id: str):
@@ -746,6 +765,10 @@ async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: in
         enemy_agility = 166
         
         # Jester requires using a ticket first (item_48)
+        jester_tickets = get_inventory_amount(char_info_res, "item_48")
+        if jester_tickets <= 0:
+            return "No Jester tickets left (item_48). Stopped to prevent token deduction."
+            
         try:
             item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [[sessionkey, char_id, "item_48"]])
             print(f"DEBUG CIRCUS Jester Ticket Use: {item_res}")
@@ -837,6 +860,10 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         enemy_agility = 171
         
         # Kitsune requires item_27
+        kitsune_tickets = get_inventory_amount(char_info_res, "item_27")
+        if kitsune_tickets <= 0:
+            return "No Kitsune tickets left (item_27). Stopped to prevent token deduction."
+            
         try:
             item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [sessionkey, char_id, "item_27"])
             if isinstance(item_res, dict) and item_res.get('status') == 0:
@@ -850,6 +877,10 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         enemy_agility = 176
         
         # Tengu requires item_31
+        tengu_tickets = get_inventory_amount(char_info_res, "item_31")
+        if tengu_tickets <= 0:
+            return "No Tengu tickets left (item_31). Stopped to prevent token deduction."
+            
         try:
             item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [sessionkey, char_id, "item_31"])
             if isinstance(item_res, dict) and item_res.get('status') == 0:
