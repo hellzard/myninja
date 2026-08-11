@@ -927,6 +927,12 @@ async def run_yokai_minigame(client: NinjaSageClient, sessionkey: str, char_id: 
     if not isinstance(get_data_res, dict) or get_data_res.get('status') == 0:
         return f"Failed to get Yokai Minigame Data: {get_data_res}"
 
+    free_play = get_data_res.get('free_play', 0)
+    energy = get_data_res.get('energy', 0)
+    
+    if free_play <= 0 and energy <= 0:
+        return "Failed: Out of energy and free tries! Stopped to prevent token deduction."
+
     # 2. Start Minigame
     try:
         start_res = await client.send_amf_request("urUACOuL6PahuoEd.swP4z80ragAZ", [[char_id, sessionkey]])
@@ -969,7 +975,7 @@ async def run_yokai_minigame(client: NinjaSageClient, sessionkey: str, char_id: 
     if not isinstance(finish_res, dict) or finish_res.get('status') == 0:
         return f"Failed to finish Yokai Minigame: {finish_res}"
         
-    reward = finish_res.get('reward', {})
+    reward = finish_res.get('rewards', finish_res.get('reward', {}))
     return f"Yokai Minigame Completed! Rewards: {reward}"
 
 
