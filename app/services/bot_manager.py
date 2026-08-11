@@ -117,6 +117,59 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
     finish_res = await client.send_amf_request("BattleSystem.finishMission", finish_params)
     return f"Mission {mission_id} Complete! Reward: {finish_res}"
 
+async def auto_daily_event(client: NinjaSageClient, sessionkey: str, char_id: int):
+    # 1. Fetch Char Data
+    char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
+    if isinstance(char_data_res, dict) and char_data_res.get('status') == 1:
+        char_obj = char_data_res.get('data', {})
+        level = int(char_obj.get('character_level', char_obj.get('level', 1)))
+        rank_val = char_obj.get('character_rank') or char_obj.get('character_data_character_rank') or char_obj.get('rank') or 1
+        try:
+            rank = int(rank_val)
+        except (ValueError, TypeError):
+            rank = 1
+    else:
+        return "Failed to load character data for daily events"
+
+    # 2. Get Mission Room Data
+    room_data = await client.send_amf_request("CharacterService.getMissionRoomData", [char_id, sessionkey])
+    if not isinstance(room_data, dict) or room_data.get('status') != 1:
+        return "No available daily missions (or failed to fetch)"
+
+    def _normalize(missions):
+        items = []
+        if not isinstance(missions, dict):
+            return items
+        for m_id, available in missions.items():
+            run_count = max(0, int(available))
+            if run_count > 0:
+                items.append((m_id, run_count))
+        return items
+
+    daily_entries = _normalize(room_data.get('daily'))
+    tp_entries = _normalize(room_data.get('tp'))
+    ss_entries = _normalize(room_data.get('ss'))
+
+    # APK Rules: TP requires Level 40 and Rank 5
+    if level < 40 or rank < 5:
+        tp_entries = []
+    
+    # APK Rules: SS requires Level 80 and Rank 9
+    if level < 80 or rank < 9:
+        ss_entries = []
+
+    # Run the first available mission, prioritizing Daily -> TP -> SS
+    for m_id, _ in daily_entries:
+        return await run_mission(client, sessionkey, char_id, m_id)
+    
+    for m_id, _ in tp_entries:
+        return await run_mission(client, sessionkey, char_id, m_id)
+
+    for m_id, _ in ss_entries:
+        return await run_mission(client, sessionkey, char_id, m_id)
+
+    return "Daily missions completed"
+
 async def run_hunting(client: NinjaSageClient, sessionkey: str, char_id: int, zone: int):
     start_res = await client.send_amf_request("JDEUnbiWJXOtHxVv.CCQV8v8GpKBY", [char_id, zone, sessionkey])
     if start_res.get('status') == 1 and 'battle_code' in start_res:

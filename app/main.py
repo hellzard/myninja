@@ -45,7 +45,6 @@ class AutoLevelingRequest(BaseModel):
 class AutoDailyRequest(BaseModel):
     sessionkey: str
     char_id: int
-    mission_id: str
 
 class AutoHuntingRequest(BaseModel):
     sessionkey: str
@@ -95,7 +94,7 @@ async def api_auto_level_step(req: AutoLevelingRequest):
 async def api_auto_daily_step(req: AutoDailyRequest):
     client = NinjaSageClient()
     try:
-        res = await run_mission(client, req.sessionkey, req.char_id, req.mission_id)
+        res = await auto_daily_event(client, req.sessionkey, req.char_id)
         return {"status": "success", "message": res}
     except Exception as e:
         return {"status": "error", "message": str(e)}

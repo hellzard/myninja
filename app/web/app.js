@@ -289,7 +289,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Auto Daily
     let autoDailyInterval = null;
-    let currentDailyId = 101;
     const btnAutoDaily = document.getElementById('toggle-autodaily');
     
     btnAutoDaily.addEventListener('click', () => {
@@ -304,33 +303,29 @@ document.addEventListener('DOMContentLoaded', () => {
         
         btnAutoDaily.textContent = "STOP";
         btnAutoDaily.style.background = "#ff5252";
-        currentDailyId = 101;
         addLog(`Auto Daily STARTED...`);
         
         autoDailyInterval = setInterval(async () => {
-            if (currentDailyId > 111) {
-                addLog("All daily missions attempted. Stopping.");
-                btnAutoDaily.click();
-                return;
-            }
-            
             try {
                 const res = await fetch('/api/bot/auto_daily_step', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
                         sessionkey: sessionState.sessionkey,
-                        char_id: sessionState.char_id,
-                        mission_id: `msn_${currentDailyId}`
+                        char_id: sessionState.char_id
                     })
                 });
                 const data = await res.json();
-                addLog(`[AutoDaily] msn_${currentDailyId} Response: ${data.message}`);
-                currentDailyId++; // Move to next daily mission regardless of success/fail
+                
+                addLog(`[AutoDaily] Response: ${data.message}`);
+                
+                if (data.message === "Daily missions completed" || data.message === "No available daily missions (or failed to fetch)") {
+                    btnAutoDaily.click();
+                }
             } catch(e) {
                 addLog(`[AutoDaily] Error: ${e.message}`);
             }
-        }, 4000);
+        }, 6000);
     });
 
     // Auto Hunting
