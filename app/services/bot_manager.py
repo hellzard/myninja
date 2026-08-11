@@ -416,8 +416,15 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
         exam_res = await client.send_amf_request("ChuninExam.getData", [sessionkey, char_id])
         
         if isinstance(exam_res, dict) and exam_res.get('status') == 1:
-            exam_data = exam_res.get('data', {})
-            progress = exam_data.get('progress', 0)
+            exam_data = exam_res.get('data', [])
+            
+            if isinstance(exam_data, list):
+                progress = sum(1 for s in exam_data if isinstance(s, dict) and s.get("status") == 2)
+            elif isinstance(exam_data, dict):
+                progress = exam_data.get('progress', 0)
+            else:
+                progress = 0
+                
             if progress < 5:
                 stage_num = progress + 1
                 
@@ -452,8 +459,15 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
         exam_res = await client.send_amf_request("JouninExam.getData", [sessionkey, char_id])
         
         if isinstance(exam_res, dict) and exam_res.get('status') == 1:
-            exam_data = exam_res.get('data', {})
-            progress = exam_data.get('progress', 0)
+            exam_data = exam_res.get('data', [])
+            
+            if isinstance(exam_data, list):
+                progress = sum(1 for s in exam_data if isinstance(s, dict) and s.get("status") == 2)
+            elif isinstance(exam_data, dict):
+                progress = exam_data.get('progress', 0)
+            else:
+                progress = 0
+                
             if progress < 5:
                 stage_num = progress + 6 # Jounin exam uses stages 6 to 10 internally
                 await client.send_amf_request("JouninExam.startStage", [sessionkey, char_id, stage_num])
