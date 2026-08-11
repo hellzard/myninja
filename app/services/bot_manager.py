@@ -449,9 +449,10 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
                 else:
                     return f"Chunin Exam Stage {stage_num} completed! {res}"
             else:
-                # All stages done (progress == 5), promote!
-                res = await client.send_amf_request("ChuninExam.promoteToChunin", [sessionkey, char_id])
-                return f"Promoted to Chunin! {res}"
+                # All stages done (progress == 5), but rank is still 1!
+                # The original APK requires the user to log in manually to claim the promotion if manual_claim is False.
+                # The server's ChuninExam.promoteToChunin endpoint returns 'Unable to promote', so we must stop spamming.
+                return ""
         return f"Chunin Exam data: {exam_res}"
         
     # 2. Chunin -> Jounin (Level 40)
