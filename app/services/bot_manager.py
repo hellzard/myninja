@@ -871,7 +871,7 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
     hash_start = hashlib.sha256(hash_start_str.encode('utf-8')).hexdigest()
     
     try:
-        start_res = await client.send_amf_request("urUACOuL6PahuoEd.MTpVa9K3yFwo", [[
+        start_res = await client.send_amf_request("PhantomKyunokiEvent2026.startBattle", [[
             char_id, ene_id, char_agility, enemy_info_str, hash_start, sessionkey
         ]])
     except Exception as e:
@@ -891,15 +891,15 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
     
     # 4. Finish Event
     # From decompiled _create_battle_hash: hash = CUCSG.hash(f"{char_id}{enemy_id}{battle_code}{damage}")
-    # CRITICAL: hash does NOT include BATTLE_HASH/equipment_data!
+    # CRITICAL: hash includes BATTLE_HASH at the end!
     damage_done = 0
-    hash_end_str = str(char_id) + ene_id + battle_code + str(damage_done)
+    hash_end_str = str(char_id) + ene_id + battle_code + str(damage_done) + BATTLE_HASH
     hash_end = hashlib.sha256(hash_end_str.encode('utf-8')).hexdigest()
     
     # From decompiled _execute_battle: params = [char_id, enemy_id, code, dmg, hash, BATTLE_HASH, session_key]
     # CRITICAL: 6th param is BATTLE_HASH from config, NOT equipment_data from monster_hunting!
     try:
-        finish_res = await client.send_amf_request("urUACOuL6PahuoEd.4nI6yGEvtUni", [[
+        finish_res = await client.send_amf_request("PhantomKyunokiEvent2026.finishBattle", [[
             char_id, ene_id, battle_code, damage_done, hash_end, BATTLE_HASH, sessionkey
         ]])
     except Exception as e:
