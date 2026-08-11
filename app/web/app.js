@@ -279,8 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.status === 'success' && !data.message.includes("Failed")) {
                     addLog(`[AutoLevel] msn_${autoLevelTarget} Success: ${data.message}`);
                 } else {
-                    addLog(`[AutoLevel] msn_${autoLevelTarget} Failed. Retrying in 4s...`);
-                    // We DO NOT decrement autoLevelTarget anymore. We stay on the exact level!
+                    addLog(`[AutoLevel] msn_${autoLevelTarget} Response: ${data.message}`);
                 }
             } catch(e) {
                 addLog(`[AutoLevel] Error: ${e.message}`);

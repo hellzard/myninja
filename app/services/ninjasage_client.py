@@ -19,7 +19,7 @@ class NinjaSageClient:
             
         envelope = remoting.Envelope(amfVersion=pyamf.AMF3)
         request_msg = remoting.Request(target=target_uri, body=body)
-        envelope["/1"] = request_msg
+        envelope["/0"] = request_msg
         
         # 2. Convert to bytes
         encoded_stream = remoting.encode(envelope)

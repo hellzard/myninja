@@ -57,7 +57,7 @@ def calculate_agility(char_data_res: dict) -> int:
     # Note: real calculation includes gear, but often server accepts it if no gear is equipped or hash isn't strictly validated on agility
     return agility
 
-BATTLE_HASH = "e89c256038cc9603"
+BATTLE_HASH = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzAxIiwid2VhcG9uIjoid3BuXzAxIiwic2V0Ijoic2V0XzAxXzAifSwic3RhdHVzIjp7ImVhcnRoIjowLCJmaXJlIjowLCJ3YXRlciI6MCwibGlnaHRuaW5nIjowLCJ3aW5kIjowfSwiYnl0ZXMiOnsiXyI6ODIyODQ0NywiX18iOjgyMjg0NDcsIl9fXyI6IjE3NjI3NDY2NTk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mjc0NjY1OTE3NjI3NDY2NTkxNzYyNzQ2NjU5MTc2Mjc0NjY1OSIsIl9fX19fIjo4MjI4NDQ3LCJfX19fX18iOjgyMjg0NDcsIl9fX18iOjE3NjI3NDY2NTl9LCJfX19fIjpbeyJfIjoic2tpbGxfMTMiLCJfXyI6MjkxMzR9XX0="
 
 async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mission_id: str):
     SAGE_SCROLL_MINIGAME_MISSION_IDS = {'msn_109', 'msn_110', 'msn_111'}
@@ -95,18 +95,27 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
     start_params = [char_id, mission_id, ",".join(enemies), "#".join(enemy_attrs), agility, mission_hash, sessionkey]
     
     start_res = await client.send_amf_request("BattleSystem.startMission", start_params)
-    if start_res.get('status') == 1 and 'battle_code' in start_res:
-        battle_id = start_res['battle_code']
-        await asyncio.sleep(1)
-        
-        finish_hash_input = f"{mission_id}{char_id}{battle_id}0"
-        finish_mission_hash = hashlib.sha256(finish_hash_input.encode()).hexdigest()
-        
-        finish_params = [char_id, mission_id, battle_id, finish_mission_hash, 0, sessionkey, BATTLE_HASH, 0]
-        finish_res = await client.send_amf_request("BattleSystem.finishMission", finish_params)
-        return f"Mission {mission_id} Complete! Reward: {finish_res}"
+    
+    # APK treats the response directly as battle_id.
+    # Server may return: a raw value (int/str), or a dict with status/error info.
+    if isinstance(start_res, dict):
+        if start_res.get('status') == 2 or start_res.get('error') is not None:
+            return f"Failed to start mission {mission_id}: {start_res}"
+        battle_id = str(start_res.get('battle_code', start_res.get('code', start_res.get('id', ''))))
     else:
-        return f"Failed to start mission {mission_id}: {start_res}"
+        battle_id = str(start_res)
+    
+    if not battle_id or battle_id == 'None':
+        return f"Failed to start mission {mission_id}: No battle_id in response: {start_res}"
+    
+    await asyncio.sleep(1)
+    
+    finish_hash_input = f"{mission_id}{char_id}{battle_id}0"
+    finish_mission_hash = hashlib.sha256(finish_hash_input.encode()).hexdigest()
+    
+    finish_params = [char_id, mission_id, battle_id, finish_mission_hash, 0, sessionkey, BATTLE_HASH, 0]
+    finish_res = await client.send_amf_request("BattleSystem.finishMission", finish_params)
+    return f"Mission {mission_id} Complete! Reward: {finish_res}"
 
 async def run_hunting(client: NinjaSageClient, sessionkey: str, char_id: int, zone: int):
     start_res = await client.send_amf_request("JDEUnbiWJXOtHxVv.CCQV8v8GpKBY", [char_id, zone, sessionkey])
