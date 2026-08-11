@@ -894,7 +894,8 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         return f"Failed to start Yokai Event: server returned {type(start_res).__name__}"
     
     if start_res.get('status') != 1 or 'code' not in start_res:
-        return f"Failed to start Yokai Event: {start_res}"
+        error_msg = start_res.get('result', start_res)
+        return f"Failed to start Yokai Event: {error_msg}"
         
     battle_code = start_res['code']
     
@@ -920,6 +921,10 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         ]])
     except Exception as e:
         return f"Yokai Event finish failed: {e}"
-    
-    return f"Yokai Event Complete! Reward: {finish_res}"
+        
+    if isinstance(finish_res, dict) and finish_res.get('status') == 1:
+        return f"Yokai Event Complete! Reward: {finish_res.get('result', [])}"
+    else:
+        error_msg = finish_res.get('result', finish_res) if isinstance(finish_res, dict) else finish_res
+        return f"Yokai Event Complete but server rejected finish: {error_msg}"
 
