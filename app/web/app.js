@@ -360,15 +360,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                 });
                 const data = await res.json();
+                
+                if (data.message && data.message.includes("Stopped")) {
+                    addLog(`[AutoHunt] ${data.message}`);
+                    btnAutoHunt.click(); // Stop the loop by triggering button click
+                    return;
+                }
+                
                 if (data.status === 'success' && !data.message.includes("Failed") && !data.message.includes("Unknown boss")) {
                     addLog(`[AutoHunt] Zone ${currentHuntZone} Success: ${data.message}`);
+                    currentHuntZone++;
+                    if (currentHuntZone > 5) currentHuntZone = 1;
                 } else {
                     addLog(`[AutoHunt] Zone ${currentHuntZone} Failed: ${data.message || data.status}. Moving to next zone...`);
                     currentHuntZone++;
-                    if (currentHuntZone > 50) { // Safety break
-                        addLog("Max hunting zones reached. Stopping.");
-                        btnAutoHunt.click();
-                    }
+                    if (currentHuntZone > 5) currentHuntZone = 1;
                 }
             } catch(e) {
                 addLog(`[AutoHunt] Error: ${e.message}`);

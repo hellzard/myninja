@@ -206,37 +206,31 @@ async def run_hunting(client: NinjaSageClient, sessionkey: str, char_id: int, zo
     if not boss_info:
         return f"Unknown boss zone: {zone}"
         
-    # Call getData first as the server might require it to initialize the session for Hunting House
+    # Get custom Hunting House data
     get_data_res = await client.send_amf_request("HuntingHouse.getData", [char_id, sessionkey])
-    print(f"[DEBUG] HuntingHouse.getData for boss {boss_num}: {get_data_res}")
     
-    start_res = await client.send_amf_request("HuntingHouse.startHunting", [char_id, boss_num, sessionkey])
-    print(f"[DEBUG] HuntingHouse.startHunting for boss {boss_num}: {start_res}")
-    
-    old_start_res = await client.send_amf_request("JDEUnbiWJXOtHxVv.CCQV8v8GpKBY", [char_id, zone, sessionkey])
-    print(f"[DEBUG] OLD startHunting for zone {zone}: {old_start_res}")
+    if isinstance(get_data_res, dict) and get_data_res.get('status') == 1:
+        material = get_data_res.get('material', 0)
+        if material <= 0:
+            return f"Stopped: You do not have enough material ({material})."
+            
+    # The server expects 1-indexed zone for this custom feature
+    start_res = await client.send_amf_request("JDEUnbiWJXOtHxVv.CCQV8v8GpKBY", [char_id, zone, sessionkey])
     
     if isinstance(start_res, dict) and start_res.get('status') == 1 and 'battle_code' in start_res:
         battle_code = start_res['battle_code']
         await asyncio.sleep(2)
         
-        # Finish hash: md5(str(boss_num) + str(char_id) + str(battle_code))
-        finish_hash_str = str(boss_num) + str(char_id) + str(battle_code)
-        finish_hash = hashlib.md5(finish_hash_str.encode()).hexdigest()
-        
-        finish_res = await client.send_amf_request("HuntingHouse.finishHunting", [
-            char_id, boss_num, battle_code, finish_hash, sessionkey
-        ])
+        # Original finish endpoint for custom hunting house: [char_id, zone, battle_code, win, sessionkey, drops]
+        finish_res = await client.send_amf_request("JDEUnbiWJXOtHxVv.wrlPOTLOEWFE", [char_id, zone, battle_code, 1, sessionkey, []])
         
         if isinstance(finish_res, dict) and finish_res.get('status') == 1:
-            rewards = finish_res.get('result', [])
-            exp = rewards[0] if len(rewards) > 0 else 0
-            gold = rewards[1] if len(rewards) > 1 else 0
-            return f"Hunting House Boss {boss_info['name']} Defeated! Gained {exp} EXP, {gold} Gold."
+            return f"Hunting House Zone {zone} Cleared! Rewards: {finish_res.get('result', [])}"
         else:
             return f"Failed to finish hunting: {finish_res}"
     else:
-        return f"Failed to start hunting. getData={get_data_res}, startRes={start_res}, oldRes={old_start_res}"
+        error_msg = start_res.get('result', start_res) if isinstance(start_res, dict) else start_res
+        return f"Failed to start hunting: {error_msg}"
 
 async def auto_shadow_war(client: NinjaSageClient, sessionkey: str, char_id: int):
     # 1. Check Event Status and Energy
