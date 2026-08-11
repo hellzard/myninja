@@ -957,9 +957,9 @@ async def run_yokai_minigame(client: NinjaSageClient, sessionkey: str, char_id: 
         
     await asyncio.sleep(3)
     
-    score = 2250
-    lanterns = 125
-    combo = 125
+    score = 5240
+    lanterns = 192
+    combo = 192
     
     hash_str = f"{char_id}_{score}_{lanterns}_{combo}_{battle_code}"
     hash_val = hashlib.sha256(hash_str.encode('utf-8')).hexdigest()
