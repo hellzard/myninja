@@ -138,12 +138,24 @@ async def auto_daily_event(client: NinjaSageClient, sessionkey: str, char_id: in
 
     def _normalize(missions):
         items = []
+        if isinstance(missions, list):
+            for m in missions:
+                if isinstance(m, dict):
+                    m_id = str(m.get("id", ""))
+                    available = m.get("available", m.get("run_count", 0))
+                    if m_id:
+                        run_count = max(0, int(available))
+                        if run_count > 0:
+                            items.append((m_id, run_count))
+            return items
+        
         if not isinstance(missions, dict):
             return items
+            
         for m_id, available in missions.items():
             run_count = max(0, int(available))
             if run_count > 0:
-                items.append((m_id, run_count))
+                items.append((str(m_id), run_count))
         return items
 
     daily_entries = _normalize(room_data.get('daily'))
