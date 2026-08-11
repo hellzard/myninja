@@ -382,11 +382,32 @@ async def auto_clan_war(client: NinjaSageClient, sessionkey: str, char_id: int):
 async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
     # Retrieve char data to check level and rank
     char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
+    
+    # AMF may return a list or dict — normalize to dict
+    if isinstance(char_data_res, list):
+        # Try to find a dict element containing character info
+        for item in char_data_res:
+            if isinstance(item, dict):
+                char_data_res = item
+                break
+        else:
+            return "No exams available (character data is a list with no dict)"
+    
+    if not isinstance(char_data_res, dict):
+        return "No exams available (unexpected character data format)"
+    
     if char_data_res.get('status') == 0:
         return f"Failed to get character data for exam: {char_data_res.get('error', 'Unknown error')}"
     
-    char = char_data_res
-    char_obj = char.get('character_data', char)
+    char_obj = char_data_res.get('character_data', char_data_res)
+    if isinstance(char_obj, list):
+        for item in char_obj:
+            if isinstance(item, dict):
+                char_obj = item
+                break
+        else:
+            return "No exams available (could not parse character object)"
+    
     level = int(char_obj.get('character_level', char_obj.get('level', 1)))
     rank = char_obj.get('rank', 1)
     
