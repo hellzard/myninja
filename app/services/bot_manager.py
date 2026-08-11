@@ -779,9 +779,9 @@ async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: in
         ticket_item = "item_47"
         
     try:
-        item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [[sessionkey, char_id, ticket_item]])
-        if isinstance(item_res, dict) and item_res.get('status') == 0:
-            return f"No {boss_type.capitalize()} tickets left ({ticket_item}) or failed to use. Stopped to prevent token deduction."
+        item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [sessionkey, char_id, ticket_item])
+        if not isinstance(item_res, dict) or item_res.get('status') != 1:
+            return f"Failed to use ticket ({ticket_item}). Server responded: {item_res}. Stopped to prevent token deduction."
     except Exception as e:
         return f"Failed to use {boss_type.capitalize()} ticket: {e}"
     
@@ -880,9 +880,9 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         
     # Attempt to use ticket first to prevent token deduction
     try:
-        item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [[sessionkey, char_id, ticket_item]])
-        if isinstance(item_res, dict) and item_res.get('status') == 0:
-            return f"No {boss_type.capitalize()} tickets left ({ticket_item}) or failed to use. Stopped to prevent token deduction."
+        item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [sessionkey, char_id, ticket_item])
+        if not isinstance(item_res, dict) or item_res.get('status') != 1:
+            return f"Failed to use ticket ({ticket_item}). Server responded: {item_res}. Stopped to prevent token deduction."
     except Exception as e:
         return f"Failed to use {boss_type.capitalize()} ticket: {e}"
     
