@@ -907,14 +907,8 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
     await asyncio.sleep(12)
     
     # 4. Finish Event
-    if boss_type == "kitsune":
-        damage_done = hp
-    elif boss_type == "tengu":
-        damage_done = hp
-    elif boss_type == "nurarihyon":
-        damage_done = hp
-    else:
-        damage_done = hp
+    # Event bosses using this API expect damage to be reported as 0
+    damage_done = 0
         
     hash_end_str = str(char_id) + ene_id + battle_code + str(damage_done) + loc6_str
     hash_end = hashlib.sha256(hash_end_str.encode('utf-8')).hexdigest()
