@@ -9,6 +9,7 @@ from app.services.bot_manager import (
     auto_daily_gacha,
     auto_giveaway,
     run_mission,
+    auto_daily_event,
     run_hunting,
     auto_shadow_war,
     auto_monster_hunt,
