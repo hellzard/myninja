@@ -20,21 +20,37 @@ document.addEventListener('DOMContentLoaded', () => {
         tokens: '--'
     };
 
-    function addLog(msg) {
+    function addLog(msg, type = "info") {
         const li = document.createElement('li');
+        li.className = 'log-entry';
+        
+        const now = new Date();
+        const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ':' + now.getSeconds().toString().padStart(2, '0');
+        
+        const timeSpan = document.createElement('div');
+        timeSpan.className = 'log-time';
+        timeSpan.textContent = timeStr;
+        
+        const dot = document.createElement('div');
+        dot.className = 'log-dot ' + (type === 'error' ? 'err' : 'ok');
+        
         const msgDiv = document.createElement('div');
+        msgDiv.className = 'log-msg ' + (type === 'error' ? 'error' : '');
         msgDiv.textContent = msg;
         
-        const timeSmall = document.createElement('small');
-        const now = new Date();
-        timeSmall.textContent = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ':' + now.getSeconds().toString().padStart(2, '0');
-        
+        li.appendChild(timeSpan);
+        li.appendChild(dot);
         li.appendChild(msgDiv);
-        li.appendChild(timeSmall);
-        activityLog.insertBefore(li, activityLog.firstChild);
         
-        if (activityLog.children.length > 50) {
-            activityLog.removeChild(activityLog.lastChild);
+        activityLog.appendChild(li); // append at bottom
+        
+        const terminalWindow = document.getElementById('terminal-window');
+        if (terminalWindow) {
+            terminalWindow.scrollTop = terminalWindow.scrollHeight;
+        }
+        
+        if (activityLog.children.length > 100) {
+            activityLog.removeChild(activityLog.firstChild);
         }
     }
 
@@ -999,3 +1015,65 @@ document.getElementById('toggle-automission-farmer').addEventListener('click', (
         }
     }, 4000); // 4 seconds delay
 });
+
+// ==========================================
+// BACKGROUND CANVAS PARTICLES (Cyber-Ninja)
+// ==========================================
+const canvas = document.getElementById('canvas-bg');
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+    
+    function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+    
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.size = Math.random() * 2 + 0.5;
+            this.speedX = Math.random() * 1 - 0.5;
+            this.speedY = Math.random() * -1 - 0.5; // Float upwards
+            this.color = Math.random() > 0.5 ? 'rgba(234, 88, 12, ' : 'rgba(251, 191, 36, ';
+            this.alpha = Math.random() * 0.5 + 0.1;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.y < 0) {
+                this.y = height;
+                this.x = Math.random() * width;
+            }
+            if (this.x < 0 || this.x > width) {
+                this.speedX *= -1;
+            }
+        }
+        draw() {
+            ctx.fillStyle = this.color + this.alpha + ')';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+    
+    for (let i = 0; i < 50; i++) {
+        particles.push(new Particle());
+    }
+    
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animate);
+    }
+    animate();
+}

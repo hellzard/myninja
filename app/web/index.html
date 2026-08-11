@@ -1,795 +1,316 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="dark" />
-    <title>Ninja Sage Cloud Dashboard</title>
-    <meta name="description" content="Ninja Sage Cloud Controller" />
-    <link rel="stylesheet" href="/panel/styles.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="/panel/app.js" defer></script>
-    <style>
-      .login-overlay {
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: radial-gradient(circle at top, #2e1205 0%, #0c0502 60%, #020101 100%);
-        display: flex;
-        flex-direction: column;
-        z-index: 9999;
-        font-family: 'Outfit', system-ui, -apple-system, sans-serif;
-        padding: 20px;
-        box-sizing: border-box;
-        overflow-y: auto;
-      }
-      .login-container {
-        display: flex;
-        flex-direction: row;
-        gap: 2rem;
-        width: 100%;
-        max-width: 900px;
-        margin: auto;
-        box-sizing: border-box;
-        animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      }
-      @media (max-width: 768px) {
-        .login-container {
-          flex-direction: column;
-          gap: 1rem;
-          margin-top: 5vh;
-        }
-      }
-      @keyframes slideUp {
-        0% { opacity: 0; transform: translateY(30px); }
-        100% { opacity: 1; transform: translateY(0); }
-      }
-      .login-panel {
-        flex: 1;
-        background: rgba(18, 18, 18, 0.65);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        padding: 2.5rem;
-        box-sizing: border-box;
-        box-shadow: 0 30px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
-        display: flex;
-        flex-direction: column;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-      @media (max-width: 768px) {
-        .login-panel {
-          padding: 1.5rem;
-        }
-      }
-      .login-header {
-        display: flex;
-        align-items: center;
-        gap: 1.25rem;
-        margin-bottom: 2rem;
-      }
-      .login-header svg {
-        width: 48px;
-        height: 48px;
-        filter: drop-shadow(0 0 10px rgba(217, 119, 6, 0.5));
-      }
-      .login-header h2 {
-        margin: 0;
-        font-size: 28px;
-        color: #fff;
-        font-weight: 700;
-        letter-spacing: -0.5px;
-      }
-      .login-header p {
-        margin: 4px 0 0 0;
-        font-size: 14px;
-        color: #a0a0a0;
-      }
-      .btn-outline {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        width: 100%;
-        padding: 12px;
-        background: rgba(217, 119, 6, 0.05);
-        border: 1px solid rgba(217, 119, 6, 0.4);
-        color: #fbbf24;
-        border-radius: 10px;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 500;
-        margin-bottom: 1.5rem;
-        transition: all 0.3s ease;
-      }
-      .btn-outline:hover {
-        background: rgba(217, 119, 6, 0.15);
-        border-color: #d97706;
-        transform: translateY(-2px);
-      }
-      .form-group {
-        margin-bottom: 1.5rem;
-      }
-      .form-group label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-size: 13px;
-        font-weight: 600;
-        color: #b0b0b0;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-      .input-wrapper {
-        position: relative;
-        display: flex;
-        align-items: center;
-      }
-      .input-wrapper svg {
-        position: absolute;
-        left: 14px;
-        width: 18px;
-        height: 18px;
-        fill: #777;
-        transition: fill 0.3s ease;
-      }
-      .input-wrapper input {
-        width: 100%;
-        padding: 14px 14px 14px 44px;
-        background: rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #fff;
-        border-radius: 10px;
-        box-sizing: border-box;
-        font-size: 15px;
-        font-family: inherit;
-        transition: all 0.3s ease;
-      }
-      .input-wrapper input:focus {
-        outline: none;
-        border-color: #fbbf24;
-        background: rgba(0, 0, 0, 0.5);
-        box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
-      }
-      .input-wrapper input:focus + svg,
-      .input-wrapper input:focus ~ svg {
-        fill: #fbbf24;
-      }
-      .input-wrapper .show-pwd {
-        position: absolute;
-        right: 14px;
-        color: #d97706;
-        font-size: 13px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: color 0.2s;
-        user-select: none;
-      }
-      .input-wrapper .show-pwd:hover {
-        color: #fbbf24;
-      }
-      .btn-primary {
-        width: 100%;
-        padding: 14px;
-        background: linear-gradient(135deg, #d97706, #fbbf24);
-        color: #1a0b02;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        font-weight: 700;
-        font-size: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        margin-top: 1.5rem;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4);
-      }
-      .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(217, 119, 6, 0.6);
-        background: linear-gradient(135deg, #f59e0b, #fcd34d);
-      }
-      .btn-primary:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        transform: none;
-        box-shadow: none;
-      }
-      
-      .logs-panel {
-        max-height: 100%;
-      }
-      @media (max-width: 768px) {
-        .logs-panel {
-          display: none;
-        }
-      }
-      .logs-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1.5rem;
-      }
-      .logs-header h3 {
-        margin: 0;
-        color: #fff;
-        font-size: 18px;
-        font-weight: 600;
-      }
-      .btn-clear {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #ccc;
-        padding: 8px 12px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 12px;
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        transition: all 0.2s ease;
-      }
-      .btn-clear:hover {
-        background: rgba(217, 119, 6, 0.1);
-        border-color: #d97706;
-        color: #fbbf24;
-      }
-      .login-logs {
-        flex: 1;
-        list-style: none;
-        padding: 12px;
-        margin: 0;
-        overflow-y: auto;
-        font-family: monospace;
-        font-size: 13px;
-        color: #aaa;
-        background: rgba(0, 0, 0, 0.4);
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-      }
-      .login-logs::-webkit-scrollbar {
-        width: 6px;
-      }
-      .login-logs::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      .login-logs::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 10px;
-      }
-      .login-logs li {
-        display: flex;
-        gap: 12px;
-        margin-bottom: 12px;
-        align-items: flex-start;
-        line-height: 1.4;
-      }
-      .log-time {
-        color: #666;
-        min-width: 65px;
-        font-size: 12px;
-      }
-      .log-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        margin-top: 5px;
-        flex-shrink: 0;
-        box-shadow: 0 0 5px currentColor;
-      }
-      .log-dot.ok { background: #10b981; color: #10b981; }
-      .log-dot.warn { background: #f59e0b; color: #f59e0b; }
-      .log-dot.err { background: #ef4444; color: #ef4444; }
-      
-      .login-footer {
-        position: absolute;
-        bottom: 15px;
-        width: 100%;
-        text-align: center;
-        color: rgba(255, 255, 255, 0.4);
-        font-size: 12px;
-      }
-      .login-footer a {
-        color: #d97706;
-        text-decoration: none;
-        margin-left: 10px;
-        transition: color 0.2s;
-      }
-      .login-footer a:hover {
-        color: #fbbf24;
-      }
-      .hidden {
-        display: none !important;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Login Modal -->
-    <div id="login-modal" class="login-overlay">
-      <div class="login-container">
-        
-        <!-- Left Panel: Form -->
-        <div class="login-panel">
-          <div class="login-header">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ninja Sage - Web Bot Panel</title>
+  <link rel="stylesheet" href="/panel/style.css" />
+  <!-- Font Awesome for sleek icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Vanilla Tilt for 3D effect -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+</head>
+<body>
+  
+  <canvas id="canvas-bg"></canvas>
 
-            <div>
-              <h2>Account Login</h2>
-              <p>Welcome back. Please sign in to continue.</p>
-            </div>
-          </div>
-          
+  <!-- LOGIN VIEW -->
+  <div id="auth-view">
+    <div class="auth-card glass-panel tilt" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
+      <div class="auth-header">
+        <div class="logo-glow">
+          <i class="fa-solid fa-shuriken"></i>
+        </div>
+        <h1>Ninja Sage Bot</h1>
+        <p>Authenticate to access the Shadow Terminal</p>
+      </div>
 
-          <form id="login-form">
-            <div class="form-group">
-              <label>Username</label>
-              <div class="input-wrapper">
-                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                <input type="text" id="login-user" required placeholder="Enter your username" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Password</label>
-              <div class="input-wrapper">
-                <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                <input type="password" id="login-pass" required placeholder="Enter your password" />
-                <span class="show-pwd" onclick="const p=document.getElementById('login-pass'); p.type=p.type==='password'?'text':'password';">Show</span>
-              </div>
-            </div>
-            
-            <button type="submit" class="btn-primary" id="login-btn">
-              Login &rarr;
-            </button>
-            
-            <button type="button" class="btn-outline" id="quick-login-btn" style="margin-top: 1rem; margin-bottom: 0;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-              Quick Login
-            </button>
-          </form>
+      <form id="login-form">
+        <div class="input-wrapper">
+          <label>Username</label>
+          <input type="text" id="login-user" class="input-field" placeholder="Enter username" required />
+        </div>
+        <div class="input-wrapper">
+          <label>Password</label>
+          <input type="password" id="login-pass" class="input-field" placeholder="Enter password" required />
         </div>
         
-        <!-- Right Panel: Logs -->
-        <div class="login-panel logs-panel">
-          <div class="logs-header">
-            <h3>Logs</h3>
-            <button class="btn-clear" onclick="document.getElementById('startup-logs').innerHTML='';">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-              Clear
-            </button>
+        <button type="submit" id="login-btn" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+          <i class="fa-solid fa-right-to-bracket"></i> INITIALIZE CONNECTION
+        </button>
+        <button type="button" id="quick-login-btn" class="btn btn-toggle" style="width: 100%; margin-top: 0.75rem;">
+          <i class="fa-solid fa-bolt"></i> QUICK LOGIN (DEMO)
+        </button>
+      </form>
+      
+      <div style="margin-top: 1.5rem; max-height: 100px; overflow-y: auto;">
+        <ul id="startup-logs" class="log-list" style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN APP SHELL -->
+  <div id="app-shell" class="app-container hidden">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+      <div class="glass-panel profile-card">
+        <div class="avatar-ring">
+          <i class="fa-solid fa-user-ninja"></i>
+        </div>
+        <h2 id="metric-char" class="profile-name">Ninja</h2>
+        <div class="profile-id">ID: <span id="metric-char-id">...</span></div>
+        
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-label">Level</span>
+            <span id="metric-level" class="stat-val">--</span>
           </div>
-          <ul class="login-logs" id="startup-logs">
-            <li>
-              <span class="log-time">00:00:00</span>
-              <div class="log-dot ok"></div>
-              <span>Panel check ok</span>
-            </li>
+          <div class="stat-box">
+            <span class="stat-label">XP</span>
+            <span id="metric-xp" class="stat-val">--</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Gold</span>
+            <span id="metric-gold" class="stat-val" style="color:var(--primary-light)">--</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Token</span>
+            <span id="metric-token" class="stat-val" style="color:var(--primary-light)">--</span>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+          <button id="btn-refresh-stats" class="btn btn-toggle"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
+          <button id="btn-logout" class="btn btn-toggle" style="color: #f87171;"><i class="fa-solid fa-power-off"></i> Logout</button>
+          <button id="global-stop-btn" class="btn btn-primary hidden" style="background: linear-gradient(135deg, #ef4444, #b91c1c); width: 100%; margin-top: 0.5rem;" onclick="window.stopCurrentBot()">
+            <i class="fa-solid fa-stop"></i> HALT ALL BOTS
+          </button>
+        </div>
+        <div id="bot-status-text" style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">
+          IDLE - Awaiting Orders
+        </div>
+      </div>
+
+      <!-- TERMINAL (Desktop sidebar location) -->
+      <div class="terminal-wrapper">
+        <div class="terminal-header">
+          <h3>Terminal</h3>
+          <button class="btn-toggle" style="padding: 0.2rem 0.5rem;" onclick="document.getElementById('activity-log').innerHTML=''">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+        <div class="terminal-window" id="terminal-window">
+          <ul id="activity-log" class="log-list">
+            <!-- Logs go here -->
           </ul>
         </div>
-        
       </div>
+    </aside>
+
+    <!-- RIGHT CONTENT AREA (Bento Box Grid) -->
+    <main class="dashboard-grid">
       
-      <div class="login-footer">
-        &copy; 2026 My Ninja Panel. All rights reserved. <a href="#">Privacy</a>
+      <!-- MAIN ACTIONS -->
+      <div class="glass-panel module-card tilt" data-tilt data-tilt-max="2" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.1">
+        <div class="module-header">
+          <div class="module-icon"><i class="fa-solid fa-khanda"></i></div>
+          <div class="module-title">
+            <h3>Operations</h3>
+            <p>Core farming modules</p>
+          </div>
+        </div>
+        <div class="action-list">
+          <div class="action-item">
+            <div class="action-info">
+              <h4>Auto Leveling</h4>
+              <small>Farms mission <input type="number" id="auto_level_max" value="60" style="width: 40px; background: transparent; border: none; border-bottom: 1px solid var(--primary); color: var(--primary); text-align: center;"/></small>
+            </div>
+            <button id="toggle-autolevel" class="btn btn-toggle">START</button>
+          </div>
+          <div class="action-item">
+            <div class="action-info">
+              <h4>Auto-Mission Farmer</h4>
+              <small>Insta-clears <input type="text" id="auto_mission_id" value="auto" style="width: 50px; background: transparent; border: none; border-bottom: 1px solid var(--primary); color: var(--primary); text-align: center;"/></small>
+            </div>
+            <button id="toggle-automission-farmer" class="btn btn-toggle">START</button>
+          </div>
+          <div class="action-item">
+            <div class="action-info">
+              <h4>Auto Eudemon</h4>
+              <small>Farms TP automatically</small>
+            </div>
+            <button id="btnAutoEudemon" class="btn btn-toggle">START</button>
+          </div>
+          <div class="action-item">
+            <div class="action-info">
+              <h4>Hunting House</h4>
+              <small>Farms materials</small>
+            </div>
+            <button id="toggle-autohunting" class="btn btn-toggle">START</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAILIES & BOSSES -->
+      <div class="glass-panel module-card tilt" data-tilt data-tilt-max="2" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.1">
+        <div class="module-header">
+          <div class="module-icon"><i class="fa-solid fa-dragon"></i></div>
+          <div class="module-title">
+            <h3>Dailies & Bosses</h3>
+            <p>Routine tasks</p>
+          </div>
+        </div>
+        <div class="action-list">
+          <div class="action-item">
+            <div class="action-info">
+              <h4>Monster Hunt</h4>
+              <small>World boss combat</small>
+            </div>
+            <button id="toggle-automonster" class="btn btn-toggle">START</button>
+          </div>
+          <div class="action-item">
+            <div class="action-info">
+              <h4>Daily Event</h4>
+              <small>Standard daily routines</small>
+            </div>
+            <button id="toggle-autodaily" class="btn btn-toggle">START</button>
+          </div>
+          <div class="action-item">
+            <div class="action-info">
+              <h4>Mission S</h4>
+              <small>Farms special tokens</small>
+            </div>
+            <button id="toggle-automissions" class="btn btn-toggle">START</button>
+          </div>
+          
+          <div class="action-item" style="border-top: 1px dashed var(--border-color); margin-top: 0.5rem; padding-top: 1rem;">
+             <div class="action-info">
+               <h4 style="color: var(--primary-light)"><i class="fa-solid fa-ticket"></i> Shadow Circus</h4>
+               <small>Ringmaster, Jester, Kitsune</small>
+             </div>
+             <button onclick="document.getElementById('modal-events').classList.add('show')" class="btn btn-toggle">OPEN</button>
+          </div>
+          <div class="action-item">
+             <div class="action-info">
+               <h4 style="color: var(--primary-light)"><i class="fa-solid fa-ghost"></i> Yokai Events</h4>
+               <small>Tengu, Nurarihyon, Minigame</small>
+             </div>
+             <button onclick="document.getElementById('modal-events').classList.add('show')" class="btn btn-toggle">OPEN</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- WAR & SETTINGS -->
+      <div class="glass-panel module-card tilt" data-tilt data-tilt-max="2" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.1">
+        <div class="module-header">
+          <div class="module-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="module-title">
+            <h3>War & Settings</h3>
+            <p>Clan tasks and configurations</p>
+          </div>
+        </div>
+        <div class="action-list">
+          <div class="action-item">
+            <div class="action-info">
+              <h4>Shadow War</h4>
+              <small>Auto battle</small>
+            </div>
+            <button id="toggle-autoshadowwar" class="btn btn-toggle">START</button>
+          </div>
+          <div class="action-item">
+            <div class="action-info">
+              <h4>Clan War</h4>
+              <small>Uses Clan Token logic</small>
+            </div>
+            <button id="toggle-autoclanwar" class="btn btn-toggle">START</button>
+          </div>
+          
+          <div class="action-item" style="border-top: 1px dashed var(--border-color); margin-top: 0.5rem; padding-top: 1rem;">
+             <div class="action-info">
+               <h4><i class="fa-solid fa-gear"></i> Bot Settings</h4>
+               <small>Delays & preferences</small>
+             </div>
+             <button onclick="document.getElementById('modal-settings').classList.add('show')" class="btn btn-toggle">EDIT</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- MODALS -->
+  
+  <!-- Events Modal -->
+  <div id="modal-events" class="modal-overlay">
+    <div class="modal-content glass-panel">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-masks-theater"></i> Special Events</h3>
+        <button class="btn-close" onclick="document.getElementById('modal-events').classList.remove('show')">&times;</button>
+      </div>
+      <div class="action-list">
+        <h4>Shadow Circus</h4>
+        <div class="action-item">
+          <span>Ringmaster</span>
+          <button id="toggle-autoringmaster" class="btn btn-toggle">START</button>
+        </div>
+        <div class="action-item">
+          <span>Jester</span>
+          <button id="toggle-autojester" class="btn btn-toggle">START</button>
+        </div>
+        <div class="action-item">
+          <span>Kitsune</span>
+          <button id="toggle-autokitsune" class="btn btn-toggle">START</button>
+        </div>
+        <h4 style="margin-top: 1rem;">Yokai Events</h4>
+        <div class="action-item">
+          <span>Tengu</span>
+          <button id="toggle-autotengu" class="btn btn-toggle">START</button>
+        </div>
+        <div class="action-item">
+          <span>Nurarihyon</span>
+          <button id="toggle-autonurarihyon" class="btn btn-toggle">START</button>
+        </div>
+        <div class="action-item">
+          <span>Minigame <small>(Insta-Clear)</small></span>
+          <button id="toggle-autoyokaiminigame" class="btn btn-toggle">START</button>
+        </div>
       </div>
     </div>
+  </div>
 
-    <!-- Main Dashboard -->
-    <div class="shell hidden" id="app-shell">
-      <div class="bento-container">
-        
-        <!-- Profile Card -->
-        <div class="bento-card bento-profile">
-          <div class="profile-avatar">忍</div>
-          <h2 id="metric-char">Unknown</h2>
-          <div class="profile-id">ID: <span id="metric-char-id">—</span></div>
-          
-          <div class="profile-stats-grid">
-            <div class="stat-box">
-              <span class="stat-label">Level</span>
-              <span class="stat-value" id="metric-level">--</span>
-            </div>
-            <div class="stat-box">
-              <span class="stat-label">XP</span>
-              <span class="stat-value" id="metric-xp">--</span>
-            </div>
-            <div class="stat-box">
-              <span class="stat-label">Gold</span>
-              <span class="stat-value" id="metric-gold" style="color:var(--primary)">--</span>
-            </div>
-            <div class="stat-box">
-              <span class="stat-label">Tokens</span>
-              <span class="stat-value" id="metric-token" style="color:var(--primary)">--</span>
-            </div>
-          </div>
-          
-          <div class="profile-btn-group">
-             <button id="btn-refresh-stats" class="bento-btn primary">Refresh Stats</button>
-             <button id="btn-logout" class="bento-btn secondary" style="color: #f87171; border-color: rgba(248,113,113,0.3); font-weight: bold;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px; margin-top: -2px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                Logout
-             </button>
-          </div>
-        </div>
-
-        <!-- Automation Modules -->
-        <div class="bento-card bento-actions">
-          <div class="card-header">
-            <h3>Automation Modules</h3>
-            <button class="bento-btn-small">Settings</button>
-          </div>
-          
-          <div class="modules-grid">
-            <!-- Main Actions -->
-            <div class="module-card" onclick="document.getElementById('modal-main').classList.add('show')">
-               <div class="module-icon">
-                 <svg viewBox="0 0 24 24"><path d="M14.5 4h5v5l-14 14-5-5 14-14z"></path><path d="M9.5 4h-5v5l14 14 5-5-14-14z"></path></svg>
-               </div>
-               <div class="module-info">
-                 <h4>Main Action</h4>
-                 <p>Leveling, Eudemon, Monster Hunt</p>
-               </div>
-               <div class="module-arrow">→</div>
-            </div>
-            
-            <!-- Events -->
-            <div class="module-card" onclick="document.getElementById('modal-events').classList.add('show')">
-               <div class="module-icon">
-                 <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-               </div>
-               <div class="module-info">
-                 <h4>Events</h4>
-                 <p>Yokai, Circus, Seasonal</p>
-               </div>
-               <div class="module-arrow">→</div>
-            </div>
-            
-            <!-- War -->
-            <div class="module-card" onclick="document.getElementById('modal-war').classList.add('show')">
-               <div class="module-icon">
-                 <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
-               </div>
-               <div class="module-info">
-                 <h4>War</h4>
-                 <p>Shadow War, Clan War</p>
-               </div>
-               <div class="module-arrow">→</div>
-            </div>
-            
-            <!-- Settings -->
-            <div class="module-card" onclick="document.getElementById('modal-settings').classList.add('show'); loadSettings();">
-               <div class="module-icon">
-                 <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-               </div>
-               <div class="module-info">
-                 <h4>Settings</h4>
-                 <p>Configure bot behaviors</p>
-               </div>
-               <div class="module-arrow">→</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bot Status -->
-        <div class="bento-card" style="margin-bottom: 15px; border-color: #fbbf24; background: rgba(217, 119, 6, 0.05);">
-          <div class="card-header" style="border-bottom: 1px solid rgba(251, 191, 36, 0.2); padding-bottom: 12px; margin-bottom: 12px;">
-             <h3 style="display:flex; align-items:center; gap:8px; color: #fbbf24;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Current Status
-             </h3>
-             <button id="global-stop-btn" class="bento-btn-small" style="background: #ff5252; color: #fff; border: none; display: none;" onclick="window.stopCurrentBot()">Stop Bot</button>
-          </div>
-          <div style="color: #eee; font-weight: 500; font-size: 14px;" id="bot-status-text">
-            Idle - No bot is currently running.
-          </div>
-        </div>
-
-        <!-- Terminal Log -->
-        <div class="bento-card bento-terminal">
-          <div class="card-header">
-             <h3 style="display:flex; align-items:center; gap:8px;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
-                Terminal Log
-             </h3>
-             <button class="bento-btn-small" onclick="document.getElementById('activity-log').innerHTML='';">Clear Log</button>
-          </div>
-          <div class="terminal-window">
-            <ul id="activity-log" class="terminal-log-list">
-              <li>
-                 <span class="log-time">00:00:00</span>
-                 <span class="log-dot ok"></span>
-                 <span class="log-msg">System initialized. Waiting for bot commands...</span>
-              </li>
-            </ul>
-          </div>
-        </div>
+  <!-- Settings Modal -->
+  <div id="modal-settings" class="modal-overlay">
+    <div class="modal-content glass-panel">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-gear"></i> Configuration</h3>
+        <button class="btn-close" onclick="document.getElementById('modal-settings').classList.remove('show')">&times;</button>
       </div>
-
-      <!-- Modals styles and classes -->
-      <style>
-        .hidden { display: none !important; }
-        :root {
-          --bg-app: #09090b;       
-          --bg-card: #18181b;      
-          --bg-hover: #27272a;     
-          --border-color: #27272a; 
-          --primary: #ea580c;      
-          --primary-hover: #c2410c;
-          --text-main: #fafafa;    
-          --text-muted: #a1a1aa;   
-          --radius: 12px;
-        }
-
-        .shell {
-          background-color: var(--bg-app);
-          color: var(--text-main);
-          font-family: 'Outfit', 'Inter', system-ui, sans-serif;
-          min-height: 100vh; position: absolute; top: 0; left: 0; right: 0;
-          display: flex; align-items: center; justify-content: center;
-        }
-
-        .bento-btn {
-          padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 600; cursor: pointer;
-          border: 1px solid transparent; transition: all 0.2s; font-family: inherit; font-size: 0.95rem;
-        }
-        .bento-btn.primary { background: var(--primary); color: #fff; }
-        .bento-btn.primary:hover { background: var(--primary-hover); }
-        .bento-btn.secondary { background: var(--bg-hover); color: var(--text-main); border-color: var(--border-color); }
-        .bento-btn.secondary:hover { background: #3f3f46; }
-
-        .bento-container {
-          width: 100%; max-width: 1100px; padding: 1.5rem;
-          display: grid; gap: 1.5rem; grid-template-columns: 1fr;
-        }
-        @media (min-width: 900px) {
-          .bento-container { grid-template-columns: 350px 1fr; }
-          .bento-terminal { grid-column: 1 / 3; }
-        }
-
-        .bento-card {
-          background: var(--bg-card); border: 1px solid var(--border-color);
-          border-radius: var(--radius); padding: 1.5rem;
-        }
-
-        /* Profile */
-        .profile-avatar {
-          width: 90px; height: 90px; margin: 0 auto 1rem auto;
-          border-radius: 50%; background: #09090b; border: 2px solid var(--primary);
-          display: flex; align-items: center; justify-content: center;
-          font-size: 2.5rem; font-family: serif; font-weight: bold; color: var(--primary);
-          box-shadow: 0 0 20px rgba(234,88,12,0.15);
-        }
-        .bento-profile h2 { text-align: center; margin: 0 0 0.5rem 0; font-size: 1.75rem; font-weight: 600; }
-        .profile-id { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
-        
-        .profile-stats-grid {
-          display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;
-        }
-        .stat-box {
-          background: var(--bg-app); border: 1px solid var(--border-color);
-          border-radius: 8px; padding: 1rem; text-align: center;
-        }
-        .stat-label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.25rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
-        .stat-value { display: block; font-size: 1.25rem; font-weight: 700; }
-        .profile-btn-group { display: flex; gap: 0.75rem; }
-        .profile-btn-group button { flex: 1; }
-
-        /* Modules */
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-        .card-header h3 { margin: 0; font-size: 1.25rem; font-weight: 600; }
-        .bento-btn-small { 
-          background: var(--bg-hover); color: var(--text-main); border: 1px solid var(--border-color);
-          padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500;
-          transition: 0.2s; font-family: inherit;
-        }
-        .bento-btn-small:hover { background: #3f3f46; }
-
-        .modules-grid { display: flex; flex-direction: column; gap: 1rem; }
-        .module-card {
-          display: flex; align-items: center; gap: 1.25rem;
-          background: var(--bg-app); border: 1px solid var(--border-color);
-          padding: 1.25rem; border-radius: 12px; cursor: pointer;
-          transition: all 0.2s;
-        }
-        .module-card:hover { border-color: var(--primary); background: #1f1a16; transform: translateY(-2px); }
-        .module-icon { 
-          width: 52px; height: 52px; background: var(--bg-hover); border-radius: 10px;
-          display: flex; align-items: center; justify-content: center; color: var(--primary);
-        }
-        .module-icon svg { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2; fill: none; }
-        .module-info { flex: 1; }
-        .module-info h4 { margin: 0 0 0.25rem 0; font-size: 1.1rem; }
-        .module-info p { margin: 0; color: var(--text-muted); font-size: 0.85rem; }
-        .module-arrow { color: var(--text-muted); font-weight: bold; font-size: 1.25rem; transition: 0.2s; }
-        .module-card:hover .module-arrow { color: var(--primary); transform: translateX(4px); }
-
-        /* Terminal */
-        .bento-terminal { display: flex; flex-direction: column; min-height: 350px; }
-        .terminal-window {
-          flex: 1; background: #000; border: 1px solid #111; border-radius: 8px;
-          padding: 1.25rem; overflow-y: auto; max-height: 400px; 
-          font-family: 'JetBrains Mono', 'Consolas', monospace; font-size: 0.85rem; line-height: 1.5;
-        }
-        .terminal-log-list { list-style: none; margin: 0; padding: 0; }
-        .terminal-log-list li { display: flex; gap: 0.75rem; margin-bottom: 0.5rem; align-items: flex-start; }
-        .log-time { color: #52525b; min-width: 65px; }
-        .log-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
-        .log-dot.ok { background: #22c55e; }
-        .log-dot.err { background: #ef4444; }
-        .log-msg { color: #d4d4d8; }
-
-        /* Modals */
-        .dash-modal {
-          position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-          background: rgba(0,0,0,0.8); backdrop-filter: blur(4px);
-          display: flex; align-items: center; justify-content: center; z-index: 99999;
-          opacity: 0; visibility: hidden; transition: 0.2s;
-        }
-        .dash-modal.show { opacity: 1; visibility: visible; }
-        .dash-modal-content {
-          background: var(--bg-card); border: 1px solid var(--border-color);
-          border-radius: var(--radius); width: 90%; max-width: 550px; padding: 1.5rem;
-          transform: scale(0.95); transition: 0.2s; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-        }
-        .dash-modal.show .dash-modal-content { transform: scale(1); }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-        .modal-header h3 { margin: 0; font-size: 1.25rem; font-weight: 600; }
-        .btn-close-modal { background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; }
-        .btn-close-modal:hover { color: #fff; }
-
-        .modal-list-item {
-          display: flex; justify-content: space-between; align-items: center;
-          background: var(--bg-app); border: 1px solid var(--border-color);
-          padding: 1.25rem; border-radius: 8px; margin-bottom: 0.75rem;
-        }
-        .modal-list-item h4 { margin: 0 0 0.25rem 0; font-size: 1rem; }
-        .modal-list-item small { color: var(--text-muted); font-size: 0.85rem; }
-        
-        .btn-toggle {
-          background: var(--bg-hover); color: var(--text-main); border: 1px solid var(--border-color);
-          padding: 0.5rem 1.25rem; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.2s; font-family: inherit;
-        }
-        .btn-toggle:hover { background: #3f3f46; }
-        .btn-toggle[style*="background: rgb(255, 82, 82)"] {
-          background: #ef4444 !important; border-color: #ef4444 !important; color: white !important;
-          box-shadow: 0 0 15px rgba(239,68,68,0.3);
-        }
-      </style>
-
-      <!-- Main Action Modal -->
-      <div id="modal-main" class="dash-modal">
-         <div class="dash-modal-content">
-            <div class="modal-header">
-               <h3>Main Actions</h3>
-               <button class="btn-close-modal" onclick="document.getElementById('modal-main').classList.remove('show')">&times;</button>
-            </div>
-            <div>
-               <div class="modal-list-item">
-                 <div><h4>Auto Leveling</h4><small>Farms highest normal mission.</small></div>
-                 <div style="display: flex; align-items: center;">
-                   <input type="number" id="auto_level_max" value="60" style="width: 60px; background:var(--bg-card); color:var(--text-main); border:1px solid var(--border-color); padding:0.5rem; margin-right:8px; border-radius:6px; font-family:inherit; text-align:center;"/>
-                   <button id="toggle-autolevel" class="btn-toggle">START</button>
-                 </div>
-               </div>
-               <div class="modal-list-item">
-                 <div><h4>Auto Eudemon</h4><small>Automated Eudemon boss farming.</small></div>
-                 <button id="btnAutoEudemon" class="btn-toggle">START</button>
-               </div>
-               <div class="modal-list-item">
-                 <div><h4>Hunting House</h4><small>Loops all boss hunting zones.</small></div>
-                 <button id="toggle-autohunting" class="btn-toggle">START</button>
-               </div>
-               <div class="modal-list-item">
-                 <div><h4>Monster Hunt</h4><small>Completes monster hunt routes.</small></div>
-                 <button id="toggle-automonster" class="btn-toggle">START</button>
-               </div>
-               <div class="modal-list-item">
-                 <div><h4>Daily Event</h4><small>Auto claims daily missions.</small></div>
-                 <button id="toggle-autodaily" class="btn-toggle">START</button>
-               </div>
-               <div class="modal-list-item">
-                 <div><h4>Mission S</h4><small>Insta-wins special S-rank missions.</small></div>
-                 <button id="toggle-automissions" class="btn-toggle">START</button>
-               </div>
-               <div class="modal-list-item">
-                 <div><h4>Auto-Mission Farmer</h4><small>Insta-clears specific missions by ID.</small></div>
-                 <div style="display: flex; align-items: center;">
-                   <input type="text" id="auto_mission_id" value="auto" style="width: 80px; background:var(--bg-card); color:var(--text-main); border:1px solid var(--border-color); padding:0.5rem; margin-right:8px; border-radius:6px; font-family:inherit; text-align:center;"/>
-                   <button id="toggle-automission-farmer" class="btn-toggle">START</button>
-                 </div>
-               </div>
-            </div>
-         </div>
-      </div>
-
-      <!-- Events Modal -->
-      <div id="modal-events" class="dash-modal">
-         <div class="dash-modal-content">
-            <div class="modal-header">
-               <h3>Events</h3>
-               <button class="btn-close-modal" onclick="document.getElementById('modal-events').classList.remove('show')">&times;</button>
-            </div>
-            <div>
-               <div class="modal-list-item">
-                 <div><h4>Circus Event (Shadow Ringmaster)</h4><small>Boss HP: 34k | Agility: 186</small></div>
-                 <button id="toggle-autoringmaster" class="btn-toggle">START</button>
-               </div>
-               <div class="modal-list-item">
-                 <div><h4>Circus Event (Nightmare Jester)</h4><small>Boss HP: 114k | Agility: 166</small></div>
-                 <button id="toggle-autojester" class="btn-toggle">START</button>
-               </div>
-               <div class="modal-list-item">
-                 <div><h4>Yokai Event (Kitsune)</h4><small>Boss HP: 60.8k | Agility: 171</small></div>
-                 <button id="toggle-autokitsune" class="btn-toggle">START</button>
-               </div>
-               <div class="modal-list-item">
-                 <div><h4>Yokai Event (Tengu)</h4><small>Boss HP: 75.9k | Agility: 176</small></div>
-                 <button id="toggle-autotengu" class="btn-toggle">START</button>
-               </div>
-               <div class="modal-list-item">
-                 <div><h4>Yokai Event (Nurarihyon)</h4><small>Boss HP: 114k | Agility: 176</small></div>
-                 <button id="toggle-autonurarihyon" class="btn-toggle">START</button>
-               </div>
-               <div class="modal-list-item">
-                 <div><h4>Yokai Mini-game</h4><small>Auto catch lanterns for score and combo.</small></div>
-                 <button id="toggle-autoyokaiminigame" class="btn-toggle">START</button>
-               </div>
-            </div>
-         </div>
-      </div>
-
-      <!-- War Modal -->
-      <div id="modal-war" class="dash-modal">
-         <div class="dash-modal-content">
-            <div class="modal-header">
-               <h3>War</h3>
-               <button class="btn-close-modal" onclick="document.getElementById('modal-war').classList.remove('show')">&times;</button>
-            </div>
-            <div>
-               <div class="modal-list-item">
-                 <div><h4>Shadow War</h4><small>Auto fights shadow wars.</small></div>
-                 <button id="toggle-autoshadowwar" class="btn-toggle">START</button>
-               </div>
-               <div class="modal-list-item">
-                 <div><h4>Clan War</h4><small>Auto fights clan wars.</small></div>
-                 <button id="toggle-autoclanwar" class="btn-toggle">START</button>
-               </div>
-            </div>
-         </div>
-      </div>
-      
-      <!-- Settings Modal -->
-      <div id="modal-settings" class="dash-modal">
-         <div class="dash-modal-content">
-            <div class="modal-header">
-               <h3>Settings</h3>
-               <button class="btn-close-modal" onclick="document.getElementById('modal-settings').classList.remove('show')">&times;</button>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:10px; margin-top:15px;">
-               <div class="modal-list-item">
-                 <div><h4>Leveling Delay (s)</h4></div>
-                 <input type="number" id="setting-leveling-delay" style="width:60px; background:#1f2937; color:#fff; border:1px solid #374151; padding:4px;">
-               </div>
-               <div class="modal-list-item">
-                 <div><h4>Shadow War Wait (m)</h4></div>
-                 <input type="number" id="setting-shadow-wait" style="width:60px; background:#1f2937; color:#fff; border:1px solid #374151; padding:4px;">
-               </div>
-               <div class="modal-list-item">
-                 <div><h4>Clan War Spend Token</h4></div>
-                 <input type="checkbox" id="setting-clan-token">
-               </div>
-               <div class="modal-list-item">
-                 <div><h4>Clan War Refill</h4></div>
-                 <select id="setting-clan-refill" style="background:#1f2937; color:#fff; border:1px solid #374151; padding:4px;">
-                   <option value="auto">Auto</option>
-                   <option value="token">Token</option>
-                   <option value="none">None</option>
-                 </select>
-               </div>
-               <button onclick="saveSettings()" style="margin-top:15px; padding:10px; background:#f59e0b; color:#111; border:none; font-weight:bold; cursor:pointer;">SAVE SETTINGS</button>
-            </div>
-         </div>
+      <div class="action-list">
+        <div class="action-item">
+          <span>Leveling Delay (s)</span>
+          <input type="number" id="setting-leveling-delay" value="4" class="input-field" style="width: 80px; padding: 0.5rem;" />
+        </div>
+        <div class="action-item">
+          <span>Shadow War Wait (s)</span>
+          <input type="number" id="setting-shadow-wait" value="12" class="input-field" style="width: 80px; padding: 0.5rem;" />
+        </div>
+        <div class="action-item">
+          <span>Use Clan Token</span>
+          <input type="checkbox" id="setting-clan-token" style="width: 20px; height: 20px; accent-color: var(--primary);" />
+        </div>
+        <div class="action-item">
+          <span>Auto Refill BP</span>
+          <select id="setting-clan-refill" class="input-field" style="width: 100px; padding: 0.5rem;">
+            <option value="none">None</option>
+            <option value="gold">Gold</option>
+            <option value="token">Token</option>
+          </select>
+        </div>
       </div>
     </div>
-  </body>
+  </div>
+
+  <script src="/panel/app.js" defer></script>
+</body>
 </html>
