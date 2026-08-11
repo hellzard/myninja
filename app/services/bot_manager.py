@@ -409,7 +409,11 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
             return "No exams available (could not parse character object)"
     
     level = int(char_obj.get('character_level', char_obj.get('level', 1)))
-    rank = char_obj.get('rank', 1)
+    rank_val = char_obj.get('character_rank') or char_obj.get('character_data_character_rank') or char_obj.get('rank') or 1
+    try:
+        rank = int(rank_val)
+    except (ValueError, TypeError):
+        rank = 1
     
     # 1. Genin -> Chunin (Level 20)
     if level >= 20 and rank < 2:
