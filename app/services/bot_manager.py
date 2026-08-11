@@ -855,7 +855,7 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         
         # Kitsune requires item_27
         try:
-            item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [char_id, "item_27", sessionkey])
+            item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [sessionkey, char_id, "item_27"])
             if isinstance(item_res, dict) and item_res.get('status') == 0:
                 return f"Failed to use Kitsune ticket (item_27): {item_res.get('result', item_res)}"
         except Exception as e:
@@ -868,7 +868,7 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         
         # Tengu requires item_31
         try:
-            item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [char_id, "item_31", sessionkey])
+            item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [sessionkey, char_id, "item_31"])
             if isinstance(item_res, dict) and item_res.get('status') == 0:
                 return f"Failed to use Tengu ticket (item_31): {item_res.get('result', item_res)}"
         except Exception as e:
@@ -903,16 +903,16 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         
     battle_code = start_res['code']
     
-    # 3. Wait for battle
-    await asyncio.sleep(3)
+    # 3. Wait for battle - Increased to avoid error 666 (Time Hack)
+    await asyncio.sleep(12)
     
     # 4. Finish Event
     if boss_type == "kitsune":
-        damage_done = 60800 # from charles
+        damage_done = hp
     elif boss_type == "tengu":
-        damage_done = 75924 # from charles
+        damage_done = hp
     elif boss_type == "nurarihyon":
-        damage_done = 250800 # from charles
+        damage_done = hp
     else:
         damage_done = hp
         
