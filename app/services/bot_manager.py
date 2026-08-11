@@ -825,7 +825,9 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         char_data = {}
     char_agility = char_data.get('agility', 0)
     
-    loc6_str = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzIzODEiLCJ3ZWFwb24iOiJ3cG5fMjM4MCIsInNldCI6InNldF8yMjU4XzEifSwic3RhdHVzIjp7ImVhcnRoIjowLCJsaWdodG5pbmciOjAsImZpcmUiOjAsIndhdGVyIjowLCJ3aW5kIjo3OH0sImJ5dGVzIjp7Il9fXyI6IjE3NjM4Nzk1ODk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mzg3OTU4OTE3NjM4Nzk1ODkxNzYzODc5NTg5MTc2Mzg3OTU4OSIsIl8iOjgyMjg0NDcsIl9fX18iOjE3NjM4Nzk1ODksIl9fX19fIjo4MjI4NDQ3LCJfXyI6ODIyODQ0NywiX19fX19fIjo4MjI4NDQ3fSwiX19fXyI6W3siXyI6InNraWxsXzIzMTIiLCJfXyI6NTQ2MDV9LHsiXyI6InNraWxsXzM0NSIsIl9fIjo4MDI0M30seyJfIjoic2tpbGxfMjMxMCIsIl9fIjoxMjg0Njl9LHsiXyI6InNraWxsXzIyMTUiLCJfXyI6MjkzNDl9LHsiXyI6InNraWxsXzIyODYiLCJfXyI6NDk0NzR9LHsiXyI6InNraWxsXzIyMDYiLCJfXyI6NjA5NDR9LHsiXyI6InNraWxsXzIzMDgiLCJfXyI6NjUxMDF9LHsiXyI6InNraWxsXzMyOSIsIl9fIjo3NTM1Nn1dfQ=="
+    # BATTLE_HASH from config.py - the correct base64 string for Event battles
+    # This is DIFFERENT from monster_hunting's equipment_data!
+    BATTLE_HASH = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDQiLCJiYWNrX2l0ZW0iOiJiYWNrXzIyMDIiLCJ3ZWFwb24iOiJ3cG5fMjIxMyIsInNldCI6InNldF84MzFfMCJ9LCJfX19fIjpbeyJfIjoic2tpbGxfMDQiLCJfXyI6MjMzOTd9LHsiXyI6InNraWxsXzIzMDciLCJfXyI6NTQxMTR9LHsiXyI6InNraWxsXzAzIiwiX18iOjIyOTM0fSx7Il8iOiJza2lsbF82NTMiLCJfXyI6ODE1MTJ9LHsiXyI6InNraWxsXzE5NSIsIl9fIjo2NTczM30seyJfIjoic2tpbGxfMzE0IiwiX18iOjUyNjgxfSx7Il8iOiJza2lsbF8xODciLCJfXyI6NDc1Nzl9LHsiXyI6InNraWxsXzE2NCIsIl9fIjo1NDQ0NH1dLCJzdGF0dXMiOnsiZWFydGgiOjAsImxpZ2h0bmluZyI6MCwiZmlyZSI6MCwid2F0ZXIiOjAsIndpbmQiOjczfSwiYnl0ZXMiOnsiX19fIjoiMTc2Mjg0MzY2NjQwMzY3YzNjYzk5OWE5ZjllOTUxYTFkMzMyMTE1NDViODRiMmQ1YTYzOTMzYjAwMjA0MzMwMDBjM2JiNDEwZmIxNzYyODQzNjY2MTc2Mjg0MzY2NjE3NjI4NDM2NjYxNzYyODQzNjY2IiwiX19fX19fIjo4MjI4NDQ3LCJfIjo4MjI4NDQ3LCJfXyI6ODIyODQ0NywiX19fXyI6MTc2Mjg0MzY2NiwiX19fX18iOjgyMjg0NDd9fQ=="
     
     # 2. Start Event
     if boss_type == "kitsune":
@@ -884,26 +886,21 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         
     battle_code = start_res['code']
     
-    # 3. Wait for battle - dynamic based on boss to avoid error 666 (Time Hack)
-    if boss_type == "kitsune":
-        await asyncio.sleep(45)
-    elif boss_type == "tengu":
-        await asyncio.sleep(55)
-    elif boss_type == "nurarihyon":
-        await asyncio.sleep(80)
-    else:
-        await asyncio.sleep(45)
+    # 3. Wait for battle - 25 seconds total (from decompiled event.py docstring)
+    await asyncio.sleep(25)
     
     # 4. Finish Event
-    # Event bosses using this API expect damage to be reported as 0
+    # From decompiled _create_battle_hash: hash = CUCSG.hash(f"{char_id}{enemy_id}{battle_code}{damage}")
+    # CRITICAL: hash does NOT include BATTLE_HASH/equipment_data!
     damage_done = 0
-        
-    hash_end_str = str(char_id) + ene_id + battle_code + str(damage_done) + loc6_str
+    hash_end_str = str(char_id) + ene_id + battle_code + str(damage_done)
     hash_end = hashlib.sha256(hash_end_str.encode('utf-8')).hexdigest()
     
+    # From decompiled _execute_battle: params = [char_id, enemy_id, code, dmg, hash, BATTLE_HASH, session_key]
+    # CRITICAL: 6th param is BATTLE_HASH from config, NOT equipment_data from monster_hunting!
     try:
         finish_res = await client.send_amf_request("urUACOuL6PahuoEd.4nI6yGEvtUni", [[
-            char_id, ene_id, battle_code, damage_done, hash_end, loc6_str, sessionkey
+            char_id, ene_id, battle_code, damage_done, hash_end, BATTLE_HASH, sessionkey
         ]])
     except Exception as e:
         return f"Yokai Event finish failed: {e}"
@@ -913,4 +910,5 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
     else:
         error_msg = finish_res.get('result', finish_res) if isinstance(finish_res, dict) else finish_res
         return f"Yokai Event Complete but server rejected finish: {error_msg}"
+
 
