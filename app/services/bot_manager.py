@@ -855,7 +855,9 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         
         # Kitsune requires item_27
         try:
-            item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [[sessionkey, char_id, "item_27"]])
+            item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [char_id, "item_27", sessionkey])
+            if isinstance(item_res, dict) and item_res.get('status') == 0:
+                return f"Failed to use Kitsune ticket (item_27): {item_res.get('result', item_res)}"
         except Exception as e:
             return f"Failed to use Yokai ticket: {e}"
     elif boss_type == "tengu":
@@ -866,7 +868,9 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         
         # Tengu requires item_31
         try:
-            item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [[sessionkey, char_id, "item_31"]])
+            item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [char_id, "item_31", sessionkey])
+            if isinstance(item_res, dict) and item_res.get('status') == 0:
+                return f"Failed to use Tengu ticket (item_31): {item_res.get('result', item_res)}"
         except Exception as e:
             return f"Failed to use Tengu ticket: {e}"
     elif boss_type == "nurarihyon":
