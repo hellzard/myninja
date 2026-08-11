@@ -207,12 +207,14 @@ async def run_hunting(client: NinjaSageClient, sessionkey: str, char_id: int, zo
         return f"Unknown boss zone: {zone}"
         
     # Call getData first as the server might require it to initialize the session for Hunting House
-    await client.send_amf_request("HuntingHouse.getData", [sessionkey, char_id])
+    get_data_res = await client.send_amf_request("HuntingHouse.getData", [sessionkey, char_id])
+    print(f"[DEBUG] HuntingHouse.getData for boss {boss_num}: {get_data_res}")
     
     start_res = await client.send_amf_request("HuntingHouse.startHunting", [char_id, boss_num, sessionkey])
+    print(f"[DEBUG] HuntingHouse.startHunting for boss {boss_num}: {start_res}")
     
-    if start_res and isinstance(start_res, str) and len(start_res) == 10:
-        battle_code = start_res
+    if isinstance(start_res, dict) and start_res.get('status') == 1 and 'battle_code' in start_res:
+        battle_code = start_res['battle_code']
         await asyncio.sleep(2)
         
         # Finish hash: md5(str(boss_num) + str(char_id) + str(battle_code))
