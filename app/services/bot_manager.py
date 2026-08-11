@@ -233,7 +233,7 @@ async def run_hunting(client: NinjaSageClient, sessionkey: str, char_id: int, zo
         else:
             return f"Failed to finish hunting: {finish_res}"
     else:
-        return f"Failed to start hunting: {start_res}"
+        return f"Failed to start hunting. getData={get_data_res}, startRes={start_res}"
 
 async def auto_shadow_war(client: NinjaSageClient, sessionkey: str, char_id: int):
     # 1. Check Event Status and Energy
