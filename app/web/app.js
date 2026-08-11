@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const loginModal = document.getElementById('login-modal');
+    const loginModal = document.getElementById('auth-view');
     const appShell = document.getElementById('app-shell');
     const loginForm = document.getElementById('login-form');
     const loginBtn = document.getElementById('login-btn');
