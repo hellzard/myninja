@@ -50,9 +50,17 @@ body {
   padding: 2rem;
   display: grid;
   grid-template-columns: 320px 1fr;
+  grid-template-rows: auto auto;
   gap: 2rem;
   min-height: 100vh;
   align-items: start;
+}
+
+/* Grid areas for desktop */
+@media (min-width: 993px) {
+  .sidebar { grid-column: 1 / 2; grid-row: 1 / 2; }
+  .dashboard-grid { grid-column: 2 / 3; grid-row: 1 / 2; }
+  .terminal-wrapper { grid-column: 1 / 3; grid-row: 2 / 3; width: 100%; }
 }
 
 @media (max-width: 992px) {
@@ -60,20 +68,16 @@ body {
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    gap: 1.5rem;
   }
   .sidebar {
-    display: contents;
+    display: block;
   }
   .profile-card {
     order: 1;
   }
-  .dashboard-grid {
-    order: 2;
-    margin-top: 1rem;
-  }
   .terminal-wrapper {
-    order: 3;
-    margin-top: 2rem;
+    margin-top: 1rem;
     width: 100%;
   }
 }
@@ -410,15 +414,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .terminal-window {
-  flex: 1;
-  background: rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(255,255,255,0.05);
-  border-radius: var(--radius-sm);
-  padding: 1rem;
+  background: #020617;
+  height: 350px;
   overflow-y: auto;
+  padding: 1.5rem;
+  border-bottom-left-radius: var(--radius-sm);
+  border-bottom-right-radius: var(--radius-sm);
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.85rem;
-  color: #cbd5e1;
+  font-size: 0.9rem;
   box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
   scroll-behavior: smooth;
 }

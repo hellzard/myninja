@@ -80,6 +80,7 @@
 
         <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
           <button id="btn-refresh-stats" class="btn btn-toggle"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
+          <button id="btn-settings" class="btn btn-toggle" onclick="document.getElementById('modal-settings').classList.add('show')"><i class="fa-solid fa-gear"></i></button>
           <button id="btn-logout" class="btn btn-toggle" style="color: #f87171;"><i class="fa-solid fa-power-off"></i> Logout</button>
           <button id="global-stop-btn" class="btn btn-primary hidden" style="background: linear-gradient(135deg, #ef4444, #b91c1c); width: 100%; margin-top: 0.5rem;" onclick="window.stopCurrentBot()">
             <i class="fa-solid fa-stop"></i> HALT ALL BOTS
@@ -90,20 +91,7 @@
         </div>
       </div>
 
-      <!-- TERMINAL (Desktop sidebar location) -->
-      <div class="terminal-wrapper">
-        <div class="terminal-header">
-          <h3>Terminal</h3>
-          <button class="btn-toggle" style="padding: 0.2rem 0.5rem;" onclick="document.getElementById('activity-log').innerHTML=''">
-            <i class="fa-solid fa-trash"></i>
-          </button>
-        </div>
-        <div class="terminal-window" id="terminal-window">
-          <ul id="activity-log" class="log-list">
-            <!-- Logs go here -->
-          </ul>
-        </div>
-      </div>
+      
     </aside>
 
     <!-- RIGHT CONTENT AREA (Bento Box Grid - 5 Categories) -->
@@ -150,17 +138,24 @@
         </div>
       </div>
       
-      <!-- Settings -->
-      <div class="glass-panel module-card tilt" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2" onclick="document.getElementById('modal-settings').classList.add('show')" style="cursor: pointer;">
-        <div class="module-header" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
-          <div class="module-icon" style="font-size: 3rem; margin-bottom: 1rem; color: #94a3b8;"><i class="fa-solid fa-gear"></i></div>
-          <div class="module-title">
-            <h3>Settings</h3>
-          </div>
-        </div>
-      </div>
+      
 
     </main>
+
+    <!-- TERMINAL (Full Width Bottom) -->
+      <div class="terminal-wrapper">
+        <div class="terminal-header">
+          <h3>Terminal</h3>
+          <button class="btn-toggle" style="padding: 0.2rem 0.5rem;" onclick="document.getElementById('activity-log').innerHTML=''">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+        <div class="terminal-window" id="terminal-window">
+          <ul id="activity-log" class="log-list">
+            <!-- Logs go here -->
+          </ul>
+        </div>
+      </div>
     
     <footer style="grid-column: 1 / -1; text-align: center; margin-top: 1rem; padding: 1.5rem 1rem; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); font-family: 'JetBrains Mono', monospace; line-height: 1.6; background: rgba(0,0,0,0.2); border-radius: var(--radius);">
       <p style="margin-bottom: 0.5rem; color: #f8fafc;"><i class="fa-solid fa-user-shield" style="color: var(--primary); margin-right: 0.5rem;"></i> <strong>Strictly for Personal Use. Not for commercial distribution.</strong></p>
