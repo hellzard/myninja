@@ -39,7 +39,7 @@
           <i class="fa-solid fa-right-to-bracket"></i> INITIALIZE CONNECTION
         </button>
         <button type="button" id="quick-login-btn" class="btn btn-toggle" style="width: 100%; margin-top: 0.75rem;">
-          <i class="fa-solid fa-bolt"></i> QUICK LOGIN (DEMO)
+          <i class="fa-solid fa-bolt"></i> QUICK LOGIN
         </button>
       </form>
       
@@ -56,7 +56,7 @@
     <aside class="sidebar">
       <div class="glass-panel profile-card">
         <div class="avatar-ring">
-          <i class="fa-solid fa-user-ninja"></i>
+          <i class="fa-brands fa-galactic-senate glowing-logo-spin"></i>
         </div>
         <h2 id="metric-char" class="profile-name">Ninja</h2>
         <div class="profile-id">ID: <span id="metric-char-id">...</span></div>
@@ -108,130 +108,56 @@
       </div>
     </aside>
 
-    <!-- RIGHT CONTENT AREA (Bento Box Grid) -->
+    <!-- RIGHT CONTENT AREA (Bento Box Grid - 5 Categories) -->
     <main class="dashboard-grid">
       
-      <!-- MAIN ACTIONS -->
-      <div class="glass-panel module-card tilt" data-tilt data-tilt-max="2" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.1">
-        <div class="module-header">
-          <div class="module-icon"><i class="fa-solid fa-khanda"></i></div>
+      <!-- Operations -->
+      <div class="glass-panel module-card tilt" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2" onclick="document.getElementById('modal-operations').classList.add('show')" style="cursor: pointer;">
+        <div class="module-header" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+          <div class="module-icon" style="font-size: 3rem; margin-bottom: 1rem;"><i class="fa-solid fa-khanda"></i></div>
           <div class="module-title">
             <h3>Operations</h3>
-            <p>Core farming modules</p>
-          </div>
-        </div>
-        <div class="action-list">
-          <div class="action-item">
-            <div class="action-info">
-              <h4>Auto Leveling</h4>
-              <small>Farms mission <input type="number" id="auto_level_max" value="60" style="width: 40px; background: transparent; border: none; border-bottom: 1px solid var(--primary); color: var(--primary); text-align: center;"/></small>
-            </div>
-            <button id="toggle-autolevel" class="btn btn-toggle">START</button>
-          </div>
-          <div class="action-item">
-            <div class="action-info">
-              <h4>Auto-Mission Farmer</h4>
-              <small>Insta-clears <input type="text" id="auto_mission_id" value="auto" style="width: 50px; background: transparent; border: none; border-bottom: 1px solid var(--primary); color: var(--primary); text-align: center;"/></small>
-            </div>
-            <button id="toggle-automission-farmer" class="btn btn-toggle">START</button>
-          </div>
-          <div class="action-item">
-            <div class="action-info">
-              <h4>Auto Eudemon</h4>
-              <small>Farms TP automatically</small>
-            </div>
-            <button id="btnAutoEudemon" class="btn btn-toggle">START</button>
-          </div>
-          <div class="action-item">
-            <div class="action-info">
-              <h4>Hunting House</h4>
-              <small>Farms materials</small>
-            </div>
-            <button id="toggle-autohunting" class="btn btn-toggle">START</button>
           </div>
         </div>
       </div>
 
-      <!-- DAILIES & BOSSES -->
-      <div class="glass-panel module-card tilt" data-tilt data-tilt-max="2" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.1">
-        <div class="module-header">
-          <div class="module-icon"><i class="fa-solid fa-dragon"></i></div>
+      <!-- Events -->
+      <div class="glass-panel module-card tilt" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2" onclick="document.getElementById('modal-events').classList.add('show')" style="cursor: pointer;">
+        <div class="module-header" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+          <div class="module-icon" style="font-size: 3rem; margin-bottom: 1rem; color: #facc15;"><i class="fa-solid fa-masks-theater"></i></div>
+          <div class="module-title">
+            <h3>Events</h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dailies & Bosses -->
+      <div class="glass-panel module-card tilt" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2" onclick="document.getElementById('modal-dailies').classList.add('show')" style="cursor: pointer;">
+        <div class="module-header" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+          <div class="module-icon" style="font-size: 3rem; margin-bottom: 1rem; color: #3b82f6;"><i class="fa-solid fa-dragon"></i></div>
           <div class="module-title">
             <h3>Dailies & Bosses</h3>
-            <p>Routine tasks</p>
-          </div>
-        </div>
-        <div class="action-list">
-          <div class="action-item">
-            <div class="action-info">
-              <h4>Monster Hunt</h4>
-              <small>World boss combat</small>
-            </div>
-            <button id="toggle-automonster" class="btn btn-toggle">START</button>
-          </div>
-          <div class="action-item">
-            <div class="action-info">
-              <h4>Daily Event</h4>
-              <small>Standard daily routines</small>
-            </div>
-            <button id="toggle-autodaily" class="btn btn-toggle">START</button>
-          </div>
-          <div class="action-item">
-            <div class="action-info">
-              <h4>Mission S</h4>
-              <small>Farms special tokens</small>
-            </div>
-            <button id="toggle-automissions" class="btn btn-toggle">START</button>
-          </div>
-          
-          <div class="action-item" style="border-top: 1px dashed var(--border-color); margin-top: 0.5rem; padding-top: 1rem;">
-             <div class="action-info">
-               <h4 style="color: var(--primary-light)"><i class="fa-solid fa-ticket"></i> Shadow Circus</h4>
-               <small>Ringmaster, Jester, Kitsune</small>
-             </div>
-             <button onclick="document.getElementById('modal-events').classList.add('show')" class="btn btn-toggle">OPEN</button>
-          </div>
-          <div class="action-item">
-             <div class="action-info">
-               <h4 style="color: var(--primary-light)"><i class="fa-solid fa-ghost"></i> Yokai Events</h4>
-               <small>Tengu, Nurarihyon, Minigame</small>
-             </div>
-             <button onclick="document.getElementById('modal-events').classList.add('show')" class="btn btn-toggle">OPEN</button>
           </div>
         </div>
       </div>
 
-      <!-- WAR & SETTINGS -->
-      <div class="glass-panel module-card tilt" data-tilt data-tilt-max="2" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.1">
-        <div class="module-header">
-          <div class="module-icon"><i class="fa-solid fa-shield-halved"></i></div>
+      <!-- War (Coming Soon) -->
+      <div class="glass-panel module-card tilt disabled-card" data-tilt data-tilt-max="1" data-tilt-speed="400" style="cursor: not-allowed; opacity: 0.6; position: relative;">
+        <div class="coming-soon-badge" style="position: absolute; top: -10px; right: -10px; background: #ef4444; color: white; padding: 4px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; box-shadow: 0 0 10px #ef4444; z-index: 10;">COMING SOON</div>
+        <div class="module-header" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+          <div class="module-icon" style="font-size: 3rem; margin-bottom: 1rem; color: #ef4444;"><i class="fa-solid fa-shield-halved"></i></div>
           <div class="module-title">
-            <h3>War & Settings</h3>
-            <p>Clan tasks and configurations</p>
+            <h3>War</h3>
           </div>
         </div>
-        <div class="action-list">
-          <div class="action-item">
-            <div class="action-info">
-              <h4>Shadow War</h4>
-              <small>Auto battle</small>
-            </div>
-            <button id="toggle-autoshadowwar" class="btn btn-toggle">START</button>
-          </div>
-          <div class="action-item">
-            <div class="action-info">
-              <h4>Clan War</h4>
-              <small>Uses Clan Token logic</small>
-            </div>
-            <button id="toggle-autoclanwar" class="btn btn-toggle">START</button>
-          </div>
-          
-          <div class="action-item" style="border-top: 1px dashed var(--border-color); margin-top: 0.5rem; padding-top: 1rem;">
-             <div class="action-info">
-               <h4><i class="fa-solid fa-gear"></i> Bot Settings</h4>
-               <small>Delays & preferences</small>
-             </div>
-             <button onclick="document.getElementById('modal-settings').classList.add('show')" class="btn btn-toggle">EDIT</button>
+      </div>
+      
+      <!-- Settings -->
+      <div class="glass-panel module-card tilt" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2" onclick="document.getElementById('modal-settings').classList.add('show')" style="cursor: pointer;">
+        <div class="module-header" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+          <div class="module-icon" style="font-size: 3rem; margin-bottom: 1rem; color: #94a3b8;"><i class="fa-solid fa-gear"></i></div>
+          <div class="module-title">
+            <h3>Settings</h3>
           </div>
         </div>
       </div>
@@ -240,8 +166,47 @@
   </div>
 
   <!-- MODALS -->
-  
-  <!-- Events Modal -->
+
+  <!-- Modal Operations -->
+  <div id="modal-operations" class="modal-overlay">
+    <div class="modal-content glass-panel">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-khanda"></i> Operations</h3>
+        <button class="btn-close" onclick="document.getElementById('modal-operations').classList.remove('show')">&times;</button>
+      </div>
+      <div class="action-list">
+        <div class="action-item">
+          <div class="action-info">
+            <h4>Auto Leveling</h4>
+            <div style="margin-top: 0.25rem;">Max Level: <input type="number" id="auto_level_max" value="60" class="input-field" style="width: 50px; text-align: center;" /></div>
+          </div>
+          <button id="toggle-autolevel" class="btn btn-toggle">START</button>
+        </div>
+        <div class="action-item">
+          <div class="action-info">
+            <h4>Auto-Mission Farmer</h4>
+            <div style="margin-top: 0.25rem;">
+              Mission: 
+              <select id="auto_mission_id" class="input-field" style="width: 140px; margin-left: 0.5rem;">
+                <option value="auto">Auto (Highest)</option>
+                <option value="msn_11">Grade C - Random</option>
+                <option value="msn_18">Grade B - Random</option>
+                <option value="msn_23">Grade A - Random</option>
+                <option value="msn_42">Sannin - Random</option>
+                <option value="msn_69">Sannin - Random 2</option>
+                <option value="msn_109">Sannin - Scroll A</option>
+                <option value="msn_110">Sannin - Scroll B</option>
+                <option value="msn_111">Sannin - Scroll C</option>
+              </select>
+            </div>
+          </div>
+          <button id="toggle-automission-farmer" class="btn btn-toggle">START</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Events -->
   <div id="modal-events" class="modal-overlay">
     <div class="modal-content glass-panel">
       <div class="modal-header">
@@ -249,31 +214,71 @@
         <button class="btn-close" onclick="document.getElementById('modal-events').classList.remove('show')">&times;</button>
       </div>
       <div class="action-list">
-        <h4>Shadow Circus</h4>
         <div class="action-item">
-          <span>Ringmaster</span>
-          <button id="toggle-autoringmaster" class="btn btn-toggle">START</button>
+          <div class="action-info">
+            <h4>Shadow Circus</h4>
+            <div style="margin-top: 0.25rem;">
+              Boss: 
+              <select id="circus-boss-id" class="input-field" style="width: 140px; margin-left: 0.5rem;">
+                <option value="ringmaster">Ringmaster</option>
+                <option value="jester">Jester</option>
+              </select>
+            </div>
+          </div>
+          <button id="toggle-autocircus" class="btn btn-toggle">START</button>
         </div>
         <div class="action-item">
-          <span>Jester</span>
-          <button id="toggle-autojester" class="btn btn-toggle">START</button>
+          <div class="action-info">
+            <h4>Yokai Event</h4>
+            <div style="margin-top: 0.25rem;">
+              Boss: 
+              <select id="yokai-boss-id" class="input-field" style="width: 140px; margin-left: 0.5rem;">
+                <option value="kitsune">Kitsune</option>
+                <option value="tengu">Tengu</option>
+                <option value="nurarihyon">Nurarihyon</option>
+              </select>
+            </div>
+          </div>
+          <button id="toggle-autoyokai" class="btn btn-toggle">START</button>
         </div>
         <div class="action-item">
-          <span>Kitsune</span>
-          <button id="toggle-autokitsune" class="btn btn-toggle">START</button>
-        </div>
-        <h4 style="margin-top: 1rem;">Yokai Events</h4>
-        <div class="action-item">
-          <span>Tengu</span>
-          <button id="toggle-autotengu" class="btn btn-toggle">START</button>
-        </div>
-        <div class="action-item">
-          <span>Nurarihyon</span>
-          <button id="toggle-autonurarihyon" class="btn btn-toggle">START</button>
-        </div>
-        <div class="action-item">
-          <span>Minigame <small>(Insta-Clear)</small></span>
+          <div class="action-info">
+            <h4>Yokai Minigame</h4>
+            <div style="margin-top: 0.25rem; font-size: 0.8rem; color: var(--text-muted);">Insta-Clear</div>
+          </div>
           <button id="toggle-autoyokaiminigame" class="btn btn-toggle">START</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Dailies & Bosses -->
+  <div id="modal-dailies" class="modal-overlay">
+    <div class="modal-content glass-panel">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-dragon"></i> Dailies & Bosses</h3>
+        <button class="btn-close" onclick="document.getElementById('modal-dailies').classList.remove('show')">&times;</button>
+      </div>
+      <div class="action-list">
+        <div class="action-item">
+          <h4>Monster Hunt</h4>
+          <button id="toggle-automonster" class="btn btn-toggle">START</button>
+        </div>
+        <div class="action-item">
+          <h4>Daily Event</h4>
+          <button id="toggle-autodaily" class="btn btn-toggle">START</button>
+        </div>
+        <div class="action-item">
+          <h4>Mission S</h4>
+          <button id="toggle-automissions" class="btn btn-toggle">START</button>
+        </div>
+        <div class="action-item">
+          <h4>Hunting House</h4>
+          <button id="toggle-autohunting" class="btn btn-toggle">START</button>
+        </div>
+        <div class="action-item">
+          <h4>Eudemon</h4>
+          <button id="btnAutoEudemon" class="btn btn-toggle">START</button>
         </div>
       </div>
     </div>
@@ -308,9 +313,12 @@
           </select>
         </div>
       </div>
+      <div style="margin-top: 1rem; text-align: right;">
+        <button id="btn-save-settings" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Settings</button>
+      </div>
     </div>
   </div>
 
-  <script src="/panel/app.js?v=2" defer></script>
+  <script src="/panel/app.js?v=4" defer></script>
 </body>
 </html>

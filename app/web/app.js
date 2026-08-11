@@ -472,26 +472,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Circus Event - Shadow Ringmaster
-    let autoRingmasterInterval = null;
-    const btnAutoRingmaster = document.getElementById('toggle-autoringmaster');
 
-    if (btnAutoRingmaster) {
-        btnAutoRingmaster.addEventListener('click', () => {
-            if (autoRingmasterInterval) {
-                clearInterval(autoRingmasterInterval);
-                autoRingmasterInterval = null;
-                btnAutoRingmaster.textContent = "START";
-                btnAutoRingmaster.style.background = "";
-                addLog("Auto Ringmaster STOPPED.");
+    // Circus Event
+    let autoCircusInterval = null;
+    const btnAutoCircus = document.getElementById('toggle-autocircus');
+
+    if (btnAutoCircus) {
+        btnAutoCircus.addEventListener('click', () => {
+            const bossId = document.getElementById('circus-boss-id').value;
+            const eventIdStr = bossId === 'ringmaster' ? 'circus_ringmaster' : 'circus_jester';
+            const bossName = bossId === 'ringmaster' ? 'Ringmaster' : 'Jester';
+
+            if (autoCircusInterval) {
+                clearInterval(autoCircusInterval);
+                autoCircusInterval = null;
+                btnAutoCircus.textContent = "START";
+                btnAutoCircus.style.background = "";
+                addLog(`Auto Circus ${bossName} STOPPED.`);
                 return;
             }
 
-            btnAutoRingmaster.textContent = "STOP";
-            btnAutoRingmaster.style.background = "#ff5252";
-            addLog(`Auto Ringmaster STARTED...`);
+            btnAutoCircus.textContent = "STOP";
+            btnAutoCircus.style.background = "#ff5252";
+            addLog(`Auto Circus ${bossName} STARTED...`);
 
-            autoRingmasterInterval = setInterval(async () => {
+            autoCircusInterval = setInterval(async () => {
                 try {
                     const res = await fetch('/api/bot/auto_event_step', {
                         method: 'POST',
@@ -499,41 +504,50 @@ document.addEventListener('DOMContentLoaded', () => {
                         body: JSON.stringify({ 
                             sessionkey: sessionState.sessionkey,
                             char_id: sessionState.char_id,
-                            event_id: 'circus_ringmaster'
+                            event_id: eventIdStr
                         })
                     });
                     const data = await res.json();
-                    addLog(`[Ringmaster] Response: ${data.message}`);
-                    if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket'))) {
-                        btnAutoRingmaster.click();
+                    addLog(`[Circus ${bossName}] Response: ${data.message}`);
+                    if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket') || data.message.toLowerCase().includes('stopped'))) {
+                        btnAutoCircus.click();
                     }
                 } catch(e) {
-                    addLog(`[Ringmaster] Error: ${e.message}`);
+                    addLog(`[Circus ${bossName}] Error: ${e.message}`);
                 }
             }, 5000);
         });
     }
 
-    // Circus Event - Nightmare Jester
-    let autoJesterInterval = null;
-    const btnAutoJester = document.getElementById('toggle-autojester');
+    // Yokai Event
+    let autoYokaiInterval = null;
+    const btnAutoYokai = document.getElementById('toggle-autoyokai');
 
-    if (btnAutoJester) {
-        btnAutoJester.addEventListener('click', () => {
-            if (autoJesterInterval) {
-                clearInterval(autoJesterInterval);
-                autoJesterInterval = null;
-                btnAutoJester.textContent = "START";
-                btnAutoJester.style.background = "";
-                addLog("Auto Jester STOPPED.");
+    if (btnAutoYokai) {
+        btnAutoYokai.addEventListener('click', () => {
+            const bossId = document.getElementById('yokai-boss-id').value;
+            let eventIdStr = 'yokai_kitsune';
+            let bossName = 'Kitsune';
+            if (bossId === 'tengu') {
+                eventIdStr = 'yokai_tengu'; bossName = 'Tengu';
+            } else if (bossId === 'nurarihyon') {
+                eventIdStr = 'yokai_nurarihyon'; bossName = 'Nurarihyon';
+            }
+
+            if (autoYokaiInterval) {
+                clearInterval(autoYokaiInterval);
+                autoYokaiInterval = null;
+                btnAutoYokai.textContent = "START";
+                btnAutoYokai.style.background = "";
+                addLog(`Auto Yokai ${bossName} STOPPED.`);
                 return;
             }
 
-            btnAutoJester.textContent = "STOP";
-            btnAutoJester.style.background = "#ff5252";
-            addLog(`Auto Jester STARTED...`);
+            btnAutoYokai.textContent = "STOP";
+            btnAutoYokai.style.background = "#ff5252";
+            addLog(`Auto Yokai ${bossName} STARTED...`);
 
-            autoJesterInterval = setInterval(async () => {
+            autoYokaiInterval = setInterval(async () => {
                 try {
                     const res = await fetch('/api/bot/auto_event_step', {
                         method: 'POST',
@@ -541,147 +555,20 @@ document.addEventListener('DOMContentLoaded', () => {
                         body: JSON.stringify({ 
                             sessionkey: sessionState.sessionkey,
                             char_id: sessionState.char_id,
-                            event_id: 'circus_jester'
+                            event_id: eventIdStr
                         })
                     });
                     const data = await res.json();
-                    addLog(`[Jester] Response: ${data.message}`);
-                    if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket'))) {
-                        btnAutoJester.click();
+                    addLog(`[Yokai ${bossName}] Response: ${data.message}`);
+                    if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket') || data.message.toLowerCase().includes('stopped'))) {
+                        btnAutoYokai.click();
                     }
                 } catch(e) {
-                    addLog(`[Jester] Error: ${e.message}`);
+                    addLog(`[Yokai ${bossName}] Error: ${e.message}`);
                 }
             }, 5000);
         });
     }
-
-    // Yokai Event - Kitsune
-    let autoKitsuneInterval = null;
-    const btnAutoKitsune = document.getElementById('toggle-autokitsune');
-
-    if (btnAutoKitsune) {
-        btnAutoKitsune.addEventListener('click', () => {
-            if (autoKitsuneInterval) {
-                clearInterval(autoKitsuneInterval);
-                autoKitsuneInterval = null;
-                btnAutoKitsune.textContent = "START";
-                btnAutoKitsune.style.background = "";
-                addLog("Auto Yokai Kitsune STOPPED.");
-                return;
-            }
-
-            btnAutoKitsune.textContent = "STOP";
-            btnAutoKitsune.style.background = "#ff5252";
-            addLog(`Auto Yokai Kitsune STARTED...`);
-
-            autoKitsuneInterval = setInterval(async () => {
-                try {
-                    const res = await fetch('/api/bot/auto_event_step', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 
-                            sessionkey: sessionState.sessionkey,
-                            char_id: sessionState.char_id,
-                            event_id: 'yokai_kitsune'
-                        })
-                    });
-                    const data = await res.json();
-                    addLog(`[Kitsune] Response: ${data.message}`);
-                    if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket'))) {
-                        btnAutoKitsune.click();
-                    }
-                } catch(e) {
-                    addLog(`[Kitsune] Error: ${e.message}`);
-                }
-            }, 5000);
-        });
-    }
-
-    // Yokai Event - Tengu
-    let autoTenguInterval = null;
-    const btnAutoTengu = document.getElementById('toggle-autotengu');
-
-    if (btnAutoTengu) {
-        btnAutoTengu.addEventListener('click', () => {
-            if (autoTenguInterval) {
-                clearInterval(autoTenguInterval);
-                autoTenguInterval = null;
-                btnAutoTengu.textContent = "START";
-                btnAutoTengu.style.background = "";
-                addLog("Auto Yokai Tengu STOPPED.");
-                return;
-            }
-
-            btnAutoTengu.textContent = "STOP";
-            btnAutoTengu.style.background = "#ff5252";
-            addLog(`Auto Yokai Tengu STARTED...`);
-
-            autoTenguInterval = setInterval(async () => {
-                try {
-                    const res = await fetch('/api/bot/auto_event_step', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 
-                            sessionkey: sessionState.sessionkey,
-                            char_id: sessionState.char_id,
-                            event_id: 'yokai_tengu'
-                        })
-                    });
-                    const data = await res.json();
-                    addLog(`[Tengu] Response: ${data.message}`);
-                    if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket'))) {
-                        btnAutoTengu.click();
-                    }
-                } catch(e) {
-                    addLog(`[Tengu] Error: ${e.message}`);
-                }
-            }, 5000);
-        });
-    }
-
-    // Yokai Event - Nurarihyon
-    let autoNurarihyonInterval = null;
-    const btnAutoNurarihyon = document.getElementById('toggle-autonurarihyon');
-
-    if (btnAutoNurarihyon) {
-        btnAutoNurarihyon.addEventListener('click', () => {
-            if (autoNurarihyonInterval) {
-                clearInterval(autoNurarihyonInterval);
-                autoNurarihyonInterval = null;
-                btnAutoNurarihyon.textContent = "START";
-                btnAutoNurarihyon.style.background = "";
-                addLog("Auto Yokai Nurarihyon STOPPED.");
-                return;
-            }
-
-            btnAutoNurarihyon.textContent = "STOP";
-            btnAutoNurarihyon.style.background = "#ff5252";
-            addLog(`Auto Yokai Nurarihyon STARTED...`);
-
-            autoNurarihyonInterval = setInterval(async () => {
-                try {
-                    const res = await fetch('/api/bot/auto_event_step', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 
-                            sessionkey: sessionState.sessionkey,
-                            char_id: sessionState.char_id,
-                            event_id: 'yokai_nurarihyon'
-                        })
-                    });
-                    const data = await res.json();
-                    addLog(`[Nurarihyon] Response: ${data.message}`);
-                    if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket'))) {
-                        btnAutoNurarihyon.click();
-                    }
-                } catch(e) {
-                    addLog(`[Nurarihyon] Error: ${e.message}`);
-                }
-            }, 5000);
-        });
-    }
-    
     // Yokai Minigame
     let autoYokaiMinigameInterval = null;
     const btnAutoYokaiMinigame = document.getElementById('toggle-autoyokaiminigame');
