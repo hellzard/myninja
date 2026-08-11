@@ -213,6 +213,9 @@ async def run_hunting(client: NinjaSageClient, sessionkey: str, char_id: int, zo
     start_res = await client.send_amf_request("HuntingHouse.startHunting", [char_id, boss_num, sessionkey])
     print(f"[DEBUG] HuntingHouse.startHunting for boss {boss_num}: {start_res}")
     
+    old_start_res = await client.send_amf_request("JDEUnbiWJXOtHxVv.CCQV8v8GpKBY", [char_id, zone, sessionkey])
+    print(f"[DEBUG] OLD startHunting for zone {zone}: {old_start_res}")
+    
     if isinstance(start_res, dict) and start_res.get('status') == 1 and 'battle_code' in start_res:
         battle_code = start_res['battle_code']
         await asyncio.sleep(2)
@@ -233,7 +236,7 @@ async def run_hunting(client: NinjaSageClient, sessionkey: str, char_id: int, zo
         else:
             return f"Failed to finish hunting: {finish_res}"
     else:
-        return f"Failed to start hunting. getData={get_data_res}, startRes={start_res}"
+        return f"Failed to start hunting. getData={get_data_res}, startRes={start_res}, oldRes={old_start_res}"
 
 async def auto_shadow_war(client: NinjaSageClient, sessionkey: str, char_id: int):
     # 1. Check Event Status and Energy
