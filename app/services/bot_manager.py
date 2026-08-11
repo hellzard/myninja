@@ -825,26 +825,7 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         char_data = {}
     char_agility = char_data.get('agility', 0)
     
-    loc5 = {
-        "status": {
-            "wind": char_data.get('atrrib_wind', 0),
-            "fire": char_data.get('atrrib_fire', 0),
-            "lightning": char_data.get('atrrib_lightning', 0),
-            "water": char_data.get('atrrib_water', 0),
-            "earth": char_data.get('atrrib_earth', 0)
-        },
-        "items": {
-            "weapon": char_data.get('character_weapon', ''),
-            "set": char_data.get('character_set', ''),
-            "back_item": char_data.get('character_back_item', ''),
-            "accessory": char_data.get('character_accessory', '')
-        },
-        "____": [],
-        "bytes": {
-            "_": 100000, "__": 100000, "___": "1", "____": "1", "_____": 100000, "______": 100000
-        }
-    }
-    loc6_str = base64.b64encode(json.dumps(loc5).encode('utf-8')).decode('utf-8')
+    loc6_str = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzIzODEiLCJ3ZWFwb24iOiJ3cG5fMjM4MCIsInNldCI6InNldF8yMjU4XzEifSwic3RhdHVzIjp7ImVhcnRoIjowLCJsaWdodG5pbmciOjAsImZpcmUiOjAsIndhdGVyIjowLCJ3aW5kIjo3OH0sImJ5dGVzIjp7Il9fXyI6IjE3NjM4Nzk1ODk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mzg3OTU4OTE3NjM4Nzk1ODkxNzYzODc5NTg5MTc2Mzg3OTU4OSIsIl8iOjgyMjg0NDcsIl9fX18iOjE3NjM4Nzk1ODksIl9fX19fIjo4MjI4NDQ3LCJfXyI6ODIyODQ0NywiX19fX19fIjo4MjI4NDQ3fSwiX19fXyI6W3siXyI6InNraWxsXzIzMTIiLCJfXyI6NTQ2MDV9LHsiXyI6InNraWxsXzM0NSIsIl9fIjo4MDI0M30seyJfIjoic2tpbGxfMjMxMCIsIl9fIjoxMjg0Njl9LHsiXyI6InNraWxsXzIyMTUiLCJfXyI6MjkzNDl9LHsiXyI6InNraWxsXzIyODYiLCJfXyI6NDk0NzR9LHsiXyI6InNraWxsXzIyMDYiLCJfXyI6NjA5NDR9LHsiXyI6InNraWxsXzIzMDgiLCJfXyI6NjUxMDF9LHsiXyI6InNraWxsXzMyOSIsIl9fIjo3NTM1Nn1dfQ=="
     
     # 2. Start Event
     if boss_type == "kitsune":
@@ -903,8 +884,15 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         
     battle_code = start_res['code']
     
-    # 3. Wait for battle - Increased to avoid error 666 (Time Hack)
-    await asyncio.sleep(12)
+    # 3. Wait for battle - dynamic based on boss to avoid error 666 (Time Hack)
+    if boss_type == "kitsune":
+        await asyncio.sleep(45)
+    elif boss_type == "tengu":
+        await asyncio.sleep(55)
+    elif boss_type == "nurarihyon":
+        await asyncio.sleep(80)
+    else:
+        await asyncio.sleep(45)
     
     # 4. Finish Event
     # Event bosses using this API expect damage to be reported as 0
