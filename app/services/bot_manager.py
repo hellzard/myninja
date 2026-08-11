@@ -978,4 +978,60 @@ async def run_yokai_minigame(client: NinjaSageClient, sessionkey: str, char_id: 
     reward = finish_res.get('rewards', finish_res.get('reward', {}))
     return f"Yokai Minigame Completed! Rewards: {reward}"
 
-
+async def run_auto_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mission_id: str):
+    import hashlib
+    import asyncio
+    
+    # Dummy enemy parameters for starting the mission
+    _loc2_ = "enm_302"
+    _loc3_ = "id:enm_302|hp:100|agility:10"
+    _loc4_ = ""
+    
+    # Calculate start hash
+    start_hash_str = f"{_loc2_}{_loc3_}{_loc4_}"
+    start_hash = hashlib.sha256(start_hash_str.encode('utf-8')).hexdigest()
+    
+    # 1. Start Mission
+    try:
+        start_res = await client.send_amf_request("IOIJB836r2Hu2PPW.mwaPMdtCPC5o", [
+            char_id, mission_id, _loc2_, _loc3_, _loc4_, start_hash, sessionkey
+        ])
+    except Exception as e:
+        return f"Failed to start mission: {e}"
+        
+    if not isinstance(start_res, dict):
+        return f"Failed to start mission: Invalid response {type(start_res).__name__}"
+    
+    if start_res.get('status') == 0:
+        return f"Failed to start mission: {start_res}"
+        
+    # Extract battle code
+    battle_code = ""
+    if 'battle_code' in start_res:
+        battle_code = start_res['battle_code']
+    elif 'code' in start_res:
+        battle_code = start_res['code']
+        
+    if not battle_code:
+        return f"Failed to start mission: No battle code found in {start_res}"
+        
+    await asyncio.sleep(1) # Fast clear
+    
+    # Calculate finish hash
+    total_damage = 100
+    finish_hash_str = f"{mission_id}{char_id}{battle_code}{total_damage}"
+    finish_hash = hashlib.sha256(finish_hash_str.encode('utf-8')).hexdigest()
+    
+    # 2. Finish Mission
+    try:
+        finish_res = await client.send_amf_request("IOIJB836r2Hu2PPW.MSi71s3i1X89", [
+            char_id, mission_id, battle_code, finish_hash, total_damage, sessionkey, 1, 0
+        ])
+    except Exception as e:
+        return f"Failed to finish mission: {e}"
+    
+    if not isinstance(finish_res, dict) or finish_res.get('status') == 0:
+        return f"Failed to finish mission: {finish_res}"
+        
+    rewards = finish_res.get('rewards', finish_res.get('reward', {}))
+    return f"Mission Completed! Rewards: {rewards}"

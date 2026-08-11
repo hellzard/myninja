@@ -944,3 +944,58 @@ window.saveSettings = async function() {
         alert("Error saving settings: " + e.message);
     }
 }
+
+// Auto-Mission Farmer
+let autoMissionInterval = null;
+document.getElementById('toggle-automission-farmer').addEventListener('click', () => {
+    const btn = document.getElementById('toggle-automission-farmer');
+    const missionIdInput = document.getElementById('auto_mission_id');
+    const targetMissionId = missionIdInput.value.trim();
+    
+    if (!targetMissionId) {
+        addLog("[AutoMission] Error: Please enter a valid mission ID (e.g. msn_11).", "error");
+        return;
+    }
+    
+    if (autoMissionInterval) {
+        clearInterval(autoMissionInterval);
+        autoMissionInterval = null;
+        btn.textContent = "START";
+        btn.style.background = "";
+        missionIdInput.disabled = false;
+        addLog("Auto-Mission Farmer STOPPED.");
+        return;
+    }
+    
+    btn.textContent = "STOP";
+    btn.style.background = "#ff5252";
+    missionIdInput.disabled = true;
+    addLog(`Auto-Mission Farmer STARTED for mission: ${targetMissionId}...`);
+    
+    autoMissionInterval = setInterval(async () => {
+        try {
+            const res = await fetch('/api/bot/auto_mission_step', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    sessionkey: sessionState.sessionkey,
+                    char_id: sessionState.char_id,
+                    mission_id: targetMissionId
+                })
+            });
+            const data = await res.json();
+            
+            if (data.status === 'success' && !data.message.includes("Failed")) {
+                addLog(`[AutoMission] Success: ${data.message}`);
+            } else {
+                addLog(`[AutoMission] Response: ${data.message || data.status}`);
+                // Stop automatically if it fails heavily (e.g. invalid mission)
+                if (data.message && data.message.includes('Invalid response')) {
+                    btn.click();
+                }
+            }
+        } catch(e) {
+            addLog(`[AutoMission] Error: ${e.message}`);
+        }
+    }, 4000); // 4 seconds delay
+});

@@ -187,7 +187,18 @@ async def api_auto_eudemon(req: BasicBotRequest):
     except Exception as e:
         return {"status": "error", "message": str(e)}
 
-
+@app.post("/api/bot/auto_mission_step")
+async def api_auto_mission_step(req: AutoLevelingRequest):
+    client = NinjaSageClient()
+    try:
+        from app.services.bot_manager import run_auto_mission
+        res = await run_auto_mission(client, req.sessionkey, req.char_id, req.mission_id)
+        return {"status": "success", "message": res}
+    except Exception as e:
+        import traceback
+        error_trace = traceback.format_exc()
+        print(f"API AUTO MISSION ERROR:\n{error_trace}")
+        return {"status": "error", "message": str(e)}
 
 @app.post("/api/bot/auto_yokai_minigame_step")
 async def api_auto_yokai_minigame(req: BasicBotRequest):
