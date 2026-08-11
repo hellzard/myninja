@@ -867,13 +867,13 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
     
     enemy_info_str = f"id:{ene_id}|hp:{hp}|agility:{enemy_agility}"
     
-    hash_start_str = str(char_id) + str(boss_id) + enemy_info_str + str(char_agility)
+    hash_start_str = str(char_id) + ene_id + enemy_info_str + str(char_agility)
     hash_start = hashlib.sha256(hash_start_str.encode('utf-8')).hexdigest()
     
     try:
-        start_res = await client.send_amf_request("PhantomKyunokiEvent2026.startBattle", [
-            char_id, boss_id, char_agility, enemy_info_str, hash_start, sessionkey
-        ])
+        start_res = await client.send_amf_request("urUACOuL6PahuoEd.MTpVa9K3yFwo", [[
+            char_id, ene_id, char_agility, enemy_info_str, hash_start, sessionkey
+        ]])
     except Exception as e:
         return f"Failed to start Yokai Event: {e}"
     
@@ -886,22 +886,25 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         
     battle_code = start_res['code']
     
-    # 3. Wait for battle - 25 seconds total (from decompiled event.py docstring)
+    # 3. Wait for battle - 25 seconds total
     await asyncio.sleep(25)
     
     # 4. Finish Event
-    # From decompiled _create_battle_hash: hash = CUCSG.hash(f"{char_id}{enemy_id}{battle_code}{damage}")
-    # CRITICAL: hash includes BATTLE_HASH at the end!
-    damage_done = 0
-    hash_end_str = str(char_id) + str(boss_id) + battle_code + str(damage_done)
+    # From Charles logs: Yokai uses the generic/summer event endpoints.
+    damage_done = hp  # Doing full damage based on Charles logs or 61280.
+    
+    # We will use the same hardcoded EQUIPMENT_DATA from Monster Hunt.
+    EQUIPMENT_DATA = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzIzODEiLCJ3ZWFwb24iOiJ3cG5fMjM4MCIsInNldCI6InNldF8yMjU4XzEifSwic3RhdHVzIjp7ImVhcnRoIjowLCJsaWdodG5pbmciOjAsImZpcmUiOjAsIndhdGVyIjowLCJ3aW5kIjo3OH0sImJ5dGVzIjp7Il9fXyI6IjE3NjM4Nzk1ODk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mzg3OTU4OTE3NjM4Nzk1ODkxNzYzODc5NTg5MTc2Mzg3OTU4OSIsIl8iOjgyMjg0NDcsIl9fX18iOjE3NjM4Nzk1ODksIl9fX19fIjo4MjI4NDQ3LCJfXyI6ODIyODQ0NywiX19fX19fIjo4MjI4NDQ3fSwiX19fXyI6W3siXyI6InNraWxsXzIzMTIiLCJfXyI6NTQ2MDV9LHsiXyI6InNraWxsXzM0NSIsIl9fIjo4MDI0M30seyJfIjoic2tpbGxfMjMxMCIsIl9fIjoxMjg0Njl9LHsiXyI6InNraWxsXzIyMTUiLCJfXyI6MjkzNDl9LHsiXyI6InNraWxsXzIyODYiLCJfXyI6NDk0NzR9LHsiXyI6InNraWxsXzIyMDYiLCJfXyI6NjA5NDR9LHsiXyI6InNraWxsXzIzMDgiLCJfXyI6NjUxMDF9LHsiXyI6InNraWxsXzMyOSIsIl9fIjo3NTM1Nn1dfQ=="
+    
+    hash_end_str = str(char_id) + ene_id + battle_code + str(damage_done) + EQUIPMENT_DATA
+    # In Monster Hunt the hash calculation uses cucsg_hash locally but python uses hashlib.
+    # The server accepts it since `bot_manager.py` uses this exact equipment data logic for Monster Hunt.
     hash_end = hashlib.sha256(hash_end_str.encode('utf-8')).hexdigest()
     
-    # From decompiled _execute_battle: params = [char_id, enemy_id, code, dmg, hash, BATTLE_HASH, session_key]
-    # CRITICAL: 6th param is BATTLE_HASH from config, NOT equipment_data from monster_hunting!
     try:
-        finish_res = await client.send_amf_request("PhantomKyunokiEvent2026.finishBattle", [
-            char_id, boss_id, battle_code, damage_done, hash_end, BATTLE_HASH, sessionkey
-        ])
+        finish_res = await client.send_amf_request("urUACOuL6PahuoEd.iETwupoGdQMO", [[
+            char_id, ene_id, battle_code, damage_done, hash_end, EQUIPMENT_DATA, sessionkey
+        ]])
     except Exception as e:
         return f"Yokai Event finish failed: {e}"
         
