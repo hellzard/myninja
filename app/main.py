@@ -189,6 +189,16 @@ async def api_auto_eudemon(req: BasicBotRequest):
 
 
 
+@app.post("/api/bot/auto_yokai_minigame_step")
+async def api_auto_yokai_minigame(req: BasicBotRequest):
+    client = NinjaSageClient()
+    try:
+        from app.services.bot_manager import run_yokai_minigame
+        res = await run_yokai_minigame(client, req.sessionkey, req.char_id)
+        return {"status": "success", "message": res}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
 @app.post("/api/bot/command")
 async def bot_command(req: BotCommandRequest):
     client = NinjaSageClient()

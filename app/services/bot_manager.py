@@ -914,4 +914,62 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         error_msg = finish_res.get('result', finish_res) if isinstance(finish_res, dict) else finish_res
         return f"Yokai Event Complete but server rejected finish: {error_msg}"
 
+async def run_yokai_minigame(client: NinjaSageClient, sessionkey: str, char_id: int):
+    import hashlib
+    import asyncio
+    
+    # 1. Get Minigame Data
+    try:
+        get_data_res = await client.send_amf_request("urUACOuL6PahuoEd.vcx81Tk10da9", [[char_id, sessionkey]])
+    except Exception as e:
+        return f"Failed to get Yokai Minigame Data: {e}"
+        
+    if not isinstance(get_data_res, dict) or get_data_res.get('status') == 0:
+        return f"Failed to get Yokai Minigame Data: {get_data_res}"
+
+    # 2. Start Minigame
+    try:
+        start_res = await client.send_amf_request("urUACOuL6PahuoEd.swP4z80ragAZ", [[char_id, sessionkey]])
+    except Exception as e:
+        return f"Failed to start Yokai Minigame: {e}"
+        
+    if not isinstance(start_res, dict):
+        return f"Failed to start Yokai Minigame: Invalid response {type(start_res).__name__}"
+    
+    if start_res.get('status') == 0:
+        return f"Failed to start Yokai Minigame: {start_res}"
+        
+    # Attempt to extract battle code
+    battle_code = ""
+    if 'battle_code' in start_res:
+        battle_code = start_res['battle_code']
+    elif 'code' in start_res:
+        battle_code = start_res['code']
+    else:
+        # Some endpoints return code implicitly or it relies on a previously set character state
+        pass
+        
+    await asyncio.sleep(3)
+    
+    score = 440
+    lanterns = 40
+    combo = 13
+    
+    hash_str = f"{char_id}_{score}_{lanterns}_{combo}_{battle_code}"
+    hash_val = hashlib.sha256(hash_str.encode('utf-8')).hexdigest()
+    
+    # 3. Finish Minigame
+    try:
+        finish_res = await client.send_amf_request("urUACOuL6PahuoEd.VQF5sdP8F3Yj", [[
+            char_id, sessionkey, score, lanterns, combo, hash_val, battle_code
+        ]])
+    except Exception as e:
+        return f"Failed to finish Yokai Minigame: {e}"
+    
+    if not isinstance(finish_res, dict) or finish_res.get('status') == 0:
+        return f"Failed to finish Yokai Minigame: {finish_res}"
+        
+    reward = finish_res.get('reward', {})
+    return f"Yokai Minigame Completed! Rewards: {reward}"
+
 

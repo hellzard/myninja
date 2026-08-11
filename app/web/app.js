@@ -665,6 +665,47 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 5000);
         });
     }
+    
+    // Yokai Minigame
+    let autoYokaiMinigameInterval = null;
+    const btnAutoYokaiMinigame = document.getElementById('toggle-autoyokaiminigame');
+
+    if (btnAutoYokaiMinigame) {
+        btnAutoYokaiMinigame.addEventListener('click', () => {
+            if (autoYokaiMinigameInterval) {
+                clearInterval(autoYokaiMinigameInterval);
+                autoYokaiMinigameInterval = null;
+                btnAutoYokaiMinigame.textContent = "START";
+                btnAutoYokaiMinigame.style.background = "";
+                addLog("Auto Yokai Minigame STOPPED.");
+                return;
+            }
+
+            btnAutoYokaiMinigame.textContent = "STOP";
+            btnAutoYokaiMinigame.style.background = "#ff5252";
+            addLog(`Auto Yokai Minigame STARTED...`);
+
+            autoYokaiMinigameInterval = setInterval(async () => {
+                try {
+                    const res = await fetch('/api/bot/auto_yokai_minigame_step', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            sessionkey: sessionState.sessionkey,
+                            char_id: sessionState.char_id
+                        })
+                    });
+                    const data = await res.json();
+                    addLog(`[Yokai Minigame] Response: ${data.message}`);
+                    if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket'))) {
+                        btnAutoYokaiMinigame.click();
+                    }
+                } catch(e) {
+                    addLog(`[Yokai Minigame] Error: ${e.message}`);
+                }
+            }, 5000);
+        });
+    }
 
     // Auto Shadow War
     let autoShadowWarInterval = null;
