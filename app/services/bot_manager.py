@@ -449,9 +449,9 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
                 else:
                     return f"Chunin Exam Stage {stage_num} completed! {res}"
             else:
-                # All stages done (progress == 5), but rank is still 1!
-                # Dump the exam data so we can see what's actually happening
-                return f"All stages show completed. Raw Exam Data: {exam_data} | Rank is {rank}"
+                # All stages done (progress == 5), promote!
+                res = await client.send_amf_request("ChuninExam.promoteToChunin", [sessionkey, char_id])
+                return f"Promoted to Chunin! {res}"
         return f"Chunin Exam data: {exam_res}"
         
     # 2. Chunin -> Jounin (Level 40)
