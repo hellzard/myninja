@@ -49,7 +49,8 @@ def get_data_by_id(data_id: str, data_list: list) -> dict:
             return item
     return {}
 
-def calculate_agility(char_data: dict) -> int:
+def calculate_agility(char_data_res: dict) -> int:
+    char_data = char_data_res.get('character_data', char_data_res)
     agility = 10
     if 'status' in char_data and 'wind' in char_data['status']:
         agility += char_data['status']['wind'] * 1
@@ -88,7 +89,7 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
         ene_agi = enemy_attr.get("agility", 0)
         enemy_attrs.append(f"id:{enemy}|hp:{hp}|agility:{ene_agi}")
         
-    hash_input = ",".join(enemies) + "".join(enemy_attrs) + str(agility)
+    hash_input = ",".join(enemies) + "#".join(enemy_attrs) + str(agility)
     mission_hash = hashlib.sha256(hash_input.encode()).hexdigest()
     
     start_params = [char_id, mission_id, ",".join(enemies), "#".join(enemy_attrs), agility, mission_hash, sessionkey]
@@ -274,7 +275,7 @@ async def auto_mission_s(client: NinjaSageClient, sessionkey: str, char_id: int)
         ene_agi = enemy_attr.get("agility", 0)
         enemy_attrs.append(f"id:{enemy}|hp:{hp}|agility:{ene_agi}")
         
-    hash_input = ",".join(enemies) + "".join(enemy_attrs) + str(agility)
+    hash_input = ",".join(enemies) + "#".join(enemy_attrs) + str(agility)
     mission_hash = hashlib.sha256(hash_input.encode()).hexdigest()
     
     # 4. Start Battle
