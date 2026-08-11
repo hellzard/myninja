@@ -393,9 +393,9 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
     # 1. Genin -> Chunin (Level 20)
     if level >= 20 and rank < 2:
         exam_res = await client.send_amf_request("ChuninExam.getData", [sessionkey, char_id])
-        exam_data = exam_res.get('data', {}) if isinstance(exam_res, dict) else {}
         
-        if exam_res.get('status') == 1:
+        if isinstance(exam_res, dict) and exam_res.get('status') == 1:
+            exam_data = exam_res.get('data', {})
             progress = exam_data.get('progress', 0)
             if progress < 5:
                 stage_num = progress + 1
@@ -429,9 +429,9 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
     # 2. Chunin -> Jounin (Level 40)
     elif level >= 40 and rank < 3:
         exam_res = await client.send_amf_request("JouninExam.getData", [sessionkey, char_id])
-        exam_data = exam_res.get('data', {}) if isinstance(exam_res, dict) else {}
         
-        if exam_res.get('status') == 1:
+        if isinstance(exam_res, dict) and exam_res.get('status') == 1:
+            exam_data = exam_res.get('data', {})
             progress = exam_data.get('progress', 0)
             if progress < 5:
                 stage_num = progress + 6 # Jounin exam uses stages 6 to 10 internally
