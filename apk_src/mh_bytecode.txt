@@ -1,0 +1,117 @@
+﻿================================================================================
+METHOD: _get_equipment_data (line 43)
+Args: ()
+All locals: ()
+Constants:
+  [0]: 'Return the base64 encoded equipment data.'
+  [1]: 'eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzIzODEiLCJ3ZWFwb24iOiJ3cG5fMjM4MCIsInNldCI6InNldF8yMjU4XzEifSwic3RhdHVzIjp7ImVhcnRoIjowLCJsaWdodG5pbmciOjAsImZpcmUiOjAsIndhdGV...
+Names: ()
+================================================================================
+     0  LOAD_CONST                  1  = 'eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzIzODEiLCJ3ZWFwb24iOiJ3cG5...
+     2  RETURN_VALUE                0  
+
+================================================================================
+METHOD: _start_battle (line 59)
+Args: ('self', 'boss_id')
+All locals: ('self', 'boss_id', 'battle_hash', 'response')
+Constants:
+  [0]: 'Start a battle and return the battle data.'
+  [1]: 'status'
+  [2]: 1
+  [3]: 'Failed to start battle: '
+  [4]: None
+Names: ('CUCSG', 'hash', 'char_id', 'send_amf_request', 'START_BATTLE_ENDPOINT', 'session_key', 'get', 'print')
+================================================================================
+     0  LOAD_GLOBAL                 0  = CUCSG
+     2  <160>                       1  (1)
+     4  LOAD_FAST                   0  = self
+     6  LOAD_ATTR                   2  = char_id
+     8  FORMAT_VALUE                0  (0)
+    10  LOAD_FAST                   1  = boss_id
+    12  FORMAT_VALUE                0  (0)
+    14  BUILD_STRING                2  (2)
+    16  <161>                       1  (1)
+    18  STORE_FAST                  2  = battle_hash
+    20  LOAD_GLOBAL                 3  = send_amf_request
+    22  LOAD_GLOBAL                 4  = START_BATTLE_ENDPOINT
+    24  LOAD_FAST                   0  = self
+    26  LOAD_ATTR                   2  = char_id
+    28  LOAD_FAST                   1  = boss_id
+    30  LOAD_FAST                   2  = battle_hash
+    32  LOAD_FAST                   0  = self
+    34  LOAD_ATTR                   5  = session_key
+    36  BUILD_LIST                  4  (4)
+    38  GET_AWAITABLE               2  (2)
+    40  STORE_FAST                  3  = response
+    42  LOAD_FAST                   3  = response
+    44  <160>                       6  (6)
+    46  LOAD_CONST                  1  = 'status'
+    48  <161>                       1  (1)
+    50  LOAD_CONST                  2  = 1
+    52  COMPARE_OP                  3  (3)
+    54  POP_JUMP_IF_FALSE          37  (37)
+    56  LOAD_GLOBAL                 7  = print
+    58  LOAD_CONST                  3  = 'Failed to start battle: '
+    60  LOAD_FAST                   3  = response
+    62  FORMAT_VALUE                0  (0)
+    64  BUILD_STRING                2  (2)
+    66  GET_AWAITABLE               1  (1)
+    68  POP_TOP                     0  
+    70  LOAD_CONST                  4  = None
+    72  RETURN_VALUE                0  
+    74  LOAD_FAST                   3  = response
+    76  RETURN_VALUE                0  
+
+================================================================================
+METHOD: _finish_battle (line 71)
+Args: ('self', 'boss_id', 'battle_id', 'battle_hash_value')
+All locals: ('self', 'boss_id', 'battle_id', 'battle_hash_value', 'battle_completion_hash', 'params', 'response')
+Constants:
+  [0]: 'Finish the battle and process rewards.'
+  [1]: '0'
+  [2]: 0
+Names: ('CUCSG', 'hash', 'char_id', 'equipment_data', 'session_key', 'send_amf_request', 'FINISH_BATTLE_ENDPOINT', 'save_fight_data', '_process_battle_results')
+================================================================================
+     0  LOAD_GLOBAL                 0  = CUCSG
+     2  <160>                       1  (1)
+     4  LOAD_FAST                   0  = self
+     6  LOAD_ATTR                   2  = char_id
+     8  FORMAT_VALUE                0  (0)
+    10  LOAD_FAST                   1  = boss_id
+    12  FORMAT_VALUE                0  (0)
+    14  LOAD_FAST                   2  = battle_id
+    16  FORMAT_VALUE                0  (0)
+    18  LOAD_CONST                  1  = '0'
+    20  LOAD_FAST                   0  = self
+    22  LOAD_ATTR                   3  = equipment_data
+    24  FORMAT_VALUE                0  (0)
+    26  BUILD_STRING                5  (5)
+    28  <161>                       1  (1)
+    30  STORE_FAST                  4  = battle_completion_hash
+    32  LOAD_FAST                   0  = self
+    34  LOAD_ATTR                   2  = char_id
+    36  LOAD_FAST                   1  = boss_id
+    38  LOAD_FAST                   2  = battle_id
+    40  LOAD_CONST                  2  = 0
+    42  LOAD_FAST                   4  = battle_completion_hash
+    44  LOAD_FAST                   0  = self
+    46  LOAD_ATTR                   3  = equipment_data
+    48  LOAD_FAST                   0  = self
+    50  LOAD_ATTR                   4  = session_key
+    52  BUILD_LIST                  7  (7)
+    54  STORE_FAST                  5  = params
+    56  LOAD_GLOBAL                 5  = send_amf_request
+    58  LOAD_GLOBAL                 6  = FINISH_BATTLE_ENDPOINT
+    60  LOAD_FAST                   5  = params
+    62  GET_AWAITABLE               2  (2)
+    64  STORE_FAST                  6  = response
+    66  LOAD_GLOBAL                 7  = save_fight_data
+    68  LOAD_FAST                   6  = response
+    70  GET_AWAITABLE               1  (1)
+    72  POP_TOP                     0  
+    74  LOAD_FAST                   0  = self
+    76  <160>                       8  (8)
+    78  LOAD_FAST                   6  = response
+    80  <161>                       1  (1)
+    82  RETURN_VALUE                0  
+

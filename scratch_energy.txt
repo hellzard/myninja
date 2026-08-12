@@ -1,0 +1,41 @@
+{'ene_2121', 'ene_2120'}
+  [63]: 'Γ¥î Battle failed: '
+  [64]: '\nΓÅ│ Waiting '
+  [65]: ' seconds before next battle...'
+  [66]: 'stop_event'
+  [67]: '≡ƒôè FINISHED '
+  [68]: '  ΓÇó Battles executed: '
+  [69]: '  ΓÇó Remaining energy: '
+  [70]: '  ΓÇó Failed attempts: '
+  [71]: '  ΓÇó Total time: ~'
+  [72]: ' seconds ('
+  [73]: 60
+  [74]: '.1f'
+  [75]: ' minutes)'
+Names: ('_check_stop_event', 'EVENT_CONFIGS', 'ValueError', 'join', 'keys', '_get_character_data', 'check_energy', 'print', 'name', '_handle_empty_event_energy', 'set', 'range', '_wait_with_stop_check', '_send_event_request', 'get_battle_data_method', '_select_hanami_enemy', 'get_data_by_id', 'enemy_list', '_enemy_name_from_id', 'is_fixed_boss', 'boss_id', 'boss_hp', 'boss_agility', 'is_random_enemy', '_get_random_enemy_with_retry', 'enemy_choices', 'next', 'iter', 'items', 'get', 'config', 'all_char', 'StatManager', 'calculate_stats_with_data', 'CUCSG', 'hash', 'get_start_battle_method', 'isinstance', 'list', 'len', 'str', 'dict', '_response_message', '_extract_retry_delay', 'delay_between_calls', 'finish_damage', '_create_battle_hash', 'BATTLE_HASH', 'get_finish_battle_method', 'save_fight_data', 'add', '_check_hack_detection', 'hasattr', 'stop_event', 'is_set', 'clear', 'upper')
+================================================================================
+     0  LOAD_FAST                   0  = self
+     2  <160>                       0  (0)
+     4  <161>                       0  (0)
+     6  POP_JUMP_IF_FALSE           6  (6)
+     8  LOAD_CONST                  1  = None
+    10  RETURN_VALUE                0  
+    12  LOAD_FAST                   1  = event_type
+    14  LOAD_FAST                   0  = self
+    16  LOAD_ATTR                   1  = EVENT_CONFIGS
+    18  CONTAINS_OP                 1  (1)
+    20  POP_JUMP_IF_FALSE          27  (27)
+    22  LOAD_GLOBAL                 2  = ValueError
+    24  LOAD_CONST                  2  = 'Unknown event type: '
+    26  LOAD_FAST                   1  = event_type
+    28  FORMAT_VALUE                0  (0)
+    30  LOAD_CONST                  3  = '. Available: '
+    32  LOAD_CONST                  4  = ', '
+    34  <160>                       3  (3)
+    36  LOAD_FAST                   0  = self
+    38  LOAD_ATTR                   1  = EVENT_CONFIGS
+    40  <160>                       4  (4)
+    42  <161>                       0  (0)
+    44  <161>                       1  (1)
+    46  FORMAT_VALUE                0  (0)
+    48  BUILD_STRING      

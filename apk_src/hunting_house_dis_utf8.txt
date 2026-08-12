@@ -1,0 +1,1034 @@
+﻿# pydisasm version 6.1.8
+# Python bytecode 3.10 (3439)
+# Disassembled from Python 3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]
+# Timestamp in code: 1780820771 (2026-06-07 15:26:11)
+# Source code size mod 2**32: 5144 bytes
+# Method Name:       <module>
+# Filename:          hunting_house.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        16
+# Flags:             0x00000040 (NOFREE)
+# First Line:        1
+# Constants:
+#    0: 2
+#    1: ('config',)
+#    2: 1
+#    3: ('check_stop_event', 'enemy_name', 'finish_hunting_house', 'get_char_id', 'get_level', 'get_session_key', 'rift_delay', 'rift_random_wait', 'response_message', 'send_rift_request', 'wait_with_stop')
+#    4: 0
+#    5: 'ene_81'
+#    6: 'Ginkotsu'
+#    7: 10
+#    8: ('num', 'enemy_ids', 'name', 'level')
+#    9: 'ene_82'
+#   10: 'Shikigami Yanki'
+#   11: 20
+#   12: 'ene_83'
+#   13: 'Gedo Sessho Seki'
+#   14: 25
+#   15: 3
+#   16: 'ene_84'
+#   17: 'ene_85'
+#   18: 'Tengu'
+#   19: 30
+#   20: 4
+#   21: 'ene_86'
+#   22: 'Byakko'
+#   23: 40
+#   24: 5
+#   25: 'ene_87'
+#   26: 'Ape King'
+#   27: 50
+#   28: 6
+#   29: 'ene_88'
+#   30: 'Battle Turtle'
+#   31: 55
+#   32: 7
+#   33: 'ene_155'
+#   34: 'Soul General Mutoh'
+#   35: 60
+#   36: 8
+#   37: 'ene_90'
+#   38: 'Calamity Serpent'
+#   39: 70
+#   40: 9
+#   41: 'ene_91'
+#   42: 'Kojima'
+#   43: 80
+#   44: 16
+#   45: 'ene_232'
+#   46: 'ene_233'
+#   47: 'The Mother & Father of Ghosts'
+#   48: 90
+#   49: 17
+#   50: ('ene_231', 'ene_230', 'ene_230')
+#   51: 'Moon Princess & Black Puppets'
+#   52: 100
+#   53: 'return'
+#   54: <Code310 code object _format_extra_rewards at 0x223d04056a0, file hunting_house.py>, line 33
+#   55: '_format_extra_rewards'
+#   56: <Code310 code object _parse_tries_payload at 0x223cdc364b0, file hunting_house.py>, line 40
+#   57: '_parse_tries_payload'
+#   58: <Code310 code object fight_hunting_house at 0x223ce4a92b0, file hunting_house.py>, line 53
+#   59: 'fight_hunting_house'
+#   60: None
+# Names:
+#    0: core
+#    1: config
+#    2: runtime
+#    3: check_stop_event
+#    4: enemy_name
+#    5: finish_hunting_house
+#    6: get_char_id
+#    7: get_level
+#    8: get_session_key
+#    9: rift_delay
+#   10: rift_random_wait
+#   11: response_message
+#   12: send_rift_request
+#   13: wait_with_stop
+#   14: RIFT_HUNTING_HOUSE_BOSSES
+#   15: str
+#   16: _format_extra_rewards
+#   17: _parse_tries_payload
+#   18: fight_hunting_house
+  1:           0 LOAD_CONST           (2)
+               2 LOAD_CONST           (('config',))
+               4 IMPORT_NAME          (core)
+               6 IMPORT_FROM          (config)
+               8 STORE_NAME           (config)
+              10 POP_TOP
+
+  2:          12 LOAD_CONST           (1)
+              14 LOAD_CONST           (('check_stop_event', 'enemy_name', 'finish_hunting_house', 'get_char_id', 'get_level', 'get_session_key', 'rift_delay', 'rift_random_wait', 'response_message', 'send_rift_request', 'wait_with_stop'))
+              16 IMPORT_NAME          (runtime)
+              18 IMPORT_FROM          (check_stop_event)
+              20 STORE_NAME           (check_stop_event)
+              22 IMPORT_FROM          (enemy_name)
+              24 STORE_NAME           (enemy_name)
+              26 IMPORT_FROM          (finish_hunting_house)
+              28 STORE_NAME           (finish_hunting_house)
+              30 IMPORT_FROM          (get_char_id)
+              32 STORE_NAME           (get_char_id)
+              34 IMPORT_FROM          (get_level)
+              36 STORE_NAME           (get_level)
+              38 IMPORT_FROM          (get_session_key)
+              40 STORE_NAME           (get_session_key)
+              42 IMPORT_FROM          (rift_delay)
+              44 STORE_NAME           (rift_delay)
+              46 IMPORT_FROM          (rift_random_wait)
+              48 STORE_NAME           (rift_random_wait)
+              50 IMPORT_FROM          (response_message)
+              52 STORE_NAME           (response_message)
+              54 IMPORT_FROM          (send_rift_request)
+              56 STORE_NAME           (send_rift_request)
+              58 IMPORT_FROM          (wait_with_stop)
+              60 STORE_NAME           (wait_with_stop)
+              62 POP_TOP
+
+ 18:          64 LOAD_CONST           (0)
+              66 LOAD_CONST           ("ene_81")
+              68 BUILD_LIST           1
+              70 LOAD_CONST           ("Ginkotsu")
+              72 LOAD_CONST           (10)
+              74 LOAD_CONST           (('num', 'enemy_ids', 'name', 'level'))
+              76 BUILD_CONST_KEY_MAP  4
+
+ 19:          78 LOAD_CONST           (1)
+              80 LOAD_CONST           ("ene_82")
+              82 BUILD_LIST           1
+              84 LOAD_CONST           ("Shikigami Yanki")
+              86 LOAD_CONST           (20)
+              88 LOAD_CONST           (('num', 'enemy_ids', 'name', 'level'))
+              90 BUILD_CONST_KEY_MAP  4
+
+ 20:          92 LOAD_CONST           (2)
+              94 LOAD_CONST           ("ene_83")
+              96 BUILD_LIST           1
+              98 LOAD_CONST           ("Gedo Sessho Seki")
+             100 LOAD_CONST           (25)
+             102 LOAD_CONST           (('num', 'enemy_ids', 'name', 'level'))
+             104 BUILD_CONST_KEY_MAP  4
+
+ 21:         106 LOAD_CONST           (3)
+             108 LOAD_CONST           ("ene_84")
+             110 LOAD_CONST           ("ene_85")
+             112 BUILD_LIST           2
+             114 LOAD_CONST           ("Tengu")
+             116 LOAD_CONST           (30)
+             118 LOAD_CONST           (('num', 'enemy_ids', 'name', 'level'))
+             120 BUILD_CONST_KEY_MAP  4
+
+ 22:         122 LOAD_CONST           (4)
+             124 LOAD_CONST           ("ene_86")
+             126 BUILD_LIST           1
+             128 LOAD_CONST           ("Byakko")
+             130 LOAD_CONST           (40)
+             132 LOAD_CONST           (('num', 'enemy_ids', 'name', 'level'))
+             134 BUILD_CONST_KEY_MAP  4
+
+ 23:         136 LOAD_CONST           (5)
+             138 LOAD_CONST           ("ene_87")
+             140 BUILD_LIST           1
+             142 LOAD_CONST           ("Ape King")
+             144 LOAD_CONST           (50)
+             146 LOAD_CONST           (('num', 'enemy_ids', 'name', 'level'))
+             148 BUILD_CONST_KEY_MAP  4
+
+ 24:         150 LOAD_CONST           (6)
+             152 LOAD_CONST           ("ene_88")
+             154 BUILD_LIST           1
+             156 LOAD_CONST           ("Battle Turtle")
+             158 LOAD_CONST           (55)
+             160 LOAD_CONST           (('num', 'enemy_ids', 'name', 'level'))
+             162 BUILD_CONST_KEY_MAP  4
+
+ 25:         164 LOAD_CONST           (7)
+             166 LOAD_CONST           ("ene_155")
+             168 BUILD_LIST           1
+             170 LOAD_CONST           ("Soul General Mutoh")
+             172 LOAD_CONST           (60)
+             174 LOAD_CONST           (('num', 'enemy_ids', 'name', 'level'))
+             176 BUILD_CONST_KEY_MAP  4
+
+ 26:         178 LOAD_CONST           (8)
+             180 LOAD_CONST           ("ene_90")
+             182 BUILD_LIST           1
+             184 LOAD_CONST           ("Calamity Serpent")
+             186 LOAD_CONST           (70)
+             188 LOAD_CONST           (('num', 'enemy_ids', 'name', 'level'))
+             190 BUILD_CONST_KEY_MAP  4
+
+ 27:         192 LOAD_CONST           (9)
+             194 LOAD_CONST           ("ene_91")
+             196 BUILD_LIST           1
+             198 LOAD_CONST           ("Kojima")
+             200 LOAD_CONST           (80)
+             202 LOAD_CONST           (('num', 'enemy_ids', 'name', 'level'))
+             204 BUILD_CONST_KEY_MAP  4
+
+ 28:         206 LOAD_CONST           (16)
+             208 LOAD_CONST           ("ene_232")
+             210 LOAD_CONST           ("ene_233")
+             212 BUILD_LIST           2
+             214 LOAD_CONST           ("The Mother & Father of Ghosts")
+             216 LOAD_CONST           (90)
+             218 LOAD_CONST           (('num', 'enemy_ids', 'name', 'level'))
+             220 BUILD_CONST_KEY_MAP  4
+
+ 29:         222 LOAD_CONST           (17)
+             224 BUILD_LIST           0
+             226 LOAD_CONST           (('ene_231', 'ene_230', 'ene_230'))
+             228 LIST_EXTEND          1
+             230 LOAD_CONST           ("Moon Princess & Black Puppets")
+             232 LOAD_CONST           (100)
+             234 LOAD_CONST           (('num', 'enemy_ids', 'name', 'level'))
+             236 BUILD_CONST_KEY_MAP  4
+
+ 17:         238 BUILD_LIST           12
+             240 STORE_NAME           (RIFT_HUNTING_HOUSE_BOSSES)
+
+ 33:         242 LOAD_CONST           ("return")
+             244 LOAD_NAME            (str)
+             246 BUILD_TUPLE          2
+             248 LOAD_CONST           (<Code310 code object _format_extra_rewards at 0x223d04056a0, file hunting_house.py>, line 33)
+             250 LOAD_CONST           ("_format_extra_rewards")
+             252 MAKE_FUNCTION        (annotation)
+             254 STORE_NAME           (_format_extra_rewards)
+
+ 40:         256 LOAD_CONST           (<Code310 code object _parse_tries_payload at 0x223cdc364b0, file hunting_house.py>, line 40)
+             258 LOAD_CONST           ("_parse_tries_payload")
+             260 MAKE_FUNCTION        (No arguments)
+             262 STORE_NAME           (_parse_tries_payload)
+
+ 53:         264 LOAD_CONST           (<Code310 code object fight_hunting_house at 0x223ce4a92b0, file hunting_house.py>, line 53)
+             266 LOAD_CONST           ("fight_hunting_house")
+             268 MAKE_FUNCTION        (No arguments)
+             270 STORE_NAME           (fight_hunting_house)
+             272 LOAD_CONST           (None)
+             274 RETURN_VALUE
+
+
+# Method Name:       _format_extra_rewards
+# Filename:          hunting_house.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        33
+# Constants:
+#    0: None
+#    1: 2
+#    2: '-'
+#    3: <Code310 code object <listcomp> at 0x223d0405580, file hunting_house.py>, line 36
+#    4: '_format_extra_rewards.<locals>.<listcomp>'
+#    5: ', '
+# Names:
+#    0: isinstance
+#    1: list
+#    2: len
+#    3: join
+# Varnames:
+#	rewards, extras
+# Positional arguments:
+#	rewards
+# Local variables:
+#    1: extras
+ 34:           0 LOAD_GLOBAL          (isinstance)
+               2 LOAD_FAST            (rewards)
+               4 LOAD_GLOBAL          (list)
+               6 CALL_FUNCTION        (2 positional arguments)
+               8 POP_JUMP_IF_FALSE    (to 22)
+              10 LOAD_GLOBAL          (len)
+              12 LOAD_FAST            (rewards)
+              14 CALL_FUNCTION        (1 positional argument)
+              16 LOAD_CONST           (2)
+              18 COMPARE_OP           (<=)
+              20 POP_JUMP_IF_FALSE    (to 26)
+
+ 35:     >>   22 LOAD_CONST           ("-")
+              24 RETURN_VALUE
+
+ 36:     >>   26 LOAD_CONST           (<Code310 code object <listcomp> at 0x223d0405580, file hunting_house.py>, line 36)
+              28 LOAD_CONST           ("_format_extra_rewards.<locals>.<listcomp>")
+              30 MAKE_FUNCTION        (No arguments)
+              32 LOAD_FAST            (rewards)
+              34 LOAD_CONST           (2)
+              36 LOAD_CONST           (None)
+              38 BUILD_SLICE          2
+              40 BINARY_SUBSCR
+              42 GET_ITER
+              44 CALL_FUNCTION        (1 positional argument)
+              46 STORE_FAST           (extras)
+
+ 37:          48 LOAD_FAST            (extras)
+              50 POP_JUMP_IF_FALSE    (to 62)
+              52 LOAD_CONST           (", ")
+              54 LOAD_METHOD          (join)
+              56 LOAD_FAST            (extras)
+              58 CALL_METHOD          (1 positional argument)
+              60 RETURN_VALUE
+         >>   62 LOAD_CONST           ("-")
+              64 RETURN_VALUE
+
+
+# Method Name:       _parse_tries_payload
+# Filename:          hunting_house.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  4
+# Stack size:        9
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        40
+# Constants:
+#    0: None
+#    1: <Code310 code object <listcomp> at 0x223d0405760, file hunting_house.py>, line 43
+#    2: '_parse_tries_payload.<locals>.<listcomp>'
+#    3: ','
+#    4: 0
+# Names:
+#    0: isinstance
+#    1: str
+#    2: split
+#    3: append
+#    4: int
+#    5: Exception
+# Varnames:
+#	data_field, parts, tries, item
+# Positional arguments:
+#	data_field
+# Local variables:
+#    1: parts
+#    2: tries
+#    3: item
+ 41:           0 LOAD_GLOBAL          (isinstance)
+               2 LOAD_FAST            (data_field)
+               4 LOAD_GLOBAL          (str)
+               6 CALL_FUNCTION        (2 positional arguments)
+               8 POP_JUMP_IF_TRUE     (to 14)
+
+ 42:          10 BUILD_LIST           0
+              12 RETURN_VALUE
+
+ 43:     >>   14 LOAD_CONST           (<Code310 code object <listcomp> at 0x223d0405760, file hunting_house.py>, line 43)
+              16 LOAD_CONST           ("_parse_tries_payload.<locals>.<listcomp>")
+              18 MAKE_FUNCTION        (No arguments)
+              20 LOAD_FAST            (data_field)
+              22 LOAD_METHOD          (split)
+              24 LOAD_CONST           (",")
+              26 CALL_METHOD          (1 positional argument)
+              28 GET_ITER
+              30 CALL_FUNCTION        (1 positional argument)
+              32 STORE_FAST           (parts)
+
+ 44:          34 BUILD_LIST           0
+              36 STORE_FAST           (tries)
+
+ 45:          38 LOAD_FAST            (parts)
+              40 GET_ITER
+         >>   42 FOR_ITER             (to 94)
+              44 STORE_FAST           (item)
+
+ 46:          46 SETUP_FINALLY        (to 66)
+
+ 47:          48 LOAD_FAST            (tries)
+              50 LOAD_METHOD          (append)
+              52 LOAD_GLOBAL          (int)
+              54 LOAD_FAST            (item)
+              56 CALL_FUNCTION        (1 positional argument)
+              58 CALL_METHOD          (1 positional argument)
+              60 POP_TOP
+              62 POP_BLOCK
+              64 JUMP_ABSOLUTE        (to 42)
+
+ 48:     >>   66 DUP_TOP
+              68 LOAD_GLOBAL          (Exception)
+              70 JUMP_IF_NOT_EXC_MATCH (to 92)
+              72 POP_TOP
+              74 POP_TOP
+              76 POP_TOP
+
+ 49:          78 LOAD_FAST            (tries)
+              80 LOAD_METHOD          (append)
+              82 LOAD_CONST           (0)
+              84 CALL_METHOD          (1 positional argument)
+              86 POP_TOP
+              88 POP_EXCEPT
+              90 JUMP_ABSOLUTE        (to 42)
+
+ 48:     >>   92 RERAISE              0
+
+ 50:     >>   94 LOAD_FAST            (tries)
+              96 RETURN_VALUE
+
+
+# Method Name:       fight_hunting_house
+# Filename:          hunting_house.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  19
+# Stack size:        11
+# Flags:             0x00000003 (NEWLOCALS | OPTIMIZED)
+# First Line:        53
+# Constants:
+#    0: None
+#    1: 'Select a Ninja Rift character first'
+#    2: 'Loading Ninja Rift Hunting House data...'
+#    3: 'HuntingHouse.getData'
+#    4: 'status'
+#    5: 1
+#    6: 'Failed to load Ninja Rift Hunting House: '
+#    7: 'data'
+#    8: 0
+#    9: True
+#   10: False
+#   11: 'level'
+#   12: 'num'
+#   13: ' & '
+#   14: <Code310 code object <genexpr> at 0x223d04058b0, file hunting_house.py>, line 80
+#   15: 'fight_hunting_house.<locals>.<genexpr>'
+#   16: 'enemy_ids'
+#   17: 'Fighting Rift Hunting House boss: '
+#   18: ' ('
+#   19: '/'
+#   20: ')'
+#   21: 'HuntingHouse.startHunting'
+#   22: 10
+#   23: 'Could not start Hunting House battle: '
+#   24: 5
+#   25: 'rift_hunting_house_battle_wait_base_seconds'
+#   26: 'rift_hunting_house_battle_wait_random_seconds'
+#   27: 20
+#   28: 'Waiting '
+#   29: ' seconds before finishing '
+#   30: '...'
+#   31: 'result'
+#   32: 'Defeated '
+#   33: ' | EXP: '
+#   34: ' | Gold: '
+#   35: ' | Rewards: '
+#   36: 'Hunting House finish failed: '
+#   37: 'rift_hunting_house_between_battles_delay_seconds'
+#   38: 'stop_event'
+#   39: 'Ninja Rift Hunting House ended after '
+#   40: ' fights'
+# Names:
+#    0: isinstance
+#    1: config
+#    2: char_data
+#    3: dict
+#    4: ValueError
+#    5: get_char_id
+#    6: get_session_key
+#    7: get_level
+#    8: print
+#    9: send_rift_request
+#   10: get
+#   11: response_message
+#   12: _parse_tries_payload
+#   13: RIFT_HUNTING_HOUSE_BOSSES
+#   14: check_stop_event
+#   15: len
+#   16: join
+#   17: range
+#   18: str
+#   19: max
+#   20: rift_random_wait
+#   21: wait_with_stop
+#   22: finish_hunting_house
+#   23: _format_extra_rewards
+#   24: rift_delay
+#   25: hasattr
+#   26: stop_event
+#   27: clear
+# Varnames:
+#	char_id, session_key, level, data, tries, total_fights, completed, available, boss_name, idx, start_result, battle_code, battle_wait, finish_result, rewards, exp, gold, extra_rewards, between_delay
+# Local variables:
+#    0: char_id
+#    1: session_key
+#    2: level
+#    3: data
+#    4: tries
+#    5: total_fights
+#    6: completed
+#    7: available
+#    8: boss_name
+#    9: idx
+#   10: start_result
+#   11: battle_code
+#   12: battle_wait
+#   13: finish_result
+#   14: rewards
+#   15: exp
+#   16: gold
+#   17: extra_rewards
+#   18: between_delay
+# Cell variables:
+#    0: boss
+ 54:           0 LOAD_GLOBAL          (isinstance)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_ATTR            (char_data)
+               6 LOAD_GLOBAL          (dict)
+               8 CALL_FUNCTION        (2 positional arguments)
+              10 POP_JUMP_IF_TRUE     (to 20)
+
+ 55:          12 LOAD_GLOBAL          (ValueError)
+              14 LOAD_CONST           ("Select a Ninja Rift character first")
+              16 CALL_FUNCTION        (1 positional argument)
+              18 RAISE_VARARGS        (exception instance)
+
+ 57:     >>   20 LOAD_GLOBAL          (get_char_id)
+              22 CALL_FUNCTION        (0 positional arguments)
+              24 STORE_FAST           (char_id)
+
+ 58:          26 LOAD_GLOBAL          (get_session_key)
+              28 CALL_FUNCTION        (0 positional arguments)
+              30 STORE_FAST           (session_key)
+
+ 59:          32 LOAD_GLOBAL          (get_level)
+              34 CALL_FUNCTION        (0 positional arguments)
+              36 STORE_FAST           (level)
+
+ 61:          38 LOAD_GLOBAL          (print)
+              40 LOAD_CONST           ("Loading Ninja Rift Hunting House data...")
+              42 CALL_FUNCTION        (1 positional argument)
+              44 POP_TOP
+
+ 62:          46 LOAD_GLOBAL          (send_rift_request)
+              48 LOAD_CONST           ("HuntingHouse.getData")
+              50 LOAD_FAST            (session_key)
+              52 LOAD_FAST            (char_id)
+              54 BUILD_LIST           2
+              56 CALL_FUNCTION        (2 positional arguments)
+              58 STORE_FAST           (data)
+
+ 63:          60 LOAD_GLOBAL          (isinstance)
+              62 LOAD_FAST            (data)
+              64 LOAD_GLOBAL          (dict)
+              66 CALL_FUNCTION        (2 positional arguments)
+              68 POP_JUMP_IF_FALSE    (to 84)
+              70 LOAD_FAST            (data)
+              72 LOAD_METHOD          (get)
+              74 LOAD_CONST           ("status")
+              76 CALL_METHOD          (1 positional argument)
+              78 LOAD_CONST           (1)
+              80 COMPARE_OP           (!=)
+              82 POP_JUMP_IF_FALSE    (to 102)
+
+ 64:     >>   84 LOAD_GLOBAL          (ValueError)
+              86 LOAD_CONST           ("Failed to load Ninja Rift Hunting House: ")
+              88 LOAD_GLOBAL          (response_message)
+              90 LOAD_FAST            (data)
+              92 CALL_FUNCTION        (1 positional argument)
+              94 FORMAT_VALUE         0
+              96 BUILD_STRING         2
+              98 CALL_FUNCTION        (1 positional argument)
+             100 RAISE_VARARGS        (exception instance)
+
+ 66:     >>  102 LOAD_GLOBAL          (_parse_tries_payload)
+             104 LOAD_FAST            (data)
+             106 LOAD_METHOD          (get)
+             108 LOAD_CONST           ("data")
+             110 CALL_METHOD          (1 positional argument)
+             112 CALL_FUNCTION        (1 positional argument)
+             114 STORE_FAST           (tries)
+
+ 67:         116 LOAD_CONST           (0)
+             118 STORE_FAST           (total_fights)
+
+ 68:         120 LOAD_CONST           (True)
+             122 STORE_FAST           (completed)
+
+ 70:         124 LOAD_GLOBAL          (RIFT_HUNTING_HOUSE_BOSSES)
+             126 GET_ITER
+         >>  128 EXTENDED_ARG         (256)
+             130 FOR_ITER             (to 654)
+             132 STORE_DEREF          (boss)
+
+ 71:         134 LOAD_GLOBAL          (check_stop_event)
+             136 CALL_FUNCTION        (0 positional arguments)
+             138 POP_JUMP_IF_FALSE    (to 148)
+
+ 72:         140 LOAD_CONST           (False)
+             142 STORE_FAST           (completed)
+
+ 73:         144 POP_TOP
+             146 JUMP_FORWARD         (to 654)
+
+ 74:     >>  148 LOAD_FAST            (level)
+             150 LOAD_DEREF           (boss)
+             152 LOAD_CONST           ("level")
+             154 BINARY_SUBSCR
+             156 COMPARE_OP           (<)
+             158 POP_JUMP_IF_FALSE    (to 162)
+
+ 75:         160 JUMP_ABSOLUTE        (to 128)
+
+ 76:     >>  162 LOAD_DEREF           (boss)
+             164 LOAD_CONST           ("num")
+             166 BINARY_SUBSCR
+             168 LOAD_GLOBAL          (len)
+             170 LOAD_FAST            (tries)
+             172 CALL_FUNCTION        (1 positional argument)
+             174 COMPARE_OP           (<)
+             176 POP_JUMP_IF_FALSE    (to 190)
+             178 LOAD_FAST            (tries)
+             180 LOAD_DEREF           (boss)
+             182 LOAD_CONST           ("num")
+             184 BINARY_SUBSCR
+             186 BINARY_SUBSCR
+             188 JUMP_FORWARD         (to 192)
+         >>  190 LOAD_CONST           (0)
+         >>  192 STORE_FAST           (available)
+
+ 77:         194 LOAD_FAST            (available)
+             196 LOAD_CONST           (0)
+             198 COMPARE_OP           (<=)
+             200 POP_JUMP_IF_FALSE    (to 204)
+
+ 78:         202 JUMP_ABSOLUTE        (to 128)
+
+ 80:     >>  204 LOAD_CONST           (" & ")
+             206 LOAD_METHOD          (join)
+             208 LOAD_CLOSURE         (boss)
+             210 BUILD_TUPLE          1
+             212 LOAD_CONST           (<Code310 code object <genexpr> at 0x223d04058b0, file hunting_house.py>, line 80)
+             214 LOAD_CONST           ("fight_hunting_house.<locals>.<genexpr>")
+             216 MAKE_FUNCTION        (closure)
+             218 LOAD_DEREF           (boss)
+             220 LOAD_CONST           ("enemy_ids")
+             222 BINARY_SUBSCR
+             224 GET_ITER
+             226 CALL_FUNCTION        (1 positional argument)
+             228 CALL_METHOD          (1 positional argument)
+             230 STORE_FAST           (boss_name)
+
+ 81:         232 LOAD_GLOBAL          (range)
+             234 LOAD_FAST            (available)
+             236 CALL_FUNCTION        (1 positional argument)
+             238 GET_ITER
+         >>  240 FOR_ITER             (to 652)
+             242 STORE_FAST           (idx)
+
+ 82:         244 LOAD_GLOBAL          (check_stop_event)
+             246 CALL_FUNCTION        (0 positional arguments)
+             248 POP_JUMP_IF_FALSE    (to 258)
+
+ 83:         250 LOAD_CONST           (False)
+             252 STORE_FAST           (completed)
+
+ 84:         254 POP_TOP
+             256 JUMP_FORWARD         (to 652)
+
+ 86:     >>  258 LOAD_GLOBAL          (print)
+             260 LOAD_CONST           ("Fighting Rift Hunting House boss: ")
+             262 LOAD_FAST            (boss_name)
+             264 FORMAT_VALUE         0
+             266 LOAD_CONST           (" (")
+             268 LOAD_FAST            (idx)
+             270 LOAD_CONST           (1)
+             272 BINARY_ADD
+             274 FORMAT_VALUE         0
+             276 LOAD_CONST           ("/")
+             278 LOAD_FAST            (available)
+             280 FORMAT_VALUE         0
+             282 LOAD_CONST           (")")
+             284 BUILD_STRING         7
+             286 CALL_FUNCTION        (1 positional argument)
+             288 POP_TOP
+
+ 87:         290 LOAD_GLOBAL          (send_rift_request)
+
+ 88:         292 LOAD_CONST           ("HuntingHouse.startHunting")
+
+ 89:         294 LOAD_FAST            (char_id)
+             296 LOAD_DEREF           (boss)
+             298 LOAD_CONST           ("num")
+             300 BINARY_SUBSCR
+             302 LOAD_FAST            (session_key)
+             304 BUILD_LIST           3
+
+ 87:         306 CALL_FUNCTION        (2 positional arguments)
+             308 STORE_FAST           (start_result)
+
+ 91:         310 LOAD_GLOBAL          (isinstance)
+             312 LOAD_FAST            (start_result)
+             314 LOAD_GLOBAL          (str)
+             316 CALL_FUNCTION        (2 positional arguments)
+             318 POP_JUMP_IF_FALSE    (to 336)
+             320 LOAD_GLOBAL          (len)
+             322 LOAD_FAST            (start_result)
+             324 CALL_FUNCTION        (1 positional argument)
+             326 LOAD_CONST           (10)
+             328 COMPARE_OP           (==)
+             330 POP_JUMP_IF_FALSE    (to 336)
+             332 LOAD_FAST            (start_result)
+             334 JUMP_FORWARD         (to 338)
+         >>  336 LOAD_CONST           (None)
+         >>  338 STORE_FAST           (battle_code)
+
+ 92:         340 LOAD_FAST            (battle_code)
+             342 POP_JUMP_IF_TRUE     (to 370)
+
+ 93:         344 LOAD_GLOBAL          (print)
+             346 LOAD_CONST           ("Could not start Hunting House battle: ")
+             348 LOAD_GLOBAL          (response_message)
+             350 LOAD_FAST            (start_result)
+             352 CALL_FUNCTION        (1 positional argument)
+             354 FORMAT_VALUE         0
+             356 BUILD_STRING         2
+             358 CALL_FUNCTION        (1 positional argument)
+             360 POP_TOP
+
+ 94:         362 LOAD_CONST           (False)
+             364 STORE_FAST           (completed)
+
+ 95:         366 POP_TOP
+             368 JUMP_FORWARD         (to 652)
+
+ 97:     >>  370 LOAD_GLOBAL          (max)
+
+ 98:         372 LOAD_CONST           (5)
+
+ 99:         374 LOAD_GLOBAL          (rift_random_wait)
+
+100:         376 LOAD_CONST           ("rift_hunting_house_battle_wait_base_seconds")
+
+101:         378 LOAD_CONST           ("rift_hunting_house_battle_wait_random_seconds")
+
+102:         380 LOAD_CONST           (20)
+
+103:         382 LOAD_CONST           (5)
+
+ 99:         384 CALL_FUNCTION        (4 positional arguments)
+
+ 97:         386 CALL_FUNCTION        (2 positional arguments)
+             388 STORE_FAST           (battle_wait)
+
+106:         390 LOAD_GLOBAL          (print)
+             392 LOAD_CONST           ("Waiting ")
+             394 LOAD_FAST            (battle_wait)
+             396 FORMAT_VALUE         0
+             398 LOAD_CONST           (" seconds before finishing ")
+             400 LOAD_FAST            (boss_name)
+             402 FORMAT_VALUE         0
+             404 LOAD_CONST           ("...")
+             406 BUILD_STRING         5
+             408 CALL_FUNCTION        (1 positional argument)
+             410 POP_TOP
+
+107:         412 LOAD_GLOBAL          (wait_with_stop)
+             414 LOAD_FAST            (battle_wait)
+             416 CALL_FUNCTION        (1 positional argument)
+             418 POP_JUMP_IF_TRUE     (to 428)
+
+108:         420 LOAD_CONST           (False)
+             422 STORE_FAST           (completed)
+
+109:         424 POP_TOP
+             426 JUMP_FORWARD         (to 652)
+
+111:     >>  428 LOAD_GLOBAL          (finish_hunting_house)
+             430 LOAD_DEREF           (boss)
+             432 LOAD_CONST           ("num")
+             434 BINARY_SUBSCR
+             436 LOAD_FAST            (battle_code)
+             438 CALL_FUNCTION        (2 positional arguments)
+             440 STORE_FAST           (finish_result)
+
+112:         442 LOAD_GLOBAL          (isinstance)
+             444 LOAD_FAST            (finish_result)
+             446 LOAD_GLOBAL          (dict)
+             448 CALL_FUNCTION        (2 positional arguments)
+             450 EXTENDED_ARG         (256)
+             452 POP_JUMP_IF_FALSE    (to 582)
+             454 LOAD_FAST            (finish_result)
+             456 LOAD_METHOD          (get)
+             458 LOAD_CONST           ("status")
+             460 CALL_METHOD          (1 positional argument)
+             462 LOAD_CONST           (1)
+             464 COMPARE_OP           (==)
+             466 EXTENDED_ARG         (256)
+             468 POP_JUMP_IF_FALSE    (to 582)
+
+113:         470 LOAD_FAST            (finish_result)
+             472 LOAD_METHOD          (get)
+             474 LOAD_CONST           ("result")
+             476 BUILD_LIST           0
+             478 CALL_METHOD          (2 positional arguments)
+             480 STORE_FAST           (rewards)
+
+114:         482 LOAD_GLOBAL          (len)
+             484 LOAD_FAST            (rewards)
+             486 CALL_FUNCTION        (1 positional argument)
+             488 LOAD_CONST           (0)
+             490 COMPARE_OP           (>)
+             492 POP_JUMP_IF_FALSE    (to 502)
+             494 LOAD_FAST            (rewards)
+             496 LOAD_CONST           (0)
+             498 BINARY_SUBSCR
+             500 JUMP_FORWARD         (to 504)
+         >>  502 LOAD_CONST           (0)
+         >>  504 STORE_FAST           (exp)
+
+115:         506 LOAD_GLOBAL          (len)
+             508 LOAD_FAST            (rewards)
+             510 CALL_FUNCTION        (1 positional argument)
+             512 LOAD_CONST           (1)
+             514 COMPARE_OP           (>)
+             516 EXTENDED_ARG         (256)
+             518 POP_JUMP_IF_FALSE    (to 528)
+             520 LOAD_FAST            (rewards)
+             522 LOAD_CONST           (1)
+             524 BINARY_SUBSCR
+             526 JUMP_FORWARD         (to 530)
+         >>  528 LOAD_CONST           (0)
+         >>  530 STORE_FAST           (gold)
+
+116:         532 LOAD_GLOBAL          (_format_extra_rewards)
+             534 LOAD_FAST            (rewards)
+             536 CALL_FUNCTION        (1 positional argument)
+             538 STORE_FAST           (extra_rewards)
+
+117:         540 LOAD_GLOBAL          (print)
+             542 LOAD_CONST           ("Defeated ")
+             544 LOAD_FAST            (boss_name)
+             546 FORMAT_VALUE         0
+             548 LOAD_CONST           (" | EXP: ")
+             550 LOAD_FAST            (exp)
+             552 FORMAT_VALUE         0
+             554 LOAD_CONST           (" | Gold: ")
+             556 LOAD_FAST            (gold)
+             558 FORMAT_VALUE         0
+             560 LOAD_CONST           (" | Rewards: ")
+             562 LOAD_FAST            (extra_rewards)
+             564 FORMAT_VALUE         0
+             566 BUILD_STRING         8
+             568 CALL_FUNCTION        (1 positional argument)
+             570 POP_TOP
+
+118:         572 LOAD_FAST            (total_fights)
+             574 LOAD_CONST           (1)
+             576 INPLACE_ADD
+             578 STORE_FAST           (total_fights)
+             580 JUMP_FORWARD         (to 608)
+
+120:     >>  582 LOAD_GLOBAL          (print)
+             584 LOAD_CONST           ("Hunting House finish failed: ")
+             586 LOAD_GLOBAL          (response_message)
+             588 LOAD_FAST            (finish_result)
+             590 CALL_FUNCTION        (1 positional argument)
+             592 FORMAT_VALUE         0
+             594 BUILD_STRING         2
+             596 CALL_FUNCTION        (1 positional argument)
+             598 POP_TOP
+
+121:         600 LOAD_CONST           (False)
+             602 STORE_FAST           (completed)
+
+122:         604 POP_TOP
+             606 JUMP_FORWARD         (to 652)
+
+124:     >>  608 LOAD_GLOBAL          (rift_delay)
+             610 LOAD_CONST           ("rift_hunting_house_between_battles_delay_seconds")
+             612 LOAD_CONST           (5)
+             614 CALL_FUNCTION        (2 positional arguments)
+             616 STORE_FAST           (between_delay)
+
+125:         618 LOAD_FAST            (idx)
+             620 LOAD_FAST            (available)
+             622 LOAD_CONST           (1)
+             624 BINARY_SUBTRACT
+             626 COMPARE_OP           (<)
+             628 EXTENDED_ARG         (256)
+             630 POP_JUMP_IF_FALSE    (to 650)
+             632 LOAD_GLOBAL          (wait_with_stop)
+             634 LOAD_FAST            (between_delay)
+             636 CALL_FUNCTION        (1 positional argument)
+             638 EXTENDED_ARG         (256)
+             640 POP_JUMP_IF_TRUE     (to 650)
+
+126:         642 LOAD_CONST           (False)
+             644 STORE_FAST           (completed)
+
+127:         646 POP_TOP
+             648 JUMP_FORWARD         (to 652)
+         >>  650 JUMP_ABSOLUTE        (to 240)
+         >>  652 JUMP_ABSOLUTE        (to 128)
+
+129:     >>  654 LOAD_GLOBAL          (hasattr)
+             656 LOAD_GLOBAL          (config)
+             658 LOAD_CONST           ("stop_event")
+             660 CALL_FUNCTION        (2 positional arguments)
+             662 EXTENDED_ARG         (256)
+             664 POP_JUMP_IF_FALSE    (to 676)
+
+130:         666 LOAD_GLOBAL          (config)
+             668 LOAD_ATTR            (stop_event)
+             670 LOAD_METHOD          (clear)
+             672 CALL_METHOD          (0 positional arguments)
+             674 POP_TOP
+
+131:     >>  676 LOAD_GLOBAL          (print)
+             678 LOAD_CONST           ("Ninja Rift Hunting House ended after ")
+             680 LOAD_FAST            (total_fights)
+             682 FORMAT_VALUE         0
+             684 LOAD_CONST           (" fights")
+             686 BUILD_STRING         3
+             688 CALL_FUNCTION        (1 positional argument)
+             690 POP_TOP
+
+132:         692 LOAD_FAST            (completed)
+             694 RETURN_VALUE
+
+
+# Method Name:       <listcomp>
+# Filename:          hunting_house.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        4
+# Flags:             0x00000053 (NOFREE | NESTED | NEWLOCALS | OPTIMIZED)
+# First Line:        36
+# Names:
+#    0: str
+#    1: strip
+# Varnames:
+#	.0, item
+# Positional arguments:
+#	.0
+# Local variables:
+#    1: item
+ 36:           0 BUILD_LIST           0
+               2 LOAD_FAST            (.0)
+         >>    4 FOR_ITER             (to 30)
+               6 STORE_FAST           (item)
+               8 LOAD_GLOBAL          (str)
+              10 LOAD_FAST            (item)
+              12 CALL_FUNCTION        (1 positional argument)
+              14 LOAD_METHOD          (strip)
+              16 CALL_METHOD          (0 positional arguments)
+              18 POP_JUMP_IF_FALSE    (to 4)
+              20 LOAD_GLOBAL          (str)
+              22 LOAD_FAST            (item)
+              24 CALL_FUNCTION        (1 positional argument)
+              26 LIST_APPEND          2
+              28 JUMP_ABSOLUTE        (to 4)
+         >>   30 RETURN_VALUE
+
+
+# Method Name:       <listcomp>
+# Filename:          hunting_house.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        4
+# Flags:             0x00000053 (NOFREE | NESTED | NEWLOCALS | OPTIMIZED)
+# First Line:        43
+# Names:
+#    0: strip
+# Varnames:
+#	.0, item
+# Positional arguments:
+#	.0
+# Local variables:
+#    1: item
+ 43:           0 BUILD_LIST           0
+               2 LOAD_FAST            (.0)
+         >>    4 FOR_ITER             (to 18)
+               6 STORE_FAST           (item)
+               8 LOAD_FAST            (item)
+              10 LOAD_METHOD          (strip)
+              12 CALL_METHOD          (0 positional arguments)
+              14 LIST_APPEND          2
+              16 JUMP_ABSOLUTE        (to 4)
+         >>   18 RETURN_VALUE
+
+
+# Method Name:       <genexpr>
+# Filename:          hunting_house.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        5
+# Flags:             0x00000033 (GENERATOR | NESTED | NEWLOCALS | OPTIMIZED)
+# First Line:        80
+# Constants:
+#    0: 'name'
+#    1: None
+# Names:
+#    0: enemy_name
+# Varnames:
+#	.0, enemy_id
+# Positional arguments:
+#	.0
+# Local variables:
+#    1: enemy_id
+# Free variables:
+#    0: boss
+               0 GEN_START            0
+
+ 80:           2 LOAD_FAST            (.0)
+         >>    4 FOR_ITER             (to 26)
+               6 STORE_FAST           (enemy_id)
+               8 LOAD_GLOBAL          (enemy_name)
+              10 LOAD_FAST            (enemy_id)
+              12 LOAD_DEREF           (boss)
+              14 LOAD_CONST           ("name")
+              16 BINARY_SUBSCR
+              18 CALL_FUNCTION        (2 positional arguments)
+              20 YIELD_VALUE
+              22 POP_TOP
+              24 JUMP_ABSOLUTE        (to 4)
+         >>   26 LOAD_CONST           (None)
+              28 RETURN_VALUE
+

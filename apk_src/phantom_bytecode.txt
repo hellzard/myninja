@@ -1,0 +1,134 @@
+﻿FOUND EventConfig class body
+Constants:
+  [0]: 'EventConfig'
+  [1]: 'Configuration for event battle systems.'
+  [2]: 'name'
+  [3]: 'api_class'
+  [4]: 'enemy_choices'
+  [5]: False
+  [6]: 'is_fixed_boss'
+  [7]: None
+  [8]: 'boss_id'
+  [9]: 'boss_hp'
+  [10]: 'boss_agility'
+  [11]: 'is_random_enemy'
+  [12]: 0
+  [13]: 'delay_between_calls'
+  [14]: 'finish_damage'
+  [15]: 'return'
+  [17]: 'EventConfig.get_battle_data_method'
+  [19]: 'EventConfig.get_start_battle_method'
+  [21]: 'EventConfig.get_finish_battle_method'
+  [22]: 'battle_data'
+  [24]: 'EventConfig.get_enemy_from_battle_data'
+================================================================================
+     0  LOAD_NAME                   0  = __name__
+     2  STORE_NAME                  1  = __module__
+     4  LOAD_CONST                  0  = 'EventConfig'
+     6  STORE_NAME                  2  = __qualname__
+     8  SETUP_ANNOTATIONS           0  
+    10  LOAD_CONST                  1  = 'Configuration for event battle systems.'
+    12  STORE_NAME                  3  = __doc__
+    14  LOAD_NAME                   4  = str
+    16  LOAD_NAME                   5  = __annotations__
+    18  LOAD_CONST                  2  = 'name'
+    20  STORE_SUBSCR                0  
+    22  LOAD_NAME                   4  = str
+    24  LOAD_NAME                   5  = __annotations__
+    26  LOAD_CONST                  3  = 'api_class'
+    28  STORE_SUBSCR                0  
+    30  LOAD_NAME                   6  = Dict
+    32  LOAD_NAME                   4  = str
+    34  LOAD_NAME                   7  = Tuple
+    36  LOAD_NAME                   4  = str
+    38  LOAD_NAME                   4  = str
+    40  BUILD_TUPLE                 2  (2)
+    42  BINARY_SUBSCR               0  
+    44  BUILD_TUPLE                 2  (2)
+    46  BINARY_SUBSCR               0  
+    48  LOAD_NAME                   5  = __annotations__
+    50  LOAD_CONST                  4  = 'enemy_choices'
+    52  STORE_SUBSCR                0  
+    54  LOAD_CONST                  5  = False
+    56  STORE_NAME                  8  = is_fixed_boss
+    58  LOAD_NAME                   9  = bool
+    60  LOAD_NAME                   5  = __annotations__
+    62  LOAD_CONST                  6  = 'is_fixed_boss'
+    64  STORE_SUBSCR                0  
+    66  LOAD_CONST                  7  = None
+    68  STORE_NAME                 10  = boss_id
+    70  LOAD_NAME                  11  = Optional
+    72  LOAD_NAME                   4  = str
+    74  BINARY_SUBSCR               0  
+    76  LOAD_NAME                   5  = __annotations__
+    78  LOAD_CONST                  8  = 'boss_id'
+    80  STORE_SUBSCR                0  
+    82  LOAD_CONST                  7  = None
+    84  STORE_NAME                 12  = boss_hp
+    86  LOAD_NAME                  11  = Optional
+    88  LOAD_NAME                  13  = int
+    90  BINARY_SUBSCR               0  
+    92  LOAD_NAME                   5  = __annotations__
+    94  LOAD_CONST                  9  = 'boss_hp'
+    96  STORE_SUBSCR                0  
+    98  LOAD_CONST                  7  = None
+   100  STORE_NAME                 14  = boss_agility
+   102  LOAD_NAME                  11  = Optional
+   104  LOAD_NAME                  13  = int
+   106  BINARY_SUBSCR               0  
+   108  LOAD_NAME                   5  = __annotations__
+   110  LOAD_CONST                 10  = 'boss_agility'
+   112  STORE_SUBSCR                0  
+   114  LOAD_CONST                  5  = False
+   116  STORE_NAME                 15  = is_random_enemy
+   118  LOAD_NAME                   9  = bool
+   120  LOAD_NAME                   5  = __annotations__
+   122  LOAD_CONST                 11  = 'is_random_enemy'
+   124  STORE_SUBSCR                0  
+   126  LOAD_CONST                 12  = 0
+   128  STORE_NAME                 16  = delay_between_calls
+   130  LOAD_NAME                  13  = int
+   132  LOAD_NAME                   5  = __annotations__
+   134  LOAD_CONST                 13  = 'delay_between_calls'
+   136  STORE_SUBSCR                0  
+   138  LOAD_CONST                 12  = 0
+   140  STORE_NAME                 17  = finish_damage
+   142  LOAD_NAME                  13  = int
+   144  LOAD_NAME                   5  = __annotations__
+   146  LOAD_CONST                 14  = 'finish_damage'
+   148  STORE_SUBSCR                0  
+   150  LOAD_CONST                 15  = 'return'
+   152  LOAD_NAME                   4  = str
+   154  BUILD_TUPLE                 2  (2)
+   156  LOAD_CONST                 16  = <code get_battle_data_method>
+   158  LOAD_CONST                 17  = 'EventConfig.get_battle_data_method'
+   160  MAKE_FUNCTION               4  (4)
+   162  STORE_NAME                 18  = get_battle_data_method
+   164  LOAD_CONST                 15  = 'return'
+   166  LOAD_NAME                   4  = str
+   168  BUILD_TUPLE                 2  (2)
+   170  LOAD_CONST                 18  = <code get_start_battle_method>
+   172  LOAD_CONST                 19  = 'EventConfig.get_start_battle_method'
+   174  MAKE_FUNCTION               4  (4)
+   176  STORE_NAME                 19  = get_start_battle_method
+   178  LOAD_CONST                 15  = 'return'
+   180  LOAD_NAME                   4  = str
+   182  BUILD_TUPLE                 2  (2)
+   184  LOAD_CONST                 20  = <code get_finish_battle_method>
+   186  LOAD_CONST                 21  = 'EventConfig.get_finish_battle_method'
+   188  MAKE_FUNCTION               4  (4)
+   190  STORE_NAME                 20  = get_finish_battle_method
+   192  LOAD_CONST                 22  = 'battle_data'
+   194  LOAD_NAME                  21  = dict
+   196  LOAD_CONST                 15  = 'return'
+   198  LOAD_NAME                  11  = Optional
+   200  LOAD_NAME                   4  = str
+   202  BINARY_SUBSCR               0  
+   204  BUILD_TUPLE                 4  (4)
+   206  LOAD_CONST                 23  = <code get_enemy_from_battle_data>
+   208  LOAD_CONST                 24  = 'EventConfig.get_enemy_from_battle_data'
+   210  MAKE_FUNCTION               4  (4)
+   212  STORE_NAME                 22  = get_enemy_from_battle_data
+   214  LOAD_CONST                  7  = None
+   216  RETURN_VALUE                0  
+

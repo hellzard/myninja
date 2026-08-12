@@ -1,0 +1,1170 @@
+﻿================================================================================
+METHOD: _create_battle_hash (line 324)
+Args: ('self', 'char_id', 'enemy_id', 'battle_code', 'damage')
+All locals: ('self', 'char_id', 'enemy_id', 'battle_code', 'damage', 'hash_input')
+Constants:
+  [0]: 'Create battle hash for validation.'
+Names: ('BATTLE_HASH', 'CUCSG', 'hash')
+================================================================================
+     0  LOAD_FAST                   1  = char_id
+     2  FORMAT_VALUE                0  (0)
+     4  LOAD_FAST                   2  = enemy_id
+     6  FORMAT_VALUE                0  (0)
+     8  LOAD_FAST                   3  = battle_code
+    10  FORMAT_VALUE                0  (0)
+    12  LOAD_FAST                   4  = damage
+    14  FORMAT_VALUE                0  (0)
+    16  LOAD_GLOBAL                 0  = BATTLE_HASH
+    18  FORMAT_VALUE                0  (0)
+    20  BUILD_STRING                5  (5)
+    22  STORE_FAST                  5  = hash_input
+    24  LOAD_GLOBAL                 1  = CUCSG
+    26  <160>                       2  (2)
+    28  LOAD_FAST                   5  = hash_input
+    30  <161>                       1  (1)
+    32  RETURN_VALUE                0  
+
+================================================================================
+METHOD: fight_event (line 529)
+Args: ('self', 'event_type', 'enemy_id', 'num_loops')
+All locals: ('self', 'event_type', 'enemy_id', 'num_loops', 'event_config', 'char_data', 'char_id', 'session_key', 'available_energy', 'battles_to_execute', 'PRE_BATTLE_DELAY', 'POST_START_DELAY', 'POST_BATTLE_DELAY', 'TOTAL_DELAY_PER_BATTLE', 'successful_battles', 'failed_attempts', 'max_failed_attempts', 'hanami_progress_kills', 'i', 'current_enemy_id', 'current_enemy_data', 'battle_data', 'result', 'first_choice', 'initial_tokens', 'agility', 'enemy_attr', 'hash_input', 'mission_hash', 'start_params', 'battle_code', 'error_msg', 'retry_delay', 'battle_dmg', 'finish_hash', 'finish_params', 'xp', 'gold', 'remaining_energy', 'total_time')
+Constants:
+  [0]: "\n        Unified event fight handler for all event types.\n        Includes 25-second total delay per battle (start + wait + finish).\n        \n        Args:\n            event_type: Type of event ...
+  [1]: None
+  [2]: 'Unknown event type: '
+  [3]: '. Available: '
+  [4]: ', '
+  [5]: 0
+  [6]: ' energy available for '
+  [7]: ' fights.'
+  [8]: 'ΓÜá∩╕Å  WARNING: Number of loops must be positive. Requested: '
+  [9]: 'ΓÜá∩╕Å  WARNING: Requested '
+  [10]: ' battles but only '
+  [11]: ' energy available.'
+  [12]: 'Cannot proceed. Please reduce the number of loops or wait for energy to regenerate.'
+  [13]: 'Will execute '
+  [14]: ' out of '
+  [15]: ' available battles.'
+  [16]: 1
+  [17]: 26
+  [18]: 3
+  [19]: 10
+  [20]: '\n'
+  [21]: '============================================================'
+  [22]: 'Battle '
+  [23]: '/'
+  [24]: ' - '
+  [25]: 'sakura'
+  [26]: 'Warning: Could not find enemy data for '
+  [27]: ('hp', 'agility')
+  [28]: '≡ƒÄ▓ Enemy: '
+  [29]: '≡ƒÄ» Boss: '
+  [30]: 'Γ¥î Too many consecutive failures ('
+  [31]: '). Stopping event.'
+  [32]: '≡ƒÄ» Fighting: '
+  [33]: 'Γ¥î No enemy selected and no defaults available.'
+  [34]: 'Γ¥î Invalid enemy ID: '
+  [35]: 'Γ¥î Failed to get valid enemy data'
+  [36]: '   HP: '
+  [37]: 'hp'
+  [38]: '?'
+  [39]: ' | AGI: '
+  [40]: 'agility'
+  [41]: 'tokens'
+  [42]: '\nΓÜö∩╕Å  Starting battle! Finishing in 25 Second...'
+  [43]: 'id:'
+  [44]: '|hp:'
+  [45]: '|agility:'
+  [46]: True
+  [47]: 'phantom'
+  [48]: 2
+  [49]: 'code'
+  [50]: 5
+  [51]: ('default_seconds',)
+  [52]: 'ΓÅ│ Start battle delayed by server. Waiting '
+  [53]: ' seconds...'
+  [54]: 'Γ¥î Unexpected battle data format: '
+  [55]: 'Γ¥î Failed to start battle: '
+  [56]: 'Battle stopped by user'
+  [57]: '\n≡ƒÅü Finishing battle...'
+  [58]: 'status'
+  [59]: 'result'
+  [60]: 'Γ£à Victory! XP: '
+  [61]: ' | Gold: '
+  [62]: {'ene_2121', 'ene_2120'}
+  [63]: 'Γ¥î Battle failed: '
+  [64]: '\nΓÅ│ Waiting '
+  [65]: ' seconds before next battle...'
+  [66]: 'stop_event'
+  [67]: '≡ƒôè FINISHED '
+  [68]: '  ΓÇó Battles executed: '
+  [69]: '  ΓÇó Remaining energy: '
+  [70]: '  ΓÇó Failed attempts: '
+  [71]: '  ΓÇó Total time: ~'
+  [72]: ' seconds ('
+  [73]: 60
+  [74]: '.1f'
+  [75]: ' minutes)'
+Names: ('_check_stop_event', 'EVENT_CONFIGS', 'ValueError', 'join', 'keys', '_get_character_data', 'check_energy', 'print', 'name', '_handle_empty_event_energy', 'set', 'range', '_wait_with_stop_check', '_send_event_request', 'get_battle_data_method', '_select_hanami_enemy', 'get_data_by_id', 'enemy_list', '_enemy_name_from_id', 'is_fixed_boss', 'boss_id', 'boss_hp', 'boss_agility', 'is_random_enemy', '_get_random_enemy_with_retry', 'enemy_choices', 'next', 'iter', 'items', 'get', 'config', 'all_char', 'StatManager', 'calculate_stats_with_data', 'CUCSG', 'hash', 'get_start_battle_method', 'isinstance', 'list', 'len', 'str', 'dict', '_response_message', '_extract_retry_delay', 'delay_between_calls', 'finish_damage', '_create_battle_hash', 'BATTLE_HASH', 'get_finish_battle_method', 'save_fight_data', 'add', '_check_hack_detection', 'hasattr', 'stop_event', 'is_set', 'clear', 'upper')
+================================================================================
+     0  LOAD_FAST                   0  = self
+     2  <160>                       0  (0)
+     4  <161>                       0  (0)
+     6  POP_JUMP_IF_FALSE           6  (6)
+     8  LOAD_CONST                  1  = None
+    10  RETURN_VALUE                0  
+    12  LOAD_FAST                   1  = event_type
+    14  LOAD_FAST                   0  = self
+    16  LOAD_ATTR                   1  = EVENT_CONFIGS
+    18  CONTAINS_OP                 1  (1)
+    20  POP_JUMP_IF_FALSE          27  (27)
+    22  LOAD_GLOBAL                 2  = ValueError
+    24  LOAD_CONST                  2  = 'Unknown event type: '
+    26  LOAD_FAST                   1  = event_type
+    28  FORMAT_VALUE                0  (0)
+    30  LOAD_CONST                  3  = '. Available: '
+    32  LOAD_CONST                  4  = ', '
+    34  <160>                       3  (3)
+    36  LOAD_FAST                   0  = self
+    38  LOAD_ATTR                   1  = EVENT_CONFIGS
+    40  <160>                       4  (4)
+    42  <161>                       0  (0)
+    44  <161>                       1  (1)
+    46  FORMAT_VALUE                0  (0)
+    48  BUILD_STRING                4  (4)
+    50  GET_AWAITABLE               1  (1)
+    52  RAISE_VARARGS               1  (1)
+    54  LOAD_FAST                   0  = self
+    56  LOAD_ATTR                   1  = EVENT_CONFIGS
+    58  LOAD_FAST                   1  = event_type
+    60  BINARY_SUBSCR               0  
+    62  STORE_FAST                  4  = event_config
+    64  LOAD_FAST                   0  = self
+    66  <160>                       5  (5)
+    68  <161>                       0  (0)
+    70  UNPACK_SEQUENCE             3  (3)
+    72  STORE_FAST                  5  = char_data
+    74  STORE_FAST                  6  = char_id
+    76  STORE_FAST                  7  = session_key
+    78  LOAD_FAST                   0  = self
+    80  <160>                       6  (6)
+    82  LOAD_FAST                   1  = event_type
+    84  <161>                       1  (1)
+    86  STORE_FAST                  8  = available_energy
+    88  LOAD_FAST                   8  = available_energy
+    90  LOAD_CONST                  5  = 0
+    92  COMPARE_OP                  2  (2)
+    94  POP_JUMP_IF_FALSE          76  (76)
+    96  LOAD_GLOBAL                 7  = print
+    98  LOAD_FAST                   8  = available_energy
+   100  FORMAT_VALUE                0  (0)
+   102  LOAD_CONST                  6  = ' energy available for '
+   104  LOAD_FAST                   4  = event_config
+   106  LOAD_ATTR                   8  = name
+   108  FORMAT_VALUE                0  (0)
+   110  LOAD_CONST                  7  = ' fights.'
+   112  BUILD_STRING                4  (4)
+   114  GET_AWAITABLE               1  (1)
+   116  POP_TOP                     0  
+   118  LOAD_FAST                   0  = self
+   120  <160>                       9  (9)
+   122  LOAD_FAST                   1  = event_type
+   124  LOAD_FAST                   4  = event_config
+   126  <161>                       2  (2)
+   128  POP_JUMP_IF_TRUE           67  (67)
+   130  LOAD_CONST                  1  = None
+   132  RETURN_VALUE                0  
+   134  LOAD_FAST                   0  = self
+   136  <160>                       6  (6)
+   138  LOAD_FAST                   1  = event_type
+   140  <161>                       1  (1)
+   142  STORE_FAST                  8  = available_energy
+   144  LOAD_FAST                   8  = available_energy
+   146  LOAD_CONST                  5  = 0
+   148  COMPARE_OP                  2  (2)
+   150  POP_JUMP_IF_TRUE           48  (48)
+   152  LOAD_GLOBAL                 7  = print
+   154  LOAD_FAST                   8  = available_energy
+   156  FORMAT_VALUE                0  (0)
+   158  LOAD_CONST                  6  = ' energy available for '
+   160  LOAD_FAST                   4  = event_config
+   162  LOAD_ATTR                   8  = name
+   164  FORMAT_VALUE                0  (0)
+   166  LOAD_CONST                  7  = ' fights.'
+   168  BUILD_STRING                4  (4)
+   170  GET_AWAITABLE               1  (1)
+   172  POP_TOP                     0  
+   174  LOAD_FAST                   3  = num_loops
+   176  LOAD_CONST                  1  = None
+   178  IS_OP                       0  (0)
+   180  POP_JUMP_IF_FALSE          94  (94)
+   182  LOAD_FAST                   8  = available_energy
+   184  STORE_FAST                  9  = battles_to_execute
+   186  JUMP_FORWARD               47  (47)
+   188  LOAD_FAST                   3  = num_loops
+   190  LOAD_CONST                  5  = 0
+   192  COMPARE_OP                  1  (1)
+   194  POP_JUMP_IF_FALSE         107  (107)
+   196  LOAD_GLOBAL                 7  = print
+   198  LOAD_CONST                  8  = 'ΓÜá∩╕Å  WARNING: Number of loops must be positive. Requested: '
+   200  LOAD_FAST                   3  = num_loops
+   202  FORMAT_VALUE                0  (0)
+   204  BUILD_STRING                2  (2)
+   206  GET_AWAITABLE               1  (1)
+   208  POP_TOP                     0  
+   210  LOAD_CONST                  1  = None
+   212  RETURN_VALUE                0  
+   214  LOAD_FAST                   3  = num_loops
+   216  LOAD_FAST                   8  = available_energy
+   218  COMPARE_OP                  4  (4)
+   220  POP_JUMP_IF_FALSE         128  (128)
+   222  LOAD_GLOBAL                 7  = print
+   224  LOAD_CONST                  9  = 'ΓÜá∩╕Å  WARNING: Requested '
+   226  LOAD_FAST                   3  = num_loops
+   228  FORMAT_VALUE                0  (0)
+   230  LOAD_CONST                 10  = ' battles but only '
+   232  LOAD_FAST                   8  = available_energy
+   234  FORMAT_VALUE                0  (0)
+   236  LOAD_CONST                 11  = ' energy available.'
+   238  BUILD_STRING                5  (5)
+   240  GET_AWAITABLE               1  (1)
+   242  POP_TOP                     0  
+   244  LOAD_GLOBAL                 7  = print
+   246  LOAD_CONST                 12  = 'Cannot proceed. Please reduce the number of loops or wait for energy to regenerate.'
+   248  GET_AWAITABLE               1  (1)
+   250  POP_TOP                     0  
+   252  LOAD_CONST                  1  = None
+   254  RETURN_VALUE                0  
+   256  LOAD_FAST                   3  = num_loops
+   258  STORE_FAST                  9  = battles_to_execute
+   260  LOAD_GLOBAL                 7  = print
+   262  LOAD_CONST                 13  = 'Will execute '
+   264  LOAD_FAST                   9  = battles_to_execute
+   266  FORMAT_VALUE                0  (0)
+   268  LOAD_CONST                 14  = ' out of '
+   270  LOAD_FAST                   8  = available_energy
+   272  FORMAT_VALUE                0  (0)
+   274  LOAD_CONST                 15  = ' available battles.'
+   276  BUILD_STRING                5  (5)
+   278  GET_AWAITABLE               1  (1)
+   280  POP_TOP                     0  
+   282  LOAD_CONST                 16  = 1
+   284  STORE_FAST                 10  = PRE_BATTLE_DELAY
+   286  LOAD_CONST                 17  = 26
+   288  STORE_FAST                 11  = POST_START_DELAY
+   290  LOAD_CONST                 18  = 3
+   292  STORE_FAST                 12  = POST_BATTLE_DELAY
+   294  LOAD_FAST                  10  = PRE_BATTLE_DELAY
+   296  LOAD_FAST                  11  = POST_START_DELAY
+   298  <23>                        0  
+   300  LOAD_FAST                  12  = POST_BATTLE_DELAY
+   302  <23>                        0  
+   304  STORE_FAST                 13  = TOTAL_DELAY_PER_BATTLE
+   306  LOAD_CONST                  5  = 0
+   308  STORE_FAST                 14  = successful_battles
+   310  LOAD_CONST                  5  = 0
+   312  STORE_FAST                 15  = failed_attempts
+   314  LOAD_CONST                 19  = 10
+   316  STORE_FAST                 16  = max_failed_attempts
+   318  LOAD_GLOBAL                10  = set
+   320  GET_AWAITABLE               0  (0)
+   322  STORE_FAST                 17  = hanami_progress_kills
+   324  LOAD_GLOBAL                11  = range
+   326  LOAD_FAST                   9  = battles_to_execute
+   328  GET_AWAITABLE               1  (1)
+   330  GET_ITER                    0  
+   332  EXTENDED_ARG                3  (3)
+   334  FOR_ITER                   32  (32)
+   336  STORE_FAST                 18  = i
+   338  LOAD_FAST                   0  = self
+   340  <160>                       0  (0)
+   342  <161>                       0  (0)
+   344  POP_JUMP_IF_FALSE         176  (176)
+   346  POP_TOP                     0  
+   348  EXTENDED_ARG                3  (3)
+   350  JUMP_FORWARD               24  (24)
+   352  LOAD_GLOBAL                 7  = print
+   354  LOAD_CONST                 20  = '\n'
+   356  LOAD_CONST                 21  = '============================================================'
+   358  FORMAT_VALUE                0  (0)
+   360  BUILD_STRING                2  (2)
+   362  GET_AWAITABLE               1  (1)
+   364  POP_TOP                     0  
+   366  LOAD_GLOBAL                 7  = print
+   368  LOAD_CONST                 22  = 'Battle '
+   370  LOAD_FAST                  18  = i
+   372  LOAD_CONST                 16  = 1
+   374  <23>                        0  
+   376  FORMAT_VALUE                0  (0)
+   378  LOAD_CONST                 23  = '/'
+   380  LOAD_FAST                   9  = battles_to_execute
+   382  FORMAT_VALUE                0  (0)
+   384  LOAD_CONST                 24  = ' - '
+   386  LOAD_FAST                   4  = event_config
+   388  LOAD_ATTR                   8  = name
+   390  FORMAT_VALUE                0  (0)
+   392  BUILD_STRING                6  (6)
+   394  GET_AWAITABLE               1  (1)
+   396  POP_TOP                     0  
+   398  LOAD_GLOBAL                 7  = print
+   400  LOAD_CONST                 21  = '============================================================'
+   402  FORMAT_VALUE                0  (0)
+   404  GET_AWAITABLE               1  (1)
+   406  POP_TOP                     0  
+   408  LOAD_FAST                   0  = self
+   410  <160>                      12  (12)
+   412  LOAD_FAST                  10  = PRE_BATTLE_DELAY
+   414  <161>                       1  (1)
+   416  POP_JUMP_IF_TRUE          212  (212)
+   418  POP_TOP                     0  
+   420  EXTENDED_ARG                2  (2)
+   422  JUMP_FORWARD              244  (244)
+   424  LOAD_CONST                  1  = None
+   426  STORE_FAST                 19  = current_enemy_id
+   428  LOAD_CONST                  1  = None
+   430  STORE_FAST                 20  = current_enemy_data
+   432  LOAD_FAST                   1  = event_type
+   434  LOAD_CONST                 25  = 'sakura'
+   436  COMPARE_OP                  2  (2)
+   438  EXTENDED_ARG                1  (1)
+   440  POP_JUMP_IF_FALSE          23  (23)
+   442  LOAD_FAST                   0  = self
+   444  <160>                      13  (13)
+   446  LOAD_FAST                   4  = event_config
+   448  LOAD_FAST                   4  = event_config
+   450  <160>                      14  (14)
+   452  <161>                       0  (0)
+   454  LOAD_FAST                   6  = char_id
+   456  LOAD_FAST                   7  = session_key
+   458  BUILD_LIST                  2  (2)
+   460  <161>                       3  (3)
+   462  STORE_FAST                 21  = battle_data
+   464  LOAD_FAST                  21  = battle_data
+   466  LOAD_CONST                  1  = None
+   468  IS_OP                       0  (0)
+   470  POP_JUMP_IF_FALSE         239  (239)
+   472  POP_TOP                     0  
+   474  EXTENDED_ARG                2  (2)
+   476  JUMP_FORWARD              217  (217)
+   478  LOAD_FAST                   2  = enemy_id
+   480  <112>                     246  (246)
+   482  LOAD_FAST                   0  = self
+   484  <160>                      15  (15)
+   486  LOAD_FAST                  21  = battle_data
+   488  LOAD_FAST                  17  = hanami_progress_kills
+   490  <161>                       2  (2)
+   492  STORE_FAST                 19  = current_enemy_id
+   494  LOAD_GLOBAL                16  = get_data_by_id
+   496  LOAD_FAST                  19  = current_enemy_id
+   498  LOAD_FAST                   0  = self
+   500  LOAD_ATTR                  17  = enemy_list
+   502  GET_AWAITABLE               2  (2)
+   504  STORE_FAST                 20  = current_enemy_data
+   506  LOAD_FAST                  20  = current_enemy_data
+   508  EXTENDED_ARG                1  (1)
+   510  POP_JUMP_IF_TRUE           12  (12)
+   512  LOAD_GLOBAL                 7  = print
+   514  LOAD_CONST                 26  = 'Warning: Could not find enemy data for '
+   516  LOAD_FAST                  19  = current_enemy_id
+   518  FORMAT_VALUE                0  (0)
+   520  BUILD_STRING                2  (2)
+   522  GET_AWAITABLE               1  (1)
+   524  POP_TOP                     0  
+   526  LOAD_CONST                 16  = 1
+   528  LOAD_CONST                 16  = 1
+   530  LOAD_CONST                 27  = ('hp', 'agility')
+   532  BUILD_CONST_KEY_MAP         2  (2)
+   534  STORE_FAST                 20  = current_enemy_data
+   536  LOAD_GLOBAL                 7  = print
+   538  LOAD_CONST                 28  = '≡ƒÄ▓ Enemy: '
+   540  LOAD_FAST                   0  = self
+   542  <160>                      18  (18)
+   544  LOAD_FAST                  19  = current_enemy_id
+   546  <161>                       1  (1)
+   548  FORMAT_VALUE                0  (0)
+   550  BUILD_STRING                2  (2)
+   552  GET_AWAITABLE               1  (1)
+   554  POP_TOP                     0  
+   556  JUMP_FORWARD              145  (145)
+   558  LOAD_FAST                   4  = event_config
+   560  LOAD_ATTR                  19  = is_fixed_boss
+   562  EXTENDED_ARG                1  (1)
+   564  POP_JUMP_IF_FALSE          48  (48)
+   566  LOAD_FAST                   4  = event_config
+   568  LOAD_ATTR                  20  = boss_id
+   570  STORE_FAST                 19  = current_enemy_id
+   572  LOAD_FAST                   4  = event_config
+   574  LOAD_ATTR                  21  = boss_hp
+   576  LOAD_FAST                   4  = event_config
+   578  LOAD_ATTR                  22  = boss_agility
+   580  LOAD_CONST                 27  = ('hp', 'agility')
+   582  BUILD_CONST_KEY_MAP         2  (2)
+   584  STORE_FAST                 20  = current_enemy_data
+   586  LOAD_GLOBAL                 7  = print
+   588  LOAD_CONST                 29  = '≡ƒÄ» Boss: '
+   590  LOAD_FAST                   0  = self
+   592  <160>                      18  (18)
+   594  LOAD_FAST                  19  = current_enemy_id
+   596  <161>                       1  (1)
+   598  FORMAT_VALUE                0  (0)
+   600  BUILD_STRING                2  (2)
+   602  GET_AWAITABLE               1  (1)
+   604  POP_TOP                     0  
+   606  JUMP_FORWARD              120  (120)
+   608  LOAD_FAST                   4  = event_config
+   610  LOAD_ATTR                  23  = is_random_enemy
+   612  EXTENDED_ARG                1  (1)
+   614  POP_JUMP_IF_FALSE         105  (105)
+   616  LOAD_FAST                   0  = self
+   618  <160>                      24  (24)
+   620  LOAD_FAST                   4  = event_config
+   622  LOAD_FAST                   6  = char_id
+   624  LOAD_FAST                   7  = session_key
+   626  LOAD_FAST                  18  = i
+   628  LOAD_CONST                 16  = 1
+   630  <23>                        0  
+   632  <161>                       4  (4)
+   634  STORE_FAST                 22  = result
+   636  LOAD_FAST                  22  = result
+   638  LOAD_CONST                  1  = None
+   640  IS_OP                       0  (0)
+   642  EXTENDED_ARG                1  (1)
+   644  POP_JUMP_IF_FALSE          88  (88)
+   646  LOAD_FAST                  15  = failed_attempts
+   648  LOAD_CONST                 16  = 1
+   650  CLEANUP_THROW               0  
+   652  STORE_FAST                 15  = failed_attempts
+   654  LOAD_FAST                  15  = failed_attempts
+   656  LOAD_FAST                  16  = max_failed_attempts
+   658  COMPARE_OP                  5  (5)
+   660  EXTENDED_ARG                1  (1)
+   662  POP_JUMP_IF_FALSE          87  (87)
+   664  LOAD_GLOBAL                 7  = print
+   666  LOAD_CONST                 30  = 'Γ¥î Too many consecutive failures ('
+   668  LOAD_FAST                  15  = failed_attempts
+   670  FORMAT_VALUE                0  (0)
+   672  LOAD_CONST                 31  = '). Stopping event.'
+   674  BUILD_STRING                3  (3)
+   676  GET_AWAITABLE               1  (1)
+   678  POP_TOP                     0  
+   680  POP_TOP                     0  
+   682  EXTENDED_ARG                2  (2)
+   684  JUMP_FORWARD              113  (113)
+   686  <113>                     166  (166)
+   688  LOAD_FAST                  22  = result
+   690  UNPACK_SEQUENCE             2  (2)
+   692  STORE_FAST                 19  = current_enemy_id
+   694  STORE_FAST                 20  = current_enemy_data
+   696  LOAD_GLOBAL                 7  = print
+   698  LOAD_CONST                 28  = '≡ƒÄ▓ Enemy: '
+   700  LOAD_FAST                   0  = self
+   702  <160>                      18  (18)
+   704  LOAD_FAST                  19  = current_enemy_id
+   706  <161>                       1  (1)
+   708  FORMAT_VALUE                0  (0)
+   710  BUILD_STRING                2  (2)
+   712  GET_AWAITABLE               1  (1)
+   714  POP_TOP                     0  
+   716  LOAD_CONST                  5  = 0
+   718  STORE_FAST                 15  = failed_attempts
+   720  JUMP_FORWARD               63  (63)
+   722  LOAD_FAST                   2  = enemy_id
+   724  EXTENDED_ARG                1  (1)
+   726  POP_JUMP_IF_FALSE         111  (111)
+   728  LOAD_FAST                   2  = enemy_id
+   730  STORE_FAST                 19  = current_enemy_id
+   732  JUMP_FORWARD               38  (38)
+   734  LOAD_FAST                   4  = event_config
+   736  LOAD_ATTR                  25  = enemy_choices
+   738  EXTENDED_ARG                1  (1)
+   740  POP_JUMP_IF_FALSE         142  (142)
+   742  LOAD_GLOBAL                26  = next
+   744  LOAD_GLOBAL                27  = iter
+   746  LOAD_FAST                   4  = event_config
+   748  LOAD_ATTR                  25  = enemy_choices
+   750  <160>                      28  (28)
+   752  <161>                       0  (0)
+   754  GET_AWAITABLE               1  (1)
+   756  GET_AWAITABLE               1  (1)
+   758  STORE_FAST                 23  = first_choice
+   760  LOAD_FAST                  23  = first_choice
+   762  LOAD_CONST                 16  = 1
+   764  BINARY_SUBSCR               0  
+   766  LOAD_CONST                  5  = 0
+   768  BINARY_SUBSCR               0  
+   770  STORE_FAST                 19  = current_enemy_id
+   772  LOAD_GLOBAL                 7  = print
+   774  LOAD_CONST                 32  = '≡ƒÄ» Fighting: '
+   776  LOAD_FAST                  23  = first_choice
+   778  LOAD_CONST                 16  = 1
+   780  BINARY_SUBSCR               0  
+   782  LOAD_CONST                 16  = 1
+   784  BINARY_SUBSCR               0  
+   786  FORMAT_VALUE                0  (0)
+   788  BUILD_STRING                2  (2)
+   790  GET_AWAITABLE               1  (1)
+   792  POP_TOP                     0  
+   794  JUMP_FORWARD                7  (7)
+   796  LOAD_GLOBAL                 7  = print
+   798  LOAD_CONST                 33  = 'Γ¥î No enemy selected and no defaults available.'
+   800  GET_AWAITABLE               1  (1)
+   802  POP_TOP                     0  
+   804  POP_TOP                     0  
+   806  LOAD_CONST                  1  = None
+   808  RETURN_VALUE                0  
+   810  LOAD_GLOBAL                16  = get_data_by_id
+   812  LOAD_FAST                  19  = current_enemy_id
+   814  LOAD_FAST                   0  = self
+   816  LOAD_ATTR                  17  = enemy_list
+   818  GET_AWAITABLE               2  (2)
+   820  STORE_FAST                 20  = current_enemy_data
+   822  LOAD_FAST                  20  = current_enemy_data
+   824  EXTENDED_ARG                1  (1)
+   826  POP_JUMP_IF_TRUE          168  (168)
+   828  LOAD_GLOBAL                 7  = print
+   830  LOAD_CONST                 34  = 'Γ¥î Invalid enemy ID: '
+   832  LOAD_FAST                  19  = current_enemy_id
+   834  FORMAT_VALUE                0  (0)
+   836  BUILD_STRING                2  (2)
+   838  GET_AWAITABLE               1  (1)
+   840  POP_TOP                     0  
+   842  POP_TOP                     0  
+   844  LOAD_CONST                  1  = None
+   846  RETURN_VALUE                0  
+   848  LOAD_FAST                  19  = current_enemy_id
+   850  EXTENDED_ARG                1  (1)
+   852  POP_JUMP_IF_FALSE         174  (174)
+   854  LOAD_FAST                  20  = current_enemy_data
+   856  EXTENDED_ARG                1  (1)
+   858  POP_JUMP_IF_TRUE          199  (199)
+   860  LOAD_GLOBAL                 7  = print
+   862  LOAD_CONST                 35  = 'Γ¥î Failed to get valid enemy data'
+   864  GET_AWAITABLE               1  (1)
+   866  POP_TOP                     0  
+   868  LOAD_FAST                  15  = failed_attempts
+   870  LOAD_CONST                 16  = 1
+   872  CLEANUP_THROW               0  
+   874  STORE_FAST                 15  = failed_attempts
+   876  LOAD_FAST                  15  = failed_attempts
+   878  LOAD_FAST                  16  = max_failed_attempts
+   880  COMPARE_OP                  5  (5)
+   882  EXTENDED_ARG                1  (1)
+   884  POP_JUMP_IF_FALSE         198  (198)
+   886  LOAD_GLOBAL                 7  = print
+   888  LOAD_CONST                 30  = 'Γ¥î Too many consecutive failures ('
+   890  LOAD_FAST                  15  = failed_attempts
+   892  FORMAT_VALUE                0  (0)
+   894  LOAD_CONST                 31  = '). Stopping event.'
+   896  BUILD_STRING                3  (3)
+   898  GET_AWAITABLE               1  (1)
+   900  POP_TOP                     0  
+   902  POP_TOP                     0  
+   904  EXTENDED_ARG                2  (2)
+   906  JUMP_FORWARD                2  (2)
+   908  <113>                     166  (166)
+   910  LOAD_GLOBAL                 7  = print
+   912  LOAD_CONST                 36  = '   HP: '
+   914  LOAD_FAST                  20  = current_enemy_data
+   916  <160>                      29  (29)
+   918  LOAD_CONST                 37  = 'hp'
+   920  LOAD_CONST                 38  = '?'
+   922  <161>                       2  (2)
+   924  FORMAT_VALUE                0  (0)
+   926  LOAD_CONST                 39  = ' | AGI: '
+   928  LOAD_FAST                  20  = current_enemy_data
+   930  <160>                      29  (29)
+   932  LOAD_CONST                 40  = 'agility'
+   934  LOAD_CONST                 38  = '?'
+   936  <161>                       2  (2)
+   938  FORMAT_VALUE                0  (0)
+   940  BUILD_STRING                4  (4)
+   942  GET_AWAITABLE               1  (1)
+   944  POP_TOP                     0  
+   946  LOAD_GLOBAL                30  = config
+   948  LOAD_ATTR                  31  = all_char
+   950  LOAD_CONST                 41  = 'tokens'
+   952  BINARY_SUBSCR               0  
+   954  STORE_FAST                 24  = initial_tokens
+   956  LOAD_GLOBAL                 7  = print
+   958  LOAD_CONST                 42  = '\nΓÜö∩╕Å  Starting battle! Finishing in 25 Second...'
+   960  GET_AWAITABLE               1  (1)
+   962  POP_TOP                     0  
+   964  LOAD_GLOBAL                32  = StatManager
+   966  <160>                      33  (33)
+   968  LOAD_CONST                 40  = 'agility'
+   970  LOAD_FAST                   5  = char_data
+   972  <161>                       2  (2)
+   974  STORE_FAST                 25  = agility
+   976  LOAD_CONST                 43  = 'id:'
+   978  LOAD_FAST                  19  = current_enemy_id
+   980  FORMAT_VALUE                0  (0)
+   982  LOAD_CONST                 44  = '|hp:'
+   984  LOAD_FAST                  20  = current_enemy_data
+   986  LOAD_CONST                 37  = 'hp'
+   988  BINARY_SUBSCR               0  
+   990  FORMAT_VALUE                0  (0)
+   992  LOAD_CONST                 45  = '|agility:'
+   994  LOAD_FAST                  20  = current_enemy_data
+   996  LOAD_CONST                 40  = 'agility'
+   998  BINARY_SUBSCR               0  
+  1000  FORMAT_VALUE                0  (0)
+  1002  BUILD_STRING                6  (6)
+  1004  STORE_FAST                 26  = enemy_attr
+  1006  LOAD_FAST                   6  = char_id
+  1008  FORMAT_VALUE                0  (0)
+  1010  LOAD_FAST                  19  = current_enemy_id
+  1012  FORMAT_VALUE                0  (0)
+  1014  LOAD_FAST                  26  = enemy_attr
+  1016  FORMAT_VALUE                0  (0)
+  1018  LOAD_FAST                  25  = agility
+  1020  FORMAT_VALUE                0  (0)
+  1022  BUILD_STRING                4  (4)
+  1024  STORE_FAST                 27  = hash_input
+  1026  LOAD_GLOBAL                34  = CUCSG
+  1028  <160>                      35  (35)
+  1030  LOAD_FAST                  27  = hash_input
+  1032  <161>                       1  (1)
+  1034  STORE_FAST                 28  = mission_hash
+  1036  LOAD_FAST                   6  = char_id
+  1038  LOAD_FAST                  19  = current_enemy_id
+  1040  LOAD_FAST                  25  = agility
+  1042  LOAD_FAST                  26  = enemy_attr
+  1044  LOAD_FAST                  28  = mission_hash
+  1046  LOAD_FAST                   7  = session_key
+  1048  BUILD_LIST                  6  (6)
+  1050  STORE_FAST                 29  = start_params
+  1052  LOAD_CONST                  1  = None
+  1054  STORE_FAST                 30  = battle_code
+  1056  NOP                         0  
+  1058  LOAD_FAST                   1  = event_type
+  1060  LOAD_CONST                 47  = 'phantom'
+  1062  COMPARE_OP                  2  (2)
+  1064  EXTENDED_ARG                2  (2)
+  1066  POP_JUMP_IF_FALSE         127  (127)
+  1068  LOAD_FAST                   0  = self
+  1070  <160>                      13  (13)
+  1072  LOAD_FAST                   4  = event_config
+  1074  LOAD_FAST                   4  = event_config
+  1076  <160>                      36  (36)
+  1078  <161>                       0  (0)
+  1080  LOAD_FAST                  29  = start_params
+  1082  <161>                       3  (3)
+  1084  STORE_FAST                 21  = battle_data
+  1086  LOAD_FAST                  21  = battle_data
+  1088  LOAD_CONST                  1  = None
+  1090  IS_OP                       0  (0)
+  1092  EXTENDED_ARG                2  (2)
+  1094  POP_JUMP_IF_FALSE          39  (39)
+  1096  POP_TOP                     0  
+  1098  LOAD_CONST                  1  = None
+  1100  RETURN_VALUE                0  
+  1102  LOAD_GLOBAL                37  = isinstance
+  1104  LOAD_FAST                  21  = battle_data
+  1106  LOAD_GLOBAL                38  = list
+  1108  GET_AWAITABLE               2  (2)
+  1110  EXTENDED_ARG                2  (2)
+  1112  POP_JUMP_IF_FALSE          59  (59)
+  1114  LOAD_GLOBAL                39  = len
+  1116  LOAD_FAST                  21  = battle_data
+  1118  GET_AWAITABLE               1  (1)
+  1120  LOAD_CONST                 48  = 2
+  1122  COMPARE_OP                  5  (5)
+  1124  EXTENDED_ARG                2  (2)
+  1126  POP_JUMP_IF_FALSE          59  (59)
+  1128  LOAD_GLOBAL                40  = str
+  1130  LOAD_FAST                  21  = battle_data
+  1132  LOAD_CONST                  5  = 0
+  1134  BINARY_SUBSCR               0  
+  1136  GET_AWAITABLE               1  (1)
+  1138  STORE_FAST                 30  = battle_code
+  1140  JUMP_FORWARD              153  (153)
+  1142  LOAD_GLOBAL                37  = isinstance
+  1144  LOAD_FAST                  21  = battle_data
+  1146  LOAD_GLOBAL                41  = dict
+  1148  GET_AWAITABLE               2  (2)
+  1150  EXTENDED_ARG                2  (2)
+  1152  POP_JUMP_IF_FALSE          75  (75)
+  1154  LOAD_CONST                 49  = 'code'
+  1156  LOAD_FAST                  21  = battle_data
+  1158  CONTAINS_OP                 0  (0)
+  1160  EXTENDED_ARG                2  (2)
+  1162  POP_JUMP_IF_FALSE          75  (75)
+  1164  LOAD_FAST                  21  = battle_data
+  1166  LOAD_CONST                 49  = 'code'
+  1168  BINARY_SUBSCR               0  
+  1170  STORE_FAST                 30  = battle_code
+  1172  JUMP_FORWARD              137  (137)
+  1174  LOAD_FAST                   0  = self
+  1176  <160>                      42  (42)
+  1178  LOAD_FAST                  21  = battle_data
+  1180  <161>                       1  (1)
+  1182  STORE_FAST                 31  = error_msg
+  1184  LOAD_FAST                   0  = self
+  1186  LOAD_ATTR                  43  = _extract_retry_delay
+  1188  LOAD_FAST                  31  = error_msg
+  1190  LOAD_FAST                   4  = event_config
+  1192  LOAD_ATTR                  44  = delay_between_calls
+  1194  EXTENDED_ARG                2  (2)
+  1196  <112>                      88  (88)
+  1198  LOAD_CONST                 50  = 5
+  1200  LOAD_CONST                 51  = ('default_seconds',)
+  1202  LOAD_SUPER_ATTR             2  = ValueError
+  1204  STORE_FAST                 32  = retry_delay
+  1206  LOAD_FAST                  32  = retry_delay
+  1208  LOAD_CONST                  5  = 0
+  1210  COMPARE_OP                  4  (4)
+  1212  EXTENDED_ARG                2  (2)
+  1214  POP_JUMP_IF_FALSE         115  (115)
+  1216  LOAD_GLOBAL                 7  = print
+  1218  LOAD_CONST                 52  = 'ΓÅ│ Start battle delayed by server. Waiting '
+  1220  LOAD_FAST                  32  = retry_delay
+  1222  FORMAT_VALUE                0  (0)
+  1224  LOAD_CONST                 53  = ' seconds...'
+  1226  BUILD_STRING                3  (3)
+  1228  GET_AWAITABLE               1  (1)
+  1230  POP_TOP                     0  
+  1232  LOAD_FAST                   0  = self
+  1234  <160>                      12  (12)
+  1236  LOAD_FAST                  32  = retry_delay
+  1238  <161>                       1  (1)
+  1240  EXTENDED_ARG                2  (2)
+  1242  POP_JUMP_IF_TRUE          113  (113)
+  1244  POP_TOP                     0  
+  1246  LOAD_CONST                  1  = None
+  1248  RETURN_VALUE                0  
+  1250  EXTENDED_ARG                2  (2)
+  1252  <113>                      16  (16)
+  1254  LOAD_GLOBAL                 7  = print
+  1256  LOAD_CONST                 54  = 'Γ¥î Unexpected battle data format: '
+  1258  LOAD_FAST                  21  = battle_data
+  1260  FORMAT_VALUE                0  (0)
+  1262  BUILD_STRING                2  (2)
+  1264  GET_AWAITABLE               1  (1)
+  1266  POP_TOP                     0  
+  1268  LOAD_FAST                  15  = failed_attempts
+  1270  LOAD_CONST                 16  = 1
+  1272  CLEANUP_THROW               0  
+  1274  STORE_FAST                 15  = failed_attempts
+  1276  JUMP_FORWARD               85  (85)
+  1278  LOAD_FAST                   0  = self
+  1280  <160>                      13  (13)
+  1282  LOAD_FAST                   4  = event_config
+  1284  LOAD_FAST                   4  = event_config
+  1286  <160>                      36  (36)
+  1288  <161>                       0  (0)
+  1290  LOAD_FAST                  29  = start_params
+  1292  <161>                       3  (3)
+  1294  STORE_FAST                 21  = battle_data
+  1296  LOAD_FAST                  21  = battle_data
+  1298  LOAD_CONST                  1  = None
+  1300  IS_OP                       0  (0)
+  1302  EXTENDED_ARG                2  (2)
+  1304  POP_JUMP_IF_FALSE         144  (144)
+  1306  POP_TOP                     0  
+  1308  LOAD_CONST                  1  = None
+  1310  RETURN_VALUE                0  
+  1312  LOAD_GLOBAL                37  = isinstance
+  1314  LOAD_FAST                  21  = battle_data
+  1316  LOAD_GLOBAL                41  = dict
+  1318  GET_AWAITABLE               2  (2)
+  1320  EXTENDED_ARG                2  (2)
+  1322  POP_JUMP_IF_FALSE         160  (160)
+  1324  LOAD_CONST                 49  = 'code'
+  1326  LOAD_FAST                  21  = battle_data
+  1328  CONTAINS_OP                 0  (0)
+  1330  EXTENDED_ARG                2  (2)
+  1332  POP_JUMP_IF_FALSE         160  (160)
+  1334  LOAD_FAST                  21  = battle_data
+  1336  LOAD_CONST                 49  = 'code'
+  1338  BINARY_SUBSCR               0  
+  1340  STORE_FAST                 30  = battle_code
+  1342  JUMP_FORWARD               52  (52)
+  1344  LOAD_FAST                   0  = self
+  1346  <160>                      42  (42)
+  1348  LOAD_FAST                  21  = battle_data
+  1350  <161>                       1  (1)
+  1352  STORE_FAST                 31  = error_msg
+  1354  LOAD_FAST                   0  = self
+  1356  LOAD_ATTR                  43  = _extract_retry_delay
+  1358  LOAD_FAST                  31  = error_msg
+  1360  LOAD_FAST                   4  = event_config
+  1362  LOAD_ATTR                  44  = delay_between_calls
+  1364  EXTENDED_ARG                2  (2)
+  1366  <112>                     173  (173)
+  1368  LOAD_CONST                 50  = 5
+  1370  LOAD_CONST                 51  = ('default_seconds',)
+  1372  LOAD_SUPER_ATTR             2  = ValueError
+  1374  STORE_FAST                 32  = retry_delay
+  1376  LOAD_FAST                  32  = retry_delay
+  1378  LOAD_CONST                  5  = 0
+  1380  COMPARE_OP                  4  (4)
+  1382  EXTENDED_ARG                2  (2)
+  1384  POP_JUMP_IF_FALSE         200  (200)
+  1386  LOAD_GLOBAL                 7  = print
+  1388  LOAD_CONST                 52  = 'ΓÅ│ Start battle delayed by server. Waiting '
+  1390  LOAD_FAST                  32  = retry_delay
+  1392  FORMAT_VALUE                0  (0)
+  1394  LOAD_CONST                 53  = ' seconds...'
+  1396  BUILD_STRING                3  (3)
+  1398  GET_AWAITABLE               1  (1)
+  1400  POP_TOP                     0  
+  1402  LOAD_FAST                   0  = self
+  1404  <160>                      12  (12)
+  1406  LOAD_FAST                  32  = retry_delay
+  1408  <161>                       1  (1)
+  1410  EXTENDED_ARG                2  (2)
+  1412  POP_JUMP_IF_TRUE          198  (198)
+  1414  POP_TOP                     0  
+  1416  LOAD_CONST                  1  = None
+  1418  RETURN_VALUE                0  
+  1420  EXTENDED_ARG                2  (2)
+  1422  <113>                      16  (16)
+  1424  LOAD_GLOBAL                 7  = print
+  1426  LOAD_CONST                 55  = 'Γ¥î Failed to start battle: '
+  1428  LOAD_FAST                  21  = battle_data
+  1430  FORMAT_VALUE                0  (0)
+  1432  BUILD_STRING                2  (2)
+  1434  GET_AWAITABLE               1  (1)
+  1436  POP_TOP                     0  
+  1438  LOAD_FAST                  15  = failed_attempts
+  1440  LOAD_CONST                 16  = 1
+  1442  CLEANUP_THROW               0  
+  1444  STORE_FAST                 15  = failed_attempts
+  1446  NOP                         0  
+  1448  LOAD_FAST                  30  = battle_code
+  1450  EXTENDED_ARG                2  (2)
+  1452  POP_JUMP_IF_TRUE          231  (231)
+  1454  LOAD_FAST                  15  = failed_attempts
+  1456  LOAD_FAST                  16  = max_failed_attempts
+  1458  COMPARE_OP                  5  (5)
+  1460  EXTENDED_ARG                2  (2)
+  1462  POP_JUMP_IF_FALSE         230  (230)
+  1464  LOAD_GLOBAL                 7  = print
+  1466  LOAD_CONST                 30  = 'Γ¥î Too many consecutive failures ('
+  1468  LOAD_FAST                  15  = failed_attempts
+  1470  FORMAT_VALUE                0  (0)
+  1472  LOAD_CONST                 31  = '). Stopping event.'
+  1474  BUILD_STRING                3  (3)
+  1476  GET_AWAITABLE               1  (1)
+  1478  POP_TOP                     0  
+  1480  POP_TOP                     0  
+  1482  JUMP_FORWARD              226  (226)
+  1484  <113>                     166  (166)
+  1486  LOAD_FAST                   0  = self
+  1488  <160>                       0  (0)
+  1490  <161>                       0  (0)
+  1492  EXTENDED_ARG                2  (2)
+  1494  POP_JUMP_IF_FALSE         242  (242)
+  1496  LOAD_GLOBAL                 7  = print
+  1498  LOAD_CONST                 56  = 'Battle stopped by user'
+  1500  GET_AWAITABLE               1  (1)
+  1502  POP_TOP                     0  
+  1504  POP_TOP                     0  
+  1506  JUMP_FORWARD              214  (214)
+  1508  LOAD_FAST                   0  = self
+  1510  <160>                      12  (12)
+  1512  LOAD_FAST                  11  = POST_START_DELAY
+  1514  <161>                       1  (1)
+  1516  EXTENDED_ARG                2  (2)
+  1518  POP_JUMP_IF_TRUE          250  (250)
+  1520  POP_TOP                     0  
+  1522  JUMP_FORWARD              206  (206)
+  1524  LOAD_FAST                   0  = self
+  1526  <160>                       0  (0)
+  1528  <161>                       0  (0)
+  1530  EXTENDED_ARG                3  (3)
+  1532  POP_JUMP_IF_FALSE           5  (5)
+  1534  LOAD_GLOBAL                 7  = print
+  1536  LOAD_CONST                 56  = 'Battle stopped by user'
+  1538  GET_AWAITABLE               1  (1)
+  1540  POP_TOP                     0  
+  1542  POP_TOP                     0  
+  1544  JUMP_FORWARD              195  (195)
+  1546  LOAD_GLOBAL                 7  = print
+  1548  LOAD_CONST                 57  = '\n≡ƒÅü Finishing battle...'
+  1550  GET_AWAITABLE               1  (1)
+  1552  POP_TOP                     0  
+  1554  LOAD_FAST                   4  = event_config
+  1556  LOAD_ATTR                  45  = finish_damage
+  1558  STORE_FAST                 33  = battle_dmg
+  1560  LOAD_FAST                   0  = self
+  1562  <160>                      46  (46)
+  1564  LOAD_FAST                   6  = char_id
+  1566  LOAD_FAST                  19  = current_enemy_id
+  1568  LOAD_FAST                  30  = battle_code
+  1570  LOAD_FAST                  33  = battle_dmg
+  1572  <161>                       4  (4)
+  1574  STORE_FAST                 34  = finish_hash
+  1576  LOAD_FAST                   6  = char_id
+  1578  LOAD_FAST                  19  = current_enemy_id
+  1580  LOAD_FAST                  30  = battle_code
+  1582  LOAD_FAST                  33  = battle_dmg
+  1584  LOAD_FAST                  34  = finish_hash
+  1586  LOAD_GLOBAL                47  = BATTLE_HASH
+  1588  LOAD_FAST                   7  = session_key
+  1590  BUILD_LIST                  7  (7)
+  1592  STORE_FAST                 35  = finish_params
+  1594  LOAD_FAST                   0  = self
+  1596  <160>                      13  (13)
+  1598  LOAD_FAST                   4  = event_config
+  1600  LOAD_FAST                   4  = event_config
+  1602  <160>                      48  (48)
+  1604  <161>                       0  (0)
+  1606  LOAD_FAST                  35  = finish_params
+  1608  <161>                       3  (3)
+  1610  STORE_FAST                 22  = result
+  1612  LOAD_FAST                  22  = result
+  1614  LOAD_CONST                  1  = None
+  1616  IS_OP                       0  (0)
+  1618  EXTENDED_ARG                3  (3)
+  1620  POP_JUMP_IF_FALSE          45  (45)
+  1622  POP_TOP                     0  
+  1624  JUMP_FORWARD              155  (155)
+  1626  LOAD_GLOBAL                49  = save_fight_data
+  1628  LOAD_FAST                  22  = result
+  1630  GET_AWAITABLE               1  (1)
+  1632  POP_TOP                     0  
+  1634  LOAD_GLOBAL                37  = isinstance
+  1636  LOAD_FAST                  22  = result
+  1638  LOAD_GLOBAL                41  = dict
+  1640  GET_AWAITABLE               2  (2)
+  1642  EXTENDED_ARG                3  (3)
+  1644  POP_JUMP_IF_FALSE         145  (145)
+  1646  LOAD_FAST                  22  = result
+  1648  <160>                      29  (29)
+  1650  LOAD_CONST                 58  = 'status'
+  1652  <161>                       1  (1)
+  1654  LOAD_CONST                 16  = 1
+  1656  COMPARE_OP                  2  (2)
+  1658  EXTENDED_ARG                3  (3)
+  1660  POP_JUMP_IF_FALSE         145  (145)
+  1662  LOAD_FAST                  14  = successful_battles
+  1664  LOAD_CONST                 16  = 1
+  1666  CLEANUP_THROW               0  
+  1668  STORE_FAST                 14  = successful_battles
+  1670  LOAD_CONST                 59  = 'result'
+  1672  LOAD_FAST                  22  = result
+  1674  CONTAINS_OP                 0  (0)
+  1676  EXTENDED_ARG                3  (3)
+  1678  POP_JUMP_IF_FALSE          87  (87)
+  1680  LOAD_GLOBAL                39  = len
+  1682  LOAD_FAST                  22  = result
+  1684  LOAD_CONST                 59  = 'result'
+  1686  BINARY_SUBSCR               0  
+  1688  GET_AWAITABLE               1  (1)
+  1690  LOAD_CONST                  5  = 0
+  1692  COMPARE_OP                  4  (4)
+  1694  EXTENDED_ARG                3  (3)
+  1696  POP_JUMP_IF_FALSE          87  (87)
+  1698  LOAD_FAST                  22  = result
+  1700  LOAD_CONST                 59  = 'result'
+  1702  BINARY_SUBSCR               0  
+  1704  LOAD_CONST                  5  = 0
+  1706  BINARY_SUBSCR               0  
+  1708  JUMP_FORWARD                1  (1)
+  1710  LOAD_CONST                 38  = '?'
+  1712  STORE_FAST                 36  = xp
+  1714  LOAD_CONST                 59  = 'result'
+  1716  LOAD_FAST                  22  = result
+  1718  CONTAINS_OP                 0  (0)
+  1720  EXTENDED_ARG                3  (3)
+  1722  POP_JUMP_IF_FALSE         109  (109)
+  1724  LOAD_GLOBAL                39  = len
+  1726  LOAD_FAST                  22  = result
+  1728  LOAD_CONST                 59  = 'result'
+  1730  BINARY_SUBSCR               0  
+  1732  GET_AWAITABLE               1  (1)
+  1734  LOAD_CONST                 16  = 1
+  1736  COMPARE_OP                  4  (4)
+  1738  EXTENDED_ARG                3  (3)
+  1740  POP_JUMP_IF_FALSE         109  (109)
+  1742  LOAD_FAST                  22  = result
+  1744  LOAD_CONST                 59  = 'result'
+  1746  BINARY_SUBSCR               0  
+  1748  LOAD_CONST                 16  = 1
+  1750  BINARY_SUBSCR               0  
+  1752  JUMP_FORWARD                1  (1)
+  1754  LOAD_CONST                 38  = '?'
+  1756  STORE_FAST                 37  = gold
+  1758  LOAD_GLOBAL                 7  = print
+  1760  LOAD_CONST                 60  = 'Γ£à Victory! XP: '
+  1762  LOAD_FAST                  36  = xp
+  1764  FORMAT_VALUE                0  (0)
+  1766  LOAD_CONST                 61  = ' | Gold: '
+  1768  LOAD_FAST                  37  = gold
+  1770  FORMAT_VALUE                0  (0)
+  1772  BUILD_STRING                4  (4)
+  1774  GET_AWAITABLE               1  (1)
+  1776  POP_TOP                     0  
+  1778  LOAD_FAST                   1  = event_type
+  1780  LOAD_CONST                 25  = 'sakura'
+  1782  COMPARE_OP                  2  (2)
+  1784  EXTENDED_ARG                3  (3)
+  1786  POP_JUMP_IF_FALSE         136  (136)
+  1788  LOAD_FAST                  19  = current_enemy_id
+  1790  LOAD_CONST                 62  = {'ene_2121', 'ene_2120'}
+  1792  CONTAINS_OP                 0  (0)
+  1794  EXTENDED_ARG                3  (3)
+  1796  POP_JUMP_IF_FALSE         136  (136)
+  1798  LOAD_FAST                  17  = hanami_progress_kills
+  1800  <160>                      50  (50)
+  1802  LOAD_FAST                  19  = current_enemy_id
+  1804  <161>                       1  (1)
+  1806  POP_TOP                     0  
+  1808  LOAD_FAST                   0  = self
+  1810  <160>                      51  (51)
+  1812  LOAD_FAST                  22  = result
+  1814  LOAD_FAST                  24  = initial_tokens
+  1816  <161>                       2  (2)
+  1818  POP_TOP                     0  
+  1820  LOAD_CONST                  5  = 0
+  1822  STORE_FAST                 15  = failed_attempts
+  1824  JUMP_FORWARD               31  (31)
+  1826  LOAD_FAST                   0  = self
+  1828  <160>                      42  (42)
+  1830  LOAD_FAST                  22  = result
+  1832  <161>                       1  (1)
+  1834  STORE_FAST                 31  = error_msg
+  1836  LOAD_GLOBAL                 7  = print
+  1838  LOAD_CONST                 63  = 'Γ¥î Battle failed: '
+  1840  LOAD_FAST                  31  = error_msg
+  1842  FORMAT_VALUE                0  (0)
+  1844  BUILD_STRING                2  (2)
+  1846  GET_AWAITABLE               1  (1)
+  1848  POP_TOP                     0  
+  1850  LOAD_FAST                  15  = failed_attempts
+  1852  LOAD_CONST                 16  = 1
+  1854  CLEANUP_THROW               0  
+  1856  STORE_FAST                 15  = failed_attempts
+  1858  LOAD_FAST                  15  = failed_attempts
+  1860  LOAD_FAST                  16  = max_failed_attempts
+  1862  COMPARE_OP                  5  (5)
+  1864  EXTENDED_ARG                3  (3)
+  1866  POP_JUMP_IF_FALSE         176  (176)
+  1868  LOAD_GLOBAL                 7  = print
+  1870  LOAD_CONST                 30  = 'Γ¥î Too many consecutive failures ('
+  1872  LOAD_FAST                  15  = failed_attempts
+  1874  FORMAT_VALUE                0  (0)
+  1876  LOAD_CONST                 31  = '). Stopping event.'
+  1878  BUILD_STRING                3  (3)
+  1880  GET_AWAITABLE               1  (1)
+  1882  POP_TOP                     0  
+  1884  POP_TOP                     0  
+  1886  JUMP_FORWARD               24  (24)
+  1888  LOAD_FAST                  18  = i
+  1890  LOAD_FAST                   9  = battles_to_execute
+  1892  LOAD_CONST                 16  = 1
+  1894  <24>                        0  
+  1896  COMPARE_OP                  0  (0)
+  1898  EXTENDED_ARG                3  (3)
+  1900  POP_JUMP_IF_FALSE         199  (199)
+  1902  LOAD_GLOBAL                 7  = print
+  1904  LOAD_CONST                 64  = '\nΓÅ│ Waiting '
+  1906  LOAD_FAST                  12  = POST_BATTLE_DELAY
+  1908  FORMAT_VALUE                0  (0)
+  1910  LOAD_CONST                 65  = ' seconds before next battle...'
+  1912  BUILD_STRING                3  (3)
+  1914  GET_AWAITABLE               1  (1)
+  1916  POP_TOP                     0  
+  1918  LOAD_FAST                   0  = self
+  1920  <160>                      12  (12)
+  1922  LOAD_FAST                  12  = POST_BATTLE_DELAY
+  1924  <161>                       1  (1)
+  1926  EXTENDED_ARG                3  (3)
+  1928  POP_JUMP_IF_TRUE          199  (199)
+  1930  POP_TOP                     0  
+  1932  JUMP_FORWARD                1  (1)
+  1934  <113>                     166  (166)
+  1936  LOAD_GLOBAL                52  = hasattr
+  1938  LOAD_GLOBAL                30  = config
+  1940  LOAD_CONST                 66  = 'stop_event'
+  1942  GET_AWAITABLE               2  (2)
+  1944  EXTENDED_ARG                3  (3)
+  1946  POP_JUMP_IF_FALSE         217  (217)
+  1948  LOAD_GLOBAL                30  = config
+  1950  LOAD_ATTR                  53  = stop_event
+  1952  <160>                      54  (54)
+  1954  <161>                       0  (0)
+  1956  EXTENDED_ARG                3  (3)
+  1958  POP_JUMP_IF_TRUE          217  (217)
+  1960  LOAD_GLOBAL                30  = config
+  1962  LOAD_ATTR                  53  = stop_event
+  1964  <160>                      55  (55)
+  1966  <161>                       0  (0)
+  1968  POP_TOP                     0  
+  1970  LOAD_FAST                   8  = available_energy
+  1972  LOAD_FAST                  14  = successful_battles
+  1974  <24>                        0  
+  1976  STORE_FAST                 38  = remaining_energy
+  1978  LOAD_FAST                  14  = successful_battles
+  1980  LOAD_FAST                  13  = TOTAL_DELAY_PER_BATTLE
+  1982  <20>                        0  
+  1984  STORE_FAST                 39  = total_time
+  1986  LOAD_GLOBAL                 7  = print
+  1988  LOAD_CONST                 20  = '\n'
+  1990  LOAD_CONST                 21  = '============================================================'
+  1992  FORMAT_VALUE                0  (0)
+  1994  BUILD_STRING                2  (2)
+  1996  GET_AWAITABLE               1  (1)
+  1998  POP_TOP                     0  
+  2000  LOAD_GLOBAL                 7  = print
+  2002  LOAD_CONST                 67  = '≡ƒôè FINISHED '
+  2004  LOAD_FAST                   4  = event_config
+  2006  LOAD_ATTR                   8  = name
+  2008  <160>                      56  (56)
+  2010  <161>                       0  (0)
+  2012  FORMAT_VALUE                0  (0)
+  2014  BUILD_STRING                2  (2)
+  2016  GET_AWAITABLE               1  (1)
+  2018  POP_TOP                     0  
+  2020  LOAD_GLOBAL                 7  = print
+  2022  LOAD_CONST                 21  = '============================================================'
+  2024  FORMAT_VALUE                0  (0)
+  2026  GET_AWAITABLE               1  (1)
+  2028  POP_TOP                     0  
+  2030  LOAD_GLOBAL                 7  = print
+  2032  LOAD_CONST                 68  = '  ΓÇó Battles executed: '
+  2034  LOAD_FAST                  14  = successful_battles
+  2036  FORMAT_VALUE                0  (0)
+  2038  LOAD_CONST                 23  = '/'
+  2040  LOAD_FAST                   9  = battles_to_execute
+  2042  FORMAT_VALUE                0  (0)
+  2044  BUILD_STRING                4  (4)
+  2046  GET_AWAITABLE               1  (1)
+  2048  POP_TOP                     0  
+  2050  LOAD_GLOBAL                 7  = print
+  2052  LOAD_CONST                 69  = '  ΓÇó Remaining energy: '
+  2054  LOAD_FAST                  38  = remaining_energy
+  2056  FORMAT_VALUE                0  (0)
+  2058  BUILD_STRING                2  (2)
+  2060  GET_AWAITABLE               1  (1)
+  2062  POP_TOP                     0  
+  2064  LOAD_GLOBAL                 7  = print
+  2066  LOAD_CONST                 70  = '  ΓÇó Failed attempts: '
+  2068  LOAD_FAST                  15  = failed_attempts
+  2070  FORMAT_VALUE                0  (0)
+  2072  BUILD_STRING                2  (2)
+  2074  GET_AWAITABLE               1  (1)
+  2076  POP_TOP                     0  
+  2078  LOAD_GLOBAL                 7  = print
+  2080  LOAD_CONST                 71  = '  ΓÇó Total time: ~'
+  2082  LOAD_FAST                  39  = total_time
+  2084  FORMAT_VALUE                0  (0)
+  2086  LOAD_CONST                 72  = ' seconds ('
+  2088  LOAD_FAST                  39  = total_time
+  2090  LOAD_CONST                 73  = 60
+  2092  STORE_SLICE                 0  
+  2094  LOAD_CONST                 74  = '.1f'
+  2096  FORMAT_VALUE                4  (4)
+  2098  LOAD_CONST                 75  = ' minutes)'
+  2100  BUILD_STRING                5  (5)
+  2102  GET_AWAITABLE               1  (1)
+  2104  POP_TOP                     0  
+  2106  LOAD_GLOBAL                 7  = print
+  2108  LOAD_CONST                 21  = '============================================================'
+  2110  FORMAT_VALUE                0  (0)
+  2112  GET_AWAITABLE               1  (1)
+  2114  POP_TOP                     0  
+  2116  LOAD_CONST                  1  = None
+  2118  RETURN_VALUE                0  
+

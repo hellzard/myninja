@@ -1,0 +1,13 @@
+﻿python : Traceback (most recent call last):
+At line:1 char:1
++ python extract_phantom.py 2>&1 | Out-File -FilePath apk_src\mh_endpoi ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\Users\acer\ZCodeProject\ninjasage-api\extract_phantom.py", line 6, in <module>
+    ver, timestamp, magic_int, co, is_pypy, source_size, sip_hash = load_module(
+                                                                    ^^^^^^^^^^^^
+  File "C:\Users\acer\AppData\Local\Programs\Python\Python312\Lib\site-packages\xdis\load.py", line 184, in load_module
+    raise ImportError(f"File name: '{filename}' doesn't exist")
+ImportError: File name: 'apk_src/ninja_sage_android/core/mh.pyc' doesn't exist

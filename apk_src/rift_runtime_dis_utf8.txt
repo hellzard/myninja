@@ -1,0 +1,3239 @@
+﻿# pydisasm version 6.1.8
+# Python bytecode 3.10 (3439)
+# Disassembled from Python 3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]
+# Timestamp in code: 1780820771 (2026-06-07 15:26:11)
+# Source code size mod 2**32: 13644 bytes
+# Method Name:       <module>
+# Filename:          runtime.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        10
+# Flags:             0x00000040 (NOFREE)
+# First Line:        1
+# Constants:
+#    0: 0
+#    1: None
+#    2: ('Any',)
+#    3: 2
+#    4: ('config',)
+#    5: 1
+#    6: ('amf_req',)
+#    7: ('CUCSG', 'flatten_json', 'save_fight_data', 'send_amf_request')
+#    8: 'skill_2002'
+#    9: 'name'
+#   10: 'default'
+#   11: 'return'
+#   12: <Code310 code object _cfg_int at 0x1e478b84e60, file runtime.py>, line 13
+#   13: '_cfg_int'
+#   14: <Code310 code object _cfg_text at 0x1e478b84fe0, file runtime.py>, line 20
+#   15: '_cfg_text'
+#   16: <Code310 code object _as_int at 0x1e478b85040, file runtime.py>, line 26
+#   17: '_as_int'
+#   18: <Code310 code object get_rift_settings at 0x1e478b85130, file runtime.py>, line 33
+#   19: 'get_rift_settings'
+#   20: <Code310 code object check_stop_event at 0x1e478b852e0, file runtime.py>, line 37
+#   21: 'check_stop_event'
+#   22: 'seconds'
+#   23: <Code310 code object wait_with_stop at 0x1e478b854c0, file runtime.py>, line 44
+#   24: 'wait_with_stop'
+#   25: <Code310 code object rift_delay at 0x1e478b85520, file runtime.py>, line 52
+#   26: 'rift_delay'
+#   27: 'base_key'
+#   28: 'random_key'
+#   29: 'default_base'
+#   30: 'default_random'
+#   31: <Code310 code object rift_random_wait at 0x1e478b85610, file runtime.py>, line 60
+#   32: 'rift_random_wait'
+#   33: 'timer_range'
+#   34: <Code310 code object rift_exam_wait at 0x1e478a8ddf0, file runtime.py>, line 68
+#   35: 'rift_exam_wait'
+#   36: <Code310 code object get_character_snapshot at 0x1e478b84c50, file runtime.py>, line 77
+#   37: 'get_character_snapshot'
+#   38: <Code310 code object get_char_id at 0x1e478b85850, file runtime.py>, line 87
+#   39: 'get_char_id'
+#   40: <Code310 code object get_session_key at 0x1e478b853d0, file runtime.py>, line 95
+#   41: 'get_session_key'
+#   42: <Code310 code object get_level at 0x1e478b859a0, file runtime.py>, line 104
+#   43: 'get_level'
+#   44: <Code310 code object get_rank at 0x1e478b859d0, file runtime.py>, line 109
+#   45: 'get_rank'
+#   46: <Code310 code object is_premium_user at 0x1e478b85790, file runtime.py>, line 114
+#   47: 'is_premium_user'
+#   48: <Code310 code object get_village_type at 0x1e478b85910, file runtime.py>, line 132
+#   49: 'get_village_type'
+#   50: <Code310 code object get_agility at 0x1e478b85b50, file runtime.py>, line 144
+#   51: 'get_agility'
+#   52: ('level', 'xp', 'gold')
+#   53: 'level'
+#   54: 'xp'
+#   55: 'gold'
+#   56: <Code310 code object update_runtime_character_stats at 0x1e478b85c70, file runtime.py>, line 149
+#   57: 'update_runtime_character_stats'
+#   58: <Code310 code object current_gold at 0x1e478b85d00, file runtime.py>, line 177
+#   59: 'current_gold'
+#   60: <Code310 code object current_xp at 0x1e478b85d90, file runtime.py>, line 182
+#   61: 'current_xp'
+#   62: <Code310 code object response_message at 0x1e478b85d60, file runtime.py>, line 187
+#   63: 'response_message'
+#   64: 'reason'
+#   65: <Code310 code object _notify_rift_reauth_required at 0x1e478b85f10, file runtime.py>, line 199
+#   66: '_notify_rift_reauth_required'
+#   67: <Code310 code object _rift_relogin_wait_seconds at 0x1e478b86000, file runtime.py>, line 208
+#   68: '_rift_relogin_wait_seconds'
+#   69: <Code310 code object _current_char_id_for_relogin at 0x1e478b86030, file runtime.py>, line 212
+#   70: '_current_char_id_for_relogin'
+#   71: <Code310 code object _looks_like_rift_session_problem at 0x1e478b862a0, file runtime.py>, line 219
+#   72: '_looks_like_rift_session_problem'
+#   73: 'exc'
+#   74: <Code310 code object _looks_like_rift_transport_problem at 0x1e478b86420, file runtime.py>, line 244
+#   75: '_looks_like_rift_transport_problem'
+#   76: 'attempt'
+#   77: <Code310 code object _rift_retry_delay_seconds at 0x1e478b86540, file runtime.py>, line 266
+#   78: '_rift_retry_delay_seconds'
+#   79: ('attempt',)
+#   80: <Code310 code object _rift_relogin_and_reselect_character at 0x1e478b865d0, file runtime.py>, line 273
+#   81: '_rift_relogin_and_reselect_character'
+#   82: True
+#   83: ('_allow_recovery', '_attempt')
+#   84: 'service'
+#   85: 'params'
+#   86: '_allow_recovery'
+#   87: '_attempt'
+#   88: <Code310 code object send_rift_request at 0x1e478b86780, file runtime.py>, line 328
+#   89: 'send_rift_request'
+#   90: 'enemy_ids'
+#   91: 'enemy_stats'
+#   92: <Code310 code object mission_damage at 0x1e478b867b0, file runtime.py>, line 355
+#   93: 'mission_damage'
+#   94: 'mission_id'
+#   95: 'battle_code'
+#   96: 'damage'
+#   97: <Code310 code object finish_mission at 0x1e478b86900, file runtime.py>, line 371
+#   98: 'finish_mission'
+#   99: 'boss_num'
+#  100: <Code310 code object finish_eudemon at 0x1e478b86990, file runtime.py>, line 384
+#  101: 'finish_eudemon'
+#  102: <Code310 code object finish_hunting_house at 0x1e478b869f0, file runtime.py>, line 397
+#  103: 'finish_hunting_house'
+#  104: 'enemy_id'
+#  105: 'fallback'
+#  106: <Code310 code object enemy_name at 0x1e478b86ae0, file runtime.py>, line 410
+#  107: 'enemy_name'
+#  108: (0,)
+#  109: (None,)
+# Names:
+#    0: random
+#    1: time
+#    2: typing
+#    3: Any
+#    4: core
+#    5: config
+#    6: 
+#    7: amf_req
+#    8: utils
+#    9: CUCSG
+#   10: flatten_json
+#   11: save_fight_data
+#   12: send_amf_request
+#   13: RIFT_DEFAULT_SPECIAL_JOUNIN_SKILL
+#   14: str
+#   15: int
+#   16: _cfg_int
+#   17: _cfg_text
+#   18: _as_int
+#   19: dict
+#   20: get_rift_settings
+#   21: bool
+#   22: check_stop_event
+#   23: wait_with_stop
+#   24: rift_delay
+#   25: rift_random_wait
+#   26: tuple
+#   27: rift_exam_wait
+#   28: get_character_snapshot
+#   29: get_char_id
+#   30: get_session_key
+#   31: get_level
+#   32: get_rank
+#   33: is_premium_user
+#   34: get_village_type
+#   35: get_agility
+#   36: update_runtime_character_stats
+#   37: current_gold
+#   38: current_xp
+#   39: response_message
+#   40: _notify_rift_reauth_required
+#   41: _rift_relogin_wait_seconds
+#   42: _current_char_id_for_relogin
+#   43: _looks_like_rift_session_problem
+#   44: Exception
+#   45: _looks_like_rift_transport_problem
+#   46: _rift_retry_delay_seconds
+#   47: _rift_relogin_and_reselect_character
+#   48: list
+#   49: send_rift_request
+#   50: mission_damage
+#   51: finish_mission
+#   52: finish_eudemon
+#   53: finish_hunting_house
+#   54: enemy_name
+  1:           0 LOAD_CONST           (0)
+               2 LOAD_CONST           (None)
+               4 IMPORT_NAME          (random)
+               6 STORE_NAME           (random)
+
+  2:           8 LOAD_CONST           (0)
+              10 LOAD_CONST           (None)
+              12 IMPORT_NAME          (time)
+              14 STORE_NAME           (time)
+
+  3:          16 LOAD_CONST           (0)
+              18 LOAD_CONST           (('Any',))
+              20 IMPORT_NAME          (typing)
+              22 IMPORT_FROM          (Any)
+              24 STORE_NAME           (Any)
+              26 POP_TOP
+
+  5:          28 LOAD_CONST           (2)
+              30 LOAD_CONST           (('config',))
+              32 IMPORT_NAME          (core)
+              34 IMPORT_FROM          (config)
+              36 STORE_NAME           (config)
+              38 POP_TOP
+
+  6:          40 LOAD_CONST           (1)
+              42 LOAD_CONST           (('amf_req',))
+              44 IMPORT_NAME          6
+              46 IMPORT_FROM          (amf_req)
+              48 STORE_NAME           (amf_req)
+              50 POP_TOP
+
+  7:          52 LOAD_CONST           (1)
+              54 LOAD_CONST           (('CUCSG', 'flatten_json', 'save_fight_data', 'send_amf_request'))
+              56 IMPORT_NAME          (utils)
+              58 IMPORT_FROM          (CUCSG)
+              60 STORE_NAME           (CUCSG)
+              62 IMPORT_FROM          (flatten_json)
+              64 STORE_NAME           (flatten_json)
+              66 IMPORT_FROM          (save_fight_data)
+              68 STORE_NAME           (save_fight_data)
+              70 IMPORT_FROM          (send_amf_request)
+              72 STORE_NAME           (send_amf_request)
+              74 POP_TOP
+
+ 10:          76 LOAD_CONST           ("skill_2002")
+              78 STORE_NAME           (RIFT_DEFAULT_SPECIAL_JOUNIN_SKILL)
+
+ 13:          80 LOAD_CONST           ("name")
+              82 LOAD_NAME            (str)
+              84 LOAD_CONST           ("default")
+              86 LOAD_NAME            (int)
+              88 LOAD_CONST           ("return")
+              90 LOAD_NAME            (int)
+              92 BUILD_TUPLE          6
+              94 LOAD_CONST           (<Code310 code object _cfg_int at 0x1e478b84e60, file runtime.py>, line 13)
+              96 LOAD_CONST           ("_cfg_int")
+              98 MAKE_FUNCTION        (annotation)
+             100 STORE_NAME           (_cfg_int)
+
+ 20:         102 LOAD_CONST           ("name")
+             104 LOAD_NAME            (str)
+             106 LOAD_CONST           ("default")
+             108 LOAD_NAME            (str)
+             110 LOAD_CONST           ("return")
+             112 LOAD_NAME            (str)
+             114 BUILD_TUPLE          6
+             116 LOAD_CONST           (<Code310 code object _cfg_text at 0x1e478b84fe0, file runtime.py>, line 20)
+             118 LOAD_CONST           ("_cfg_text")
+             120 MAKE_FUNCTION        (annotation)
+             122 STORE_NAME           (_cfg_text)
+
+ 26:         124 LOAD_CONST           ((0,))
+             126 LOAD_CONST           ("default")
+             128 LOAD_NAME            (int)
+             130 LOAD_CONST           ("return")
+             132 LOAD_NAME            (int)
+             134 BUILD_TUPLE          4
+             136 LOAD_CONST           (<Code310 code object _as_int at 0x1e478b85040, file runtime.py>, line 26)
+             138 LOAD_CONST           ("_as_int")
+             140 MAKE_FUNCTION        (default, annotation)
+             142 STORE_NAME           (_as_int)
+
+ 33:         144 LOAD_CONST           ("return")
+             146 LOAD_NAME            (dict)
+             148 BUILD_TUPLE          2
+             150 LOAD_CONST           (<Code310 code object get_rift_settings at 0x1e478b85130, file runtime.py>, line 33)
+             152 LOAD_CONST           ("get_rift_settings")
+             154 MAKE_FUNCTION        (annotation)
+             156 STORE_NAME           (get_rift_settings)
+
+ 37:         158 LOAD_CONST           ("return")
+             160 LOAD_NAME            (bool)
+             162 BUILD_TUPLE          2
+             164 LOAD_CONST           (<Code310 code object check_stop_event at 0x1e478b852e0, file runtime.py>, line 37)
+             166 LOAD_CONST           ("check_stop_event")
+             168 MAKE_FUNCTION        (annotation)
+             170 STORE_NAME           (check_stop_event)
+
+ 44:         172 LOAD_CONST           ("seconds")
+             174 LOAD_NAME            (int)
+             176 LOAD_CONST           ("return")
+             178 LOAD_NAME            (bool)
+             180 BUILD_TUPLE          4
+             182 LOAD_CONST           (<Code310 code object wait_with_stop at 0x1e478b854c0, file runtime.py>, line 44)
+             184 LOAD_CONST           ("wait_with_stop")
+             186 MAKE_FUNCTION        (annotation)
+             188 STORE_NAME           (wait_with_stop)
+
+ 52:         190 LOAD_CONST           ("name")
+             192 LOAD_NAME            (str)
+             194 LOAD_CONST           ("default")
+             196 LOAD_NAME            (int)
+             198 LOAD_CONST           ("return")
+             200 LOAD_NAME            (int)
+             202 BUILD_TUPLE          6
+             204 LOAD_CONST           (<Code310 code object rift_delay at 0x1e478b85520, file runtime.py>, line 52)
+             206 LOAD_CONST           ("rift_delay")
+             208 MAKE_FUNCTION        (annotation)
+             210 STORE_NAME           (rift_delay)
+
+ 60:         212 LOAD_CONST           ("base_key")
+             214 LOAD_NAME            (str)
+             216 LOAD_CONST           ("random_key")
+             218 LOAD_NAME            (str)
+             220 LOAD_CONST           ("default_base")
+             222 LOAD_NAME            (int)
+             224 LOAD_CONST           ("default_random")
+             226 LOAD_NAME            (int)
+             228 LOAD_CONST           ("return")
+             230 LOAD_NAME            (int)
+             232 BUILD_TUPLE          10
+             234 LOAD_CONST           (<Code310 code object rift_random_wait at 0x1e478b85610, file runtime.py>, line 60)
+             236 LOAD_CONST           ("rift_random_wait")
+             238 MAKE_FUNCTION        (annotation)
+             240 STORE_NAME           (rift_random_wait)
+
+ 68:         242 LOAD_CONST           ("timer_range")
+             244 LOAD_NAME            (tuple)
+             246 LOAD_NAME            (int)
+             248 LOAD_NAME            (int)
+             250 BUILD_TUPLE          2
+             252 BINARY_SUBSCR
+             254 LOAD_CONST           ("return")
+             256 LOAD_NAME            (int)
+             258 BUILD_TUPLE          4
+             260 LOAD_CONST           (<Code310 code object rift_exam_wait at 0x1e478a8ddf0, file runtime.py>, line 68)
+             262 LOAD_CONST           ("rift_exam_wait")
+             264 MAKE_FUNCTION        (annotation)
+             266 STORE_NAME           (rift_exam_wait)
+
+ 77:         268 LOAD_CONST           ("return")
+             270 LOAD_NAME            (dict)
+             272 BUILD_TUPLE          2
+             274 LOAD_CONST           (<Code310 code object get_character_snapshot at 0x1e478b84c50, file runtime.py>, line 77)
+             276 LOAD_CONST           ("get_character_snapshot")
+             278 MAKE_FUNCTION        (annotation)
+             280 STORE_NAME           (get_character_snapshot)
+
+ 87:         282 LOAD_CONST           ("return")
+             284 LOAD_NAME            (Any)
+             286 BUILD_TUPLE          2
+             288 LOAD_CONST           (<Code310 code object get_char_id at 0x1e478b85850, file runtime.py>, line 87)
+             290 LOAD_CONST           ("get_char_id")
+             292 MAKE_FUNCTION        (annotation)
+             294 STORE_NAME           (get_char_id)
+
+ 95:         296 LOAD_CONST           ("return")
+             298 LOAD_NAME            (str)
+             300 BUILD_TUPLE          2
+             302 LOAD_CONST           (<Code310 code object get_session_key at 0x1e478b853d0, file runtime.py>, line 95)
+             304 LOAD_CONST           ("get_session_key")
+             306 MAKE_FUNCTION        (annotation)
+             308 STORE_NAME           (get_session_key)
+
+104:         310 LOAD_CONST           ("return")
+             312 LOAD_NAME            (int)
+             314 BUILD_TUPLE          2
+             316 LOAD_CONST           (<Code310 code object get_level at 0x1e478b859a0, file runtime.py>, line 104)
+             318 LOAD_CONST           ("get_level")
+             320 MAKE_FUNCTION        (annotation)
+             322 STORE_NAME           (get_level)
+
+109:         324 LOAD_CONST           ("return")
+             326 LOAD_NAME            (int)
+             328 BUILD_TUPLE          2
+             330 LOAD_CONST           (<Code310 code object get_rank at 0x1e478b859d0, file runtime.py>, line 109)
+             332 LOAD_CONST           ("get_rank")
+             334 MAKE_FUNCTION        (annotation)
+             336 STORE_NAME           (get_rank)
+
+114:         338 LOAD_CONST           ("return")
+             340 LOAD_NAME            (bool)
+             342 BUILD_TUPLE          2
+             344 LOAD_CONST           (<Code310 code object is_premium_user at 0x1e478b85790, file runtime.py>, line 114)
+             346 LOAD_CONST           ("is_premium_user")
+             348 MAKE_FUNCTION        (annotation)
+             350 STORE_NAME           (is_premium_user)
+
+132:         352 LOAD_CONST           ("return")
+             354 LOAD_NAME            (str)
+             356 BUILD_TUPLE          2
+             358 LOAD_CONST           (<Code310 code object get_village_type at 0x1e478b85910, file runtime.py>, line 132)
+             360 LOAD_CONST           ("get_village_type")
+             362 MAKE_FUNCTION        (annotation)
+             364 STORE_NAME           (get_village_type)
+
+144:         366 LOAD_CONST           ("return")
+             368 LOAD_NAME            (int)
+             370 BUILD_TUPLE          2
+             372 LOAD_CONST           (<Code310 code object get_agility at 0x1e478b85b50, file runtime.py>, line 144)
+             374 LOAD_CONST           ("get_agility")
+             376 MAKE_FUNCTION        (annotation)
+             378 STORE_NAME           (get_agility)
+
+149:         380 LOAD_CONST           (None)
+             382 LOAD_CONST           (None)
+             384 LOAD_CONST           (None)
+             386 LOAD_CONST           (('level', 'xp', 'gold'))
+             388 BUILD_CONST_KEY_MAP  3
+             390 LOAD_CONST           ("level")
+             392 LOAD_NAME            (int)
+             394 LOAD_CONST           (None)
+             396 BINARY_OR
+             398 LOAD_CONST           ("xp")
+             400 LOAD_NAME            (int)
+             402 LOAD_CONST           (None)
+             404 BINARY_OR
+             406 LOAD_CONST           ("gold")
+             408 LOAD_NAME            (int)
+             410 LOAD_CONST           (None)
+             412 BINARY_OR
+             414 BUILD_TUPLE          6
+             416 LOAD_CONST           (<Code310 code object update_runtime_character_stats at 0x1e478b85c70, file runtime.py>, line 149)
+             418 LOAD_CONST           ("update_runtime_character_stats")
+             420 MAKE_FUNCTION        (keyword-only, annotation)
+             422 STORE_NAME           (update_runtime_character_stats)
+
+177:         424 LOAD_CONST           ("return")
+             426 LOAD_NAME            (int)
+             428 BUILD_TUPLE          2
+             430 LOAD_CONST           (<Code310 code object current_gold at 0x1e478b85d00, file runtime.py>, line 177)
+             432 LOAD_CONST           ("current_gold")
+             434 MAKE_FUNCTION        (annotation)
+             436 STORE_NAME           (current_gold)
+
+182:         438 LOAD_CONST           ("return")
+             440 LOAD_NAME            (int)
+             442 BUILD_TUPLE          2
+             444 LOAD_CONST           (<Code310 code object current_xp at 0x1e478b85d90, file runtime.py>, line 182)
+             446 LOAD_CONST           ("current_xp")
+             448 MAKE_FUNCTION        (annotation)
+             450 STORE_NAME           (current_xp)
+
+187:         452 LOAD_CONST           ("return")
+             454 LOAD_NAME            (str)
+             456 BUILD_TUPLE          2
+             458 LOAD_CONST           (<Code310 code object response_message at 0x1e478b85d60, file runtime.py>, line 187)
+             460 LOAD_CONST           ("response_message")
+             462 MAKE_FUNCTION        (annotation)
+             464 STORE_NAME           (response_message)
+
+199:         466 LOAD_CONST           ("reason")
+             468 LOAD_NAME            (str)
+             470 BUILD_TUPLE          2
+             472 LOAD_CONST           (<Code310 code object _notify_rift_reauth_required at 0x1e478b85f10, file runtime.py>, line 199)
+             474 LOAD_CONST           ("_notify_rift_reauth_required")
+             476 MAKE_FUNCTION        (annotation)
+             478 STORE_NAME           (_notify_rift_reauth_required)
+
+208:         480 LOAD_CONST           ("return")
+             482 LOAD_NAME            (int)
+             484 BUILD_TUPLE          2
+             486 LOAD_CONST           (<Code310 code object _rift_relogin_wait_seconds at 0x1e478b86000, file runtime.py>, line 208)
+             488 LOAD_CONST           ("_rift_relogin_wait_seconds")
+             490 MAKE_FUNCTION        (annotation)
+             492 STORE_NAME           (_rift_relogin_wait_seconds)
+
+212:         494 LOAD_CONST           (<Code310 code object _current_char_id_for_relogin at 0x1e478b86030, file runtime.py>, line 212)
+             496 LOAD_CONST           ("_current_char_id_for_relogin")
+             498 MAKE_FUNCTION        (No arguments)
+             500 STORE_NAME           (_current_char_id_for_relogin)
+
+219:         502 LOAD_CONST           ("return")
+             504 LOAD_NAME            (bool)
+             506 BUILD_TUPLE          2
+             508 LOAD_CONST           (<Code310 code object _looks_like_rift_session_problem at 0x1e478b862a0, file runtime.py>, line 219)
+             510 LOAD_CONST           ("_looks_like_rift_session_problem")
+             512 MAKE_FUNCTION        (annotation)
+             514 STORE_NAME           (_looks_like_rift_session_problem)
+
+244:         516 LOAD_CONST           ("exc")
+             518 LOAD_NAME            (Exception)
+             520 LOAD_CONST           ("return")
+             522 LOAD_NAME            (bool)
+             524 BUILD_TUPLE          4
+             526 LOAD_CONST           (<Code310 code object _looks_like_rift_transport_problem at 0x1e478b86420, file runtime.py>, line 244)
+             528 LOAD_CONST           ("_looks_like_rift_transport_problem")
+             530 MAKE_FUNCTION        (annotation)
+             532 STORE_NAME           (_looks_like_rift_transport_problem)
+
+266:         534 LOAD_CONST           ("attempt")
+             536 LOAD_NAME            (int)
+             538 LOAD_CONST           ("return")
+             540 LOAD_NAME            (int)
+             542 BUILD_TUPLE          4
+             544 LOAD_CONST           (<Code310 code object _rift_retry_delay_seconds at 0x1e478b86540, file runtime.py>, line 266)
+             546 LOAD_CONST           ("_rift_retry_delay_seconds")
+             548 MAKE_FUNCTION        (annotation)
+             550 STORE_NAME           (_rift_retry_delay_seconds)
+
+273:         552 LOAD_CONST           (1)
+             554 LOAD_CONST           (('attempt',))
+             556 BUILD_CONST_KEY_MAP  1
+             558 LOAD_CONST           ("attempt")
+             560 LOAD_NAME            (int)
+             562 LOAD_CONST           ("return")
+             564 LOAD_NAME            (bool)
+             566 BUILD_TUPLE          4
+             568 LOAD_CONST           (<Code310 code object _rift_relogin_and_reselect_character at 0x1e478b865d0, file runtime.py>, line 273)
+             570 LOAD_CONST           ("_rift_relogin_and_reselect_character")
+             572 MAKE_FUNCTION        (keyword-only, annotation)
+             574 STORE_NAME           (_rift_relogin_and_reselect_character)
+
+328:         576 LOAD_CONST           (True)
+             578 LOAD_CONST           (1)
+             580 LOAD_CONST           (('_allow_recovery', '_attempt'))
+             582 BUILD_CONST_KEY_MAP  2
+             584 LOAD_CONST           ("service")
+             586 LOAD_NAME            (str)
+             588 LOAD_CONST           ("params")
+             590 LOAD_NAME            (list)
+             592 LOAD_NAME            (Any)
+             594 BINARY_SUBSCR
+             596 LOAD_CONST           ("_allow_recovery")
+             598 LOAD_NAME            (bool)
+             600 LOAD_CONST           ("_attempt")
+             602 LOAD_NAME            (int)
+             604 BUILD_TUPLE          8
+             606 LOAD_CONST           (<Code310 code object send_rift_request at 0x1e478b86780, file runtime.py>, line 328)
+             608 LOAD_CONST           ("send_rift_request")
+             610 MAKE_FUNCTION        (keyword-only, annotation)
+             612 STORE_NAME           (send_rift_request)
+
+355:         614 LOAD_CONST           ("enemy_ids")
+             616 LOAD_NAME            (list)
+             618 LOAD_NAME            (str)
+             620 BINARY_SUBSCR
+             622 LOAD_CONST           ("enemy_stats")
+             624 LOAD_NAME            (list)
+             626 LOAD_NAME            (dict)
+             628 BINARY_SUBSCR
+             630 LOAD_CONST           ("return")
+             632 LOAD_NAME            (int)
+             634 BUILD_TUPLE          6
+             636 LOAD_CONST           (<Code310 code object mission_damage at 0x1e478b867b0, file runtime.py>, line 355)
+             638 LOAD_CONST           ("mission_damage")
+             640 MAKE_FUNCTION        (annotation)
+             642 STORE_NAME           (mission_damage)
+
+371:         644 LOAD_CONST           ("mission_id")
+             646 LOAD_NAME            (str)
+             648 LOAD_CONST           ("battle_code")
+             650 LOAD_NAME            (str)
+             652 LOAD_CONST           ("damage")
+             654 LOAD_NAME            (int)
+             656 BUILD_TUPLE          6
+             658 LOAD_CONST           (<Code310 code object finish_mission at 0x1e478b86900, file runtime.py>, line 371)
+             660 LOAD_CONST           ("finish_mission")
+             662 MAKE_FUNCTION        (annotation)
+             664 STORE_NAME           (finish_mission)
+
+384:         666 LOAD_CONST           ("boss_num")
+             668 LOAD_NAME            (int)
+             670 LOAD_CONST           ("battle_code")
+             672 LOAD_NAME            (str)
+             674 BUILD_TUPLE          4
+             676 LOAD_CONST           (<Code310 code object finish_eudemon at 0x1e478b86990, file runtime.py>, line 384)
+             678 LOAD_CONST           ("finish_eudemon")
+             680 MAKE_FUNCTION        (annotation)
+             682 STORE_NAME           (finish_eudemon)
+
+397:         684 LOAD_CONST           ("boss_num")
+             686 LOAD_NAME            (int)
+             688 LOAD_CONST           ("battle_code")
+             690 LOAD_NAME            (str)
+             692 BUILD_TUPLE          4
+             694 LOAD_CONST           (<Code310 code object finish_hunting_house at 0x1e478b869f0, file runtime.py>, line 397)
+             696 LOAD_CONST           ("finish_hunting_house")
+             698 MAKE_FUNCTION        (annotation)
+             700 STORE_NAME           (finish_hunting_house)
+
+410:         702 LOAD_CONST           ((None,))
+             704 LOAD_CONST           ("enemy_id")
+             706 LOAD_NAME            (str)
+             708 LOAD_CONST           ("fallback")
+             710 LOAD_NAME            (str)
+             712 LOAD_CONST           (None)
+             714 BINARY_OR
+             716 LOAD_CONST           ("return")
+             718 LOAD_NAME            (str)
+             720 BUILD_TUPLE          6
+             722 LOAD_CONST           (<Code310 code object enemy_name at 0x1e478b86ae0, file runtime.py>, line 410)
+             724 LOAD_CONST           ("enemy_name")
+             726 MAKE_FUNCTION        (default, annotation)
+             728 STORE_NAME           (enemy_name)
+             730 LOAD_CONST           (None)
+             732 RETURN_VALUE
+
+
+# Method Name:       _cfg_int
+# Filename:          runtime.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        8
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        13
+# Constants:
+#    0: None
+# Names:
+#    0: int
+#    1: getattr
+#    2: config
+#    3: Exception
+# Varnames:
+#	name, default
+# Positional arguments:
+#	name, default
+ 14:           0 SETUP_FINALLY        (to 20)
+
+ 15:           2 LOAD_GLOBAL          (int)
+               4 LOAD_GLOBAL          (getattr)
+               6 LOAD_GLOBAL          (config)
+               8 LOAD_FAST            (name)
+              10 LOAD_FAST            (default)
+              12 CALL_FUNCTION        (3 positional arguments)
+              14 CALL_FUNCTION        (1 positional argument)
+              16 POP_BLOCK
+              18 RETURN_VALUE
+
+ 16:     >>   20 DUP_TOP
+              22 LOAD_GLOBAL          (Exception)
+              24 JUMP_IF_NOT_EXC_MATCH (to 44)
+              26 POP_TOP
+              28 POP_TOP
+              30 POP_TOP
+
+ 17:          32 LOAD_GLOBAL          (int)
+              34 LOAD_FAST            (default)
+              36 CALL_FUNCTION        (1 positional argument)
+              38 ROT_FOUR
+              40 POP_EXCEPT
+              42 RETURN_VALUE
+
+ 16:     >>   44 RERAISE              0
+
+
+# Method Name:       _cfg_text
+# Filename:          runtime.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  4
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        20
+# Constants:
+#    0: None
+# Names:
+#    0: getattr
+#    1: config
+#    2: str
+#    3: strip
+# Varnames:
+#	name, default, value, text
+# Positional arguments:
+#	name, default
+# Local variables:
+#    2: value
+#    3: text
+ 21:           0 LOAD_GLOBAL          (getattr)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_FAST            (name)
+               6 LOAD_FAST            (default)
+               8 CALL_FUNCTION        (3 positional arguments)
+              10 STORE_FAST           (value)
+
+ 22:          12 LOAD_GLOBAL          (str)
+              14 LOAD_FAST            (value)
+              16 CALL_FUNCTION        (1 positional argument)
+              18 LOAD_METHOD          (strip)
+              20 CALL_METHOD          (0 positional arguments)
+              22 STORE_FAST           (text)
+
+ 23:          24 LOAD_FAST            (text)
+              26 JUMP_IF_TRUE_OR_POP  (to 30)
+              28 LOAD_FAST            (default)
+         >>   30 RETURN_VALUE
+
+
+# Method Name:       _as_int
+# Filename:          runtime.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        8
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        26
+# Constants:
+#    0: None
+# Names:
+#    0: int
+#    1: Exception
+# Varnames:
+#	value, default
+# Positional arguments:
+#	value, default
+ 27:           0 SETUP_FINALLY        (to 12)
+
+ 28:           2 LOAD_GLOBAL          (int)
+               4 LOAD_FAST            (value)
+               6 CALL_FUNCTION        (1 positional argument)
+               8 POP_BLOCK
+              10 RETURN_VALUE
+
+ 29:     >>   12 DUP_TOP
+              14 LOAD_GLOBAL          (Exception)
+              16 JUMP_IF_NOT_EXC_MATCH (to 36)
+              18 POP_TOP
+              20 POP_TOP
+              22 POP_TOP
+
+ 30:          24 LOAD_GLOBAL          (int)
+              26 LOAD_FAST            (default)
+              28 CALL_FUNCTION        (1 positional argument)
+              30 ROT_FOUR
+              32 POP_EXCEPT
+              34 RETURN_VALUE
+
+ 29:     >>   36 RERAISE              0
+
+
+# Method Name:       get_rift_settings
+# Filename:          runtime.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        2
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        33
+# Constants:
+#    0: None
+# Names:
+#    0: config
+#    1: get_rift_settings
+ 34:           0 LOAD_GLOBAL          (config)
+               2 LOAD_METHOD          (get_rift_settings)
+               4 CALL_METHOD          (0 positional arguments)
+               6 RETURN_VALUE
+
+
+# Method Name:       check_stop_event
+# Filename:          runtime.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        37
+# Constants:
+#    0: None
+#    1: 'stop_event'
+#    2: 'Ninja Rift action stopped by user request'
+#    3: True
+#    4: False
+# Names:
+#    0: hasattr
+#    1: config
+#    2: stop_event
+#    3: is_set
+#    4: print
+ 38:           0 LOAD_GLOBAL          (hasattr)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_CONST           ("stop_event")
+               6 CALL_FUNCTION        (2 positional arguments)
+               8 POP_JUMP_IF_FALSE    (to 32)
+              10 LOAD_GLOBAL          (config)
+              12 LOAD_ATTR            (stop_event)
+              14 LOAD_METHOD          (is_set)
+              16 CALL_METHOD          (0 positional arguments)
+              18 POP_JUMP_IF_FALSE    (to 32)
+
+ 39:          20 LOAD_GLOBAL          (print)
+              22 LOAD_CONST           ("Ninja Rift action stopped by user request")
+              24 CALL_FUNCTION        (1 positional argument)
+              26 POP_TOP
+
+ 40:          28 LOAD_CONST           (True)
+              30 RETURN_VALUE
+
+ 41:     >>   32 LOAD_CONST           (False)
+              34 RETURN_VALUE
+
+
+# Method Name:       wait_with_stop
+# Filename:          runtime.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        44
+# Constants:
+#    0: None
+#    1: 0
+#    2: False
+#    3: 1
+#    4: True
+# Names:
+#    0: range
+#    1: max
+#    2: int
+#    3: check_stop_event
+#    4: time
+#    5: sleep
+# Varnames:
+#	seconds, _
+# Positional arguments:
+#	seconds
+# Local variables:
+#    1: _
+ 45:           0 LOAD_GLOBAL          (range)
+               2 LOAD_GLOBAL          (max)
+               4 LOAD_CONST           (0)
+               6 LOAD_GLOBAL          (int)
+               8 LOAD_FAST            (seconds)
+              10 CALL_FUNCTION        (1 positional argument)
+              12 CALL_FUNCTION        (2 positional arguments)
+              14 CALL_FUNCTION        (1 positional argument)
+              16 GET_ITER
+         >>   18 FOR_ITER             (to 46)
+              20 STORE_FAST           (_)
+
+ 46:          22 LOAD_GLOBAL          (check_stop_event)
+              24 CALL_FUNCTION        (0 positional arguments)
+              26 POP_JUMP_IF_FALSE    (to 34)
+
+ 47:          28 POP_TOP
+              30 LOAD_CONST           (False)
+              32 RETURN_VALUE
+
+ 48:     >>   34 LOAD_GLOBAL          (time)
+              36 LOAD_METHOD          (sleep)
+              38 LOAD_CONST           (1)
+              40 CALL_METHOD          (1 positional argument)
+              42 POP_TOP
+              44 JUMP_ABSOLUTE        (to 18)
+
+ 49:     >>   46 LOAD_CONST           (True)
+              48 RETURN_VALUE
+
+
+# Method Name:       rift_delay
+# Filename:          runtime.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        8
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        52
+# Constants:
+#    0: None
+#    1: 0
+# Names:
+#    0: get_rift_settings
+#    1: max
+#    2: int
+#    3: get
+#    4: Exception
+# Varnames:
+#	name, default, settings
+# Positional arguments:
+#	name, default
+# Local variables:
+#    2: settings
+ 53:           0 LOAD_GLOBAL          (get_rift_settings)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (settings)
+
+ 54:           6 SETUP_FINALLY        (to 32)
+
+ 55:           8 LOAD_GLOBAL          (max)
+              10 LOAD_CONST           (0)
+              12 LOAD_GLOBAL          (int)
+              14 LOAD_FAST            (settings)
+              16 LOAD_METHOD          (get)
+              18 LOAD_FAST            (name)
+              20 LOAD_FAST            (default)
+              22 CALL_METHOD          (2 positional arguments)
+              24 CALL_FUNCTION        (1 positional argument)
+              26 CALL_FUNCTION        (2 positional arguments)
+              28 POP_BLOCK
+              30 RETURN_VALUE
+
+ 56:     >>   32 DUP_TOP
+              34 LOAD_GLOBAL          (Exception)
+              36 JUMP_IF_NOT_EXC_MATCH (to 62)
+              38 POP_TOP
+              40 POP_TOP
+              42 POP_TOP
+
+ 57:          44 LOAD_GLOBAL          (max)
+              46 LOAD_CONST           (0)
+              48 LOAD_GLOBAL          (int)
+              50 LOAD_FAST            (default)
+              52 CALL_FUNCTION        (1 positional argument)
+              54 CALL_FUNCTION        (2 positional arguments)
+              56 ROT_FOUR
+              58 POP_EXCEPT
+              60 RETURN_VALUE
+
+ 56:     >>   62 RERAISE              0
+
+
+# Method Name:       rift_random_wait
+# Filename:          runtime.py
+# Argument count:    4
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  6
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        60
+# Constants:
+#    0: None
+#    1: 0
+# Names:
+#    0: rift_delay
+#    1: random
+#    2: randint
+# Varnames:
+#	base_key, random_key, default_base, default_random, base_seconds, random_seconds
+# Positional arguments:
+#	base_key, random_key, default_base, default_random
+# Local variables:
+#    4: base_seconds
+#    5: random_seconds
+ 61:           0 LOAD_GLOBAL          (rift_delay)
+               2 LOAD_FAST            (base_key)
+               4 LOAD_FAST            (default_base)
+               6 CALL_FUNCTION        (2 positional arguments)
+               8 STORE_FAST           (base_seconds)
+
+ 62:          10 LOAD_GLOBAL          (rift_delay)
+              12 LOAD_FAST            (random_key)
+              14 LOAD_FAST            (default_random)
+              16 CALL_FUNCTION        (2 positional arguments)
+              18 STORE_FAST           (random_seconds)
+
+ 63:          20 LOAD_FAST            (random_seconds)
+              22 LOAD_CONST           (0)
+              24 COMPARE_OP           (<=)
+              26 POP_JUMP_IF_FALSE    (to 32)
+
+ 64:          28 LOAD_FAST            (base_seconds)
+              30 RETURN_VALUE
+
+ 65:     >>   32 LOAD_FAST            (base_seconds)
+              34 LOAD_GLOBAL          (random)
+              36 LOAD_METHOD          (randint)
+              38 LOAD_CONST           (0)
+              40 LOAD_FAST            (random_seconds)
+              42 CALL_METHOD          (2 positional arguments)
+              44 BINARY_ADD
+              46 RETURN_VALUE
+
+
+# Method Name:       rift_exam_wait
+# Filename:          runtime.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  7
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        68
+# Constants:
+#    0: None
+#    1: 'rift_exam_wait_min_seconds'
+#    2: 'rift_exam_wait_max_seconds'
+#    3: 0
+# Names:
+#    0: rift_delay
+#    1: int
+#    2: max
+#    3: min
+#    4: random
+#    5: randint
+# Varnames:
+#	timer_range, low, high, configured_min, configured_max, wait_min, wait_max
+# Positional arguments:
+#	timer_range
+# Local variables:
+#    1: low
+#    2: high
+#    3: configured_min
+#    4: configured_max
+#    5: wait_min
+#    6: wait_max
+ 69:           0 LOAD_FAST            (timer_range)
+               2 UNPACK_SEQUENCE      2
+               4 STORE_FAST           (low)
+               6 STORE_FAST           (high)
+
+ 70:           8 LOAD_GLOBAL          (rift_delay)
+              10 LOAD_CONST           ("rift_exam_wait_min_seconds")
+              12 LOAD_GLOBAL          (int)
+              14 LOAD_FAST            (low)
+              16 CALL_FUNCTION        (1 positional argument)
+              18 CALL_FUNCTION        (2 positional arguments)
+              20 STORE_FAST           (configured_min)
+
+ 71:          22 LOAD_GLOBAL          (rift_delay)
+              24 LOAD_CONST           ("rift_exam_wait_max_seconds")
+              26 LOAD_GLOBAL          (int)
+              28 LOAD_FAST            (high)
+              30 CALL_FUNCTION        (1 positional argument)
+              32 CALL_FUNCTION        (2 positional arguments)
+              34 STORE_FAST           (configured_max)
+
+ 72:          36 LOAD_GLOBAL          (max)
+              38 LOAD_CONST           (0)
+              40 LOAD_GLOBAL          (min)
+              42 LOAD_GLOBAL          (int)
+              44 LOAD_FAST            (low)
+              46 CALL_FUNCTION        (1 positional argument)
+              48 LOAD_FAST            (configured_min)
+              50 CALL_FUNCTION        (2 positional arguments)
+              52 CALL_FUNCTION        (2 positional arguments)
+              54 STORE_FAST           (wait_min)
+
+ 73:          56 LOAD_GLOBAL          (max)
+              58 LOAD_FAST            (wait_min)
+              60 LOAD_GLOBAL          (min)
+              62 LOAD_GLOBAL          (int)
+              64 LOAD_FAST            (high)
+              66 CALL_FUNCTION        (1 positional argument)
+              68 LOAD_FAST            (configured_max)
+              70 CALL_FUNCTION        (2 positional arguments)
+              72 CALL_FUNCTION        (2 positional arguments)
+              74 STORE_FAST           (wait_max)
+
+ 74:          76 LOAD_GLOBAL          (random)
+              78 LOAD_METHOD          (randint)
+              80 LOAD_FAST            (wait_min)
+              82 LOAD_FAST            (wait_max)
+              84 CALL_METHOD          (2 positional arguments)
+              86 RETURN_VALUE
+
+
+# Method Name:       get_character_snapshot
+# Filename:          runtime.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        77
+# Constants:
+#    0: None
+#    1: 'Character data is not loaded'
+#    2: 'character_data'
+#    3: 'Character snapshot is missing'
+# Names:
+#    0: isinstance
+#    1: config
+#    2: char_data
+#    3: dict
+#    4: ValueError
+#    5: get
+# Varnames:
+#	snapshot
+# Local variables:
+#    0: snapshot
+ 78:           0 LOAD_GLOBAL          (isinstance)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_ATTR            (char_data)
+               6 LOAD_GLOBAL          (dict)
+               8 CALL_FUNCTION        (2 positional arguments)
+              10 POP_JUMP_IF_TRUE     (to 20)
+
+ 79:          12 LOAD_GLOBAL          (ValueError)
+              14 LOAD_CONST           ("Character data is not loaded")
+              16 CALL_FUNCTION        (1 positional argument)
+              18 RAISE_VARARGS        (exception instance)
+
+ 81:     >>   20 LOAD_GLOBAL          (config)
+              22 LOAD_ATTR            (char_data)
+              24 LOAD_METHOD          (get)
+              26 LOAD_CONST           ("character_data")
+              28 LOAD_GLOBAL          (config)
+              30 LOAD_ATTR            (char_data)
+              32 CALL_METHOD          (2 positional arguments)
+              34 STORE_FAST           (snapshot)
+
+ 82:          36 LOAD_GLOBAL          (isinstance)
+              38 LOAD_FAST            (snapshot)
+              40 LOAD_GLOBAL          (dict)
+              42 CALL_FUNCTION        (2 positional arguments)
+              44 POP_JUMP_IF_TRUE     (to 54)
+
+ 83:          46 LOAD_GLOBAL          (ValueError)
+              48 LOAD_CONST           ("Character snapshot is missing")
+              50 CALL_FUNCTION        (1 positional argument)
+              52 RAISE_VARARGS        (exception instance)
+
+ 84:     >>   54 LOAD_FAST            (snapshot)
+              56 RETURN_VALUE
+
+
+# Method Name:       get_char_id
+# Filename:          runtime.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        87
+# Constants:
+#    0: None
+#    1: 'character_id'
+#    2: 'char_id'
+#    3: (None, '')
+#    4: 'Character ID is missing'
+# Names:
+#    0: get_character_snapshot
+#    1: get
+#    2: ValueError
+# Varnames:
+#	snapshot, char_id
+# Local variables:
+#    0: snapshot
+#    1: char_id
+ 88:           0 LOAD_GLOBAL          (get_character_snapshot)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (snapshot)
+
+ 89:           6 LOAD_FAST            (snapshot)
+               8 LOAD_METHOD          (get)
+              10 LOAD_CONST           ("character_id")
+              12 CALL_METHOD          (1 positional argument)
+              14 JUMP_IF_TRUE_OR_POP  (to 24)
+              16 LOAD_FAST            (snapshot)
+              18 LOAD_METHOD          (get)
+              20 LOAD_CONST           ("char_id")
+              22 CALL_METHOD          (1 positional argument)
+         >>   24 STORE_FAST           (char_id)
+
+ 90:          26 LOAD_FAST            (char_id)
+              28 LOAD_CONST           ((None, ''))
+              30 CONTAINS_OP          (in)
+              32 POP_JUMP_IF_FALSE    (to 42)
+
+ 91:          34 LOAD_GLOBAL          (ValueError)
+              36 LOAD_CONST           ("Character ID is missing")
+              38 CALL_FUNCTION        (1 positional argument)
+              40 RAISE_VARARGS        (exception instance)
+
+ 92:     >>   42 LOAD_FAST            (char_id)
+              44 RETURN_VALUE
+
+
+# Method Name:       get_session_key
+# Filename:          runtime.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        95
+# Constants:
+#    0: None
+#    1: 'Login data is not loaded'
+#    2: 'sessionkey'
+#    3: 'session_key'
+#    4: ''
+#    5: 'Session key is missing'
+# Names:
+#    0: isinstance
+#    1: config
+#    2: login_data
+#    3: dict
+#    4: ValueError
+#    5: str
+#    6: get
+# Varnames:
+#	session_key
+# Local variables:
+#    0: session_key
+ 96:           0 LOAD_GLOBAL          (isinstance)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_ATTR            (login_data)
+               6 LOAD_GLOBAL          (dict)
+               8 CALL_FUNCTION        (2 positional arguments)
+              10 POP_JUMP_IF_TRUE     (to 20)
+
+ 97:          12 LOAD_GLOBAL          (ValueError)
+              14 LOAD_CONST           ("Login data is not loaded")
+              16 CALL_FUNCTION        (1 positional argument)
+              18 RAISE_VARARGS        (exception instance)
+
+ 98:     >>   20 LOAD_GLOBAL          (str)
+              22 LOAD_GLOBAL          (config)
+              24 LOAD_ATTR            (login_data)
+              26 LOAD_METHOD          (get)
+              28 LOAD_CONST           ("sessionkey")
+              30 CALL_METHOD          (1 positional argument)
+              32 JUMP_IF_TRUE_OR_POP  (to 48)
+              34 LOAD_GLOBAL          (config)
+              36 LOAD_ATTR            (login_data)
+              38 LOAD_METHOD          (get)
+              40 LOAD_CONST           ("session_key")
+              42 CALL_METHOD          (1 positional argument)
+              44 JUMP_IF_TRUE_OR_POP  (to 48)
+              46 LOAD_CONST           ("")
+         >>   48 CALL_FUNCTION        (1 positional argument)
+              50 STORE_FAST           (session_key)
+
+ 99:          52 LOAD_FAST            (session_key)
+              54 POP_JUMP_IF_TRUE     (to 64)
+
+100:          56 LOAD_GLOBAL          (ValueError)
+              58 LOAD_CONST           ("Session key is missing")
+              60 CALL_FUNCTION        (1 positional argument)
+              62 RAISE_VARARGS        (exception instance)
+
+101:     >>   64 LOAD_FAST            (session_key)
+              66 RETURN_VALUE
+
+
+# Method Name:       get_level
+# Filename:          runtime.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        104
+# Constants:
+#    0: None
+#    1: 'character_level'
+#    2: 'level'
+#    3: 0
+# Names:
+#    0: get_character_snapshot
+#    1: int
+#    2: get
+# Varnames:
+#	snapshot
+# Local variables:
+#    0: snapshot
+105:           0 LOAD_GLOBAL          (get_character_snapshot)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (snapshot)
+
+106:           6 LOAD_GLOBAL          (int)
+               8 LOAD_FAST            (snapshot)
+              10 LOAD_METHOD          (get)
+              12 LOAD_CONST           ("character_level")
+              14 CALL_METHOD          (1 positional argument)
+              16 JUMP_IF_TRUE_OR_POP  (to 30)
+              18 LOAD_FAST            (snapshot)
+              20 LOAD_METHOD          (get)
+              22 LOAD_CONST           ("level")
+              24 CALL_METHOD          (1 positional argument)
+              26 JUMP_IF_TRUE_OR_POP  (to 30)
+              28 LOAD_CONST           (0)
+         >>   30 CALL_FUNCTION        (1 positional argument)
+              32 RETURN_VALUE
+
+
+# Method Name:       get_rank
+# Filename:          runtime.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        109
+# Constants:
+#    0: None
+#    1: 'character_rank'
+#    2: 'rank'
+#    3: 0
+# Names:
+#    0: get_character_snapshot
+#    1: int
+#    2: get
+# Varnames:
+#	snapshot
+# Local variables:
+#    0: snapshot
+110:           0 LOAD_GLOBAL          (get_character_snapshot)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (snapshot)
+
+111:           6 LOAD_GLOBAL          (int)
+               8 LOAD_FAST            (snapshot)
+              10 LOAD_METHOD          (get)
+              12 LOAD_CONST           ("character_rank")
+              14 CALL_METHOD          (1 positional argument)
+              16 JUMP_IF_TRUE_OR_POP  (to 30)
+              18 LOAD_FAST            (snapshot)
+              20 LOAD_METHOD          (get)
+              22 LOAD_CONST           ("rank")
+              24 CALL_METHOD          (1 positional argument)
+              26 JUMP_IF_TRUE_OR_POP  (to 30)
+              28 LOAD_CONST           (0)
+         >>   30 CALL_FUNCTION        (1 positional argument)
+              32 RETURN_VALUE
+
+
+# Method Name:       is_premium_user
+# Filename:          runtime.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        8
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        114
+# Constants:
+#    0: None
+#    1: 'account_type'
+#    2: 'character_account_type'
+#    3: 'premium'
+#    4: 'is_premium'
+#    5: {'vip', '2', 'true', 'premium'}
+#    6: 2
+#    7: False
+# Names:
+#    0: get_character_snapshot
+#    1: get
+#    2: config
+#    3: login_data
+#    4: isinstance
+#    5: str
+#    6: strip
+#    7: lower
+#    8: int
+#    9: Exception
+# Varnames:
+#	snapshot, raw_type
+# Local variables:
+#    0: snapshot
+#    1: raw_type
+115:           0 LOAD_GLOBAL          (get_character_snapshot)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (snapshot)
+
+117:           6 LOAD_FAST            (snapshot)
+               8 LOAD_METHOD          (get)
+              10 LOAD_CONST           ("account_type")
+              12 CALL_METHOD          (1 positional argument)
+              14 JUMP_IF_TRUE_OR_POP  (to 76)
+
+118:          16 LOAD_FAST            (snapshot)
+              18 LOAD_METHOD          (get)
+              20 LOAD_CONST           ("character_account_type")
+              22 CALL_METHOD          (1 positional argument)
+
+117:          24 JUMP_IF_TRUE_OR_POP  (to 76)
+
+119:          26 LOAD_FAST            (snapshot)
+              28 LOAD_METHOD          (get)
+              30 LOAD_CONST           ("premium")
+              32 CALL_METHOD          (1 positional argument)
+
+117:          34 JUMP_IF_TRUE_OR_POP  (to 76)
+
+120:          36 LOAD_FAST            (snapshot)
+              38 LOAD_METHOD          (get)
+              40 LOAD_CONST           ("is_premium")
+              42 CALL_METHOD          (1 positional argument)
+
+117:          44 JUMP_IF_TRUE_OR_POP  (to 76)
+
+121:          46 LOAD_GLOBAL          (config)
+              48 LOAD_ATTR            (login_data)
+              50 JUMP_IF_TRUE_OR_POP  (to 54)
+              52 BUILD_MAP            0
+         >>   54 LOAD_METHOD          (get)
+              56 LOAD_CONST           ("account_type")
+              58 CALL_METHOD          (1 positional argument)
+
+117:          60 JUMP_IF_TRUE_OR_POP  (to 76)
+
+122:          62 LOAD_GLOBAL          (config)
+              64 LOAD_ATTR            (login_data)
+              66 JUMP_IF_TRUE_OR_POP  (to 70)
+              68 BUILD_MAP            0
+         >>   70 LOAD_METHOD          (get)
+              72 LOAD_CONST           ("premium")
+              74 CALL_METHOD          (1 positional argument)
+
+116:     >>   76 STORE_FAST           (raw_type)
+
+124:          78 LOAD_GLOBAL          (isinstance)
+              80 LOAD_FAST            (raw_type)
+              82 LOAD_GLOBAL          (str)
+              84 CALL_FUNCTION        (2 positional arguments)
+              86 POP_JUMP_IF_FALSE    (to 104)
+
+125:          88 LOAD_FAST            (raw_type)
+              90 LOAD_METHOD          (strip)
+              92 CALL_METHOD          (0 positional arguments)
+              94 LOAD_METHOD          (lower)
+              96 CALL_METHOD          (0 positional arguments)
+              98 LOAD_CONST           ({'vip', '2', 'true', 'premium'})
+             100 CONTAINS_OP          (in)
+             102 RETURN_VALUE
+
+126:     >>  104 SETUP_FINALLY        (to 120)
+
+127:         106 LOAD_GLOBAL          (int)
+             108 LOAD_FAST            (raw_type)
+             110 CALL_FUNCTION        (1 positional argument)
+             112 LOAD_CONST           (2)
+             114 COMPARE_OP           (==)
+             116 POP_BLOCK
+             118 RETURN_VALUE
+
+128:     >>  120 DUP_TOP
+             122 LOAD_GLOBAL          (Exception)
+             124 JUMP_IF_NOT_EXC_MATCH (to 138)
+             126 POP_TOP
+             128 POP_TOP
+             130 POP_TOP
+
+129:         132 POP_EXCEPT
+             134 LOAD_CONST           (False)
+             136 RETURN_VALUE
+
+128:     >>  138 RERAISE              0
+
+
+# Method Name:       get_village_type
+# Filename:          runtime.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        8
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        132
+# Constants:
+#    0: None
+#    1: 'character_village_id'
+#    2: 'village_id'
+#    3: 0
+#    4: 3
+#    5: 'lightning'
+#    6: 'fire'
+# Names:
+#    0: get_character_snapshot
+#    1: get
+#    2: int
+#    3: Exception
+# Varnames:
+#	snapshot, village_id
+# Local variables:
+#    0: snapshot
+#    1: village_id
+133:           0 LOAD_GLOBAL          (get_character_snapshot)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (snapshot)
+
+134:           6 LOAD_FAST            (snapshot)
+               8 LOAD_METHOD          (get)
+              10 LOAD_CONST           ("character_village_id")
+              12 CALL_METHOD          (1 positional argument)
+              14 JUMP_IF_TRUE_OR_POP  (to 28)
+              16 LOAD_FAST            (snapshot)
+              18 LOAD_METHOD          (get)
+              20 LOAD_CONST           ("village_id")
+              22 CALL_METHOD          (1 positional argument)
+              24 JUMP_IF_TRUE_OR_POP  (to 28)
+              26 LOAD_CONST           (0)
+         >>   28 STORE_FAST           (village_id)
+
+135:          30 SETUP_FINALLY        (to 44)
+
+136:          32 LOAD_GLOBAL          (int)
+              34 LOAD_FAST            (village_id)
+              36 CALL_FUNCTION        (1 positional argument)
+              38 STORE_FAST           (village_id)
+              40 POP_BLOCK
+              42 JUMP_FORWARD         (to 66)
+
+137:     >>   44 DUP_TOP
+              46 LOAD_GLOBAL          (Exception)
+              48 JUMP_IF_NOT_EXC_MATCH (to 64)
+              50 POP_TOP
+              52 POP_TOP
+              54 POP_TOP
+
+138:          56 LOAD_CONST           (0)
+              58 STORE_FAST           (village_id)
+              60 POP_EXCEPT
+              62 JUMP_FORWARD         (to 66)
+
+137:     >>   64 RERAISE              0
+
+139:     >>   66 LOAD_FAST            (village_id)
+              68 LOAD_CONST           (3)
+              70 COMPARE_OP           (==)
+              72 POP_JUMP_IF_FALSE    (to 78)
+
+140:          74 LOAD_CONST           ("lightning")
+              76 RETURN_VALUE
+
+141:     >>   78 LOAD_CONST           ("fire")
+              80 RETURN_VALUE
+
+
+# Method Name:       get_agility
+# Filename:          runtime.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        144
+# Constants:
+#    0: None
+# Names:
+#    0: flatten_json
+#    1: config
+#    2: char_data
+#    3: int
+#    4: amf_req
+#    5: calculate_agility
+# Varnames:
+#	flattened
+# Local variables:
+#    0: flattened
+145:           0 LOAD_GLOBAL          (flatten_json)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_ATTR            (char_data)
+               6 CALL_FUNCTION        (1 positional argument)
+               8 STORE_FAST           (flattened)
+
+146:          10 LOAD_GLOBAL          (int)
+              12 LOAD_GLOBAL          (amf_req)
+              14 LOAD_METHOD          (calculate_agility)
+              16 LOAD_FAST            (flattened)
+              18 CALL_METHOD          (1 positional argument)
+              20 CALL_FUNCTION        (1 positional argument)
+              22 RETURN_VALUE
+
+
+# Method Name:       update_runtime_character_stats
+# Filename:          runtime.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 3
+# Number of locals:  4
+# Stack size:        7
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        149
+# Constants:
+#    0: None
+#    1: 'character_data'
+#    2: 'character_level'
+#    3: 'level'
+#    4: 'character_xp'
+#    5: 'xp'
+#    6: 'character_gold'
+#    7: 'gold'
+#    8: 'character_update_callback'
+#    9: ('level', 'xp', 'gold')
+# Names:
+#    0: isinstance
+#    1: config
+#    2: char_data
+#    3: dict
+#    4: get
+#    5: callable
+#    6: getattr
+#    7: character_update_callback
+# Varnames:
+#	level, xp, gold, snapshot
+# Local variables:
+#    0: level
+#    1: xp
+#    2: gold
+#    3: snapshot
+150:           0 LOAD_GLOBAL          (isinstance)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_ATTR            (char_data)
+               6 LOAD_GLOBAL          (dict)
+               8 CALL_FUNCTION        (2 positional arguments)
+              10 POP_JUMP_IF_TRUE     (to 16)
+
+151:          12 LOAD_CONST           (None)
+              14 RETURN_VALUE
+
+153:     >>   16 LOAD_GLOBAL          (config)
+              18 LOAD_ATTR            (char_data)
+              20 LOAD_METHOD          (get)
+              22 LOAD_CONST           ("character_data")
+              24 LOAD_GLOBAL          (config)
+              26 LOAD_ATTR            (char_data)
+              28 CALL_METHOD          (2 positional arguments)
+              30 STORE_FAST           (snapshot)
+
+154:          32 LOAD_GLOBAL          (isinstance)
+              34 LOAD_FAST            (snapshot)
+              36 LOAD_GLOBAL          (dict)
+              38 CALL_FUNCTION        (2 positional arguments)
+              40 POP_JUMP_IF_TRUE     (to 46)
+
+155:          42 LOAD_CONST           (None)
+              44 RETURN_VALUE
+
+157:     >>   46 LOAD_FAST            (level)
+              48 LOAD_CONST           (None)
+              50 IS_OP                (is not)
+              52 POP_JUMP_IF_FALSE    (to 70)
+
+158:          54 LOAD_FAST            (level)
+              56 LOAD_FAST            (snapshot)
+              58 LOAD_CONST           ("character_level")
+              60 STORE_SUBSCR
+
+159:          62 LOAD_FAST            (level)
+              64 LOAD_FAST            (snapshot)
+              66 LOAD_CONST           ("level")
+              68 STORE_SUBSCR
+
+160:     >>   70 LOAD_FAST            (xp)
+              72 LOAD_CONST           (None)
+              74 IS_OP                (is not)
+              76 POP_JUMP_IF_FALSE    (to 94)
+
+161:          78 LOAD_FAST            (xp)
+              80 LOAD_FAST            (snapshot)
+              82 LOAD_CONST           ("character_xp")
+              84 STORE_SUBSCR
+
+162:          86 LOAD_FAST            (xp)
+              88 LOAD_FAST            (snapshot)
+              90 LOAD_CONST           ("xp")
+              92 STORE_SUBSCR
+
+163:     >>   94 LOAD_FAST            (gold)
+              96 LOAD_CONST           (None)
+              98 IS_OP                (is not)
+             100 POP_JUMP_IF_FALSE    (to 118)
+
+164:         102 LOAD_FAST            (gold)
+             104 LOAD_FAST            (snapshot)
+             106 LOAD_CONST           ("character_gold")
+             108 STORE_SUBSCR
+
+165:         110 LOAD_FAST            (gold)
+             112 LOAD_FAST            (snapshot)
+             114 LOAD_CONST           ("gold")
+             116 STORE_SUBSCR
+
+167:     >>  118 LOAD_GLOBAL          (callable)
+             120 LOAD_GLOBAL          (getattr)
+             122 LOAD_GLOBAL          (config)
+             124 LOAD_CONST           ("character_update_callback")
+             126 LOAD_CONST           (None)
+             128 CALL_FUNCTION        (3 positional arguments)
+             130 CALL_FUNCTION        (1 positional argument)
+             132 POP_JUMP_IF_FALSE    (to 204)
+
+168:         134 LOAD_GLOBAL          (config)
+             136 LOAD_METHOD          (character_update_callback)
+
+170:         138 LOAD_FAST            (snapshot)
+             140 LOAD_METHOD          (get)
+             142 LOAD_CONST           ("character_level")
+             144 CALL_METHOD          (1 positional argument)
+             146 JUMP_IF_TRUE_OR_POP  (to 156)
+             148 LOAD_FAST            (snapshot)
+             150 LOAD_METHOD          (get)
+             152 LOAD_CONST           ("level")
+             154 CALL_METHOD          (1 positional argument)
+
+171:     >>  156 LOAD_FAST            (snapshot)
+             158 LOAD_METHOD          (get)
+             160 LOAD_CONST           ("character_xp")
+             162 CALL_METHOD          (1 positional argument)
+             164 JUMP_IF_TRUE_OR_POP  (to 174)
+             166 LOAD_FAST            (snapshot)
+             168 LOAD_METHOD          (get)
+             170 LOAD_CONST           ("xp")
+             172 CALL_METHOD          (1 positional argument)
+
+172:     >>  174 LOAD_FAST            (snapshot)
+             176 LOAD_METHOD          (get)
+             178 LOAD_CONST           ("character_gold")
+             180 CALL_METHOD          (1 positional argument)
+             182 JUMP_IF_TRUE_OR_POP  (to 192)
+             184 LOAD_FAST            (snapshot)
+             186 LOAD_METHOD          (get)
+             188 LOAD_CONST           ("gold")
+             190 CALL_METHOD          (1 positional argument)
+
+169:     >>  192 LOAD_CONST           (('level', 'xp', 'gold'))
+             194 BUILD_CONST_KEY_MAP  3
+
+168:         196 CALL_METHOD          (1 positional argument)
+             198 POP_TOP
+             200 LOAD_CONST           (None)
+             202 RETURN_VALUE
+
+167:     >>  204 LOAD_CONST           (None)
+             206 RETURN_VALUE
+
+
+# Method Name:       current_gold
+# Filename:          runtime.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        177
+# Constants:
+#    0: None
+#    1: 'character_gold'
+#    2: 'gold'
+#    3: 0
+# Names:
+#    0: get_character_snapshot
+#    1: int
+#    2: get
+# Varnames:
+#	snapshot
+# Local variables:
+#    0: snapshot
+178:           0 LOAD_GLOBAL          (get_character_snapshot)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (snapshot)
+
+179:           6 LOAD_GLOBAL          (int)
+               8 LOAD_FAST            (snapshot)
+              10 LOAD_METHOD          (get)
+              12 LOAD_CONST           ("character_gold")
+              14 CALL_METHOD          (1 positional argument)
+              16 JUMP_IF_TRUE_OR_POP  (to 30)
+              18 LOAD_FAST            (snapshot)
+              20 LOAD_METHOD          (get)
+              22 LOAD_CONST           ("gold")
+              24 CALL_METHOD          (1 positional argument)
+              26 JUMP_IF_TRUE_OR_POP  (to 30)
+              28 LOAD_CONST           (0)
+         >>   30 CALL_FUNCTION        (1 positional argument)
+              32 RETURN_VALUE
+
+
+# Method Name:       current_xp
+# Filename:          runtime.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  1
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        182
+# Constants:
+#    0: None
+#    1: 'character_xp'
+#    2: 'xp'
+#    3: 0
+# Names:
+#    0: get_character_snapshot
+#    1: int
+#    2: get
+# Varnames:
+#	snapshot
+# Local variables:
+#    0: snapshot
+183:           0 LOAD_GLOBAL          (get_character_snapshot)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (snapshot)
+
+184:           6 LOAD_GLOBAL          (int)
+               8 LOAD_FAST            (snapshot)
+              10 LOAD_METHOD          (get)
+              12 LOAD_CONST           ("character_xp")
+              14 CALL_METHOD          (1 positional argument)
+              16 JUMP_IF_TRUE_OR_POP  (to 30)
+              18 LOAD_FAST            (snapshot)
+              20 LOAD_METHOD          (get)
+              22 LOAD_CONST           ("xp")
+              24 CALL_METHOD          (1 positional argument)
+              26 JUMP_IF_TRUE_OR_POP  (to 30)
+              28 LOAD_CONST           (0)
+         >>   30 CALL_FUNCTION        (1 positional argument)
+              32 RETURN_VALUE
+
+
+# Method Name:       response_message
+# Filename:          runtime.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  3
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        187
+# Constants:
+#    0: None
+#    1: 'No response'
+#    2: 'result'
+#    3: 'error'
+#    4: 'message'
+#    5: ('description', 'message', 'details', 'faultString')
+# Names:
+#    0: isinstance
+#    1: dict
+#    2: str
+#    3: get
+#    4: getattr
+# Varnames:
+#	response, attr, value
+# Positional arguments:
+#	response
+# Local variables:
+#    1: attr
+#    2: value
+188:           0 LOAD_FAST            (response)
+               2 LOAD_CONST           (None)
+               4 IS_OP                (is)
+               6 POP_JUMP_IF_FALSE    (to 12)
+
+189:           8 LOAD_CONST           ("No response")
+              10 RETURN_VALUE
+
+190:     >>   12 LOAD_GLOBAL          (isinstance)
+              14 LOAD_FAST            (response)
+              16 LOAD_GLOBAL          (dict)
+              18 CALL_FUNCTION        (2 positional arguments)
+              20 POP_JUMP_IF_FALSE    (to 60)
+
+191:          22 LOAD_GLOBAL          (str)
+              24 LOAD_FAST            (response)
+              26 LOAD_METHOD          (get)
+              28 LOAD_CONST           ("result")
+              30 CALL_METHOD          (1 positional argument)
+              32 JUMP_IF_TRUE_OR_POP  (to 56)
+              34 LOAD_FAST            (response)
+              36 LOAD_METHOD          (get)
+              38 LOAD_CONST           ("error")
+              40 CALL_METHOD          (1 positional argument)
+              42 JUMP_IF_TRUE_OR_POP  (to 56)
+              44 LOAD_FAST            (response)
+              46 LOAD_METHOD          (get)
+              48 LOAD_CONST           ("message")
+              50 CALL_METHOD          (1 positional argument)
+              52 JUMP_IF_TRUE_OR_POP  (to 56)
+              54 LOAD_FAST            (response)
+         >>   56 CALL_FUNCTION        (1 positional argument)
+              58 RETURN_VALUE
+
+192:     >>   60 LOAD_CONST           (('description', 'message', 'details', 'faultString'))
+              62 GET_ITER
+         >>   64 FOR_ITER             (to 98)
+              66 STORE_FAST           (attr)
+
+193:          68 LOAD_GLOBAL          (getattr)
+              70 LOAD_FAST            (response)
+              72 LOAD_FAST            (attr)
+              74 LOAD_CONST           (None)
+              76 CALL_FUNCTION        (3 positional arguments)
+              78 STORE_FAST           (value)
+
+194:          80 LOAD_FAST            (value)
+              82 POP_JUMP_IF_FALSE    (to 96)
+
+195:          84 LOAD_GLOBAL          (str)
+              86 LOAD_FAST            (value)
+              88 CALL_FUNCTION        (1 positional argument)
+              90 ROT_TWO
+              92 POP_TOP
+              94 RETURN_VALUE
+
+194:     >>   96 JUMP_ABSOLUTE        (to 64)
+
+196:     >>   98 LOAD_GLOBAL          (str)
+             100 LOAD_FAST            (response)
+             102 CALL_FUNCTION        (1 positional argument)
+             104 RETURN_VALUE
+
+
+# Method Name:       _notify_rift_reauth_required
+# Filename:          runtime.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        8
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        199
+# Constants:
+#    0: None
+#    1: 'session_reauth_required_callback'
+# Names:
+#    0: getattr
+#    1: config
+#    2: callable
+#    3: Exception
+# Varnames:
+#	reason, callback
+# Positional arguments:
+#	reason
+# Local variables:
+#    1: callback
+200:           0 LOAD_GLOBAL          (getattr)
+               2 LOAD_GLOBAL          (config)
+               4 LOAD_CONST           ("session_reauth_required_callback")
+               6 LOAD_CONST           (None)
+               8 CALL_FUNCTION        (3 positional arguments)
+              10 STORE_FAST           (callback)
+
+201:          12 LOAD_GLOBAL          (callable)
+              14 LOAD_FAST            (callback)
+              16 CALL_FUNCTION        (1 positional argument)
+              18 POP_JUMP_IF_FALSE    (to 56)
+
+202:          20 SETUP_FINALLY        (to 36)
+
+203:          22 LOAD_FAST            (callback)
+              24 LOAD_FAST            (reason)
+              26 CALL_FUNCTION        (1 positional argument)
+              28 POP_TOP
+              30 POP_BLOCK
+              32 LOAD_CONST           (None)
+              34 RETURN_VALUE
+
+204:     >>   36 DUP_TOP
+              38 LOAD_GLOBAL          (Exception)
+              40 JUMP_IF_NOT_EXC_MATCH (to 54)
+              42 POP_TOP
+              44 POP_TOP
+              46 POP_TOP
+
+205:          48 POP_EXCEPT
+              50 LOAD_CONST           (None)
+              52 RETURN_VALUE
+
+204:     >>   54 RERAISE              0
+
+201:     >>   56 LOAD_CONST           (None)
+              58 RETURN_VALUE
+
+
+# Method Name:       _rift_relogin_wait_seconds
+# Filename:          runtime.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        5
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        208
+# Constants:
+#    0: None
+#    1: 0
+#    2: 'rift_auto_relogin_wait_seconds'
+#    3: 15
+# Names:
+#    0: max
+#    1: rift_delay
+209:           0 LOAD_GLOBAL          (max)
+               2 LOAD_CONST           (0)
+               4 LOAD_GLOBAL          (rift_delay)
+               6 LOAD_CONST           ("rift_auto_relogin_wait_seconds")
+               8 LOAD_CONST           (15)
+              10 CALL_FUNCTION        (2 positional arguments)
+              12 CALL_FUNCTION        (2 positional arguments)
+              14 RETURN_VALUE
+
+
+# Method Name:       _current_char_id_for_relogin
+# Filename:          runtime.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  0
+# Stack size:        8
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        212
+# Constants:
+#    0: None
+# Names:
+#    0: get_char_id
+#    1: Exception
+213:           0 SETUP_FINALLY        (to 10)
+
+214:           2 LOAD_GLOBAL          (get_char_id)
+               4 CALL_FUNCTION        (0 positional arguments)
+               6 POP_BLOCK
+               8 RETURN_VALUE
+
+215:     >>   10 DUP_TOP
+              12 LOAD_GLOBAL          (Exception)
+              14 JUMP_IF_NOT_EXC_MATCH (to 28)
+              16 POP_TOP
+              18 POP_TOP
+              20 POP_TOP
+
+216:          22 POP_EXCEPT
+              24 LOAD_CONST           (None)
+              26 RETURN_VALUE
+
+215:     >>   28 RERAISE              0
+
+
+# Method Name:       _looks_like_rift_session_problem
+# Filename:          runtime.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        4
+# Flags:             0x00000003 (NEWLOCALS | OPTIMIZED)
+# First Line:        219
+# Constants:
+#    0: None
+#    1: False
+#    2: ('invalid session', 'session expired', 'session key', 'session is invalid', 'not logged in', 'please login', 'please log in', 'login required', 'auth failed', 'login again', 're-login', 'relogin', 'disconnected', 'connection lost')
+#    3: <Code310 code object <genexpr> at 0x1e478b861e0, file runtime.py>, line 241
+#    4: '_looks_like_rift_session_problem.<locals>.<genexpr>'
+# Names:
+#    0: response_message
+#    1: strip
+#    2: lower
+#    3: any
+# Varnames:
+#	result, session_markers
+# Positional arguments:
+#	result
+# Local variables:
+#    1: session_markers
+# Cell variables:
+#    0: message
+220:           0 LOAD_FAST            (result)
+               2 LOAD_CONST           (None)
+               4 IS_OP                (is)
+               6 POP_JUMP_IF_FALSE    (to 12)
+
+221:           8 LOAD_CONST           (False)
+              10 RETURN_VALUE
+
+222:     >>   12 LOAD_GLOBAL          (response_message)
+              14 LOAD_FAST            (result)
+              16 CALL_FUNCTION        (1 positional argument)
+              18 LOAD_METHOD          (strip)
+              20 CALL_METHOD          (0 positional arguments)
+              22 LOAD_METHOD          (lower)
+              24 CALL_METHOD          (0 positional arguments)
+              26 STORE_DEREF          (message)
+
+223:          28 LOAD_DEREF           (message)
+              30 POP_JUMP_IF_TRUE     (to 36)
+
+224:          32 LOAD_CONST           (False)
+              34 RETURN_VALUE
+
+225:     >>   36 LOAD_CONST           (('invalid session', 'session expired', 'session key', 'session is invalid', 'not logged in', 'please login', 'please log in', 'login required', 'auth failed', 'login again', 're-login', 'relogin', 'disconnected', 'connection lost'))
+              38 STORE_FAST           (session_markers)
+
+241:          40 LOAD_GLOBAL          (any)
+              42 LOAD_CLOSURE         (message)
+              44 BUILD_TUPLE          1
+              46 LOAD_CONST           (<Code310 code object <genexpr> at 0x1e478b861e0, file runtime.py>, line 241)
+              48 LOAD_CONST           ("_looks_like_rift_session_problem.<locals>.<genexpr>")
+              50 MAKE_FUNCTION        (closure)
+              52 LOAD_FAST            (session_markers)
+              54 GET_ITER
+              56 CALL_FUNCTION        (1 positional argument)
+              58 CALL_FUNCTION        (1 positional argument)
+              60 RETURN_VALUE
+
+
+# Method Name:       _looks_like_rift_transport_problem
+# Filename:          runtime.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        4
+# Flags:             0x00000003 (NEWLOCALS | OPTIMIZED)
+# First Line:        244
+# Constants:
+#    0: None
+#    1: False
+#    2: ('connection aborted', 'connection reset', 'connection refused', 'connection broken', 'connection pool', 'remote disconnected', 'timed out', 'timeout', 'temporarily unavailable', 'name or service not known', 'failed to establish a new connection', 'network is unreachable', 'internet')
+#    3: <Code310 code object <genexpr> at 0x1e476416360, file runtime.py>, line 263
+#    4: '_looks_like_rift_transport_problem.<locals>.<genexpr>'
+# Names:
+#    0: str
+#    1: strip
+#    2: lower
+#    3: any
+# Varnames:
+#	exc, markers
+# Positional arguments:
+#	exc
+# Local variables:
+#    1: markers
+# Cell variables:
+#    0: message
+245:           0 LOAD_GLOBAL          (str)
+               2 LOAD_FAST            (exc)
+               4 CALL_FUNCTION        (1 positional argument)
+               6 LOAD_METHOD          (strip)
+               8 CALL_METHOD          (0 positional arguments)
+              10 LOAD_METHOD          (lower)
+              12 CALL_METHOD          (0 positional arguments)
+              14 STORE_DEREF          (message)
+
+246:          16 LOAD_DEREF           (message)
+              18 POP_JUMP_IF_TRUE     (to 24)
+
+247:          20 LOAD_CONST           (False)
+              22 RETURN_VALUE
+
+248:     >>   24 LOAD_CONST           (('connection aborted', 'connection reset', 'connection refused', 'connection broken', 'connection pool', 'remote disconnected', 'timed out', 'timeout', 'temporarily unavailable', 'name or service not known', 'failed to establish a new connection', 'network is unreachable', 'internet'))
+              26 STORE_FAST           (markers)
+
+263:          28 LOAD_GLOBAL          (any)
+              30 LOAD_CLOSURE         (message)
+              32 BUILD_TUPLE          1
+              34 LOAD_CONST           (<Code310 code object <genexpr> at 0x1e476416360, file runtime.py>, line 263)
+              36 LOAD_CONST           ("_looks_like_rift_transport_problem.<locals>.<genexpr>")
+              38 MAKE_FUNCTION        (closure)
+              40 LOAD_FAST            (markers)
+              42 GET_ITER
+              44 CALL_FUNCTION        (1 positional argument)
+              46 CALL_FUNCTION        (1 positional argument)
+              48 RETURN_VALUE
+
+
+# Method Name:       _rift_retry_delay_seconds
+# Filename:          runtime.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        3
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        266
+# Constants:
+#    0: None
+#    1: 1
+#    2: 5
+# Names:
+#    0: _rift_relogin_wait_seconds
+# Varnames:
+#	attempt, base_wait
+# Positional arguments:
+#	attempt
+# Local variables:
+#    1: base_wait
+267:           0 LOAD_GLOBAL          (_rift_relogin_wait_seconds)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (base_wait)
+
+268:           6 LOAD_FAST            (attempt)
+               8 LOAD_CONST           (1)
+              10 COMPARE_OP           (<=)
+              12 POP_JUMP_IF_FALSE    (to 18)
+
+269:          14 LOAD_FAST            (base_wait)
+              16 RETURN_VALUE
+
+270:     >>   18 LOAD_FAST            (base_wait)
+              20 LOAD_FAST            (attempt)
+              22 LOAD_CONST           (1)
+              24 BINARY_SUBTRACT
+              26 LOAD_CONST           (5)
+              28 BINARY_MULTIPLY
+              30 BINARY_ADD
+              32 RETURN_VALUE
+
+
+# Method Name:       _rift_relogin_and_reselect_character
+# Filename:          runtime.py
+# Argument count:    0
+# Position-only argument count: 0
+# Keyword-only arguments: 1
+# Number of locals:  13
+# Stack size:        10
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        273
+# Constants:
+#    0: None
+#    1: 'id'
+#    2: 'No quick login data found for Ninja Rift. Cannot auto relogin.'
+#    3: False
+#    4: 'username'
+#    5: 'password'
+#    6: 'Invalid quick login credentials for Ninja Rift auto relogin.'
+#    7: 0
+#    8: 'Ninja Rift session problem detected. Waiting '
+#    9: ' seconds before auto relogin...'
+#   10: 'status'
+#   11: 1
+#   12: 'Ninja Rift version check failed during auto relogin: '
+#   13: ''
+#   14: 'Ninja Rift auto relogin failed: '
+#   15: 'verified'
+#   16: 'Ninja Rift auto relogin requires verification code. Sending user back to login.'
+#   17: 'Ninja Rift verification is required again. Please log in and enter the code.'
+#   18: 'Ninja Rift auto relogin character list refresh warning: '
+#   19: (None, '')
+#   20: 'Ninja Rift auto relogin successful.'
+#   21: True
+#   22: 'Ninja Rift auto relogin error: '
+# Names:
+#    0: config
+#    1: get_current_amf_profile
+#    2: get
+#    3: get_quick_login_credentials
+#    4: print
+#    5: _current_char_id_for_relogin
+#    6: _rift_retry_delay_seconds
+#    7: wait_with_stop
+#    8: game_data
+#    9: rift_bootstrap
+#   10: amf_req
+#   11: check_version
+#   12: isinstance
+#   13: dict
+#   14: response_message
+#   15: login
+#   16: _as_int
+#   17: _notify_rift_reauth_required
+#   18: login_data
+#   19: get_all_characters
+#   20: all_char
+#   21: Exception
+#   22: get_character_data
+#   23: char_data
+# Varnames:
+#	attempt, profile_id, credentials, _, username, password, char_id, wait_seconds, version_result, login_result, all_characters, exc, refreshed_char
+# Local variables:
+#    0: attempt
+#    1: profile_id
+#    2: credentials
+#    3: _
+#    4: username
+#    5: password
+#    6: char_id
+#    7: wait_seconds
+#    8: version_result
+#    9: login_result
+#   10: all_characters
+#   11: exc
+#   12: refreshed_char
+274:           0 LOAD_GLOBAL          (config)
+               2 LOAD_METHOD          (get_current_amf_profile)
+               4 CALL_METHOD          (0 positional arguments)
+               6 LOAD_METHOD          (get)
+               8 LOAD_CONST           ("id")
+              10 CALL_METHOD          (1 positional argument)
+              12 STORE_FAST           (profile_id)
+
+275:          14 LOAD_GLOBAL          (config)
+              16 LOAD_METHOD          (get_quick_login_credentials)
+              18 LOAD_FAST            (profile_id)
+              20 CALL_METHOD          (1 positional argument)
+              22 UNPACK_SEQUENCE      2
+              24 STORE_FAST           (credentials)
+              26 STORE_FAST           (_)
+
+276:          28 LOAD_FAST            (credentials)
+              30 POP_JUMP_IF_TRUE     (to 44)
+
+277:          32 LOAD_GLOBAL          (print)
+              34 LOAD_CONST           ("No quick login data found for Ninja Rift. Cannot auto relogin.")
+              36 CALL_FUNCTION        (1 positional argument)
+              38 POP_TOP
+
+278:          40 LOAD_CONST           (False)
+              42 RETURN_VALUE
+
+280:     >>   44 LOAD_FAST            (credentials)
+              46 LOAD_METHOD          (get)
+              48 LOAD_CONST           ("username")
+              50 CALL_METHOD          (1 positional argument)
+              52 STORE_FAST           (username)
+
+281:          54 LOAD_FAST            (credentials)
+              56 LOAD_METHOD          (get)
+              58 LOAD_CONST           ("password")
+              60 CALL_METHOD          (1 positional argument)
+              62 STORE_FAST           (password)
+
+282:          64 LOAD_FAST            (username)
+              66 POP_JUMP_IF_FALSE    (to 72)
+              68 LOAD_FAST            (password)
+              70 POP_JUMP_IF_TRUE     (to 84)
+
+283:     >>   72 LOAD_GLOBAL          (print)
+              74 LOAD_CONST           ("Invalid quick login credentials for Ninja Rift auto relogin.")
+              76 CALL_FUNCTION        (1 positional argument)
+              78 POP_TOP
+
+284:          80 LOAD_CONST           (False)
+              82 RETURN_VALUE
+
+286:     >>   84 LOAD_GLOBAL          (_current_char_id_for_relogin)
+              86 CALL_FUNCTION        (0 positional arguments)
+              88 STORE_FAST           (char_id)
+
+287:          90 LOAD_GLOBAL          (_rift_retry_delay_seconds)
+              92 LOAD_FAST            (attempt)
+              94 CALL_FUNCTION        (1 positional argument)
+              96 STORE_FAST           (wait_seconds)
+
+288:          98 LOAD_FAST            (wait_seconds)
+             100 LOAD_CONST           (0)
+             102 COMPARE_OP           (>)
+             104 POP_JUMP_IF_FALSE    (to 134)
+
+289:         106 LOAD_GLOBAL          (print)
+             108 LOAD_CONST           ("Ninja Rift session problem detected. Waiting ")
+             110 LOAD_FAST            (wait_seconds)
+             112 FORMAT_VALUE         0
+             114 LOAD_CONST           (" seconds before auto relogin...")
+             116 BUILD_STRING         3
+             118 CALL_FUNCTION        (1 positional argument)
+             120 POP_TOP
+
+290:         122 LOAD_GLOBAL          (wait_with_stop)
+             124 LOAD_FAST            (wait_seconds)
+             126 CALL_FUNCTION        (1 positional argument)
+             128 POP_JUMP_IF_TRUE     (to 134)
+
+291:         130 LOAD_CONST           (False)
+             132 RETURN_VALUE
+
+293:     >>  134 SETUP_FINALLY        (to 446)
+
+294:         136 LOAD_CONST           (None)
+             138 LOAD_GLOBAL          (config)
+             140 STORE_ATTR           (game_data)
+
+295:         142 LOAD_CONST           (None)
+             144 LOAD_GLOBAL          (config)
+             146 STORE_ATTR           (rift_bootstrap)
+
+296:         148 LOAD_GLOBAL          (amf_req)
+             150 LOAD_METHOD          (check_version)
+             152 CALL_METHOD          (0 positional arguments)
+             154 STORE_FAST           (version_result)
+
+297:         156 LOAD_GLOBAL          (isinstance)
+             158 LOAD_FAST            (version_result)
+             160 LOAD_GLOBAL          (dict)
+             162 CALL_FUNCTION        (2 positional arguments)
+             164 POP_JUMP_IF_FALSE    (to 180)
+             166 LOAD_FAST            (version_result)
+             168 LOAD_METHOD          (get)
+             170 LOAD_CONST           ("status")
+             172 CALL_METHOD          (1 positional argument)
+             174 LOAD_CONST           (1)
+             176 COMPARE_OP           (!=)
+             178 POP_JUMP_IF_FALSE    (to 204)
+
+298:     >>  180 LOAD_GLOBAL          (print)
+             182 LOAD_CONST           ("Ninja Rift version check failed during auto relogin: ")
+             184 LOAD_GLOBAL          (response_message)
+             186 LOAD_FAST            (version_result)
+             188 CALL_FUNCTION        (1 positional argument)
+             190 FORMAT_VALUE         0
+             192 BUILD_STRING         2
+             194 CALL_FUNCTION        (1 positional argument)
+             196 POP_TOP
+
+299:         198 POP_BLOCK
+             200 LOAD_CONST           (False)
+             202 RETURN_VALUE
+
+301:     >>  204 LOAD_GLOBAL          (amf_req)
+             206 LOAD_METHOD          (login)
+             208 LOAD_FAST            (username)
+             210 LOAD_FAST            (password)
+             212 LOAD_CONST           ("")
+             214 LOAD_CONST           ("")
+             216 CALL_METHOD          (4 positional arguments)
+             218 STORE_FAST           (login_result)
+
+302:         220 LOAD_GLOBAL          (isinstance)
+             222 LOAD_FAST            (login_result)
+             224 LOAD_GLOBAL          (dict)
+             226 CALL_FUNCTION        (2 positional arguments)
+             228 POP_JUMP_IF_FALSE    (to 244)
+             230 LOAD_FAST            (login_result)
+             232 LOAD_METHOD          (get)
+             234 LOAD_CONST           ("status")
+             236 CALL_METHOD          (1 positional argument)
+             238 LOAD_CONST           (1)
+             240 COMPARE_OP           (!=)
+             242 POP_JUMP_IF_FALSE    (to 268)
+
+303:     >>  244 LOAD_GLOBAL          (print)
+             246 LOAD_CONST           ("Ninja Rift auto relogin failed: ")
+             248 LOAD_GLOBAL          (response_message)
+             250 LOAD_FAST            (login_result)
+             252 CALL_FUNCTION        (1 positional argument)
+             254 FORMAT_VALUE         0
+             256 BUILD_STRING         2
+             258 CALL_FUNCTION        (1 positional argument)
+             260 POP_TOP
+
+304:         262 POP_BLOCK
+             264 LOAD_CONST           (False)
+             266 RETURN_VALUE
+
+305:     >>  268 LOAD_GLOBAL          (_as_int)
+             270 LOAD_FAST            (login_result)
+             272 LOAD_METHOD          (get)
+             274 LOAD_CONST           ("verified")
+             276 LOAD_CONST           (1)
+             278 CALL_METHOD          (2 positional arguments)
+             280 LOAD_CONST           (1)
+             282 CALL_FUNCTION        (2 positional arguments)
+             284 LOAD_CONST           (0)
+             286 COMPARE_OP           (==)
+             288 POP_JUMP_IF_FALSE    (to 312)
+
+306:         290 LOAD_GLOBAL          (print)
+             292 LOAD_CONST           ("Ninja Rift auto relogin requires verification code. Sending user back to login.")
+             294 CALL_FUNCTION        (1 positional argument)
+             296 POP_TOP
+
+307:         298 LOAD_GLOBAL          (_notify_rift_reauth_required)
+             300 LOAD_CONST           ("Ninja Rift verification is required again. Please log in and enter the code.")
+             302 CALL_FUNCTION        (1 positional argument)
+             304 POP_TOP
+
+308:         306 POP_BLOCK
+             308 LOAD_CONST           (False)
+             310 RETURN_VALUE
+
+310:     >>  312 LOAD_FAST            (login_result)
+             314 LOAD_GLOBAL          (config)
+             316 STORE_ATTR           (login_data)
+
+311:         318 SETUP_FINALLY        (to 348)
+
+312:         320 LOAD_GLOBAL          (amf_req)
+             322 LOAD_METHOD          (get_all_characters)
+             324 CALL_METHOD          (0 positional arguments)
+             326 STORE_FAST           (all_characters)
+
+313:         328 LOAD_GLOBAL          (isinstance)
+             330 LOAD_FAST            (all_characters)
+             332 LOAD_GLOBAL          (dict)
+             334 CALL_FUNCTION        (2 positional arguments)
+             336 POP_JUMP_IF_FALSE    (to 344)
+
+314:         338 LOAD_FAST            (all_characters)
+             340 LOAD_GLOBAL          (config)
+             342 STORE_ATTR           (all_char)
+         >>  344 POP_BLOCK
+             346 JUMP_FORWARD         (to 398)
+
+315:     >>  348 DUP_TOP
+             350 LOAD_GLOBAL          (Exception)
+             352 JUMP_IF_NOT_EXC_MATCH (to 396)
+             354 POP_TOP
+             356 STORE_FAST           (exc)
+             358 POP_TOP
+             360 SETUP_FINALLY        (to 388)
+
+316:         362 LOAD_GLOBAL          (print)
+             364 LOAD_CONST           ("Ninja Rift auto relogin character list refresh warning: ")
+             366 LOAD_FAST            (exc)
+             368 FORMAT_VALUE         0
+             370 BUILD_STRING         2
+             372 CALL_FUNCTION        (1 positional argument)
+             374 POP_TOP
+             376 POP_BLOCK
+             378 POP_EXCEPT
+             380 LOAD_CONST           (None)
+             382 STORE_FAST           (exc)
+             384 DELETE_FAST          (exc)
+             386 JUMP_FORWARD         (to 398)
+         >>  388 LOAD_CONST           (None)
+             390 STORE_FAST           (exc)
+             392 DELETE_FAST          (exc)
+             394 RERAISE              1
+
+315:     >>  396 RERAISE              0
+
+317:     >>  398 LOAD_FAST            (char_id)
+             400 LOAD_CONST           ((None, ''))
+             402 CONTAINS_OP          (not in)
+             404 POP_JUMP_IF_FALSE    (to 432)
+
+318:         406 LOAD_GLOBAL          (amf_req)
+             408 LOAD_METHOD          (get_character_data)
+             410 LOAD_FAST            (char_id)
+             412 CALL_METHOD          (1 positional argument)
+             414 STORE_FAST           (refreshed_char)
+
+319:         416 LOAD_GLOBAL          (isinstance)
+             418 LOAD_FAST            (refreshed_char)
+             420 LOAD_GLOBAL          (dict)
+             422 CALL_FUNCTION        (2 positional arguments)
+             424 POP_JUMP_IF_FALSE    (to 432)
+
+320:         426 LOAD_FAST            (refreshed_char)
+             428 LOAD_GLOBAL          (config)
+             430 STORE_ATTR           (char_data)
+
+321:     >>  432 LOAD_GLOBAL          (print)
+             434 LOAD_CONST           ("Ninja Rift auto relogin successful.")
+             436 CALL_FUNCTION        (1 positional argument)
+             438 POP_TOP
+
+322:         440 POP_BLOCK
+             442 LOAD_CONST           (True)
+             444 RETURN_VALUE
+
+323:     >>  446 DUP_TOP
+             448 LOAD_GLOBAL          (Exception)
+             450 JUMP_IF_NOT_EXC_MATCH (to 496)
+             452 POP_TOP
+             454 STORE_FAST           (exc)
+             456 POP_TOP
+             458 SETUP_FINALLY        (to 488)
+
+324:         460 LOAD_GLOBAL          (print)
+             462 LOAD_CONST           ("Ninja Rift auto relogin error: ")
+             464 LOAD_FAST            (exc)
+             466 FORMAT_VALUE         0
+             468 BUILD_STRING         2
+             470 CALL_FUNCTION        (1 positional argument)
+             472 POP_TOP
+
+325:         474 POP_BLOCK
+             476 POP_EXCEPT
+             478 LOAD_CONST           (None)
+             480 STORE_FAST           (exc)
+             482 DELETE_FAST          (exc)
+             484 LOAD_CONST           (False)
+             486 RETURN_VALUE
+         >>  488 LOAD_CONST           (None)
+             490 STORE_FAST           (exc)
+             492 DELETE_FAST          (exc)
+             494 RERAISE              1
+
+323:     >>  496 RERAISE              0
+
+
+# Method Name:       send_rift_request
+# Filename:          runtime.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 2
+# Number of locals:  7
+# Stack size:        10
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        328
+# Constants:
+#    0: None
+#    1: 'rift_min_call_delay_seconds'
+#    2: 2
+#    3: 0
+#    4: 'Ninja Rift request failed on '
+#    5: ': '
+#    6: 3
+#    7: ('attempt',)
+#    8: 'Retrying Ninja Rift request after auto relogin: '
+#    9: True
+#   10: 1
+#   11: ('_allow_recovery', '_attempt')
+#   12: 'Ninja Rift session error on '
+#   13: 'Retrying Ninja Rift request after session recovery: '
+#   14: 'Ninja Rift session expired and auto relogin could not recover it.'
+# Names:
+#    0: check_stop_event
+#    1: rift_delay
+#    2: wait_with_stop
+#    3: send_amf_request
+#    4: Exception
+#    5: _looks_like_rift_transport_problem
+#    6: print
+#    7: _rift_relogin_and_reselect_character
+#    8: send_rift_request
+#    9: _looks_like_rift_session_problem
+#   10: response_message
+#   11: _notify_rift_reauth_required
+# Varnames:
+#	service, params, _allow_recovery, _attempt, min_delay, result, exc
+# Positional arguments:
+#	service, params
+# Local variables:
+#    2: _allow_recovery
+#    3: _attempt
+#    4: min_delay
+#    5: result
+#    6: exc
+329:           0 LOAD_GLOBAL          (check_stop_event)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 POP_JUMP_IF_FALSE    (to 10)
+
+330:           6 LOAD_CONST           (None)
+               8 RETURN_VALUE
+
+331:     >>   10 LOAD_GLOBAL          (rift_delay)
+              12 LOAD_CONST           ("rift_min_call_delay_seconds")
+              14 LOAD_CONST           (2)
+              16 CALL_FUNCTION        (2 positional arguments)
+              18 STORE_FAST           (min_delay)
+
+332:          20 LOAD_FAST            (min_delay)
+              22 LOAD_CONST           (0)
+              24 COMPARE_OP           (>)
+              26 POP_JUMP_IF_FALSE    (to 40)
+
+333:          28 LOAD_GLOBAL          (wait_with_stop)
+              30 LOAD_FAST            (min_delay)
+              32 CALL_FUNCTION        (1 positional argument)
+              34 POP_JUMP_IF_TRUE     (to 40)
+
+334:          36 LOAD_CONST           (None)
+              38 RETURN_VALUE
+
+335:     >>   40 SETUP_FINALLY        (to 56)
+
+336:          42 LOAD_GLOBAL          (send_amf_request)
+              44 LOAD_FAST            (service)
+              46 LOAD_FAST            (params)
+              48 CALL_FUNCTION        (2 positional arguments)
+              50 STORE_FAST           (result)
+              52 POP_BLOCK
+              54 JUMP_FORWARD         (to 180)
+
+337:     >>   56 DUP_TOP
+              58 LOAD_GLOBAL          (Exception)
+              60 JUMP_IF_NOT_EXC_MATCH (to 178)
+              62 POP_TOP
+              64 STORE_FAST           (exc)
+              66 POP_TOP
+              68 SETUP_FINALLY        (to 170)
+
+338:          70 LOAD_FAST            (_allow_recovery)
+              72 POP_JUMP_IF_FALSE    (to 82)
+              74 LOAD_GLOBAL          (_looks_like_rift_transport_problem)
+              76 LOAD_FAST            (exc)
+              78 CALL_FUNCTION        (1 positional argument)
+              80 POP_JUMP_IF_TRUE     (to 84)
+
+339:     >>   82 RAISE_VARARGS        (reraise)
+
+340:     >>   84 LOAD_GLOBAL          (print)
+              86 LOAD_CONST           ("Ninja Rift request failed on ")
+              88 LOAD_FAST            (service)
+              90 FORMAT_VALUE         0
+              92 LOAD_CONST           (": ")
+              94 LOAD_FAST            (exc)
+              96 FORMAT_VALUE         0
+              98 BUILD_STRING         4
+             100 CALL_FUNCTION        (1 positional argument)
+             102 POP_TOP
+
+341:         104 LOAD_FAST            (_attempt)
+             106 LOAD_CONST           (3)
+             108 COMPARE_OP           (<)
+             110 POP_JUMP_IF_FALSE    (to 168)
+             112 LOAD_GLOBAL          (_rift_relogin_and_reselect_character)
+             114 LOAD_FAST            (_attempt)
+             116 LOAD_CONST           (('attempt',))
+             118 CALL_FUNCTION_KW     (1 total positional and keyword args)
+             120 POP_JUMP_IF_FALSE    (to 168)
+
+342:         122 LOAD_GLOBAL          (print)
+             124 LOAD_CONST           ("Retrying Ninja Rift request after auto relogin: ")
+             126 LOAD_FAST            (service)
+             128 FORMAT_VALUE         0
+             130 BUILD_STRING         2
+             132 CALL_FUNCTION        (1 positional argument)
+             134 POP_TOP
+
+343:         136 LOAD_GLOBAL          (send_rift_request)
+             138 LOAD_FAST            (service)
+             140 LOAD_FAST            (params)
+             142 LOAD_CONST           (True)
+             144 LOAD_FAST            (_attempt)
+             146 LOAD_CONST           (1)
+             148 BINARY_ADD
+             150 LOAD_CONST           (('_allow_recovery', '_attempt'))
+             152 CALL_FUNCTION_KW     (4 total positional and keyword args)
+             154 POP_BLOCK
+             156 ROT_FOUR
+             158 POP_EXCEPT
+             160 LOAD_CONST           (None)
+             162 STORE_FAST           (exc)
+             164 DELETE_FAST          (exc)
+             166 RETURN_VALUE
+
+344:     >>  168 RAISE_VARARGS        (reraise)
+         >>  170 LOAD_CONST           (None)
+             172 STORE_FAST           (exc)
+             174 DELETE_FAST          (exc)
+             176 RERAISE              1
+
+337:     >>  178 RERAISE              0
+
+346:     >>  180 LOAD_FAST            (_allow_recovery)
+             182 POP_JUMP_IF_FALSE    (to 276)
+             184 LOAD_GLOBAL          (_looks_like_rift_session_problem)
+             186 LOAD_FAST            (result)
+             188 CALL_FUNCTION        (1 positional argument)
+             190 POP_JUMP_IF_FALSE    (to 276)
+
+347:         192 LOAD_GLOBAL          (print)
+             194 LOAD_CONST           ("Ninja Rift session error on ")
+             196 LOAD_FAST            (service)
+             198 FORMAT_VALUE         0
+             200 LOAD_CONST           (": ")
+             202 LOAD_GLOBAL          (response_message)
+             204 LOAD_FAST            (result)
+             206 CALL_FUNCTION        (1 positional argument)
+             208 FORMAT_VALUE         0
+             210 BUILD_STRING         4
+             212 CALL_FUNCTION        (1 positional argument)
+             214 POP_TOP
+
+348:         216 LOAD_FAST            (_attempt)
+             218 LOAD_CONST           (3)
+             220 COMPARE_OP           (<)
+             222 POP_JUMP_IF_FALSE    (to 268)
+             224 LOAD_GLOBAL          (_rift_relogin_and_reselect_character)
+             226 LOAD_FAST            (_attempt)
+             228 LOAD_CONST           (('attempt',))
+             230 CALL_FUNCTION_KW     (1 total positional and keyword args)
+             232 POP_JUMP_IF_FALSE    (to 268)
+
+349:         234 LOAD_GLOBAL          (print)
+             236 LOAD_CONST           ("Retrying Ninja Rift request after session recovery: ")
+             238 LOAD_FAST            (service)
+             240 FORMAT_VALUE         0
+             242 BUILD_STRING         2
+             244 CALL_FUNCTION        (1 positional argument)
+             246 POP_TOP
+
+350:         248 LOAD_GLOBAL          (send_rift_request)
+             250 LOAD_FAST            (service)
+             252 LOAD_FAST            (params)
+             254 LOAD_CONST           (True)
+             256 LOAD_FAST            (_attempt)
+             258 LOAD_CONST           (1)
+             260 BINARY_ADD
+             262 LOAD_CONST           (('_allow_recovery', '_attempt'))
+             264 CALL_FUNCTION_KW     (4 total positional and keyword args)
+             266 RETURN_VALUE
+
+351:     >>  268 LOAD_GLOBAL          (_notify_rift_reauth_required)
+             270 LOAD_CONST           ("Ninja Rift session expired and auto relogin could not recover it.")
+             272 CALL_FUNCTION        (1 positional argument)
+             274 POP_TOP
+
+352:     >>  276 LOAD_FAST            (result)
+             278 RETURN_VALUE
+
+
+# Method Name:       mission_damage
+# Filename:          runtime.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  7
+# Stack size:        9
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        355
+# Constants:
+#    0: None
+#    1: 0
+#    2: 'enemy_hp'
+#    3: 'hp'
+#    4: 1.2
+# Names:
+#    0: zip
+#    1: get
+#    2: int
+#    3: Exception
+#    4: max
+#    5: random
+#    6: randint
+# Varnames:
+#	enemy_ids, enemy_stats, total_hp, enemy_id, enemy_data, hp, upper
+# Positional arguments:
+#	enemy_ids, enemy_stats
+# Local variables:
+#    2: total_hp
+#    3: enemy_id
+#    4: enemy_data
+#    5: hp
+#    6: upper
+356:           0 LOAD_CONST           (0)
+               2 STORE_FAST           (total_hp)
+
+357:           4 LOAD_GLOBAL          (zip)
+               6 LOAD_FAST            (enemy_ids)
+               8 LOAD_FAST            (enemy_stats)
+              10 CALL_FUNCTION        (2 positional arguments)
+              12 GET_ITER
+         >>   14 FOR_ITER             (to 82)
+              16 UNPACK_SEQUENCE      2
+              18 STORE_FAST           (enemy_id)
+              20 STORE_FAST           (enemy_data)
+
+358:          22 LOAD_FAST            (enemy_data)
+              24 LOAD_METHOD          (get)
+              26 LOAD_CONST           ("enemy_hp")
+              28 CALL_METHOD          (1 positional argument)
+              30 JUMP_IF_TRUE_OR_POP  (to 44)
+              32 LOAD_FAST            (enemy_data)
+              34 LOAD_METHOD          (get)
+              36 LOAD_CONST           ("hp")
+              38 CALL_METHOD          (1 positional argument)
+              40 JUMP_IF_TRUE_OR_POP  (to 44)
+              42 LOAD_CONST           (0)
+         >>   44 STORE_FAST           (hp)
+
+359:          46 SETUP_FINALLY        (to 64)
+
+360:          48 LOAD_FAST            (total_hp)
+              50 LOAD_GLOBAL          (int)
+              52 LOAD_FAST            (hp)
+              54 CALL_FUNCTION        (1 positional argument)
+              56 INPLACE_ADD
+              58 STORE_FAST           (total_hp)
+              60 POP_BLOCK
+              62 JUMP_ABSOLUTE        (to 14)
+
+361:     >>   64 DUP_TOP
+              66 LOAD_GLOBAL          (Exception)
+              68 JUMP_IF_NOT_EXC_MATCH (to 80)
+              70 POP_TOP
+              72 POP_TOP
+              74 POP_TOP
+
+362:          76 POP_EXCEPT
+              78 JUMP_ABSOLUTE        (to 14)
+
+361:     >>   80 RERAISE              0
+
+364:     >>   82 LOAD_FAST            (total_hp)
+              84 LOAD_CONST           (0)
+              86 COMPARE_OP           (<=)
+              88 POP_JUMP_IF_FALSE    (to 94)
+
+365:          90 LOAD_CONST           (0)
+              92 RETURN_VALUE
+
+367:     >>   94 LOAD_GLOBAL          (max)
+              96 LOAD_FAST            (total_hp)
+              98 LOAD_GLOBAL          (int)
+             100 LOAD_FAST            (total_hp)
+             102 LOAD_CONST           (1.2)
+             104 BINARY_MULTIPLY
+             106 CALL_FUNCTION        (1 positional argument)
+             108 CALL_FUNCTION        (2 positional arguments)
+             110 STORE_FAST           (upper)
+
+368:         112 LOAD_GLOBAL          (random)
+             114 LOAD_METHOD          (randint)
+             116 LOAD_FAST            (total_hp)
+             118 LOAD_FAST            (upper)
+             120 CALL_METHOD          (2 positional arguments)
+             122 RETURN_VALUE
+
+
+# Method Name:       finish_mission
+# Filename:          runtime.py
+# Argument count:    3
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  7
+# Stack size:        8
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        371
+# Constants:
+#    0: None
+#    1: 'BattleSystem.finishMission'
+# Names:
+#    0: get_char_id
+#    1: get_session_key
+#    2: CUCSG
+#    3: hash
+#    4: send_rift_request
+#    5: save_fight_data
+# Varnames:
+#	mission_id, battle_code, damage, char_id, session_key, finish_hash, result
+# Positional arguments:
+#	mission_id, battle_code, damage
+# Local variables:
+#    3: char_id
+#    4: session_key
+#    5: finish_hash
+#    6: result
+372:           0 LOAD_GLOBAL          (get_char_id)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (char_id)
+
+373:           6 LOAD_GLOBAL          (get_session_key)
+               8 CALL_FUNCTION        (0 positional arguments)
+              10 STORE_FAST           (session_key)
+
+374:          12 LOAD_GLOBAL          (CUCSG)
+              14 LOAD_METHOD          (hash)
+              16 LOAD_FAST            (mission_id)
+              18 FORMAT_VALUE         0
+              20 LOAD_FAST            (char_id)
+              22 FORMAT_VALUE         0
+              24 LOAD_FAST            (battle_code)
+              26 FORMAT_VALUE         0
+              28 LOAD_FAST            (damage)
+              30 FORMAT_VALUE         0
+              32 BUILD_STRING         4
+              34 CALL_METHOD          (1 positional argument)
+              36 STORE_FAST           (finish_hash)
+
+375:          38 LOAD_GLOBAL          (send_rift_request)
+
+376:          40 LOAD_CONST           ("BattleSystem.finishMission")
+
+377:          42 LOAD_FAST            (char_id)
+              44 LOAD_FAST            (mission_id)
+              46 LOAD_FAST            (battle_code)
+              48 LOAD_FAST            (finish_hash)
+              50 LOAD_FAST            (damage)
+              52 LOAD_FAST            (session_key)
+              54 BUILD_LIST           6
+
+375:          56 CALL_FUNCTION        (2 positional arguments)
+              58 STORE_FAST           (result)
+
+379:          60 LOAD_FAST            (result)
+              62 LOAD_CONST           (None)
+              64 IS_OP                (is not)
+              66 POP_JUMP_IF_FALSE    (to 76)
+
+380:          68 LOAD_GLOBAL          (save_fight_data)
+              70 LOAD_FAST            (result)
+              72 CALL_FUNCTION        (1 positional argument)
+              74 POP_TOP
+
+381:     >>   76 LOAD_FAST            (result)
+              78 RETURN_VALUE
+
+
+# Method Name:       finish_eudemon
+# Filename:          runtime.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  6
+# Stack size:        7
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        384
+# Constants:
+#    0: None
+#    1: 'EudemonGarden.finishHunting'
+# Names:
+#    0: get_char_id
+#    1: get_session_key
+#    2: CUCSG
+#    3: hash
+#    4: send_rift_request
+#    5: save_fight_data
+# Varnames:
+#	boss_num, battle_code, char_id, session_key, finish_hash, result
+# Positional arguments:
+#	boss_num, battle_code
+# Local variables:
+#    2: char_id
+#    3: session_key
+#    4: finish_hash
+#    5: result
+385:           0 LOAD_GLOBAL          (get_char_id)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (char_id)
+
+386:           6 LOAD_GLOBAL          (get_session_key)
+               8 CALL_FUNCTION        (0 positional arguments)
+              10 STORE_FAST           (session_key)
+
+387:          12 LOAD_GLOBAL          (CUCSG)
+              14 LOAD_METHOD          (hash)
+              16 LOAD_FAST            (boss_num)
+              18 FORMAT_VALUE         0
+              20 LOAD_FAST            (char_id)
+              22 FORMAT_VALUE         0
+              24 LOAD_FAST            (battle_code)
+              26 FORMAT_VALUE         0
+              28 BUILD_STRING         3
+              30 CALL_METHOD          (1 positional argument)
+              32 STORE_FAST           (finish_hash)
+
+388:          34 LOAD_GLOBAL          (send_rift_request)
+
+389:          36 LOAD_CONST           ("EudemonGarden.finishHunting")
+
+390:          38 LOAD_FAST            (char_id)
+              40 LOAD_FAST            (boss_num)
+              42 LOAD_FAST            (battle_code)
+              44 LOAD_FAST            (finish_hash)
+              46 LOAD_FAST            (session_key)
+              48 BUILD_LIST           5
+
+388:          50 CALL_FUNCTION        (2 positional arguments)
+              52 STORE_FAST           (result)
+
+392:          54 LOAD_FAST            (result)
+              56 LOAD_CONST           (None)
+              58 IS_OP                (is not)
+              60 POP_JUMP_IF_FALSE    (to 70)
+
+393:          62 LOAD_GLOBAL          (save_fight_data)
+              64 LOAD_FAST            (result)
+              66 CALL_FUNCTION        (1 positional argument)
+              68 POP_TOP
+
+394:     >>   70 LOAD_FAST            (result)
+              72 RETURN_VALUE
+
+
+# Method Name:       finish_hunting_house
+# Filename:          runtime.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  6
+# Stack size:        7
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        397
+# Constants:
+#    0: None
+#    1: 'HuntingHouse.finishHunting'
+# Names:
+#    0: get_char_id
+#    1: get_session_key
+#    2: CUCSG
+#    3: hash
+#    4: send_rift_request
+#    5: save_fight_data
+# Varnames:
+#	boss_num, battle_code, char_id, session_key, finish_hash, result
+# Positional arguments:
+#	boss_num, battle_code
+# Local variables:
+#    2: char_id
+#    3: session_key
+#    4: finish_hash
+#    5: result
+398:           0 LOAD_GLOBAL          (get_char_id)
+               2 CALL_FUNCTION        (0 positional arguments)
+               4 STORE_FAST           (char_id)
+
+399:           6 LOAD_GLOBAL          (get_session_key)
+               8 CALL_FUNCTION        (0 positional arguments)
+              10 STORE_FAST           (session_key)
+
+400:          12 LOAD_GLOBAL          (CUCSG)
+              14 LOAD_METHOD          (hash)
+              16 LOAD_FAST            (boss_num)
+              18 FORMAT_VALUE         0
+              20 LOAD_FAST            (char_id)
+              22 FORMAT_VALUE         0
+              24 LOAD_FAST            (battle_code)
+              26 FORMAT_VALUE         0
+              28 BUILD_STRING         3
+              30 CALL_METHOD          (1 positional argument)
+              32 STORE_FAST           (finish_hash)
+
+401:          34 LOAD_GLOBAL          (send_rift_request)
+
+402:          36 LOAD_CONST           ("HuntingHouse.finishHunting")
+
+403:          38 LOAD_FAST            (char_id)
+              40 LOAD_FAST            (boss_num)
+              42 LOAD_FAST            (battle_code)
+              44 LOAD_FAST            (finish_hash)
+              46 LOAD_FAST            (session_key)
+              48 BUILD_LIST           5
+
+401:          50 CALL_FUNCTION        (2 positional arguments)
+              52 STORE_FAST           (result)
+
+405:          54 LOAD_FAST            (result)
+              56 LOAD_CONST           (None)
+              58 IS_OP                (is not)
+              60 POP_JUMP_IF_FALSE    (to 70)
+
+406:          62 LOAD_GLOBAL          (save_fight_data)
+              64 LOAD_FAST            (result)
+              66 CALL_FUNCTION        (1 positional argument)
+              68 POP_TOP
+
+407:     >>   70 LOAD_FAST            (result)
+              72 RETURN_VALUE
+
+
+# Method Name:       enemy_name
+# Filename:          runtime.py
+# Argument count:    2
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  4
+# Stack size:        4
+# Flags:             0x00000043 (NOFREE | NEWLOCALS | OPTIMIZED)
+# First Line:        410
+# Constants:
+#    0: None
+#    1: 'enemy_name'
+#    2: 'name'
+# Names:
+#    0: amf_req
+#    1: get_enemy_library
+#    2: get
+#    3: str
+# Varnames:
+#	enemy_id, fallback, enemy, name
+# Positional arguments:
+#	enemy_id, fallback
+# Local variables:
+#    2: enemy
+#    3: name
+411:           0 LOAD_GLOBAL          (amf_req)
+               2 LOAD_METHOD          (get_enemy_library)
+               4 CALL_METHOD          (0 positional arguments)
+               6 LOAD_METHOD          (get)
+               8 LOAD_GLOBAL          (str)
+              10 LOAD_FAST            (enemy_id)
+              12 CALL_FUNCTION        (1 positional argument)
+              14 CALL_METHOD          (1 positional argument)
+              16 JUMP_IF_TRUE_OR_POP  (to 20)
+              18 BUILD_MAP            0
+         >>   20 STORE_FAST           (enemy)
+
+412:          22 LOAD_FAST            (enemy)
+              24 LOAD_METHOD          (get)
+              26 LOAD_CONST           ("enemy_name")
+              28 CALL_METHOD          (1 positional argument)
+              30 JUMP_IF_TRUE_OR_POP  (to 52)
+              32 LOAD_FAST            (enemy)
+              34 LOAD_METHOD          (get)
+              36 LOAD_CONST           ("name")
+              38 CALL_METHOD          (1 positional argument)
+              40 JUMP_IF_TRUE_OR_POP  (to 52)
+              42 LOAD_FAST            (fallback)
+              44 JUMP_IF_TRUE_OR_POP  (to 52)
+              46 LOAD_GLOBAL          (str)
+              48 LOAD_FAST            (enemy_id)
+              50 CALL_FUNCTION        (1 positional argument)
+         >>   52 STORE_FAST           (name)
+
+413:          54 LOAD_GLOBAL          (str)
+              56 LOAD_FAST            (name)
+              58 CALL_FUNCTION        (1 positional argument)
+              60 RETURN_VALUE
+
+
+# Method Name:       <genexpr>
+# Filename:          runtime.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        3
+# Flags:             0x00000033 (GENERATOR | NESTED | NEWLOCALS | OPTIMIZED)
+# First Line:        241
+# Constants:
+#    0: None
+# Varnames:
+#	.0, marker
+# Positional arguments:
+#	.0
+# Local variables:
+#    1: marker
+# Free variables:
+#    0: message
+               0 GEN_START            0
+
+241:           2 LOAD_FAST            (.0)
+         >>    4 FOR_ITER             (to 20)
+               6 STORE_FAST           (marker)
+               8 LOAD_FAST            (marker)
+              10 LOAD_DEREF           (message)
+              12 CONTAINS_OP          (in)
+              14 YIELD_VALUE
+              16 POP_TOP
+              18 JUMP_ABSOLUTE        (to 4)
+         >>   20 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+
+# Method Name:       <genexpr>
+# Filename:          runtime.py
+# Argument count:    1
+# Position-only argument count: 0
+# Keyword-only arguments: 0
+# Number of locals:  2
+# Stack size:        3
+# Flags:             0x00000033 (GENERATOR | NESTED | NEWLOCALS | OPTIMIZED)
+# First Line:        263
+# Constants:
+#    0: None
+# Varnames:
+#	.0, marker
+# Positional arguments:
+#	.0
+# Local variables:
+#    1: marker
+# Free variables:
+#    0: message
+               0 GEN_START            0
+
+263:           2 LOAD_FAST            (.0)
+         >>    4 FOR_ITER             (to 20)
+               6 STORE_FAST           (marker)
+               8 LOAD_FAST            (marker)
+              10 LOAD_DEREF           (message)
+              12 CONTAINS_OP          (in)
+              14 YIELD_VALUE
+              16 POP_TOP
+              18 JUMP_ABSOLUTE        (to 4)
+         >>   20 LOAD_CONST           (None)
+              22 RETURN_VALUE
+

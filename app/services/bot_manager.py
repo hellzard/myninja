@@ -740,6 +740,7 @@ async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: in
     if not isinstance(char_data, dict):
         char_data = {}
     char_agility = char_data.get('agility', 0)
+    initial_tokens = int(char_info_res.get('account_tokens', 0))
     
     # Simulate _loc6_ equipment encoding logic
     loc5 = {
@@ -823,6 +824,11 @@ async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: in
         ]])
     except Exception as e:
         return f"Circus Event finish failed: {e}"
+        
+    if isinstance(finish_res, dict) and finish_res.get('status') == 1:
+        final_tokens = finish_res.get('account_tokens')
+        if final_tokens is not None and int(final_tokens) < initial_tokens:
+            return f"STOPPED: Tiket {boss_type.capitalize()} habis! Server memotong {initial_tokens - int(final_tokens)} Token. Bot dihentikan untuk melindungi tokenmu."
     
     return f"Circus Event Complete! Reward: {finish_res}"
 
@@ -850,6 +856,7 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
     if not isinstance(char_data, dict):
         char_data = {}
     char_agility = char_data.get('agility', 0)
+    initial_tokens = int(char_info_res.get('account_tokens', 0))
     
     # BATTLE_HASH from config.py - the correct base64 string for Event battles
     # This is DIFFERENT from monster_hunting's equipment_data!
@@ -876,14 +883,6 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         ticket_item = "item_35"
     else:
         return f"Unknown yokai boss type: {boss_type}"
-        
-    try:
-        char_full_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
-        ticket_count = get_inventory_amount(char_full_res, ticket_item)
-        if ticket_count <= 0:
-            return f"No {boss_type.capitalize()} tickets left ({ticket_item}). Stopped to prevent token deduction."
-    except Exception as e:
-        return f"Failed to check {boss_type.capitalize()} ticket inventory: {e}"
     
     enemy_info_str = f"id:{ene_id}|hp:{hp}|agility:{enemy_agility}"
     
@@ -929,6 +928,9 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         return f"Yokai Event finish failed: {e}"
         
     if isinstance(finish_res, dict) and finish_res.get('status') == 1:
+        final_tokens = finish_res.get('account_tokens')
+        if final_tokens is not None and int(final_tokens) < initial_tokens:
+            return f"STOPPED: Tiket {boss_type.capitalize()} habis! Server memotong {initial_tokens - int(final_tokens)} Token. Bot dihentikan untuk melindungi tokenmu."
         return f"Yokai Event Complete! Reward: {finish_res.get('result', [])}"
     else:
         error_msg = finish_res.get('result', finish_res) if isinstance(finish_res, dict) else finish_res
