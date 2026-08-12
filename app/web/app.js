@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btnAutoLevel.click();
                 return;
             }
-            let delay = 2000;
+            let delay = 4000;
             // First try taking exam if eligible
             try {
                 const examRes = await fetch('/api/bot/auto_exam_step', {
