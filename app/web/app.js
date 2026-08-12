@@ -284,10 +284,11 @@ document.addEventListener('DOMContentLoaded', () => {
         let charLevel = parseInt(sessionState.level);
         if (isNaN(charLevel)) charLevel = 1;
         
-        let targetMissionId = "msn_11"; // Grade C
-        if (charLevel >= 40) targetMissionId = "msn_42"; // Sannin
-        else if (charLevel >= 20) targetMissionId = "msn_23"; // Grade A
-        else if (charLevel >= 10) targetMissionId = "msn_18"; // Grade B
+        let targetMissionId = "3"; // Genin
+        if (charLevel >= 60) targetMissionId = "121"; // Sannin/A+
+        else if (charLevel >= 40) targetMissionId = "109"; // Grade A
+        else if (charLevel >= 20) targetMissionId = "69"; // Grade B
+        else if (charLevel >= 10) targetMissionId = "68"; // Grade C
         
         autoLevelTarget = targetMissionId;
         autoLevelIsRunning = true;
@@ -302,9 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btnAutoLevel.click();
                 return;
             }
-            
-            let delay = 4000;
-            
+            let delay = 2000;
             // First try taking exam if eligible
             try {
                 const examRes = await fetch('/api/bot/auto_exam_step', {

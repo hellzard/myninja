@@ -117,37 +117,14 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
             return f"Failed to start Sage Scroll mission {mission_id}: {start_res}"
             
         battle_id = str(start_res) if not isinstance(start_res, dict) else str(start_res.get('battle_code', start_res.get('id', start_res)))
-        await asyncio.sleep(2)
+        await asyncio.sleep(1)
         finish_res = await client.send_amf_request("BattleSystem.finishSageScrollMiniGame", [char_id, sessionkey, battle_id])
         return f"Sage Scroll Mission {mission_id} Complete! Reward: {finish_res}"
         
-    mission_info = get_data_by_id(mission_id, MISSION_DATA)
-    if not mission_info:
-        return f"Unknown mission_id {mission_id}"
-        
-    char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
-    if char_data_res.get('status') == 0:
-        return f"Failed to get character data: {char_data_res.get('error', 'Unknown error')}"
-    char_data = char_data_res
-    agility = calculate_agility(char_data)
-    
-    enemies = mission_info.get("enemies", [])
-    enemy_attrs = []
-    for enemy in enemies:
-        enemy_attr = get_data_by_id(enemy, ENEMY_DATA)
-        hp = enemy_attr.get("hp", 0)
-        ene_agi = enemy_attr.get("agility", 0)
-        enemy_attrs.append(f"id:{enemy}|hp:{hp}|agility:{ene_agi}")
-        
-    hash_input = ",".join(enemies) + "#".join(enemy_attrs) + str(agility)
-    mission_hash = hashlib.sha256(hash_input.encode()).hexdigest()
-    
-    start_params = [char_id, mission_id, ",".join(enemies), "#".join(enemy_attrs), agility, mission_hash, sessionkey]
-    
+    # Efficient bypass for standard missions (no getCharacterData overhead)
+    start_params = [char_id, mission_id, "char_0", "char_0", "char_0", "char_0", sessionkey]
     start_res = await client.send_amf_request("IOIJB836r2Hu2PPW.mwaPMdtCPC5o", start_params)
     
-    # APK treats the response directly as battle_id.
-    # Server may return: a raw value (int/str), or a dict with status/error info.
     if isinstance(start_res, dict):
         if start_res.get('status') == 2 or start_res.get('error') is not None:
             return f"Failed to start mission {mission_id}: {start_res}"
