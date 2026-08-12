@@ -770,21 +770,19 @@ async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: in
         ene_id = "ene_2135"
         hp = 114000
         enemy_agility = 166
-        ticket_item = "item_48"
+        
+        # Jester requires using a ticket first (item_48)
+        try:
+            item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [[sessionkey, char_id, "item_48"]])
+            print(f"DEBUG CIRCUS Jester Ticket Use: {item_res}")
+        except Exception as e:
+            return f"Failed to use Jester ticket: {e}"
+            
     else: # default to ringmaster
         boss_id = 312610 
         ene_id = "ene_2134"
         hp = 34200
         enemy_agility = 186
-        ticket_item = "item_47"
-        
-    try:
-        char_full_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
-        ticket_count = get_inventory_amount(char_full_res, ticket_item)
-        if ticket_count <= 0:
-            return f"No {boss_type.capitalize()} tickets left ({ticket_item}). Stopped to prevent token deduction."
-    except Exception as e:
-        return f"Failed to check {boss_type.capitalize()} ticket inventory: {e}"
     
     enemy_info_str = f"id:{ene_id}|hp:{hp}|agility:{enemy_agility}"
     
