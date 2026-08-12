@@ -984,3 +984,73 @@ if (canvas) {
     }
     animate();
 }
+
+// ----------------------------------------------------
+// TOP SECRET MODULE (GACHA EXPLOIT)
+// ----------------------------------------------------
+
+let secretUnlocked = false;
+
+function openSecretModal() {
+    if (!secretUnlocked) {
+        document.getElementById('modal-password').classList.add('show');
+    } else {
+        document.getElementById('modal-secret').classList.add('show');
+    }
+}
+
+function verifySecretPassword() {
+    const input = document.getElementById('secret_passcode').value;
+    if (input === 'adiganteng') {
+        secretUnlocked = true;
+        document.getElementById('secret_passcode').value = '';
+        document.getElementById('modal-password').classList.remove('show');
+        document.getElementById('modal-secret').classList.add('show');
+        addLog("[System] Exploit Arsenal Unlocked. Proceed with caution.", "success");
+    } else {
+        alert("ACCESS DENIED");
+        document.getElementById('secret_passcode').value = '';
+    }
+}
+
+async function triggerGachaExploit() {
+    const sessionkey = document.getElementById("sessionkey").value;
+    const char_id = document.getElementById("char_id").value;
+    const coinType = document.getElementById("exploit_coin_type").value;
+    const spamCount = parseInt(document.getElementById("exploit_spam_count").value, 10);
+
+    if (!sessionkey || !char_id) {
+        alert("Please login first!");
+        return;
+    }
+
+    const btn = document.getElementById("btn-exploit-gacha");
+    btn.innerText = "EXECUTING...";
+    btn.disabled = true;
+    addLog(`[Gacha Exploit] Initiating Race Condition: ${spamCount}x ${coinType}...`, "warning");
+
+    try {
+        const response = await fetch("/api/bot/exploit_gacha", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                sessionkey: sessionkey,
+                char_id: parseInt(char_id),
+                coin_type: coinType,
+                spam_count: spamCount
+            })
+        });
+        const data = await response.json();
+        if (data.status === "success") {
+            addLog(`[Gacha Exploit] Success: ${data.message}`, "success");
+        } else {
+            addLog(`[Gacha Exploit] Error: ${data.message}`, "error");
+        }
+    } catch(e) {
+        addLog(`[Gacha Exploit] Network Error: ${e.message}`, "error");
+    } finally {
+        btn.innerText = "EXECUTE";
+        btn.disabled = false;
+    }
+}
+

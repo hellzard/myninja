@@ -18,7 +18,8 @@ from app.services.bot_manager import (
     auto_exam,
     auto_eudemon,
     run_circus_event,
-    run_yokai_event
+    run_yokai_event,
+    exploit_gacha_race
 )
 
 # -----------------
@@ -42,6 +43,12 @@ class AutoLevelingRequest(BaseModel):
     sessionkey: str
     char_id: int
     mission_id: str
+
+class ExploitGachaRequest(BaseModel):
+    sessionkey: str
+    char_id: int
+    coin_type: str
+    spam_count: int
 
 class AutoDailyRequest(BaseModel):
     sessionkey: str
@@ -206,6 +213,16 @@ async def api_auto_yokai_minigame(req: BasicBotRequest):
     try:
         from app.services.bot_manager import run_yokai_minigame
         res = await run_yokai_minigame(client, req.sessionkey, req.char_id)
+        return {"status": "success", "message": res}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+@app.post("/api/bot/exploit_gacha")
+async def api_exploit_gacha(req: ExploitGachaRequest):
+    client = NinjaSageClient()
+    try:
+        from app.services.bot_manager import exploit_gacha_race
+        res = await exploit_gacha_race(client, req.sessionkey, req.char_id, req.coin_type, req.spam_count)
         return {"status": "success", "message": res}
     except Exception as e:
         return {"status": "error", "message": str(e)}

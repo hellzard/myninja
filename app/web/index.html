@@ -138,7 +138,15 @@
         </div>
       </div>
       
-      
+      <!-- TOP SECRET MODULE -->
+      <div class="module-card clickable glass-panel" onclick="openSecretModal()">
+        <div class="module-header" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+          <div class="module-icon icon-secret" style="color: #ef4444; text-shadow: 0 0 10px rgba(239, 68, 68, 0.8);"><i class="fa-solid fa-user-secret"></i></div>
+          <div class="module-title">
+            <h3 style="color: #ef4444;">Top Secret</h3>
+          </div>
+        </div>
+      </div>
 
     </main>
 
@@ -164,6 +172,57 @@
   </div>
 
   <!-- MODALS -->
+
+  <!-- Modal Password Unlock -->
+  <div id="modal-password" class="modal-overlay">
+    <div class="modal-content glass-panel" style="max-width: 400px; text-align: center;">
+      <div class="modal-header" style="justify-content: center;">
+        <h3><i class="fa-solid fa-lock" style="color: #ef4444;"></i> Top Secret Authorization</h3>
+      </div>
+      <div style="padding: 1rem 0;">
+        <p style="margin-bottom: 1rem; color: var(--text-muted);">Enter passcode to unlock experimental modules.</p>
+        <input type="password" id="secret_passcode" class="input-field" placeholder="Passcode..." style="width: 100%; text-align: center; margin-bottom: 1rem; font-size: 1.2rem; letter-spacing: 2px;">
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <button class="btn btn-primary" onclick="verifySecretPassword()">Unlock</button>
+          <button class="btn btn-secondary" onclick="document.getElementById('modal-password').classList.remove('show')">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Top Secret -->
+  <div id="modal-secret" class="modal-overlay">
+    <div class="modal-content glass-panel" style="border: 1px solid #ef4444;">
+      <div class="modal-header">
+        <h3 style="color: #ef4444;"><i class="fa-solid fa-user-secret"></i> Exploit Arsenal</h3>
+        <button class="btn-close" onclick="document.getElementById('modal-secret').classList.remove('show')">&times;</button>
+      </div>
+      <div class="action-list">
+        <div class="action-item" style="border-left: 4px solid #ef4444;">
+          <div class="action-info">
+            <h4 style="color: #ef4444;">Gacha Race Condition (Spammer)</h4>
+            <div style="margin-top: 0.25rem;">
+              Coin Type: 
+              <select id="exploit_coin_type" class="input-field" style="width: 120px;">
+                <option value="fox_coin">Fox Coin (Yokai)</option>
+                <option value="moyai">Moyai Coin (Daily)</option>
+                <option value="coins">Normal Coin</option>
+              </select>
+            </div>
+            <div style="margin-top: 0.25rem;">
+              Spam Request: 
+              <select id="exploit_spam_count" class="input-field" style="width: 80px;">
+                <option value="10">10x</option>
+                <option value="50">50x</option>
+                <option value="100">100x</option>
+              </select>
+            </div>
+          </div>
+          <button id="btn-exploit-gacha" class="btn btn-toggle" style="background: rgba(239, 68, 68, 0.2); border-color: #ef4444; color: #ef4444;" onclick="triggerGachaExploit()">EXECUTE</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal Operations -->
   <div id="modal-operations" class="modal-overlay">

