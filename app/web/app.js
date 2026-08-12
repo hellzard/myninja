@@ -288,10 +288,10 @@ document.addEventListener('DOMContentLoaded', () => {
             charLevel = parseInt(document.getElementById('auto_level_max').value || 60);
         }
         
-        let targetMissionId = "msn_11";
-        if (charLevel >= 40) targetMissionId = "msn_60";
-        else if (charLevel >= 20) targetMissionId = "msn_35";
-        else if (charLevel >= 10) targetMissionId = "msn_22";
+        let targetMissionId = "msn_11"; // Grade C
+        if (charLevel >= 40) targetMissionId = "msn_42"; // Sannin
+        else if (charLevel >= 20) targetMissionId = "msn_23"; // Grade A
+        else if (charLevel >= 10) targetMissionId = "msn_18"; // Grade B
         
         autoLevelTarget = targetMissionId;
         
