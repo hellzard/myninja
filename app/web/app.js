@@ -165,10 +165,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.getElementById('btn-logout').addEventListener('click', () => {
-        localStorage.removeItem('ns_session');
-        sessionState = { sessionkey: null, char_id: null, char_name: null, level: '--', xp: '--', gold: '--', tokens: '--' };
-        activityLog.innerHTML = '<li><div>Ready for commands...</div><small>System</small></li>';
-        checkLoginState();
+        if(confirm("Are you sure you want to logout? All running bots will be stopped.")) {
+            localStorage.removeItem('ns_session');
+            window.location.reload();
+        }
     });
 
     // Command Handlers
