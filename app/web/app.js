@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch(e) {
                 addLog(`[AutoLevel] Error: ${e.message}`);
             }
-        }, 4000); // 4 seconds delay
+        }, 2000); // 2 seconds delay
     });
 
     // Auto Daily
