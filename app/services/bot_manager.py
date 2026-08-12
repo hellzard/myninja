@@ -144,7 +144,7 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
     
     start_params = [char_id, mission_id, ",".join(enemies), "#".join(enemy_attrs), agility, mission_hash, sessionkey]
     
-    start_res = await client.send_amf_request("BattleSystem.startMission", start_params)
+    start_res = await client.send_amf_request("IOIJB836r2Hu2PPW.mwaPMdtCPC5o", start_params)
     
     # APK treats the response directly as battle_id.
     # Server may return: a raw value (int/str), or a dict with status/error info.
@@ -164,7 +164,7 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
     finish_mission_hash = hashlib.sha256(finish_hash_input.encode()).hexdigest()
     
     finish_params = [char_id, mission_id, battle_id, finish_mission_hash, 0, sessionkey, BATTLE_HASH, 0]
-    finish_res = await client.send_amf_request("BattleSystem.finishMission", finish_params)
+    finish_res = await client.send_amf_request("IOIJB836r2Hu2PPW.MSi71s3i1X89", finish_params)
     return f"Mission {mission_id} Complete! Reward: {finish_res}"
 
 async def auto_daily_event(client: NinjaSageClient, sessionkey: str, char_id: int):
@@ -450,7 +450,7 @@ async def auto_mission_s(client: NinjaSageClient, sessionkey: str, char_id: int)
     
     # 4. Start Battle
     start_params = [char_id, mission_id, ",".join(enemies), "#".join(enemy_attrs), agility, mission_hash, sessionkey, stage_to_run]
-    start_res = await client.send_amf_request("BattleSystem.startMission", start_params)
+    start_res = await client.send_amf_request("IOIJB836r2Hu2PPW.mwaPMdtCPC5o", start_params)
     
     if start_res.get('status') != 1 or 'battle_code' not in start_res:
         return f"Failed to start Mission S stage {stage_to_run}: {start_res}"
@@ -463,7 +463,7 @@ async def auto_mission_s(client: NinjaSageClient, sessionkey: str, char_id: int)
     finish_mission_hash = hashlib.sha256(finish_hash_input.encode()).hexdigest()
     
     finish_params = [char_id, mission_id, battle_id, finish_mission_hash, MISSION_S_FINISH_DAMAGE, sessionkey, BATTLE_HASH, 1]
-    finish_res = await client.send_amf_request("BattleSystem.finishMission", finish_params)
+    finish_res = await client.send_amf_request("IOIJB836r2Hu2PPW.MSi71s3i1X89", finish_params)
     
     if finish_res.get('status') == 1:
         rewards = finish_res.get('result', [])
