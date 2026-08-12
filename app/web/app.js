@@ -265,14 +265,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // Auto Leveling
-    let autoLevelInterval = null;
+    let autoLevelIsRunning = false;
     let autoLevelTarget = 0;
     const btnAutoLevel = document.getElementById('toggle-autolevel');
     
     btnAutoLevel.addEventListener('click', () => {
-        if (autoLevelInterval) {
-            clearInterval(autoLevelInterval);
-            autoLevelInterval = null;
+        if (autoLevelIsRunning) {
+            autoLevelIsRunning = false;
             btnAutoLevel.textContent = "START";
             btnAutoLevel.style.background = "";
             addLog("Auto Leveling STOPPED.");
@@ -281,12 +280,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         btnAutoLevel.textContent = "STOP";
         btnAutoLevel.style.background = "#ff5252";
-        // Get the level from the UI metric if available, otherwise fallback to input
-        const metricLevelStr = document.getElementById('metric-level').textContent;
-        let charLevel = parseInt(metricLevelStr);
-        if (isNaN(charLevel)) {
-            charLevel = parseInt(document.getElementById('auto_level_max').value || 60);
-        }
+        
+        let charLevel = parseInt(sessionState.level);
+        if (isNaN(charLevel)) charLevel = 1;
         
         let targetMissionId = "msn_11"; // Grade C
         if (charLevel >= 40) targetMissionId = "msn_42"; // Sannin
@@ -294,15 +290,20 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (charLevel >= 10) targetMissionId = "msn_18"; // Grade B
         
         autoLevelTarget = targetMissionId;
+        autoLevelIsRunning = true;
         
         addLog(`Auto Leveling STARTED (Targeting ${autoLevelTarget} based on Character Level ${charLevel})...`);
         
-        autoLevelInterval = setInterval(async () => {
+        async function runLoop() {
+            if (!autoLevelIsRunning) return;
+            
             if (!autoLevelTarget) {
                 addLog("Invalid mission level. Stopping.");
                 btnAutoLevel.click();
                 return;
             }
+            
+            let delay = 2000;
             
             // First try taking exam if eligible
             try {
@@ -324,6 +325,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error("Exam check failed", e);
             }
             
+            if (!autoLevelIsRunning) return;
+            
             // Then run normal leveling
             try {
                 const res = await fetch('/api/bot/auto_leveling_step', {
@@ -340,11 +343,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     addLog(`[AutoLevel] ${autoLevelTarget} Success: ${data.message}`);
                 } else {
                     addLog(`[AutoLevel] ${autoLevelTarget} Response: ${data.message}`);
+                    if (data.message.includes("rate limited")) {
+                        addLog("[System] Rate limit detected. Backing off for 10 seconds...", "warn");
+                        delay = 10000;
+                    }
                 }
             } catch(e) {
                 addLog(`[AutoLevel] Error: ${e.message}`);
             }
-        }, 2000); // 2 seconds delay
+            
+            if (autoLevelIsRunning) {
+                setTimeout(runLoop, delay);
+            }
+        }
+        
+        runLoop();
     });
 
     // Auto Daily
