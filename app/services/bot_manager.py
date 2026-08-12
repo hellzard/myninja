@@ -211,6 +211,9 @@ async def auto_daily_event(client: NinjaSageClient, sessionkey: str, char_id: in
     daily_entries = _normalize(room_data.get('daily'))
     tp_entries = _normalize(room_data.get('tp'))
     ss_entries = _normalize(room_data.get('ss'))
+    
+    # Generic events (like moyai island, summer, etc) that might appear dynamically
+    event_entries = _normalize(room_data.get('event'))
 
     # APK Rules: TP requires Level 40 and Rank 5
     if level < 40 or rank < 5:
@@ -220,7 +223,10 @@ async def auto_daily_event(client: NinjaSageClient, sessionkey: str, char_id: in
     if level < 80 or rank < 9:
         ss_entries = []
 
-    # Run the first available mission, prioritizing Daily -> TP -> SS
+    # Run the first available mission, prioritizing Event -> Daily -> TP -> SS
+    for m_id, _ in event_entries:
+        return await run_mission(client, sessionkey, char_id, m_id)
+
     for m_id, _ in daily_entries:
         return await run_mission(client, sessionkey, char_id, m_id)
     
