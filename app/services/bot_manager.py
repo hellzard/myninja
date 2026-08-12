@@ -313,38 +313,45 @@ async def auto_shadow_war(client: NinjaSageClient, sessionkey: str, char_id: int
     else:
         return f"Shadow War Battle Failed: {finish_res}"
 
+_monster_hunt_boss_cache = {}
+
 async def auto_monster_hunt(client: NinjaSageClient, sessionkey: str, char_id: int):
     import hashlib
     import asyncio
+    global _monster_hunt_boss_cache
     
     # Constants
     EQUIPMENT_DATA = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzIzODEiLCJ3ZWFwb24iOiJ3cG5fMjM4MCIsInNldCI6InNldF8yMjU4XzEifSwic3RhdHVzIjp7ImVhcnRoIjowLCJsaWdodG5pbmciOjAsImZpcmUiOjAsIndhdGVyIjowLCJ3aW5kIjo3OH0sImJ5dGVzIjp7Il9fXyI6IjE3NjM4Nzk1ODk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mzg3OTU4OTE3NjM4Nzk1ODkxNzYzODc5NTg5MTc2Mzg3OTU4OSIsIl8iOjgyMjg0NDcsIl9fX18iOjE3NjM4Nzk1ODksIl9fX19fIjo4MjI4NDQ3LCJfXyI6ODIyODQ0NywiX19fX19fIjo4MjI4NDQ3fSwiX19fXyI6W3siXyI6InNraWxsXzIzMTIiLCJfXyI6NTQ2MDV9LHsiXyI6InNraWxsXzM0NSIsIl9fIjo4MDI0M30seyJfIjoic2tpbGxfMjMxMCIsIl9fIjoxMjg0Njl9LHsiXyI6InNraWxsXzIyMTUiLCJfXyI6MjkzNDl9LHsiXyI6InNraWxsXzIyODYiLCJfXyI6NDk0NzR9LHsiXyI6InNraWxsXzIyMDYiLCJfXyI6NjA5NDR9LHsiXyI6InNraWxsXzIzMDgiLCJfXyI6NjUxMDF9LHsiXyI6InNraWxsXzMyOSIsIl9fIjo3NTM1Nn1dfQ=="
     
-    # 1. Get Event Data
-    event_res = await client.send_amf_request("MonsterHunterEvent2023.getEventData", [char_id, sessionkey])
-    if event_res.get('status') != 1:
-        return f"Failed to get Monster Hunt data: {event_res}"
-        
-    boss_id = event_res.get('boss_id', '')
-    energy = event_res.get('energy', 0)
+    boss_id = _monster_hunt_boss_cache.get(char_id)
     
-    if energy < 10:
-        return f"Not enough energy to hunt. Current: {energy}/10 required."
+    if not boss_id:
+        # 1. Get Event Data (Only on first run)
+        event_res = await client.send_amf_request("MonsterHunterEvent2023.getEventData", [char_id, sessionkey])
+        if event_res.get('status') != 1:
+            return f"Failed to get Monster Hunt data: {event_res}"
+            
+        boss_id = event_res.get('boss_id', '')
+        _monster_hunt_boss_cache[char_id] = boss_id
         
+        energy = event_res.get('energy', 0)
+        if energy < 10:
+            return f"Not enough energy to hunt. Current: {energy}/10 required."
+            
     # 2. Start Battle
-    # hash(char_id + boss_id)
     start_hash_str = str(char_id) + str(boss_id)
     start_hash = hashlib.sha256(start_hash_str.encode()).hexdigest()
     
     start_res = await client.send_amf_request("MonsterHunterEvent2023.startBattle", [char_id, boss_id, start_hash, sessionkey])
     if start_res.get("status") != 1:
-        return f"Failed to start battle: {start_res}"
+        # If it fails, maybe energy is exhausted, clear cache so next run it fetches real energy/boss.
+        _monster_hunt_boss_cache.pop(char_id, None)
+        return f"Failed to start battle (probably out of energy): {start_res}"
         
     battle_id = str(start_res.get("code", ""))
-    await asyncio.sleep(2)
+    await asyncio.sleep(1) # Reduced sleep to 1s for efficiency
     
     # 3. Finish Battle
-    # hash(char_id + boss_id + battle_id + "0" + equipment_data)
     finish_hash_str = str(char_id) + str(boss_id) + battle_id + "0" + EQUIPMENT_DATA
     finish_hash = hashlib.sha256(finish_hash_str.encode()).hexdigest()
     
@@ -355,7 +362,7 @@ async def auto_monster_hunt(client: NinjaSageClient, sessionkey: str, char_id: i
     if finish_res.get("status") == 1:
         rewards = finish_res.get("result", [])
         if len(rewards) >= 2:
-            return f"Monster Hunt {boss_id} Completed! Energy left: {energy-10}. Gained {rewards[0]} XP, {rewards[1]} Gold."
+            return f"Monster Hunt {boss_id} Completed! Gained {rewards[0]} XP, {rewards[1]} Gold."
         return f"Monster Hunt {boss_id} Completed! Result: {rewards}"
     else:
         return f"Battle failed: {finish_res}"
