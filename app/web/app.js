@@ -980,6 +980,7 @@ if (canvas) {
     }
     
     function animate() {
+        if (window.innerWidth <= 768) return; // Stop drawing on mobile
         ctx.clearRect(0, 0, width, height);
         particles.forEach(p => {
             p.update();
@@ -987,7 +988,11 @@ if (canvas) {
         });
         requestAnimationFrame(animate);
     }
-    animate();
+    
+    // Only start if not on mobile
+    if (window.innerWidth > 768) {
+        animate();
+    }
 }
 
 // ----------------------------------------------------
