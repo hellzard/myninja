@@ -288,12 +288,17 @@ document.addEventListener('DOMContentLoaded', () => {
             charLevel = parseInt(document.getElementById('auto_level_max').value || 60);
         }
         
-        autoLevelTarget = charLevel;
+        let targetMissionId = "msn_11";
+        if (charLevel >= 40) targetMissionId = "msn_60";
+        else if (charLevel >= 20) targetMissionId = "msn_35";
+        else if (charLevel >= 10) targetMissionId = "msn_22";
         
-        addLog(`Auto Leveling STARTED (Targeting msn_${autoLevelTarget} based on Character Level)...`);
+        autoLevelTarget = targetMissionId;
+        
+        addLog(`Auto Leveling STARTED (Targeting ${autoLevelTarget} based on Character Level ${charLevel})...`);
         
         autoLevelInterval = setInterval(async () => {
-            if (autoLevelTarget < 1) {
+            if (!autoLevelTarget) {
                 addLog("Invalid mission level. Stopping.");
                 btnAutoLevel.click();
                 return;
@@ -327,14 +332,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify({
                         sessionkey: sessionState.sessionkey,
                         char_id: sessionState.char_id,
-                        mission_id: `msn_${autoLevelTarget}`
+                        mission_id: autoLevelTarget
                     })
                 });
                 const data = await res.json();
                 if (data.status === 'success' && !data.message.includes("Failed")) {
-                    addLog(`[AutoLevel] msn_${autoLevelTarget} Success: ${data.message}`);
+                    addLog(`[AutoLevel] ${autoLevelTarget} Success: ${data.message}`);
                 } else {
-                    addLog(`[AutoLevel] msn_${autoLevelTarget} Response: ${data.message}`);
+                    addLog(`[AutoLevel] ${autoLevelTarget} Response: ${data.message}`);
                 }
             } catch(e) {
                 addLog(`[AutoLevel] Error: ${e.message}`);
