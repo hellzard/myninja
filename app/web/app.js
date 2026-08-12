@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         statusText.textContent = "Running: " + botName;
                         statusText.style.color = "#10b981";
                     }
-                    if (stopGlobalBtn) stopGlobalBtn.style.display = "block";
+                    if (stopGlobalBtn) stopGlobalBtn.classList.remove("hidden");
                 } else {
                     if (currentRunningBotBtn === this) {
                         currentRunningBotBtn = null;
@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             statusText.textContent = "Idle - No bot is currently running.";
                             statusText.style.color = "#eee";
                         }
-                        if (stopGlobalBtn) stopGlobalBtn.style.display = "none";
+                        if (stopGlobalBtn) stopGlobalBtn.classList.add("hidden");
                     }
                 }
             }, 10);
@@ -782,46 +782,51 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Refresh Stats Button
+    // Refresh Stats Logic
+    async function refreshStats(quiet = false) {
+        if (!sessionState || !sessionState.sessionkey) return;
+        try {
+            const res = await fetch('/api/bot/get_stats', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    sessionkey: sessionState.sessionkey,
+                    char_id: sessionState.char_id
+                })
+            });
+            const data = await res.json();
+            if (data.status === 'success') {
+                sessionState.gold = data.gold;
+                sessionState.xp = data.xp;
+                sessionState.level = data.level;
+                sessionState.tokens = data.tokens;
+                
+                localStorage.setItem('ns_session', JSON.stringify(sessionState));
+                checkLoginState();
+                if (!quiet) addLog("Stats refreshed successfully! ✅");
+            } else {
+                if (!quiet) addLog("Failed to refresh stats: " + data.message, "err");
+            }
+        } catch(e) {
+            if (!quiet) addLog("Error refreshing stats: " + e.message, "err");
+        }
+    }
+
     const btnRefreshStats = document.getElementById('btn-refresh-stats');
     if (btnRefreshStats) {
-        btnRefreshStats.addEventListener('click', async () => {
-            const stored = localStorage.getItem('ns_quick_login');
-            if (stored) {
-                addLog("Refreshing Session Token via Quick Login...");
-                const creds = JSON.parse(stored);
-                try {
-                    const res = await fetch('/api/auth/login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username: creds.user, password: creds.pass })
-                    });
-                    const data = await res.json();
-                    if (data.status === 'success') {
-                        sessionState = {
-                            sessionkey: data.sessionkey,
-                            char_id: data.char_id,
-                            char_name: data.char_name,
-                            level: data.level || '--',
-                            xp: data.xp || '--',
-                            gold: data.gold || '--',
-                            tokens: data.tokens || '--'
-                        };
-                        localStorage.setItem('ns_session', JSON.stringify(sessionState));
-                        addLog("Session refreshed successfully! ✅");
-                        checkLoginState();
-                    } else {
-                        const errMsg = data.message || (data.detail ? JSON.stringify(data.detail) : "Unknown error");
-                        addLog("Failed to refresh session: " + errMsg, "err");
-                    }
-                } catch(e) {
-                    addLog("Error refreshing session: " + e.message, "err");
-                }
-            } else {
-                addLog("No quick login credentials found. Please logout and login manually.", "err");
-            }
+        btnRefreshStats.addEventListener('click', () => {
+            addLog("Refreshing Character Stats...");
+            refreshStats();
         });
     }
+
+    // Auto update stats every 5 seconds if a bot is running
+    setInterval(() => {
+        const statusTextStr = statusText ? statusText.textContent : "";
+        if (statusTextStr.includes("RUNNING")) {
+            refreshStats(true); // quiet refresh
+        }
+    }, 5000);
 
     // Initial check
     checkLoginState();

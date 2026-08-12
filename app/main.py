@@ -227,6 +227,35 @@ async def api_exploit_gacha(req: ExploitGachaRequest):
     except Exception as e:
         return {"status": "error", "message": str(e)}
 
+@app.post("/api/bot/get_stats")
+async def api_get_stats(req: BasicBotRequest):
+    client = NinjaSageClient()
+    try:
+        char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [req.char_id, req.sessionkey])
+        if char_data_res.get("status") == 1:
+            char_obj = char_data_res.get("character", {})
+            gold = char_obj.get("gold", "--")
+            xp = char_obj.get("xp", "--")
+            lvl = char_obj.get("character_level", char_obj.get("level", "--"))
+            
+            # Fetch token data as well (from SystemLogin.getAccountData)
+            acc_data = await client.send_amf_request("SystemLogin.getAccountData", [req.sessionkey])
+            tokens = "--"
+            if acc_data.get("status") == 1:
+                tokens = acc_data.get("account", {}).get("tokens", "--")
+                
+            return {
+                "status": "success",
+                "gold": gold,
+                "xp": xp,
+                "level": lvl,
+                "tokens": tokens
+            }
+        else:
+            return {"status": "error", "message": "Failed to get character data"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
 @app.post("/api/bot/command")
 async def bot_command(req: BotCommandRequest):
     client = NinjaSageClient()
