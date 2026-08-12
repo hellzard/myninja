@@ -665,7 +665,7 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
     char_level = int(char_obj.get('character_level', char_obj.get('level', 1)))
     
     # 2. Get available bosses
-    avail_res = await client.send_amf_request("EudemonGarden.getData", [sessionkey, char_id])
+    avail_res = await client.send_amf_request("A11M5XZ9wxhTs2Dr.RuyuMINDEhfE", [sessionkey, char_id])
     if "data" not in avail_res:
         return "Eudemon boss response missing 'data'"
         
@@ -715,7 +715,7 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
     import hashlib
     
     # Start Hunting
-    start_res = await client.send_amf_request("EudemonGarden.startHunting", [char_id, target_boss_index, sessionkey])
+    start_res = await client.send_amf_request("A11M5XZ9wxhTs2Dr.iIOH3uczAJZI", [char_id, target_boss_index, sessionkey])
     if start_res.get("status") != 1:
         return f"Failed to start {target_boss_name}: {start_res}"
         
@@ -731,7 +731,7 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
     BATTLE_HASH = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzAxIiwid2VhcG9uIjoid3BuXzAxIiwic2V0Ijoic2V0XzAxXzAifSwic3RhdHVzIjp7ImVhcnRoIjowLCJmaXJlIjowLCJ3YXRlciI6MCwibGlnaHRuaW5nIjowLCJ3aW5kIjowfSwiYnl0ZXMiOnsiXyI6ODIyODQ0NywiX18iOjgyMjg0NDcsIl9fXyI6IjE3NjI3NDY2NTk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mjc0NjY1OTE3NjI3NDY2NTkxNzYyNzQ2NjU5MTc2Mjc0NjY1OSIsIl9fX19fIjo4MjI4NDQ3LCJfX19fX18iOjgyMjg0NDcsIl9fX18iOjE3NjI3NDY2NTl9LCJfX19fIjpbeyJfIjoic2tpbGxfMTMiLCJfXyI6MjkxMzR9XX0="
     
     finish_params = [char_id, target_boss_index, battle_id, loc2, sessionkey, BATTLE_HASH]
-    finish_res = await client.send_amf_request("EudemonGarden.finishHunting", finish_params)
+    finish_res = await client.send_amf_request("A11M5XZ9wxhTs2Dr.L6IPyPI8oNXL", finish_params)
     
     if finish_res.get("status") == 1:
         xp = finish_res.get("result", [0,0])[0]
