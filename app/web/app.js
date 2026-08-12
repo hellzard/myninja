@@ -953,8 +953,11 @@ if (canvas) {
     function resize() {
         width = window.innerWidth;
         height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
+        // On mobile, draw at half resolution to save GPU
+        let dpr = (width <= 768) ? 0.5 : 1;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx.scale(dpr, dpr);
     }
     window.addEventListener('resize', resize);
     resize();
@@ -988,24 +991,29 @@ if (canvas) {
         }
     }
     
-    for (let i = 0; i < 50; i++) {
+    let numParticles = (window.innerWidth <= 768) ? 20 : 50;
+    for (let i = 0; i < numParticles; i++) {
         particles.push(new Particle());
     }
     
-    function animate() {
-        if (window.innerWidth <= 768) return; // Stop drawing on mobile
+    let lastTime = 0;
+    function animate(timestamp) {
+        requestAnimationFrame(animate);
+        
+        // Limit FPS to 30 on mobile
+        if (window.innerWidth <= 768) {
+            if (timestamp - lastTime < 33) return; 
+        }
+        lastTime = timestamp;
+        
         ctx.clearRect(0, 0, width, height);
         particles.forEach(p => {
             p.update();
             p.draw();
         });
-        requestAnimationFrame(animate);
     }
     
-    // Only start if not on mobile
-    if (window.innerWidth > 768) {
-        animate();
-    }
+    requestAnimationFrame(animate);
 }
 
 // ----------------------------------------------------
