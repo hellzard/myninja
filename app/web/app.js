@@ -843,6 +843,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial check
     checkLoginState();
+
+    // PWA Service Worker Registration & Install Logic
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/panel/sw.js')
+                .then(reg => console.log('ServiceWorker registration successful with scope: ', reg.scope))
+                .catch(err => console.log('ServiceWorker registration failed: ', err));
+        });
+    }
+
+    let deferredPrompt;
+    const installBtn = document.getElementById('btn-install-pwa');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevent the mini-infobar from appearing on mobile
+        e.preventDefault();
+        // Stash the event so it can be triggered later.
+        deferredPrompt = e;
+        // Update UI notify the user they can install the PWA
+        if (installBtn) {
+            installBtn.classList.remove('hidden');
+            installBtn.addEventListener('click', async () => {
+                // Hide the app provided install promotion
+                installBtn.classList.add('hidden');
+                // Show the install prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response to the install prompt: ${outcome}`);
+                // We've used the prompt, and can't use it again, throw it away
+                deferredPrompt = null;
+            });
+        }
+    });
+
+    window.addEventListener('appinstalled', () => {
+        // Hide the app-provided install promotion
+        if (installBtn) installBtn.classList.add('hidden');
+        // Clear the deferredPrompt so it can be garbage collected
+        deferredPrompt = null;
+        console.log('PWA was installed');
+    });
 });
 
 // Settings Logic

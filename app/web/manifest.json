@@ -1,0 +1,17 @@
+{
+    "name": "Ninja Sage Bot",
+    "short_name": "NS Bot",
+    "description": "Auto Bot Panel for Ninja Sage",
+    "start_url": "/panel/index.html",
+    "display": "standalone",
+    "background_color": "#0a0c10",
+    "theme_color": "#0a0c10",
+    "icons": [
+      {
+        "src": "/panel/assets/icon-512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any maskable"
+      }
+    ]
+}
