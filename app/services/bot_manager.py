@@ -772,12 +772,9 @@ async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: in
         hp = 114000
         enemy_agility = 166
         
-        # Jester requires using a ticket first (item_48)
-        try:
-            item_res = await client.send_amf_request("36a62s4oZ7iYRJjd.zLYzbsmF8811", [[sessionkey, char_id, "item_48"]])
-            print(f"DEBUG CIRCUS Jester Ticket Use: {item_res}")
-        except Exception as e:
-            return f"Failed to use Jester ticket: {e}"
+        # Note: Event bosses do not require using a ticket item from inventory.
+        # The tickets are managed by the server and visible on the boss selection screen.
+
             
     else: # default to ringmaster
         boss_id = 312610 
@@ -868,19 +865,16 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         ene_id = "ene_2133"
         hp = 60800
         enemy_agility = 171
-        ticket_item = "item_27"
     elif boss_type == "tengu":
         boss_id = 312610
         ene_id = "ene_2132"
         hp = 75924
         enemy_agility = 176
-        ticket_item = "item_31"
     elif boss_type == "nurarihyon":
         boss_id = 312610
         ene_id = "ene_2131"
         hp = 114000
         enemy_agility = 176
-        ticket_item = "item_35"
     else:
         return f"Unknown yokai boss type: {boss_type}"
     
