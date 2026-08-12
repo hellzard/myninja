@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
-            let delay = 2000;
+            let delay = 4000;
             
             // First try taking exam if eligible
             try {
@@ -398,7 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch(e) {
                 addLog(`[AutoDaily] Error: ${e.message}`);
             }
-        }, 6000);
+        }, 4000);
     });
 
     // Auto Hunting
@@ -452,7 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch(e) {
                 addLog(`[AutoHunt] Error: ${e.message}`);
             }
-        }, 5000); // 5 seconds delay for boss fights
+        }, 4000); // 4 seconds delay for boss fights
     });
 
     // Eudemon Boss (Desktop & Mobile share same logic if we use querySelectorAll)
@@ -501,7 +501,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     addLog(`[Eudemon] Error: ${e.message}`, 'error');
                     btn.click();
                 }
-            }, 5000);
+            }, 4000);
         });
     });
 
@@ -548,7 +548,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch(e) {
                     addLog(`[Circus ${bossName}] Error: ${e.message}`);
                 }
-            }, 5000);
+            }, 4000);
         });
     }
 
@@ -599,7 +599,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch(e) {
                     addLog(`[Yokai ${bossName}] Error: ${e.message}`);
                 }
-            }, 5000);
+            }, 4000);
         });
     }
     // Yokai Minigame
@@ -639,7 +639,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch(e) {
                     addLog(`[Yokai Minigame] Error: ${e.message}`);
                 }
-            }, 5000);
+            }, 4000);
         });
     }
 
@@ -681,7 +681,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch(e) {
                 addLog(`[AutoShadowWar] Error: ${e.message}`);
             }
-        }, 5000);
+        }, 4000);
     });
 
     // Auto Monster Hunt
@@ -717,7 +717,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch(e) {
                     addLog(`[AutoMonster] Error: ${e.message}`);
                 }
-            }, 5000);
+            }, 4000);
         });
     }
 
@@ -754,7 +754,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch(e) {
                     addLog(`[AutoMissionS] Error: ${e.message}`);
                 }
-            }, 5000);
+            }, 4000);
         });
     }
 
@@ -791,7 +791,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch(e) {
                     addLog(`[AutoClanWar] Error: ${e.message}`);
                 }
-            }, 5000);
+            }, 4000);
         });
     }
 
@@ -839,7 +839,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (statusTextStr.includes("RUNNING")) {
             refreshStats(true); // quiet refresh
         }
-    }, 5000);
+    }, 4000);
 
     // Initial check
     checkLoginState();
