@@ -836,10 +836,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Auto update stats every 5 seconds if a bot is running
     setInterval(() => {
         const statusTextStr = statusText ? statusText.textContent : "";
-        if (statusTextStr.includes("RUNNING")) {
+        if (statusTextStr.includes("Running")) {
             refreshStats(true); // quiet refresh
         }
-    }, 4000);
+    }, 5000);
 
     // Initial check
     checkLoginState();

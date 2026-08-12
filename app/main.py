@@ -233,7 +233,7 @@ async def api_get_stats(req: BasicBotRequest):
     try:
         char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [req.char_id, req.sessionkey])
         if char_data_res.get("status") == 1:
-            char_obj = char_data_res.get("character", {})
+            char_obj = char_data_res.get("data", char_data_res.get("character_data", char_data_res))
             gold = char_obj.get("gold", "--")
             xp = char_obj.get("xp", "--")
             lvl = char_obj.get("character_level", char_obj.get("level", "--"))
