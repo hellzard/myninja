@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ns-bot-cache-v2';
+const CACHE_NAME = 'ns-bot-cache-v3';
 const ASSETS_TO_CACHE = [
   '/panel/',
   '/panel/index.html',

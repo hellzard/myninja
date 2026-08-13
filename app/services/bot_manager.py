@@ -109,6 +109,9 @@ def get_inventory_amount(payload, item_id: str) -> int:
 
 _char_info_cache = {}
 
+# Anti-cheat payload from nsepanel (base64 encoded JSON with default gear/stats)
+BATTLE_HASH = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzAxIiwid2VhcG9uIjoid3BuXzAxIiwic2V0Ijoic2V0XzAxXzAifSwic3RhdHVzIjp7ImVhcnRoIjowLCJmaXJlIjowLCJ3YXRlciI6MCwibGlnaHRuaW5nIjowLCJ3aW5kIjowfSwiYnl0ZXMiOnsiXyI6ODIyODQ0NywiX18iOjgyMjg0NDcsIl9fXyI6IjE3NjI3NDY2NTk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mjc0NjY1OTE3NjI3NDY2NTkxNzYyNzQ2NjU5MTc2Mjc0NjY1OSIsIl9fX19fIjo4MjI4NDQ3LCJfX19fX18iOjgyMjg0NDcsIl9fX18iOjE3NjI3NDY2NTl9LCJfX19fIjpbeyJfIjoic2tpbGxfMTMiLCJfXyI6MjkxMzR9XX0="
+
 def get_best_mission(level: int, rank: int) -> str:
     # rank 1=Genin(C), 2=Chunin(B), 3=Jounin(A), 4=Special(S), 5=Sage(SS)
     allowed_grades = ["c"]
@@ -147,7 +150,7 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
     char_info = _char_info_cache.get(char_id)
     if char_info is None:
         char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
-        if char_data_res.get('status') == 0:
+        if isinstance(char_data_res, dict) and char_data_res.get('status') == 0:
             return f"Failed to get character data: {char_data_res.get('error', 'Unknown error')}"
         char_obj = char_data_res.get('character_data') or char_data_res.get('data') or char_data_res
         if isinstance(char_obj, list):
@@ -179,8 +182,9 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
     
     mission_info = get_data_by_id(actual_mission_id, MISSION_DATA)
     if not mission_info:
-        return f"Unknown mission_id {actual_mission_id}"
+        return f"Failed: Unknown mission_id {actual_mission_id}"
         
+    # === PHASE 1: startMission (matches SWF Mission_Room.as:341-362) ===
     enemies = mission_info.get("enemies", [])
     enemy_attrs = []
     for enemy in enemies:
@@ -188,29 +192,61 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
         hp = enemy_attr.get("hp", 0)
         ene_agi = enemy_attr.get("agility", 0)
         enemy_attrs.append(f"id:{enemy}|hp:{hp}|agility:{ene_agi}")
-        
-    hash_input = ",".join(enemies) + "#".join(enemy_attrs) + str(char_info["agility"])
-    mission_hash = hashlib.sha256(hash_input.encode()).hexdigest()
     
-    start_params = [char_id, actual_mission_id, ",".join(enemies), "#".join(enemy_attrs), char_info["agility"], mission_hash, sessionkey]
+    enemies_str = ",".join(enemies)
+    enemy_attrs_str = "#".join(enemy_attrs)
+        
+    # Hash: SWF does CUCSG.hash(_loc2_ + _loc3_ + _loc4_) where _loc2_=enemies, _loc3_=enemy_attrs, _loc4_=agility
+    start_hash_input = enemies_str + enemy_attrs_str + str(char_info["agility"])
+    mission_hash = hashlib.sha256(start_hash_input.encode()).hexdigest()
+    
+    # SWF params: [char_id, mission_id, enemies, enemy_attrs, agility, hash, sessionkey]
+    start_params = [char_id, actual_mission_id, enemies_str, enemy_attrs_str, char_info["agility"], mission_hash, sessionkey]
     start_res = await client.send_amf_request("IOIJB836r2Hu2PPW.mwaPMdtCPC5o", start_params)
     
+    # === PHASE 2: Validate startMission response ===
+    # SWF checks: if(param1.length != 10) → fail. Success = raw battle_code string/number
     if isinstance(start_res, dict):
-        if start_res.get('status') == 2 or start_res.get('error') is not None:
-            return f"Failed to start mission {actual_mission_id}: {start_res}"
+        if start_res.get('status') == 2 or start_res.get('status') == 0:
+            return f"Failed: startMission rejected {actual_mission_id}: {start_res}"
         battle_id = str(start_res.get('battle_code', start_res.get('code', start_res.get('id', ''))))
     else:
         battle_id = str(start_res)
     
-    if not battle_id or battle_id == 'None':
-        return f"Failed to start mission {actual_mission_id}: No battle_id in response: {start_res}"
+    if not battle_id or battle_id == 'None' or battle_id == '':
+        return f"Failed: No battle_id for {actual_mission_id}: {start_res}"
     
     await asyncio.sleep(1)
     
-    # Ultimate reference_bridge bypass for finishMission (bypasses hash validation completely)
-    finish_params = [char_id, actual_mission_id, battle_id, 1, 9999, sessionkey, [], 0]
+    # === PHASE 3: finishMission (matches nsepanel leveling_dis.txt:3795-3826) ===
+    # nsepanel hash: f"{mission_id}{char_id}{battle_id}0"
+    finish_hash_input = f"{actual_mission_id}{char_id}{battle_id}0"
+    finish_hash = hashlib.sha256(finish_hash_input.encode()).hexdigest()
+    
+    # nsepanel params: [char_id, mission_id, battle_id, finish_hash, 0, session_key, battle_hash, 0]
+    finish_params = [char_id, actual_mission_id, battle_id, finish_hash, 0, sessionkey, BATTLE_HASH, 0]
     finish_res = await client.send_amf_request("IOIJB836r2Hu2PPW.MSi71s3i1X89", finish_params)
-    return f"Mission {actual_mission_id} Complete! Reward: {finish_res}"
+    
+    # === PHASE 4: Check finish response status ===
+    if isinstance(finish_res, dict):
+        if finish_res.get('status') == 0:
+            return f"Failed: finishMission rejected {actual_mission_id}: {finish_res}"
+        # Extract rewards
+        xp = finish_res.get('xp', finish_res.get('character_xp', '?'))
+        gold = finish_res.get('gold', finish_res.get('character_gold', '?'))
+        level = finish_res.get('level', finish_res.get('character_level', '?'))
+        # Invalidate cache so next loop picks up new level/rank
+        if char_id in _char_info_cache:
+            del _char_info_cache[char_id]
+        return f"Mission {actual_mission_id} SUCCESS! Level:{level} XP:{xp} Gold:{gold}"
+    elif isinstance(finish_res, list) and len(finish_res) > 0:
+        # SWF onBattleFinishAmf expects array with rewards
+        # Invalidate cache
+        if char_id in _char_info_cache:
+            del _char_info_cache[char_id]
+        return f"Mission {actual_mission_id} SUCCESS! Reward: {finish_res}"
+    else:
+        return f"Failed: finishMission unexpected response for {actual_mission_id}: {finish_res}"
 
 async def auto_daily_event(client: NinjaSageClient, sessionkey: str, char_id: int):
     # 1. Fetch Char Data

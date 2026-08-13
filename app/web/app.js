@@ -267,6 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Auto Leveling
     let autoLevelIsRunning = false;
     let autoLevelTarget = 0;
+    let autoLevelFailCount = 0;
     const btnAutoLevel = document.getElementById('toggle-autolevel');
     
     btnAutoLevel.addEventListener('click', () => {
@@ -339,10 +340,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                 });
                 const data = await res.json();
-                if (data.status === 'success' && !data.message.includes("Failed")) {
-                    addLog(`[AutoLevel] ${autoLevelTarget} Success: ${data.message}`);
+                if (data.status === 'success' && data.message.includes("SUCCESS")) {
+                    addLog(`[AutoLevel] ${data.message}`, 'ok');
+                    autoLevelFailCount = 0; // Reset fail counter on success
+                } else if (data.message.includes("Failed")) {
+                    autoLevelFailCount++;
+                    addLog(`[AutoLevel] ${data.message}`, 'error');
+                    if (autoLevelFailCount >= 3) {
+                        addLog("[AutoLevel] 3 consecutive failures. Stopping auto-leveling.", 'error');
+                        btnAutoLevel.click();
+                        return;
+                    }
+                    delay = 6000; // Back off on failure
                 } else {
-                    addLog(`[AutoLevel] ${autoLevelTarget} Response: ${data.message}`);
+                    addLog(`[AutoLevel] ${data.message}`);
                     if (data.message.includes("rate limited")) {
                         addLog("[System] Rate limit detected. Backing off for 10 seconds...", "warn");
                         delay = 10000;
