@@ -565,7 +565,7 @@ async def auto_monster_hunt(client: NinjaSageClient, sessionkey: str, char_id: i
     
     EQUIPMENT_DATA = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzIzODEiLCJ3ZWFwb24iOiJ3cG5fMjM4MCIsInNldCI6InNldF8yMjU4XzEifSwic3RhdHVzIjp7ImVhcnRoIjowLCJsaWdodG5pbmciOjAsImZpcmUiOjAsIndhdGVyIjowLCJ3aW5kIjo3OH0sImJ5dGVzIjp7Il9fXyI6IjE3NjM4Nzk1ODk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mzg3OTU4OTE3NjM4Nzk1ODkxNzYzODc5NTg5MTc2Mzg3OTU4OSIsIl8iOjgyMjg0NDcsIl9fX18iOjE3NjM4Nzk1ODksIl9fX19fIjo4MjI4NDQ3LCJfXyI6ODIyODQ0NywiX19fX19fIjo4MjI4NDQ3fSwiX19fXyI6W3siXyI6InNraWxsXzIzMTIiLCJfXyI6NTQ2MDV9LHsiXyI6InNraWxsXzM0NSIsIl9fIjo4MDI0M30seyJfIjoic2tpbGxfMjMxMCIsIl9fIjoxMjg0Njl9LHsiXyI6InNraWxsXzIyMTUiLCJfXyI6MjkzNDl9LHsiXyI6InNraWxsXzIyODYiLCJfXyI6NDk0NzR9LHsiXyI6InNraWxsXzIyMDYiLCJfXyI6NjA5NDR9LHsiXyI6InNraWxsXzIzMDgiLCJfXyI6NjUxMDF9LHsiXyI6InNraWxsXzMyOSIsIl9fIjo3NTM1Nn1dfQ=="
     
-    # 1. Fetch Event Data (Always check event data and energy on each step)
+    # 1. Fetch Event Data (Check event data and energy)
     event_data = None
     endpoint_prefix = "MonsterHunterEvent2023" # Source of truth from APK bytecode
     
@@ -590,20 +590,19 @@ async def auto_monster_hunt(client: NinjaSageClient, sessionkey: str, char_id: i
             elif isinstance(event_res, list) and len(event_res) > 0 and isinstance(event_res[0], dict):
                 event_data = event_res[0]
                 endpoint_prefix = "vnB7P8simcleapK1"
-            else:
-                error_msg = event_res.get('result', event_res.get('error', event_res)) if isinstance(event_res, dict) else event_res
-                return f"Failed to get Monster Hunt data: {error_msg}"
-        except Exception as e:
-            return f"Failed to get Monster Hunt data: {e}"
+        except Exception:
+            pass
 
-    if not event_data:
-        return "Failed to get Monster Hunt event data from server (Event may be inactive)."
-
-    boss_id = event_data.get('boss_id') or event_data.get('boss') or 'ene_2080'
-    energy = int(event_data.get('energy', 0))
-    
-    if energy < 10:
-        return f"STOPPED: Energy Monster Hunt habis ({energy}/10 required). Bot dihentikan."
+    boss_id = "ene_2080"
+    if isinstance(event_data, dict):
+        inner_data = event_data.get('data') or event_data.get('event_data') or event_data
+        if isinstance(inner_data, dict):
+            boss_id = inner_data.get('boss_id') or inner_data.get('boss') or 'ene_2080'
+            energy_val = inner_data.get('energy')
+            if energy_val is not None:
+                energy = int(energy_val)
+                if energy < 10:
+                    return f"STOPPED: Energy Monster Hunter habis ({energy}/10 required). Bot dihentikan."
 
     # 2. Start Battle
     start_hash_str = f"{char_id}{boss_id}"
@@ -627,13 +626,13 @@ async def auto_monster_hunt(client: NinjaSageClient, sessionkey: str, char_id: i
             
     if not isinstance(start_res, dict) or (start_res.get("status") != 1 and str(start_res.get("status")) != "1"):
         error_msg = start_res.get('result', start_res.get('error', start_res)) if isinstance(start_res, dict) else start_res
-        return f"Failed to start Monster Hunt battle against {boss_id}: {error_msg}"
+        return f"Failed to start Monster Hunter battle against {boss_id}: {error_msg}"
 
     battle_id = str(start_res.get("code", start_res.get("battle_code", start_res.get("id", ""))))
     if not battle_id:
-        return f"Failed: No battle ID returned for Monster Hunt {boss_id}: {start_res}"
+        return f"Failed: No battle ID returned for Monster Hunter {boss_id}: {start_res}"
 
-    await asyncio.sleep(2) # Safe battle delay
+    await asyncio.sleep(2.5) # Safe battle delay
     
     # 3. Finish Battle
     finish_hash_str = f"{char_id}{boss_id}{battle_id}0{EQUIPMENT_DATA}"
@@ -657,10 +656,10 @@ async def auto_monster_hunt(client: NinjaSageClient, sessionkey: str, char_id: i
         
     if isinstance(finish_res, dict) and (finish_res.get("status") == 1 or str(finish_res.get("status")) == "1"):
         level = await get_or_fetch_char_level(client, sessionkey, char_id)
-        return format_battle_rewards(f"Monster Hunt {boss_id}", finish_res, current_level=level, char_id=char_id)
+        return format_battle_rewards(f"Monster Hunter {boss_id}", finish_res, current_level=level, char_id=char_id)
     else:
         error_msg = finish_res.get('result', finish_res.get('error', finish_res)) if isinstance(finish_res, dict) else finish_res
-        return f"Monster Hunt Battle failed: {error_msg}"
+        return f"Monster Hunter Battle failed: {error_msg}"
 
 async def auto_mission_s(client: NinjaSageClient, sessionkey: str, char_id: int):
     import hashlib

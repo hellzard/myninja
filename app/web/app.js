@@ -775,22 +775,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     });
 
-    // Auto Monster Hunt
+    // Auto Monster Hunter
     let autoMonsterInterval = null;
     const btnAutoMonster = document.getElementById('toggle-automonster');
     if (btnAutoMonster) {
         btnAutoMonster.addEventListener('click', () => {
+            if (!sessionState || !sessionState.sessionkey) {
+                addLog("[Monster Hunter] Please login first.", "error");
+                return;
+            }
+
             if (autoMonsterInterval) {
                 clearInterval(autoMonsterInterval);
                 autoMonsterInterval = null;
                 btnAutoMonster.textContent = "START";
                 btnAutoMonster.style.background = "";
-                addLog("Auto Monster Hunt STOPPED.");
+                addLog("Auto Monster Hunter STOPPED.");
                 return;
             }
+
             btnAutoMonster.textContent = "STOP";
             btnAutoMonster.style.background = "#ff5252";
-            addLog("Auto Monster Hunt STARTED...");
+            addLog("Auto Monster Hunter STARTED...");
             
             let isProcessing_autoMonsterInterval = false;
             
@@ -807,15 +813,26 @@ document.addEventListener('DOMContentLoaded', () => {
                         })
                     });
                     const data = await res.json();
-                    addLog(`[AutoMonster] Response: ${data.message}`);
+                    
                     if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
+                        addLog(`[Monster Hunter] ${data.message}`, 'ok');
                         tryUpdateStatsFromMsg(data.message);
+                    } else {
+                        const isWarn = data.message && (data.message.includes("STOPPED") || data.message.toLowerCase().includes("energy"));
+                        addLog(`[Monster Hunter] Response: ${data.message || data.status}`, isWarn ? 'warn' : 'error');
                     }
-                    if (data.status === 'error' || (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('stopped') || data.message.toLowerCase().includes('inactive')))) {
-                        if (autoMonsterInterval) btnAutoMonster.click();
+
+                    if (data.status === 'error' || (data.message && (data.message.toLowerCase().includes('energy habis') || data.message.toLowerCase().includes('energy monster hunter habis') || data.message.toLowerCase().includes('stopped')))) {
+                        if (autoMonsterInterval) {
+                            clearInterval(autoMonsterInterval);
+                            autoMonsterInterval = null;
+                            btnAutoMonster.textContent = "START";
+                            btnAutoMonster.style.background = "";
+                            addLog("Auto Monster Hunter STOPPED.");
+                        }
                     }
                 } catch(e) {
-                    addLog(`[AutoMonster] Error: ${e.message}`);
+                    addLog(`[Monster Hunter] Error: ${e.message}`, 'error');
                 } finally {
                     isProcessing_autoMonsterInterval = false;
                 }
