@@ -136,6 +136,7 @@ def _parse_materials(raw_mat) -> list:
 
 _char_level_cache = {}
 _event_char_data_cache = {}
+_char_info_cache = {}
 
 async def get_or_fetch_char_level(client: NinjaSageClient, sessionkey: str, char_id: int) -> int:
     global _char_level_cache
@@ -373,12 +374,11 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
     if isinstance(finish_res, dict) and finish_res.get('status') == 0:
         return f"Failed: finishMission rejected {actual_mission_id}: {finish_res}"
         
-    # Invalidate cache
-    if char_id in _char_info_cache:
-        del _char_info_cache[char_id]
-        
     if isinstance(finish_res, (dict, list)):
-        return format_battle_rewards(f"Mission {actual_mission_id}", finish_res, current_level=char_info.get("level"), char_id=char_id)
+        formatted_msg = format_battle_rewards(f"Mission {actual_mission_id}", finish_res, current_level=char_info.get("level"), char_id=char_id)
+        if char_id in _char_level_cache:
+            char_info["level"] = _char_level_cache[char_id]
+        return formatted_msg
     else:
         return f"Failed: finishMission unexpected response for {actual_mission_id}: {finish_res}"
 
