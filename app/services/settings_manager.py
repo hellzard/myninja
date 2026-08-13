@@ -5,7 +5,7 @@ from typing import Dict, Any
 SETTINGS_FILE = os.path.join(os.path.dirname(__file__), "..", "..", "sage_settings.json")
 
 DEFAULT_SETTINGS = {
-    "leveling_delay_seconds": 10,
+    "leveling_delay_seconds": 5,
     "leveling_cycle_cooldown_seconds": 5,
     "leveling_rest_every_cycles": 40,
     "leveling_rest_duration_seconds": 60,

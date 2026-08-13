@@ -326,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const loopStartTime = Date.now();
             let delayInput = parseInt(document.getElementById('setting-leveling-delay').value);
-            if (isNaN(delayInput) || delayInput < 1) delayInput = 4;
+            if (isNaN(delayInput) || delayInput < 1) delayInput = 5;
             let targetDelay = delayInput * 1000;
             let nextDelay = targetDelay;
             
@@ -1082,7 +1082,7 @@ window.loadSettings = async function() {
         const res = await fetch('/api/bot/settings');
         const data = await res.json();
         if (data.status === 'success' && data.settings) {
-            document.getElementById('setting-leveling-delay').value = data.settings.leveling_delay_seconds || 4;
+            document.getElementById('setting-leveling-delay').value = data.settings.leveling_delay_seconds || 5;
             document.getElementById('setting-shadow-wait').value = data.settings.sage_shadow_war_wait_minutes || 30;
             document.getElementById('setting-clan-token').checked = !!data.settings.clan_war_auto_spend_token;
             document.getElementById('setting-clan-refill').value = data.settings.clan_war_stamina_refill_source || 'auto';
@@ -1095,7 +1095,7 @@ window.loadSettings = async function() {
 window.saveSettings = async function() {
     try {
         const payload = {
-            leveling_delay_seconds: parseInt(document.getElementById('setting-leveling-delay').value) || 10,
+            leveling_delay_seconds: parseInt(document.getElementById('setting-leveling-delay').value) || 5,
             sage_shadow_war_wait_minutes: parseInt(document.getElementById('setting-shadow-wait').value) || 30,
             clan_war_auto_spend_token: document.getElementById('setting-clan-token').checked,
             clan_war_stamina_refill_source: document.getElementById('setting-clan-refill').value

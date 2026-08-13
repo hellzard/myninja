@@ -1,10 +1,10 @@
-const CACHE_NAME = 'ns-shadow-cache-v11';
+const CACHE_NAME = 'ns-shadow-cache-v12';
 
 const STATIC_ASSETS = [
   '/panel/',
   '/panel/index.html',
   '/panel/style.css?v=3',
-  '/panel/app.js?v=13',
+  '/panel/app.js?v=14',
   '/panel/manifest.json',
   '/panel/offline.html',
   '/panel/assets/icon-192.png',
