@@ -134,8 +134,31 @@ def _parse_materials(raw_mat) -> list:
         
     return materials
 
-def format_battle_rewards(feature_name: str, finish_res, current_level=None) -> str:
+_char_level_cache = {}
+
+async def get_or_fetch_char_level(client: NinjaSageClient, sessionkey: str, char_id: int) -> int:
+    global _char_level_cache
+    if char_id in _char_level_cache and _char_level_cache[char_id] is not None:
+        return _char_level_cache[char_id]
     try:
+        char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
+        char_obj = char_data_res.get('character_data') or char_data_res.get('data') or char_data_res
+        if isinstance(char_obj, list) and len(char_obj) > 0 and isinstance(char_obj[0], dict):
+            char_obj = char_obj[0]
+        if isinstance(char_obj, dict):
+            lvl = int(char_obj.get("character_level") or char_obj.get("level") or 1)
+            _char_level_cache[char_id] = lvl
+            return lvl
+    except Exception:
+        pass
+    return _char_level_cache.get(char_id, None)
+
+def format_battle_rewards(feature_name: str, finish_res, current_level=None, char_id=None) -> str:
+    try:
+        global _char_level_cache
+        if current_level is None and char_id is not None:
+            current_level = _char_level_cache.get(char_id)
+            
         xp = 0
         gold = 0
         token = 0
@@ -157,8 +180,10 @@ def format_battle_rewards(feature_name: str, finish_res, current_level=None) -> 
                 xp = res_dict.get('xp', res_dict.get('character_xp', 0))
                 gold = res_dict.get('gold', res_dict.get('character_gold', 0))
                 token = res_dict.get('token', res_dict.get('character_token', 0))
-                if not current_level:
-                    current_level = res_dict.get('level', res_dict.get('character_level'))
+                new_level = res_dict.get('level', res_dict.get('character_level'))
+                if new_level:
+                    current_level = new_level
+                    if char_id: _char_level_cache[char_id] = new_level
                 mat_raw = res_dict.get('material') or res_dict.get('materials') or res_dict.get('items')
                 materials.extend(_parse_materials(mat_raw))
             else:
@@ -168,7 +193,9 @@ def format_battle_rewards(feature_name: str, finish_res, current_level=None) -> 
                     gold = rewards.get('gold', rewards.get('character_gold', 0))
                     token = rewards.get('token', rewards.get('character_token', 0))
                     new_level = rewards.get('level', rewards.get('character_level'))
-                    if new_level: current_level = new_level
+                    if new_level:
+                        current_level = new_level
+                        if char_id: _char_level_cache[char_id] = new_level
                     
                     mat_raw = rewards.get('material') or rewards.get('materials') or rewards.get('items')
                     materials.extend(_parse_materials(mat_raw))
@@ -182,26 +209,33 @@ def format_battle_rewards(feature_name: str, finish_res, current_level=None) -> 
             if len(finish_res) > 3 and isinstance(finish_res[3], (int, float)):
                 token = finish_res[3]
                 
+        # Build comprehensive informative log string
         parts = [f"{feature_name} SUCCESS!"]
+        
+        # 1. Level Karakter Saat Ini
         if current_level is not None and str(current_level) not in ('--', 'None', '?'):
             parts.append(f"Level: {current_level}")
-        if xp:
-            parts.append(f"XP: {xp}")
-        if gold:
-            parts.append(f"Gold: {gold}")
-        if token:
-            parts.append(f"Token: {token}")
+        else:
+            parts.append("Level: -")
+            
+        # 2. XP
+        parts.append(f"XP: +{xp}" if xp else "XP: 0")
+        
+        # 3. Gold
+        parts.append(f"Gold: +{gold}" if gold else "Gold: 0")
+        
+        # 4. Token
+        parts.append(f"Token: +{token}" if token else "Token: 0")
+        
+        # 5. Materials
         if materials:
             parts.append(f"Materials: {', '.join(materials)}")
-            
-        if len(parts) == 1:
-            return f"{feature_name} SUCCESS! Raw: {finish_res}"
+        else:
+            parts.append("Materials: -")
             
         return " | ".join(parts)
     except Exception as e:
         return f"{feature_name} SUCCESS! Raw: {finish_res}"
-
-_char_info_cache = {}
 
 # Anti-cheat payload from nsepanel (base64 encoded JSON with default gear/stats)
 BATTLE_HASH = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzAxIiwid2VhcG9uIjoid3BuXzAxIiwic2V0Ijoic2V0XzAxXzAifSwic3RhdHVzIjp7ImVhcnRoIjowLCJmaXJlIjowLCJ3YXRlciI6MCwibGlnaHRuaW5nIjowLCJ3aW5kIjowfSwiYnl0ZXMiOnsiXyI6ODIyODQ0NywiX18iOjgyMjg0NDcsIl9fXyI6IjE3NjI3NDY2NTk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mjc0NjY1OTE3NjI3NDY2NTkxNzYyNzQ2NjU5MTc2Mjc0NjY1OSIsIl9fX19fIjo4MjI4NDQ3LCJfX19fX18iOjgyMjg0NDcsIl9fX18iOjE3NjI3NDY2NTl9LCJfX19fIjpbeyJfIjoic2tpbGxfMTMiLCJfXyI6MjkxMzR9XX0="
@@ -330,7 +364,7 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
         del _char_info_cache[char_id]
         
     if isinstance(finish_res, (dict, list)):
-        return format_battle_rewards(f"Mission {actual_mission_id}", finish_res)
+        return format_battle_rewards(f"Mission {actual_mission_id}", finish_res, current_level=char_info.get("level"), char_id=char_id)
     else:
         return f"Failed: finishMission unexpected response for {actual_mission_id}: {finish_res}"
 
@@ -458,7 +492,8 @@ async def run_hunting(client: NinjaSageClient, sessionkey: str, char_id: int, zo
         finish_res = await client.send_amf_request("JDEUnbiWJXOtHxVv.wrlPOTLOEWFE", [char_id, zone, battle_code, 1, sessionkey, []])
         
         if isinstance(finish_res, dict) and finish_res.get('status') == 1:
-            return format_battle_rewards(f"Hunting Zone {zone}", finish_res)
+            level = await get_or_fetch_char_level(client, sessionkey, char_id)
+            return format_battle_rewards(f"Hunting Zone {zone} ({boss_info['name']})", finish_res, current_level=level, char_id=char_id)
         else:
             return f"Failed to finish hunting: {finish_res}"
     else:
@@ -505,11 +540,8 @@ async def auto_shadow_war(client: NinjaSageClient, sessionkey: str, char_id: int
     finish_res = await client.send_amf_request("ShadowWar.executeService", ["finishBattle", finish_params])
     
     if finish_res.get("status") == 1:
-        result_payload = finish_res.get("result", [])
-        xp = result_payload[0] if len(result_payload) > 0 else "n/a"
-        gold = result_payload[1] if len(result_payload) > 1 else "n/a"
-        win_trophy = finish_res.get("win_trophy", "n/a")
-        return f"Shadow War Victory against {enemy_name}! XP: {xp}, Gold: {gold}, Trophy won: {win_trophy}"
+        level = await get_or_fetch_char_level(client, sessionkey, char_id)
+        return format_battle_rewards(f"Shadow War vs {enemy_name}", finish_res, current_level=level, char_id=char_id)
     else:
         return f"Shadow War Battle Failed: {finish_res}"
 
@@ -560,7 +592,8 @@ async def auto_monster_hunt(client: NinjaSageClient, sessionkey: str, char_id: i
     ])
     
     if finish_res.get("status") == 1:
-        return format_battle_rewards(f"Monster Hunt {boss_id}", finish_res)
+        level = await get_or_fetch_char_level(client, sessionkey, char_id)
+        return format_battle_rewards(f"Monster Hunt {boss_id}", finish_res, current_level=level, char_id=char_id)
     else:
         return f"Battle failed: {finish_res}"
 
@@ -657,7 +690,8 @@ async def auto_mission_s(client: NinjaSageClient, sessionkey: str, char_id: int)
     finish_res = await client.send_amf_request("IOIJB836r2Hu2PPW.MSi71s3i1X89", finish_params)
     
     if finish_res.get('status') == 1:
-        return format_battle_rewards(f"Mission S Stage {stage_to_run}", finish_res)
+        level = await get_or_fetch_char_level(client, sessionkey, char_id)
+        return format_battle_rewards(f"Mission S Stage {stage_to_run}", finish_res, current_level=level, char_id=char_id)
     else:
         return f"Mission S finish failed: {finish_res}"
 
@@ -726,7 +760,8 @@ async def auto_clan_war(client: NinjaSageClient, sessionkey: str, char_id: int):
         
         if battle_resp.status_code == 200:
             reward_data = battle_resp.json()
-            return format_battle_rewards(f"Clan War vs {opponent_name}", reward_data)
+            level = await get_or_fetch_char_level(client, sessionkey, char_id)
+            return format_battle_rewards(f"Clan War vs {opponent_name}", reward_data, current_level=level, char_id=char_id)
         else:
             return f"Clan War failed: {battle_resp.text}"
 
@@ -802,7 +837,7 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
                 if isinstance(res, dict) and res.get('status') == 2:
                     return f"Chunin Exam Stage {stage_num} failed! {res}"
                 else:
-                    return format_battle_rewards(f"Chunin Exam Stage {stage_num}", res)
+                    return format_battle_rewards(f"Chunin Exam Stage {stage_num}", res, current_level=level, char_id=char_id)
             else:
                 # All stages done (progress == 5), but rank is still 1!
                 # The original APK requires the user to log in manually to claim the promotion if manual_claim is False.
@@ -835,7 +870,7 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
                 if isinstance(res, dict) and res.get('status') == 2:
                     return f"Jounin Exam Stage {progress+1} failed! {res}"
                 else:
-                    return format_battle_rewards(f"Jounin Exam Stage {progress+1}", res)
+                    return format_battle_rewards(f"Jounin Exam Stage {progress+1}", res, current_level=level, char_id=char_id)
             else:
                 # All stages done, promote!
                 res = await client.send_amf_request("JouninExam.promoteToJounin", [sessionkey, char_id])
@@ -937,7 +972,8 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
     finish_res = await client.send_amf_request("A11M5XZ9wxhTs2Dr.L6IPyPI8oNXL", finish_params)
     
     if finish_res.get("status") == 1:
-        return format_battle_rewards(f"Eudemon {target_boss_name}", finish_res)
+        level = await get_or_fetch_char_level(client, sessionkey, char_id)
+        return format_battle_rewards(f"Eudemon {target_boss_name}", finish_res, current_level=level, char_id=char_id)
     else:
         return f"Failed to defeat {target_boss_name}: {finish_res}"
 
@@ -1054,7 +1090,8 @@ async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: in
         final_tokens = finish_res.get('account_tokens')
         if final_tokens is not None and int(final_tokens) < initial_tokens:
             return f"STOPPED: Tiket {boss_type.capitalize()} habis! Server memotong {initial_tokens - int(final_tokens)} Token. Bot dihentikan untuk melindungi tokenmu."
-        return format_battle_rewards(f"Circus Event {boss_type.capitalize()}", finish_res)
+        level = await get_or_fetch_char_level(client, sessionkey, char_id)
+        return format_battle_rewards(f"Circus {boss_type.capitalize()}", finish_res, current_level=level, char_id=char_id)
     else:
         error_msg = finish_res.get('result', finish_res) if isinstance(finish_res, dict) else finish_res
         return f"Circus Event Complete but server rejected finish: {error_msg}"
@@ -1155,7 +1192,8 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         final_tokens = finish_res.get('account_tokens')
         if final_tokens is not None and int(final_tokens) < initial_tokens:
             return f"STOPPED: Tiket {boss_type.capitalize()} habis! Server memotong {initial_tokens - int(final_tokens)} Token. Bot dihentikan untuk melindungi tokenmu."
-        return format_battle_rewards(f"Yokai Event {boss_type.capitalize()}", finish_res)
+        level = await get_or_fetch_char_level(client, sessionkey, char_id)
+        return format_battle_rewards(f"Yokai {boss_type.capitalize()}", finish_res, current_level=level, char_id=char_id)
     else:
         error_msg = finish_res.get('result', finish_res) if isinstance(finish_res, dict) else finish_res
         return f"Yokai Event Complete but server rejected finish: {error_msg}"
@@ -1221,7 +1259,8 @@ async def run_yokai_minigame(client: NinjaSageClient, sessionkey: str, char_id: 
     if not isinstance(finish_res, dict) or finish_res.get('status') == 0:
         return f"Failed to finish Yokai Minigame: {finish_res}"
         
-    return format_battle_rewards("Yokai Minigame", finish_res)
+    level = await get_or_fetch_char_level(client, sessionkey, char_id)
+    return format_battle_rewards("Yokai Minigame", finish_res, current_level=level, char_id=char_id)
 
 async def run_auto_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mission_id: str):
     import hashlib
@@ -1292,4 +1331,5 @@ async def run_auto_mission(client: NinjaSageClient, sessionkey: str, char_id: in
     if not isinstance(finish_res, dict) or finish_res.get('status') == 0:
         return f"Failed to finish mission: {finish_res}"
         
-    return format_battle_rewards(f"Auto Mission {mission_id}", finish_res)
+    level = await get_or_fetch_char_level(client, sessionkey, char_id)
+    return format_battle_rewards(f"Auto Mission {mission_id}", finish_res, current_level=level, char_id=char_id)
