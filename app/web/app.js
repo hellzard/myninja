@@ -285,10 +285,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isNaN(charLevel)) charLevel = 1;
         
         let targetMissionId = "msn_3"; // Genin
-        if (charLevel >= 60) targetMissionId = "msn_121"; // Sannin/A+
-        else if (charLevel >= 40) targetMissionId = "msn_109"; // Grade A
-        else if (charLevel >= 20) targetMissionId = "msn_69"; // Grade B
-        else if (charLevel >= 10) targetMissionId = "msn_68"; // Grade C
+        if (charLevel >= 80) targetMissionId = "msn_109"; // Sage Scroll (S+)
+        else if (charLevel >= 60) targetMissionId = "msn_60"; // Grade A (Level 60)
+        else if (charLevel >= 40) targetMissionId = "msn_42"; // Grade A (Level 42)
+        else if (charLevel >= 20) targetMissionId = "msn_21"; // Grade B (Level 21)
+        else if (charLevel >= 10) targetMissionId = "msn_11"; // Grade C (Level 11)
         
         autoLevelTarget = targetMissionId;
         autoLevelIsRunning = true;
