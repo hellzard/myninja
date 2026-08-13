@@ -107,9 +107,28 @@ def get_inventory_amount(payload, item_id: str) -> int:
                 return res
     return 0
 
-BATTLE_HASH = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzAxIiwid2VhcG9uIjoid3BuXzAxIiwic2V0Ijoic2V0XzAxXzAifSwic3RhdHVzIjp7ImVhcnRoIjowLCJmaXJlIjowLCJ3YXRlciI6MCwibGlnaHRuaW5nIjowLCJ3aW5kIjowfSwiYnl0ZXMiOnsiXyI6ODIyODQ0NywiX18iOjgyMjg0NDcsIl9fXyI6IjE3NjI3NDY2NTk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mjc0NjY1OTE3NjI3NDY2NTkxNzYyNzQ2NjU5MTc2Mjc0NjY1OSIsIl9fX19fIjo4MjI4NDQ3LCJfX19fX18iOjgyMjg0NDcsIl9fX18iOjE3NjI3NDY2NTl9LCJfX19fIjpbeyJfIjoic2tpbGxfMTMiLCJfXyI6MjkxMzR9XX0="
+_char_info_cache = {}
 
-_agility_cache = {}
+def get_best_mission(level: int, rank: int) -> str:
+    # rank 1=Genin(C), 2=Chunin(B), 3=Jounin(A), 4=Special(S), 5=Sage(SS)
+    allowed_grades = ["c"]
+    if rank >= 2: allowed_grades.append("b")
+    if rank >= 3: allowed_grades.append("a")
+    if rank >= 4: allowed_grades.append("s")
+    if rank >= 5: allowed_grades.append("ss")
+    
+    best_mission = None
+    highest_level = -1
+    
+    for m in MISSION_DATA:
+        m_level = m.get("level", 1)
+        m_grade = m.get("grade", "c").lower()
+        if m_level <= level and m_grade in allowed_grades and "enemies" in m and len(m["enemies"]) > 0:
+            if m_level > highest_level:
+                highest_level = m_level
+                best_mission = m.get("id")
+                
+    return best_mission or "msn_3"
 
 async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mission_id: str):
     SAGE_SCROLL_MINIGAME_MISSION_IDS = {'msn_109', 'msn_110', 'msn_111'}
@@ -123,19 +142,31 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
         finish_res = await client.send_amf_request("BattleSystem.finishSageScrollMiniGame", [char_id, sessionkey, battle_id])
         return f"Sage Scroll Mission {mission_id} Complete! Reward: {finish_res}"
         
-    global _agility_cache
+    global _char_info_cache
     
-    mission_info = get_data_by_id(mission_id, MISSION_DATA)
-    if not mission_info:
-        return f"Unknown mission_id {mission_id}"
-        
-    agility = _agility_cache.get(char_id)
-    if agility is None:
+    char_info = _char_info_cache.get(char_id)
+    if char_info is None:
         char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
         if char_data_res.get('status') == 0:
             return f"Failed to get character data: {char_data_res.get('error', 'Unknown error')}"
-        agility = calculate_agility(char_data_res)
-        _agility_cache[char_id] = agility
+        
+        char_obj = char_data_res.get('data', char_data_res)
+        lvl = int(char_obj.get("character_level", char_obj.get("level", 1)))
+        rk = int(char_obj.get("character_rank", char_obj.get("rank", 1)))
+        
+        char_info = {
+            "agility": calculate_agility(char_data_res),
+            "level": lvl,
+            "rank": rk
+        }
+        _char_info_cache[char_id] = char_info
+
+    # Dynamically select optimal mission based on nsepanel decompiled logic
+    actual_mission_id = get_best_mission(char_info["level"], char_info["rank"])
+    
+    mission_info = get_data_by_id(actual_mission_id, MISSION_DATA)
+    if not mission_info:
+        return f"Unknown mission_id {actual_mission_id}"
         
     enemies = mission_info.get("enemies", [])
     enemy_attrs = []
@@ -145,28 +176,28 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
         ene_agi = enemy_attr.get("agility", 0)
         enemy_attrs.append(f"id:{enemy}|hp:{hp}|agility:{ene_agi}")
         
-    hash_input = ",".join(enemies) + "#".join(enemy_attrs) + str(agility)
+    hash_input = ",".join(enemies) + "#".join(enemy_attrs) + str(char_info["agility"])
     mission_hash = hashlib.sha256(hash_input.encode()).hexdigest()
     
-    start_params = [char_id, mission_id, ",".join(enemies), "#".join(enemy_attrs), agility, mission_hash, sessionkey]
+    start_params = [char_id, actual_mission_id, ",".join(enemies), "#".join(enemy_attrs), char_info["agility"], mission_hash, sessionkey]
     start_res = await client.send_amf_request("IOIJB836r2Hu2PPW.mwaPMdtCPC5o", start_params)
     
     if isinstance(start_res, dict):
         if start_res.get('status') == 2 or start_res.get('error') is not None:
-            return f"Failed to start mission {mission_id}: {start_res}"
+            return f"Failed to start mission {actual_mission_id}: {start_res}"
         battle_id = str(start_res.get('battle_code', start_res.get('code', start_res.get('id', ''))))
     else:
         battle_id = str(start_res)
     
     if not battle_id or battle_id == 'None':
-        return f"Failed to start mission {mission_id}: No battle_id in response: {start_res}"
+        return f"Failed to start mission {actual_mission_id}: No battle_id in response: {start_res}"
     
     await asyncio.sleep(1)
     
     # Ultimate reference_bridge bypass for finishMission (bypasses hash validation completely)
-    finish_params = [char_id, mission_id, battle_id, 1, 9999, sessionkey, [], 0]
+    finish_params = [char_id, actual_mission_id, battle_id, 1, 9999, sessionkey, [], 0]
     finish_res = await client.send_amf_request("IOIJB836r2Hu2PPW.MSi71s3i1X89", finish_params)
-    return f"Mission {mission_id} Complete! Reward: {finish_res}"
+    return f"Mission {actual_mission_id} Complete! Reward: {finish_res}"
 
 async def auto_daily_event(client: NinjaSageClient, sessionkey: str, char_id: int):
     # 1. Fetch Char Data
