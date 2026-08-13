@@ -109,6 +109,8 @@ def get_inventory_amount(payload, item_id: str) -> int:
 
 BATTLE_HASH = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzAxIiwid2VhcG9uIjoid3BuXzAxIiwic2V0Ijoic2V0XzAxXzAifSwic3RhdHVzIjp7ImVhcnRoIjowLCJmaXJlIjowLCJ3YXRlciI6MCwibGlnaHRuaW5nIjowLCJ3aW5kIjowfSwiYnl0ZXMiOnsiXyI6ODIyODQ0NywiX18iOjgyMjg0NDcsIl9fXyI6IjE3NjI3NDY2NTk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mjc0NjY1OTE3NjI3NDY2NTkxNzYyNzQ2NjU5MTc2Mjc0NjY1OSIsIl9fX19fIjo4MjI4NDQ3LCJfX19fX18iOjgyMjg0NDcsIl9fX18iOjE3NjI3NDY2NTl9LCJfX19fIjpbeyJfIjoic2tpbGxfMTMiLCJfXyI6MjkxMzR9XX0="
 
+_agility_cache = {}
+
 async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mission_id: str):
     SAGE_SCROLL_MINIGAME_MISSION_IDS = {'msn_109', 'msn_110', 'msn_111'}
     if mission_id in SAGE_SCROLL_MINIGAME_MISSION_IDS:
@@ -121,8 +123,32 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
         finish_res = await client.send_amf_request("BattleSystem.finishSageScrollMiniGame", [char_id, sessionkey, battle_id])
         return f"Sage Scroll Mission {mission_id} Complete! Reward: {finish_res}"
         
-    # Efficient bypass for standard missions (no getCharacterData overhead)
-    start_params = [char_id, mission_id, "char_0", "char_0", "char_0", "char_0", sessionkey]
+    global _agility_cache
+    
+    mission_info = get_data_by_id(mission_id, MISSION_DATA)
+    if not mission_info:
+        return f"Unknown mission_id {mission_id}"
+        
+    agility = _agility_cache.get(char_id)
+    if agility is None:
+        char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
+        if char_data_res.get('status') == 0:
+            return f"Failed to get character data: {char_data_res.get('error', 'Unknown error')}"
+        agility = calculate_agility(char_data_res)
+        _agility_cache[char_id] = agility
+        
+    enemies = mission_info.get("enemies", [])
+    enemy_attrs = []
+    for enemy in enemies:
+        enemy_attr = get_data_by_id(enemy, ENEMY_DATA)
+        hp = enemy_attr.get("hp", 0)
+        ene_agi = enemy_attr.get("agility", 0)
+        enemy_attrs.append(f"id:{enemy}|hp:{hp}|agility:{ene_agi}")
+        
+    hash_input = ",".join(enemies) + "#".join(enemy_attrs) + str(agility)
+    mission_hash = hashlib.sha256(hash_input.encode()).hexdigest()
+    
+    start_params = [char_id, mission_id, ",".join(enemies), "#".join(enemy_attrs), agility, mission_hash, sessionkey]
     start_res = await client.send_amf_request("IOIJB836r2Hu2PPW.mwaPMdtCPC5o", start_params)
     
     if isinstance(start_res, dict):
