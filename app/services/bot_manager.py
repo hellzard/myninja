@@ -358,7 +358,7 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
     if not battle_id or battle_id == 'None' or battle_id == '':
         return f"Failed: No battle_id for {actual_mission_id}: {start_res}"
     
-    await asyncio.sleep(1)
+    await asyncio.sleep(2)
     
     # === PHASE 3: finishMission (matches nsepanel leveling_dis.txt:3795-3826) ===
     # nsepanel hash: f"{mission_id}{char_id}{battle_id}0"

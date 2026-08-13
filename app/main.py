@@ -90,6 +90,7 @@ async def api_login(req: LoginRequest):
 # Automation Bot Endpoints
 # -----------------
 @app.post("/api/bot/auto_leveling_step")
+@app.post("/api/bot/auto_level_step")
 async def api_auto_level_step(req: AutoLevelingRequest):
     client = NinjaSageClient()
     try:

@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             let delayInput = parseInt(document.getElementById('setting-leveling-delay').value);
-            if (isNaN(delayInput) || delayInput < 1) delayInput = 2;
+            if (isNaN(delayInput) || delayInput < 1) delayInput = 4;
             let delay = delayInput * 1000;
             
             // Check exam only periodically (every 10 missions) to prevent AMF request burst
@@ -337,9 +337,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     if (examRes.ok) {
                         const examData = await examRes.json();
-                        if (!examData.message.includes("No exams available")) {
-                            addLog(`[Exam System] ${examData.message}`, 'ok');
-                            tryUpdateStatsFromMsg(examData.message);
+                        const examMsg = examData?.message || "";
+                        if (examMsg && !examMsg.includes("No exams available")) {
+                            addLog(`[Exam System] ${examMsg}`, 'ok');
+                            tryUpdateStatsFromMsg(examMsg);
                         }
                     }
                 } catch (e) {
@@ -351,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Then run normal leveling
             try {
-                const res = await fetch('/api/bot/auto_level_step', {
+                const res = await fetch('/api/bot/auto_leveling_step', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -361,13 +362,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                 });
                 const data = await res.json();
-                if (data.status === 'success' && data.message.includes("SUCCESS")) {
-                    addLog(`[AutoLevel] ${data.message}`, 'ok');
+                const msg = data?.message || data?.detail || "";
+                
+                if (data?.status === 'success' && msg.includes("SUCCESS")) {
+                    addLog(`[AutoLevel] ${msg}`, 'ok');
                     autoLevelFailCount = 0; // Reset fail counter on success
-                    tryUpdateStatsFromMsg(data.message);
-                } else if (data.message.includes("Failed")) {
+                    tryUpdateStatsFromMsg(msg);
+                } else if (msg.includes("Failed") || data?.status === 'error') {
                     autoLevelFailCount++;
-                    addLog(`[AutoLevel] ${data.message}`, 'error');
+                    addLog(`[AutoLevel] ${msg || JSON.stringify(data)}`, 'error');
                     if (autoLevelFailCount >= 3) {
                         addLog("[AutoLevel] 3 consecutive failures. Stopping auto-leveling.", 'error');
                         btnAutoLevel.click();
@@ -375,8 +378,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     delay = 6000; // Back off on failure
                 } else {
-                    addLog(`[AutoLevel] ${data.message}`);
-                    if (data.message.includes("rate limited")) {
+                    addLog(`[AutoLevel] ${msg || JSON.stringify(data)}`);
+                    if (msg.toLowerCase().includes("rate limit")) {
                         addLog("[System] Rate limit detected. Backing off for 10 seconds...", "warn");
                         delay = 10000;
                     }
