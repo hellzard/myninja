@@ -256,7 +256,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         currentRunningBotBtn.click();
                     }
                     currentRunningBotBtn = this;
-                    let botName = this.previousElementSibling.querySelector('h4').textContent;
+                    let botName = "Bot";
+                    const prev = this.previousElementSibling;
+                    if (prev) {
+                        const h4 = prev.tagName === 'H4' ? prev : prev.querySelector('h4');
+                        if (h4) botName = h4.textContent.trim();
+                    }
                     if (statusText) {
                         statusText.textContent = "Running: " + botName;
                         statusText.style.color = "#10b981";
@@ -400,64 +405,67 @@ document.addEventListener('DOMContentLoaded', () => {
     let autoDailyInterval = null;
     const btnAutoDaily = document.getElementById('toggle-autodaily');
     
-    btnAutoDaily.addEventListener('click', () => {
-        if (autoDailyInterval) {
-            clearInterval(autoDailyInterval);
-            autoDailyInterval = null;
-            btnAutoDaily.textContent = "START";
-            btnAutoDaily.style.background = "";
-            addLog("Auto Daily STOPPED.");
-            return;
-        }
-        
-        btnAutoDaily.textContent = "STOP";
-        btnAutoDaily.style.background = "#ff5252";
-        addLog(`Auto Daily STARTED...`);
-        
-        let isProcessing_autoDailyInterval = false;
-        
-        autoDailyInterval = setInterval(async () => {
-            if (isProcessing_autoDailyInterval) return;
-            isProcessing_autoDailyInterval = true;
-            try {
-                const res = await fetch('/api/bot/auto_daily_step', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        sessionkey: sessionState.sessionkey,
-                        char_id: sessionState.char_id
-                    })
-                });
-                const data = await res.json();
-                addLog(`[AutoDaily] Response: ${data.message}`);
-                if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
-                    tryUpdateStatsFromMsg(data.message);
-                }
-                if (data.message === "Daily missions completed" || data.message === "No available daily missions (or failed to fetch)") {
-                    if (autoDailyInterval) btnAutoDaily.click();
-                }
-            } catch(e) {
-                addLog(`[AutoDaily] Error: ${e.message}`);
-            } finally {
-                isProcessing_autoDailyInterval = false;
+    if (btnAutoDaily) {
+        btnAutoDaily.addEventListener('click', () => {
+            if (autoDailyInterval) {
+                clearInterval(autoDailyInterval);
+                autoDailyInterval = null;
+                btnAutoDaily.textContent = "START";
+                btnAutoDaily.style.background = "";
+                addLog("Auto Daily STOPPED.");
+                return;
             }
-        }, 2500);
-    });
+            
+            btnAutoDaily.textContent = "STOP";
+            btnAutoDaily.style.background = "#ff5252";
+            addLog(`Auto Daily STARTED...`);
+            
+            let isProcessing_autoDailyInterval = false;
+            
+            autoDailyInterval = setInterval(async () => {
+                if (isProcessing_autoDailyInterval) return;
+                isProcessing_autoDailyInterval = true;
+                try {
+                    const res = await fetch('/api/bot/auto_daily_step', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            sessionkey: sessionState.sessionkey,
+                            char_id: sessionState.char_id
+                        })
+                    });
+                    const data = await res.json();
+                    addLog(`[AutoDaily] Response: ${data.message}`);
+                    if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
+                        tryUpdateStatsFromMsg(data.message);
+                    }
+                    if (data.message === "Daily missions completed" || data.message === "No available daily missions (or failed to fetch)") {
+                        if (autoDailyInterval) btnAutoDaily.click();
+                    }
+                } catch(e) {
+                    addLog(`[AutoDaily] Error: ${e.message}`);
+                } finally {
+                    isProcessing_autoDailyInterval = false;
+                }
+            }, 2500);
+        });
+    }
 
     // Auto Hunting
     let autoHuntInterval = null;
     let currentHuntZone = 1;
     const btnAutoHunt = document.getElementById('toggle-autohunting');
     
-    btnAutoHunt.addEventListener('click', () => {
-        if (autoHuntInterval) {
-            clearInterval(autoHuntInterval);
-            autoHuntInterval = null;
-            btnAutoHunt.textContent = "START";
-            btnAutoHunt.style.background = "";
-            addLog("Auto Hunting STOPPED.");
-            return;
-        }
+    if (btnAutoHunt) {
+        btnAutoHunt.addEventListener('click', () => {
+            if (autoHuntInterval) {
+                clearInterval(autoHuntInterval);
+                autoHuntInterval = null;
+                btnAutoHunt.textContent = "START";
+                btnAutoHunt.style.background = "";
+                addLog("Auto Hunting STOPPED.");
+                return;
+            }
         
         btnAutoHunt.textContent = "STOP";
         btnAutoHunt.style.background = "#ff5252";
@@ -503,7 +511,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 isProcessing_autoHuntInterval = false;
             }
         }, 3000);
-    });
+        });
+    }
 
     // Eudemon Boss (Desktop & Mobile share same logic if we use querySelectorAll)
     const eudemonBtns = document.querySelectorAll('#btnAutoEudemon');
@@ -733,50 +742,52 @@ document.addEventListener('DOMContentLoaded', () => {
     let autoShadowWarInterval = null;
     const btnAutoShadowWar = document.getElementById('toggle-autoshadowwar');
 
-    btnAutoShadowWar.addEventListener('click', () => {
-        if (autoShadowWarInterval) {
-            clearInterval(autoShadowWarInterval);
-            autoShadowWarInterval = null;
-            btnAutoShadowWar.textContent = "START";
-            btnAutoShadowWar.style.background = "";
-            addLog("Auto Shadow War STOPPED.");
-            return;
-        }
-
-        btnAutoShadowWar.textContent = "STOP";
-        btnAutoShadowWar.style.background = "#ff5252";
-        addLog(`Auto Shadow War STARTED...`);
-
-        let isProcessing_autoShadowWarInterval = false;
-
-        autoShadowWarInterval = setInterval(async () => {
-            if (isProcessing_autoShadowWarInterval) return;
-            isProcessing_autoShadowWarInterval = true;
-            try {
-                const res = await fetch('/api/bot/auto_shadow_war_step', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        action: "shadow_war",
-                        sessionkey: sessionState.sessionkey,
-                        char_id: sessionState.char_id
-                    })
-                });
-                const data = await res.json();
-                addLog(`[AutoShadowWar] Response: ${data.message}`);
-                if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
-                    tryUpdateStatsFromMsg(data.message);
-                }
-                if (data.status === 'error') {
-                    if (autoShadowWarInterval) btnAutoShadowWar.click();
-                }
-            } catch(e) {
-                addLog(`[AutoShadowWar] Error: ${e.message}`);
-            } finally {
-                isProcessing_autoShadowWarInterval = false;
+    if (btnAutoShadowWar) {
+        btnAutoShadowWar.addEventListener('click', () => {
+            if (autoShadowWarInterval) {
+                clearInterval(autoShadowWarInterval);
+                autoShadowWarInterval = null;
+                btnAutoShadowWar.textContent = "START";
+                btnAutoShadowWar.style.background = "";
+                addLog("Auto Shadow War STOPPED.");
+                return;
             }
-        }, 3000);
-    });
+
+            btnAutoShadowWar.textContent = "STOP";
+            btnAutoShadowWar.style.background = "#ff5252";
+            addLog(`Auto Shadow War STARTED...`);
+
+            let isProcessing_autoShadowWarInterval = false;
+
+            autoShadowWarInterval = setInterval(async () => {
+                if (isProcessing_autoShadowWarInterval) return;
+                isProcessing_autoShadowWarInterval = true;
+                try {
+                    const res = await fetch('/api/bot/auto_shadow_war_step', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            action: "shadow_war",
+                            sessionkey: sessionState.sessionkey,
+                            char_id: sessionState.char_id
+                        })
+                    });
+                    const data = await res.json();
+                    addLog(`[AutoShadowWar] Response: ${data.message}`);
+                    if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
+                        tryUpdateStatsFromMsg(data.message);
+                    }
+                    if (data.status === 'error') {
+                        if (autoShadowWarInterval) btnAutoShadowWar.click();
+                    }
+                } catch(e) {
+                    addLog(`[AutoShadowWar] Error: ${e.message}`);
+                } finally {
+                    isProcessing_autoShadowWarInterval = false;
+                }
+            }, 3000);
+        });
+    }
 
     // Auto Monster Hunter
     let autoMonsterInterval = null;
@@ -803,7 +814,8 @@ document.addEventListener('DOMContentLoaded', () => {
             
             let isProcessing_autoMonsterInterval = false;
             
-            autoMonsterInterval = setInterval(async () => {
+            const doMonsterStep = async () => {
+                if (!autoMonsterInterval) return;
                 if (isProcessing_autoMonsterInterval) return;
                 isProcessing_autoMonsterInterval = true;
                 try {
@@ -839,7 +851,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 } finally {
                     isProcessing_autoMonsterInterval = false;
                 }
-            }, 3000);
+            };
+
+            // Run first step immediately, then interval
+            doMonsterStep();
+            autoMonsterInterval = setInterval(doMonsterStep, 3500);
         });
     }
 
