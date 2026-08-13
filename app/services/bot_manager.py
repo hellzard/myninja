@@ -137,10 +137,8 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
     
     await asyncio.sleep(1)
     
-    finish_hash_input = f"{mission_id}{char_id}{battle_id}0"
-    finish_mission_hash = hashlib.sha256(finish_hash_input.encode()).hexdigest()
-    
-    finish_params = [char_id, mission_id, battle_id, finish_mission_hash, 0, sessionkey, BATTLE_HASH, 0]
+    # Ultimate reference_bridge bypass for finishMission (bypasses hash validation completely)
+    finish_params = [char_id, mission_id, battle_id, 1, 9999, sessionkey, [], 0]
     finish_res = await client.send_amf_request("IOIJB836r2Hu2PPW.MSi71s3i1X89", finish_params)
     return f"Mission {mission_id} Complete! Reward: {finish_res}"
 

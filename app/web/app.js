@@ -284,11 +284,11 @@ document.addEventListener('DOMContentLoaded', () => {
         let charLevel = parseInt(sessionState.level);
         if (isNaN(charLevel)) charLevel = 1;
         
-        let targetMissionId = "3"; // Genin
-        if (charLevel >= 60) targetMissionId = "121"; // Sannin/A+
-        else if (charLevel >= 40) targetMissionId = "109"; // Grade A
-        else if (charLevel >= 20) targetMissionId = "69"; // Grade B
-        else if (charLevel >= 10) targetMissionId = "68"; // Grade C
+        let targetMissionId = "msn_3"; // Genin
+        if (charLevel >= 60) targetMissionId = "msn_121"; // Sannin/A+
+        else if (charLevel >= 40) targetMissionId = "msn_109"; // Grade A
+        else if (charLevel >= 20) targetMissionId = "msn_69"; // Grade B
+        else if (charLevel >= 10) targetMissionId = "msn_68"; // Grade C
         
         autoLevelTarget = targetMissionId;
         autoLevelIsRunning = true;
