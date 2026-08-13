@@ -107,6 +107,76 @@ def get_inventory_amount(payload, item_id: str) -> int:
                 return res
     return 0
 
+def format_battle_rewards(feature_name: str, finish_res, current_level=None) -> str:
+    xp = 0
+    gold = 0
+    token = 0
+    materials = []
+    
+    if isinstance(finish_res, dict):
+        if 'result' in finish_res and isinstance(finish_res['result'], list):
+            rewards = finish_res['result']
+            if len(rewards) > 0: xp = rewards[0]
+            if len(rewards) > 1: gold = rewards[1]
+            if len(rewards) > 2 and isinstance(rewards[2], list):
+                mat_data = rewards[2]
+                if len(mat_data) > 0:
+                    if isinstance(mat_data[0], list):
+                        for item in mat_data:
+                            if len(item) >= 2: materials.append(f"{item[0]}x{item[1]}")
+                    else:
+                        materials.append(f"{mat_data[0]}x{mat_data[1]}")
+            if len(rewards) > 3 and isinstance(rewards[3], (int, float)):
+                token = rewards[3]
+        else:
+            rewards = finish_res.get('rewards') or finish_res.get('reward') or finish_res
+            if isinstance(rewards, dict):
+                xp = rewards.get('xp', rewards.get('character_xp', 0))
+                gold = rewards.get('gold', rewards.get('character_gold', 0))
+                token = rewards.get('token', rewards.get('character_token', 0))
+                new_level = rewards.get('level', rewards.get('character_level'))
+                if new_level: current_level = new_level
+                
+                mat_info = rewards.get('material', rewards.get('materials', rewards.get('items', [])))
+                if isinstance(mat_info, dict):
+                    for k, v in mat_info.items():
+                        materials.append(f"{k}x{v}")
+                elif isinstance(mat_info, list):
+                    for item in mat_info:
+                        if isinstance(item, list) and len(item) >= 2:
+                            materials.append(f"{item[0]}x{item[1]}")
+                        elif isinstance(item, dict):
+                            item_id = item.get('id', item.get('item_id', 'unknown'))
+                            qty = item.get('amount', item.get('qty', 1))
+                            materials.append(f"{item_id}x{qty}")
+                        elif isinstance(item, str):
+                            materials.append(item)
+    elif isinstance(finish_res, list):
+        if len(finish_res) > 0: xp = finish_res[0]
+        if len(finish_res) > 1: gold = finish_res[1]
+        if len(finish_res) > 2 and isinstance(finish_res[2], list):
+            mat_data = finish_res[2]
+            if len(mat_data) > 0:
+                if isinstance(mat_data[0], list):
+                    for item in mat_data:
+                        if len(item) >= 2: materials.append(f"{item[0]}x{item[1]}")
+                else:
+                    materials.append(f"{mat_data[0]}x{mat_data[1]}")
+        if len(finish_res) > 3 and isinstance(finish_res[3], (int, float)):
+            token = finish_res[3]
+        
+    parts = [f"{feature_name} SUCCESS!"]
+    if current_level is not None: parts.append(f"Level: {current_level}")
+    if xp: parts.append(f"XP: {xp}")
+    if gold: parts.append(f"Gold: {gold}")
+    if token: parts.append(f"Token: {token}")
+    if materials: parts.append(f"Materials: {', '.join(materials)}")
+    
+    if len(parts) == 1:
+        return f"{feature_name} SUCCESS! Raw: {finish_res}"
+        
+    return " | ".join(parts)
+
 _char_info_cache = {}
 
 # Anti-cheat payload from nsepanel (base64 encoded JSON with default gear/stats)
@@ -228,34 +298,15 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
     finish_res = await client.send_amf_request("IOIJB836r2Hu2PPW.MSi71s3i1X89", finish_params)
     
     # === PHASE 4: Check finish response status ===
-    if isinstance(finish_res, dict):
-        if finish_res.get('status') == 0:
-            return f"Failed: finishMission rejected {actual_mission_id}: {finish_res}"
+    if isinstance(finish_res, dict) and finish_res.get('status') == 0:
+        return f"Failed: finishMission rejected {actual_mission_id}: {finish_res}"
         
-        # Extract rewards
-        xp = "?"
-        gold = "?"
-        level = finish_res.get('level', finish_res.get('character_level', '?'))
+    # Invalidate cache
+    if char_id in _char_info_cache:
+        del _char_info_cache[char_id]
         
-        # SWF/nsepanel return rewards in a "result" array: [xp, gold]
-        if "result" in finish_res and isinstance(finish_res["result"], list):
-            rewards = finish_res["result"]
-            if len(rewards) > 0: xp = rewards[0]
-            if len(rewards) > 1: gold = rewards[1]
-        else:
-            xp = finish_res.get('xp', finish_res.get('character_xp', '?'))
-            gold = finish_res.get('gold', finish_res.get('character_gold', '?'))
-            
-        # Invalidate cache so next loop picks up new level/rank
-        if char_id in _char_info_cache:
-            del _char_info_cache[char_id]
-        return f"Mission {actual_mission_id} SUCCESS! Level:{level} XP:{xp} Gold:{gold}"
-    elif isinstance(finish_res, list) and len(finish_res) > 0:
-        # SWF onBattleFinishAmf expects array with rewards
-        # Invalidate cache
-        if char_id in _char_info_cache:
-            del _char_info_cache[char_id]
-        return f"Mission {actual_mission_id} SUCCESS! Reward: {finish_res}"
+    if isinstance(finish_res, (dict, list)):
+        return format_battle_rewards(f"Mission {actual_mission_id}", finish_res)
     else:
         return f"Failed: finishMission unexpected response for {actual_mission_id}: {finish_res}"
 
@@ -383,7 +434,7 @@ async def run_hunting(client: NinjaSageClient, sessionkey: str, char_id: int, zo
         finish_res = await client.send_amf_request("JDEUnbiWJXOtHxVv.wrlPOTLOEWFE", [char_id, zone, battle_code, 1, sessionkey, []])
         
         if isinstance(finish_res, dict) and finish_res.get('status') == 1:
-            return f"Hunting House Zone {zone} Cleared! Rewards: {finish_res.get('result', [])}"
+            return format_battle_rewards(f"Hunting Zone {zone}", finish_res)
         else:
             return f"Failed to finish hunting: {finish_res}"
     else:
@@ -485,10 +536,7 @@ async def auto_monster_hunt(client: NinjaSageClient, sessionkey: str, char_id: i
     ])
     
     if finish_res.get("status") == 1:
-        rewards = finish_res.get("result", [])
-        if len(rewards) >= 2:
-            return f"Monster Hunt {boss_id} Completed! Gained {rewards[0]} XP, {rewards[1]} Gold."
-        return f"Monster Hunt {boss_id} Completed! Result: {rewards}"
+        return format_battle_rewards(f"Monster Hunt {boss_id}", finish_res)
     else:
         return f"Battle failed: {finish_res}"
 
@@ -585,8 +633,7 @@ async def auto_mission_s(client: NinjaSageClient, sessionkey: str, char_id: int)
     finish_res = await client.send_amf_request("IOIJB836r2Hu2PPW.MSi71s3i1X89", finish_params)
     
     if finish_res.get('status') == 1:
-        rewards = finish_res.get('result', [])
-        return f"Mission S Stage {stage_to_run} Complete! Energy left: {energy - stage_cfg['energy_cost']}. Rewards: {rewards}"
+        return format_battle_rewards(f"Mission S Stage {stage_to_run}", finish_res)
     else:
         return f"Mission S finish failed: {finish_res}"
 
@@ -655,7 +702,7 @@ async def auto_clan_war(client: NinjaSageClient, sessionkey: str, char_id: int):
         
         if battle_resp.status_code == 200:
             reward_data = battle_resp.json()
-            return f"Clan War against {opponent_name} Complete! Reward: {reward_data}"
+            return format_battle_rewards(f"Clan War vs {opponent_name}", reward_data)
         else:
             return f"Clan War failed: {battle_resp.text}"
 
@@ -731,7 +778,7 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
                 if isinstance(res, dict) and res.get('status') == 2:
                     return f"Chunin Exam Stage {stage_num} failed! {res}"
                 else:
-                    return f"Chunin Exam Stage {stage_num} completed! {res}"
+                    return format_battle_rewards(f"Chunin Exam Stage {stage_num}", res)
             else:
                 # All stages done (progress == 5), but rank is still 1!
                 # The original APK requires the user to log in manually to claim the promotion if manual_claim is False.
@@ -764,7 +811,7 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
                 if isinstance(res, dict) and res.get('status') == 2:
                     return f"Jounin Exam Stage {progress+1} failed! {res}"
                 else:
-                    return f"Jounin Exam Stage {progress+1} completed! {res}"
+                    return format_battle_rewards(f"Jounin Exam Stage {progress+1}", res)
             else:
                 # All stages done, promote!
                 res = await client.send_amf_request("JouninExam.promoteToJounin", [sessionkey, char_id])
@@ -866,9 +913,7 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
     finish_res = await client.send_amf_request("A11M5XZ9wxhTs2Dr.L6IPyPI8oNXL", finish_params)
     
     if finish_res.get("status") == 1:
-        xp = finish_res.get("result", [0,0])[0]
-        gold = finish_res.get("result", [0,0])[1]
-        return f"Defeated {target_boss_name} - Gained XP: {xp}, Gold: {gold}"
+        return format_battle_rewards(f"Eudemon {target_boss_name}", finish_res)
     else:
         return f"Failed to defeat {target_boss_name}: {finish_res}"
 
@@ -986,7 +1031,7 @@ async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: in
         if final_tokens is not None and int(final_tokens) < initial_tokens:
             return f"STOPPED: Tiket {boss_type.capitalize()} habis! Server memotong {initial_tokens - int(final_tokens)} Token. Bot dihentikan untuk melindungi tokenmu."
     
-    return f"Circus Event Complete! Reward: {finish_res}"
+    return format_battle_rewards(f"Circus Event {boss_type.capitalize()}", finish_res)
 
 async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int, boss_type: str = "kitsune"):
     # 1. Get Character Data
@@ -1084,7 +1129,7 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         final_tokens = finish_res.get('account_tokens')
         if final_tokens is not None and int(final_tokens) < initial_tokens:
             return f"STOPPED: Tiket {boss_type.capitalize()} habis! Server memotong {initial_tokens - int(final_tokens)} Token. Bot dihentikan untuk melindungi tokenmu."
-        return f"Yokai Event Complete! Reward: {finish_res.get('result', [])}"
+        return format_battle_rewards(f"Yokai Event {boss_type.capitalize()}", finish_res)
     else:
         error_msg = finish_res.get('result', finish_res) if isinstance(finish_res, dict) else finish_res
         return f"Yokai Event Complete but server rejected finish: {error_msg}"
@@ -1150,8 +1195,7 @@ async def run_yokai_minigame(client: NinjaSageClient, sessionkey: str, char_id: 
     if not isinstance(finish_res, dict) or finish_res.get('status') == 0:
         return f"Failed to finish Yokai Minigame: {finish_res}"
         
-    reward = finish_res.get('rewards', finish_res.get('reward', {}))
-    return f"Yokai Minigame Completed! Rewards: {reward}"
+    return format_battle_rewards("Yokai Minigame", finish_res)
 
 async def run_auto_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mission_id: str):
     import hashlib
@@ -1222,5 +1266,4 @@ async def run_auto_mission(client: NinjaSageClient, sessionkey: str, char_id: in
     if not isinstance(finish_res, dict) or finish_res.get('status') == 0:
         return f"Failed to finish mission: {finish_res}"
         
-    rewards = finish_res.get('rewards', finish_res.get('reward', {}))
-    return f"Mission Completed! Rewards: {rewards}"
+    return format_battle_rewards(f"Auto Mission {mission_id}", finish_res)
