@@ -324,9 +324,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
+            const loopStartTime = Date.now();
             let delayInput = parseInt(document.getElementById('setting-leveling-delay').value);
             if (isNaN(delayInput) || delayInput < 1) delayInput = 4;
-            let delay = delayInput * 1000;
+            let targetDelay = delayInput * 1000;
+            let nextDelay = targetDelay;
             
             // Check exam only periodically (every 10 missions) to prevent AMF request burst
             autoLevelLoopCount++;
@@ -373,6 +375,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     addLog(`[AutoLevel] ${msg}`, 'ok');
                     autoLevelFailCount = 0; // Reset fail counter on success
                     tryUpdateStatsFromMsg(msg);
+                    
+                    const loopElapsed = Date.now() - loopStartTime;
+                    nextDelay = Math.max(500, targetDelay - loopElapsed);
                 } else if (msg.includes("Failed") || data?.status === 'error') {
                     autoLevelFailCount++;
                     addLog(`[AutoLevel] ${msg || JSON.stringify(data)}`, 'error');
@@ -381,20 +386,24 @@ document.addEventListener('DOMContentLoaded', () => {
                         btnAutoLevel.click();
                         return;
                     }
-                    delay = 6000; // Back off on failure
+                    nextDelay = 6000; // Back off on failure
                 } else {
                     addLog(`[AutoLevel] ${msg || JSON.stringify(data)}`);
                     if (msg.toLowerCase().includes("rate limit")) {
                         addLog("[System] Rate limit detected. Backing off for 10 seconds...", "warn");
-                        delay = 10000;
+                        nextDelay = 10000;
+                    } else {
+                        const loopElapsed = Date.now() - loopStartTime;
+                        nextDelay = Math.max(500, targetDelay - loopElapsed);
                     }
                 }
             } catch(e) {
                 addLog(`[AutoLevel] Error: ${e.message}`);
+                nextDelay = targetDelay;
             }
             
             if (autoLevelIsRunning) {
-                setTimeout(runLoop, delay);
+                setTimeout(runLoop, nextDelay);
             }
         }
         
