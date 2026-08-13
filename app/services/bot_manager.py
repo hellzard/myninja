@@ -177,8 +177,8 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
         }
         _char_info_cache[char_id] = char_info
 
-    # Dynamically select optimal mission based on nsepanel decompiled logic
-    actual_mission_id = get_best_mission(char_info["level"], char_info["rank"])
+    # Use provided mission_id if valid, else dynamically select optimal mission based on nsepanel decompiled logic
+    actual_mission_id = mission_id if mission_id and mission_id.lower() != "auto" else get_best_mission(char_info["level"], char_info["rank"])
     
     mission_info = get_data_by_id(actual_mission_id, MISSION_DATA)
     if not mission_info:
