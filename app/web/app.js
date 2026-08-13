@@ -61,6 +61,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tokens !== undefined && tokens !== null) document.getElementById('metric-token').textContent = tokens;
     }
 
+    function tryUpdateStatsFromMsg(msg) {
+        if (!msg || !sessionState) return;
+        const lvlMatch = msg.match(/Level:\s*(\d+)/i);
+        if (lvlMatch && lvlMatch[1]) {
+            sessionState.level = parseInt(lvlMatch[1]);
+            document.getElementById('metric-level').textContent = lvlMatch[1];
+            localStorage.setItem('ns_session', JSON.stringify(sessionState));
+        }
+    }
+
     function checkLoginState() {
         const stored = localStorage.getItem('ns_session');
         if (stored) {
@@ -299,6 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         addLog(`Auto Leveling STARTED (Targeting ${autoLevelTarget} based on Character Level ${charLevel})...`);
         
+        let autoLevelLoopCount = 0;
         async function runLoop() {
             if (!autoLevelIsRunning) return;
             
@@ -312,25 +323,28 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isNaN(delayInput) || delayInput < 1) delayInput = 2;
             let delay = delayInput * 1000;
             
-            // First try taking exam if eligible
-            try {
-                const examRes = await fetch('/api/bot/auto_exam_step', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        sessionkey: sessionState.sessionkey,
-                        char_id: sessionState.char_id
-                    })
-                });
-                if (examRes.ok) {
-                    const examData = await examRes.json();
-                    if (!examData.message.includes("No exams available")) {
-                        addLog(`[Exam System] ${examData.message}`, 'ok');
-                        refreshStats(true);
+            // Check exam only periodically (every 10 missions) to prevent AMF request burst
+            autoLevelLoopCount++;
+            if (autoLevelLoopCount % 10 === 1) {
+                try {
+                    const examRes = await fetch('/api/bot/auto_exam_step', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            sessionkey: sessionState.sessionkey,
+                            char_id: sessionState.char_id
+                        })
+                    });
+                    if (examRes.ok) {
+                        const examData = await examRes.json();
+                        if (!examData.message.includes("No exams available")) {
+                            addLog(`[Exam System] ${examData.message}`, 'ok');
+                            tryUpdateStatsFromMsg(examData.message);
+                        }
                     }
+                } catch (e) {
+                    console.error("Exam check failed", e);
                 }
-            } catch (e) {
-                console.error("Exam check failed", e);
             }
             
             if (!autoLevelIsRunning) return;
@@ -350,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.status === 'success' && data.message.includes("SUCCESS")) {
                     addLog(`[AutoLevel] ${data.message}`, 'ok');
                     autoLevelFailCount = 0; // Reset fail counter on success
-                    refreshStats(true);
+                    tryUpdateStatsFromMsg(data.message);
                 } else if (data.message.includes("Failed")) {
                     autoLevelFailCount++;
                     addLog(`[AutoLevel] ${data.message}`, 'error');
@@ -414,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await res.json();
                 addLog(`[AutoDaily] Response: ${data.message}`);
                 if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
-                    refreshStats(true);
+                    tryUpdateStatsFromMsg(data.message);
                 }
                 if (data.message === "Daily missions completed" || data.message === "No available daily missions (or failed to fetch)") {
                     if (autoDailyInterval) btnAutoDaily.click();
@@ -472,7 +486,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (data.status === 'success' && !data.message.includes("Failed") && !data.message.includes("Unknown boss")) {
                     addLog(`[AutoHunt] Zone ${currentHuntZone} Success: ${data.message}`);
-                    refreshStats(true);
+                    tryUpdateStatsFromMsg(data.message);
                     currentHuntZone++;
                     if (currentHuntZone > 5) currentHuntZone = 1;
                 } else {
@@ -527,7 +541,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
                         addLog(`[Eudemon] ${data.message}`, 'ok');
-                        refreshStats(true);
+                        tryUpdateStatsFromMsg(data.message);
                         if (data.message.includes("No available Eudemon bosses")) {
                             if (autoEudemonInterval) btn.click();
                         }
@@ -589,7 +603,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const data = await res.json();
                     addLog(`[Circus ${bossName}] Response: ${data.message}`);
                     if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
-                        refreshStats(true);
+                        tryUpdateStatsFromMsg(data.message);
                     }
                     if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket') || data.message.toLowerCase().includes('stopped'))) {
                         if (autoCircusInterval) btnAutoCircus.click();
@@ -649,7 +663,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const data = await res.json();
                     addLog(`[Yokai ${bossName}] Response: ${data.message}`);
                     if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
-                        refreshStats(true);
+                        tryUpdateStatsFromMsg(data.message);
                     }
                     if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket') || data.message.toLowerCase().includes('stopped'))) {
                         if (autoYokaiInterval) btnAutoYokai.click();
@@ -698,7 +712,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const data = await res.json();
                     addLog(`[Yokai Minigame] Response: ${data.message}`);
                     if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
-                        refreshStats(true);
+                        tryUpdateStatsFromMsg(data.message);
                     }
                     if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket'))) {
                         if (autoYokaiMinigameInterval) btnAutoYokaiMinigame.click();
@@ -748,7 +762,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await res.json();
                 addLog(`[AutoShadowWar] Response: ${data.message}`);
                 if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
-                    refreshStats(true);
+                    tryUpdateStatsFromMsg(data.message);
                 }
                 if (data.status === 'error') {
                     if (autoShadowWarInterval) btnAutoShadowWar.click();
@@ -795,7 +809,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const data = await res.json();
                     addLog(`[AutoMonster] Response: ${data.message}`);
                     if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
-                        refreshStats(true);
+                        tryUpdateStatsFromMsg(data.message);
                     }
                     if (data.status === 'error' || (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('stopped') || data.message.toLowerCase().includes('inactive')))) {
                         if (autoMonsterInterval) btnAutoMonster.click();
@@ -843,7 +857,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const data = await res.json();
                     addLog(`[AutoMissionS] Response: ${data.message}`);
                     if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
-                        refreshStats(true);
+                        tryUpdateStatsFromMsg(data.message);
                     }
                     if (data.status === 'error') if (autoMissionSInterval) btnAutoMissionS.click();
                 } catch(e) {
@@ -889,7 +903,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const data = await res.json();
                     addLog(`[AutoClanWar] Response: ${data.message}`);
                     if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
-                        refreshStats(true);
+                        tryUpdateStatsFromMsg(data.message);
                     }
                     if (data.status === 'error') if (autoClanWarInterval) btnAutoClanWar.click();
                 } catch(e) {
@@ -1104,7 +1118,7 @@ document.getElementById('toggle-automission-farmer').addEventListener('click', (
             
             if (data.status === 'success' && !data.message.includes("Failed")) {
                 addLog(`[AutoMission] Success: ${data.message}`);
-                refreshStats(true);
+                tryUpdateStatsFromMsg(data.message);
             } else {
                 addLog(`[AutoMission] Response: ${data.message || data.status}`);
                 if (data.message && data.message.includes('Invalid response')) {

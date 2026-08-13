@@ -135,6 +135,7 @@ def _parse_materials(raw_mat) -> list:
     return materials
 
 _char_level_cache = {}
+_event_char_data_cache = {}
 
 async def get_or_fetch_char_level(client: NinjaSageClient, sessionkey: str, char_id: int) -> int:
     global _char_level_cache
@@ -152,6 +153,19 @@ async def get_or_fetch_char_level(client: NinjaSageClient, sessionkey: str, char
     except Exception:
         pass
     return _char_level_cache.get(char_id, None)
+
+async def get_or_fetch_event_char_data(client: NinjaSageClient, sessionkey: str, char_id: int) -> dict:
+    global _event_char_data_cache
+    if char_id in _event_char_data_cache and _event_char_data_cache[char_id]:
+        return _event_char_data_cache[char_id]
+    try:
+        char_info_res = await client.send_amf_request("36a62s4oZ7iYRJjd.iakN46g0GaJN", [[char_id, sessionkey, char_id, "EVENT"]])
+        if isinstance(char_info_res, dict) and char_info_res.get('status') != 0:
+            _event_char_data_cache[char_id] = char_info_res
+            return char_info_res
+    except Exception:
+        pass
+    return _event_char_data_cache.get(char_id, {})
 
 def format_battle_rewards(feature_name: str, finish_res, current_level=None, char_id=None) -> str:
     try:
@@ -1041,31 +1055,12 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
         return f"Failed to defeat {target_boss_name}: {finish_res}"
 
 async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: int, boss_type: str = "ringmaster"):
-    # 1. Get Character Data to calculate agility and _loc6_
-    print(f"DEBUG CIRCUS: char_id={char_id} type={type(char_id)} sessionkey={sessionkey[:20]}... boss_type={boss_type}")
-    try:
-        char_info_res = await client.send_amf_request("36a62s4oZ7iYRJjd.iakN46g0GaJN", [[char_id, sessionkey, char_id, "EVENT"]])
-        print(f"DEBUG CIRCUS getCharData: type={type(char_info_res).__name__} val={char_info_res}")
-    except Exception as e:
-        return f"Failed to fetch character data: {e}"
-    
-    if not isinstance(char_info_res, dict) or not hasattr(char_info_res, 'get'):
-        # Try to get error details from ErrorFault
-        err_detail = ""
-        if hasattr(char_info_res, 'description'):
-            err_detail = f" desc={char_info_res.description}"
-        if hasattr(char_info_res, 'code'):
-            err_detail += f" code={char_info_res.code}"
-        if hasattr(char_info_res, 'details'):
-            err_detail += f" details={char_info_res.details}"
-        return f"Failed to fetch character data: server returned {type(char_info_res).__name__}{err_detail}"
-    
-    if char_info_res.get('status') == 0:
+    # 1. Get Character Data to calculate agility and _loc6_ (Using cache to eliminate redundant AMF calls)
+    char_info_res = await get_or_fetch_event_char_data(client, sessionkey, char_id)
+    if not isinstance(char_info_res, dict) or char_info_res.get('status') == 0:
         return f"Failed to fetch character data: {char_info_res.get('error', 'Unknown error')}"
         
     char_data = char_info_res
-    if not isinstance(char_data, dict):
-        char_data = {}
     char_agility = char_data.get('agility', 0)
     initial_tokens = int(char_info_res.get('account_tokens', 0))
     
@@ -1098,11 +1093,6 @@ async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: in
         ene_id = "ene_2135"
         hp = 114000
         enemy_agility = 166
-        
-        # Note: Event bosses do not require using a ticket item from inventory.
-        # The tickets are managed by the server and visible on the boss selection screen.
-
-            
     else: # default to ringmaster
         boss_id = 312610 
         ene_id = "ene_2134"
@@ -1125,12 +1115,13 @@ async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: in
         return f"Failed to start Circus Event: server returned {type(start_res).__name__}"
     
     if start_res.get('status') != 1 or 'code' not in start_res:
-        return f"Failed to start Circus Event: {start_res}"
+        error_msg = start_res.get('result', start_res)
+        return f"Failed to start Circus Event: {error_msg}"
         
     battle_code = start_res['code']
     
-    # 3. Wait for battle
-    await asyncio.sleep(3)
+    # 3. Wait for battle (3.5s optimal safe duration for Circus)
+    await asyncio.sleep(3.5)
     
     # 4. Finish Event
     if boss_type == "jester":
@@ -1139,7 +1130,6 @@ async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: in
         damage_done = hp
         
     hash_end_str = str(char_id) + ene_id + battle_code + str(damage_done) + loc6_str
-    
     hash_end = hashlib.sha256(hash_end_str.encode('utf-8')).hexdigest()
     
     try:
@@ -1160,28 +1150,12 @@ async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: in
         return f"Circus Event Complete but server rejected finish: {error_msg}"
 
 async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int, boss_type: str = "kitsune"):
-    # 1. Get Character Data
-    try:
-        char_info_res = await client.send_amf_request("36a62s4oZ7iYRJjd.iakN46g0GaJN", [[char_id, sessionkey, char_id, "EVENT"]])
-    except Exception as e:
-        return f"Failed to fetch character data: {e}"
-    
-    if not isinstance(char_info_res, dict) or not hasattr(char_info_res, 'get'):
-        err_detail = ""
-        if hasattr(char_info_res, 'description'):
-            err_detail = f" desc={char_info_res.description}"
-        if hasattr(char_info_res, 'code'):
-            err_detail += f" code={char_info_res.code}"
-        if hasattr(char_info_res, 'details'):
-            err_detail += f" details={char_info_res.details}"
-        return f"Failed to fetch character data: server returned {type(char_info_res).__name__}{err_detail}"
-    
-    if char_info_res.get('status') == 0:
+    # 1. Get Character Data (Using cache to eliminate redundant AMF calls)
+    char_info_res = await get_or_fetch_event_char_data(client, sessionkey, char_id)
+    if not isinstance(char_info_res, dict) or char_info_res.get('status') == 0:
         return f"Failed to fetch character data: {char_info_res.get('error', 'Unknown error')}"
         
     char_data = char_info_res
-    if not isinstance(char_data, dict):
-        char_data = {}
     char_agility = char_data.get('agility', 0)
     initial_tokens = int(char_info_res.get('account_tokens', 0))
     
