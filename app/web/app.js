@@ -305,7 +305,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 btnAutoLevel.click();
                 return;
             }
-            let delay = 4000;
+            
+            let delayInput = parseInt(document.getElementById('setting-leveling-delay').value);
+            if (isNaN(delayInput) || delayInput < 1) delayInput = 4;
+            let delay = delayInput * 1000;
+            
             // First try taking exam if eligible
             try {
                 const examRes = await fetch('/api/bot/auto_exam_step', {
@@ -904,7 +908,7 @@ window.loadSettings = async function() {
         const res = await fetch('/api/bot/settings');
         const data = await res.json();
         if (data.status === 'success' && data.settings) {
-            document.getElementById('setting-leveling-delay').value = data.settings.leveling_delay_seconds || 10;
+            document.getElementById('setting-leveling-delay').value = data.settings.leveling_delay_seconds || 4;
             document.getElementById('setting-shadow-wait').value = data.settings.sage_shadow_war_wait_minutes || 30;
             document.getElementById('setting-clan-token').checked = !!data.settings.clan_war_auto_spend_token;
             document.getElementById('setting-clan-refill').value = data.settings.clan_war_stamina_refill_source || 'auto';

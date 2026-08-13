@@ -231,10 +231,21 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
     if isinstance(finish_res, dict):
         if finish_res.get('status') == 0:
             return f"Failed: finishMission rejected {actual_mission_id}: {finish_res}"
+        
         # Extract rewards
-        xp = finish_res.get('xp', finish_res.get('character_xp', '?'))
-        gold = finish_res.get('gold', finish_res.get('character_gold', '?'))
+        xp = "?"
+        gold = "?"
         level = finish_res.get('level', finish_res.get('character_level', '?'))
+        
+        # SWF/nsepanel return rewards in a "result" array: [xp, gold]
+        if "result" in finish_res and isinstance(finish_res["result"], list):
+            rewards = finish_res["result"]
+            if len(rewards) > 0: xp = rewards[0]
+            if len(rewards) > 1: gold = rewards[1]
+        else:
+            xp = finish_res.get('xp', finish_res.get('character_xp', '?'))
+            gold = finish_res.get('gold', finish_res.get('character_gold', '?'))
+            
         # Invalidate cache so next loop picks up new level/rank
         if char_id in _char_info_cache:
             del _char_info_cache[char_id]
