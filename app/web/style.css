@@ -680,19 +680,19 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.9rem;
 }
 
-/* PWA Install Banner Button */
-.btn-pwa-install {
+/* PWA Install Action Button in Account Row */
+.btn-pwa-action {
   background: linear-gradient(135deg, #10b981, #059669) !important;
   color: white !important;
-  font-weight: 600;
-  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
-  width: 100%;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35) !important;
+  border: 1px solid rgba(16, 185, 129, 0.4) !important;
+  padding: 0.6rem 1rem !important;
 }
-.btn-pwa-install:hover {
+.btn-pwa-action:hover {
   background: linear-gradient(135deg, #34d399, #059669) !important;
-  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5) !important;
+  transform: translateY(-2px);
 }
 
 /* Utility */

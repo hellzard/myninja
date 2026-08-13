@@ -324,6 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const examData = await examRes.json();
                     if (!examData.message.includes("No exams available")) {
                         addLog(`[Exam System] ${examData.message}`, 'ok');
+                        refreshStats(true);
                     }
                 }
             } catch (e) {
@@ -333,8 +334,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!autoLevelIsRunning) return;
             
             // Then run normal leveling
+            let delay = autoLevelDelaySec * 1000;
             try {
-                const res = await fetch('/api/bot/auto_leveling_step', {
+                const res = await fetch('/api/bot/auto_level_step', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -347,6 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.status === 'success' && data.message.includes("SUCCESS")) {
                     addLog(`[AutoLevel] ${data.message}`, 'ok');
                     autoLevelFailCount = 0; // Reset fail counter on success
+                    refreshStats(true);
                 } else if (data.message.includes("Failed")) {
                     autoLevelFailCount++;
                     addLog(`[AutoLevel] ${data.message}`, 'error');
@@ -409,6 +412,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 const data = await res.json();
                 addLog(`[AutoDaily] Response: ${data.message}`);
+                if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
+                    refreshStats(true);
+                }
                 if (data.message === "Daily missions completed" || data.message === "No available daily missions (or failed to fetch)") {
                     if (autoDailyInterval) btnAutoDaily.click();
                 }
@@ -465,6 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (data.status === 'success' && !data.message.includes("Failed") && !data.message.includes("Unknown boss")) {
                     addLog(`[AutoHunt] Zone ${currentHuntZone} Success: ${data.message}`);
+                    refreshStats(true);
                     currentHuntZone++;
                     if (currentHuntZone > 5) currentHuntZone = 1;
                 } else {
@@ -519,6 +526,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     if (data.status === 'success') {
                         addLog(`[Eudemon] ${data.message}`, 'ok');
+                        refreshStats(true);
                         if (data.message.includes("No available Eudemon bosses")) {
                             if (autoEudemonInterval) btn.click();
                         }
@@ -577,6 +585,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     const data = await res.json();
                     addLog(`[Circus ${bossName}] Response: ${data.message}`);
+                    if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
+                        refreshStats(true);
+                    }
                     if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket') || data.message.toLowerCase().includes('stopped'))) {
                         if (autoCircusInterval) btnAutoCircus.click();
                     }
@@ -634,6 +645,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     const data = await res.json();
                     addLog(`[Yokai ${bossName}] Response: ${data.message}`);
+                    if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
+                        refreshStats(true);
+                    }
                     if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket') || data.message.toLowerCase().includes('stopped'))) {
                         if (autoYokaiInterval) btnAutoYokai.click();
                     }
@@ -680,6 +694,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     const data = await res.json();
                     addLog(`[Yokai Minigame] Response: ${data.message}`);
+                    if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
+                        refreshStats(true);
+                    }
                     if (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('ticket'))) {
                         if (autoYokaiMinigameInterval) btnAutoYokaiMinigame.click();
                     }
@@ -727,6 +744,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 const data = await res.json();
                 addLog(`[AutoShadowWar] Response: ${data.message}`);
+                if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
+                    refreshStats(true);
+                }
                 if (data.status === 'error') {
                     if (autoShadowWarInterval) btnAutoShadowWar.click();
                 }
@@ -771,6 +791,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     const data = await res.json();
                     addLog(`[AutoMonster] Response: ${data.message}`);
+                    if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
+                        refreshStats(true);
+                    }
                     if (data.status === 'error') if (autoMonsterInterval) btnAutoMonster.click();
                 } catch(e) {
                     addLog(`[AutoMonster] Error: ${e.message}`);
@@ -814,6 +837,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     const data = await res.json();
                     addLog(`[AutoMissionS] Response: ${data.message}`);
+                    if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
+                        refreshStats(true);
+                    }
                     if (data.status === 'error') if (autoMissionSInterval) btnAutoMissionS.click();
                 } catch(e) {
                     addLog(`[AutoMissionS] Error: ${e.message}`);
@@ -857,6 +883,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     const data = await res.json();
                     addLog(`[AutoClanWar] Response: ${data.message}`);
+                    if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
+                        refreshStats(true);
+                    }
                     if (data.status === 'error') if (autoClanWarInterval) btnAutoClanWar.click();
                 } catch(e) {
                     addLog(`[AutoClanWar] Error: ${e.message}`);
@@ -931,38 +960,49 @@ document.addEventListener('DOMContentLoaded', () => {
     // Detect if already running in standalone PWA mode
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
-    if (!isStandalone && installBtn) {
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installBtn.classList.remove('hidden');
-        });
+    if (installBtn) {
+        if (isStandalone) {
+            installBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Installed';
+            installBtn.disabled = true;
+            installBtn.style.opacity = '0.65';
+            installBtn.style.cursor = 'default';
+        } else {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+            });
 
-        installBtn.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                console.log('[PWA] User response:', outcome);
-                if (outcome === 'accepted') {
-                    installBtn.classList.add('hidden');
+            installBtn.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log('[PWA] User response:', outcome);
+                    if (outcome === 'accepted') {
+                        installBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Installed';
+                        installBtn.disabled = true;
+                        installBtn.style.opacity = '0.65';
+                        installBtn.style.cursor = 'default';
+                    }
+                    deferredPrompt = null;
+                } else {
+                    // Show interactive install guide modal for iOS, Android, or PC
+                    const guideModal = document.getElementById('modal-install-guide');
+                    if (guideModal) {
+                        guideModal.classList.add('show');
+                    } else {
+                        alert("Untuk menginstall di HP (iOS/Android):\n1. Tekan tombol Share / Menu di browser (titik 3 atau ikon bagikan)\n2. Pilih 'Add to Home Screen' / 'Tambahkan ke Layar Utama'");
+                    }
                 }
-                deferredPrompt = null;
-            } else {
-                // If iOS Safari or prompt unavailable
-                alert("Untuk menginstall di HP (iOS/Android):\n1. Tekan tombol Share / Menu di browser (titik 3 atau ikon bagikan)\n2. Pilih 'Add to Home Screen' / 'Tambahkan ke Layar Utama'");
-            }
-        });
-
-        // If on mobile browser and not standalone, show install button after 2s
-        if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-            setTimeout(() => {
-                if (!isStandalone) installBtn.classList.remove('hidden');
-            }, 2000);
+            });
         }
     }
 
     window.addEventListener('appinstalled', () => {
-        if (installBtn) installBtn.classList.add('hidden');
+        if (installBtn) {
+            installBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Installed';
+            installBtn.disabled = true;
+            installBtn.style.opacity = '0.65';
+        }
         deferredPrompt = null;
         console.log('[PWA] App installed successfully');
     });
@@ -1063,6 +1103,7 @@ document.getElementById('toggle-automission-farmer').addEventListener('click', (
             
             if (data.status === 'success' && !data.message.includes("Failed")) {
                 addLog(`[AutoMission] Success: ${data.message}`);
+                refreshStats(true);
             } else {
                 addLog(`[AutoMission] Response: ${data.message || data.status}`);
                 if (data.message && data.message.includes('Invalid response')) {
