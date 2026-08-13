@@ -334,7 +334,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!autoLevelIsRunning) return;
             
             // Then run normal leveling
-            let delay = autoLevelDelaySec * 1000;
             try {
                 const res = await fetch('/api/bot/auto_level_step', {
                     method: 'POST',
