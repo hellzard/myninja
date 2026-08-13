@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             let delayInput = parseInt(document.getElementById('setting-leveling-delay').value);
-            if (isNaN(delayInput) || delayInput < 1) delayInput = 4;
+            if (isNaN(delayInput) || delayInput < 1) delayInput = 2;
             let delay = delayInput * 1000;
             
             // First try taking exam if eligible
@@ -396,13 +396,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let isProcessing_autoDailyInterval = false;
         
         autoDailyInterval = setInterval(async () => {
-        
             if (isProcessing_autoDailyInterval) return;
-        
             isProcessing_autoDailyInterval = true;
-        
             try {
-        try {
                 const res = await fetch('/api/bot/auto_daily_step', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -412,23 +408,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                 });
                 const data = await res.json();
-                
                 addLog(`[AutoDaily] Response: ${data.message}`);
-                
                 if (data.message === "Daily missions completed" || data.message === "No available daily missions (or failed to fetch)") {
                     if (autoDailyInterval) btnAutoDaily.click();
                 }
             } catch(e) {
                 addLog(`[AutoDaily] Error: ${e.message}`);
-            }
-        
             } finally {
-        
                 isProcessing_autoDailyInterval = false;
-        
             }
-        
-        }, 4000);
+        }, 2000);
     });
 
     // Auto Hunting
@@ -454,13 +443,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let isProcessing_autoHuntInterval = false;
         
         autoHuntInterval = setInterval(async () => {
-        
             if (isProcessing_autoHuntInterval) return;
-        
             isProcessing_autoHuntInterval = true;
-        
             try {
-        try {
                 const res = await fetch('/api/bot/auto_hunting_step', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -474,7 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (data.message && data.message.includes("Stopped")) {
                     addLog(`[AutoHunt] ${data.message}`);
-                    if (autoHuntInterval) btnAutoHunt.click(); // Stop the loop by triggering button click
+                    if (autoHuntInterval) btnAutoHunt.click();
                     return;
                 }
                 
@@ -489,15 +474,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch(e) {
                 addLog(`[AutoHunt] Error: ${e.message}`);
-            }
-        
             } finally {
-        
                 isProcessing_autoHuntInterval = false;
-        
             }
-        
-        }, 4000); // 4 seconds delay for boss fights
+        }, 2000);
     });
 
     // Eudemon Boss (Desktop & Mobile share same logic if we use querySelectorAll)
@@ -524,13 +504,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let isProcessing_autoEudemonInterval = false;
             
             autoEudemonInterval = setInterval(async () => {
-            
                 if (isProcessing_autoEudemonInterval) return;
-            
                 isProcessing_autoEudemonInterval = true;
-            
                 try {
-        try {
                     const res = await fetch('/api/bot/auto_eudemon', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -553,15 +529,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch (e) {
                     addLog(`[Eudemon] Error: ${e.message}`, 'error');
                     if (autoEudemonInterval) btn.click();
-                }
-            
                 } finally {
-            
                     isProcessing_autoEudemonInterval = false;
-            
                 }
-            
-            }, 4000);
+            }, 1500);
         });
     });
 
@@ -592,13 +563,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let isProcessing_autoCircusInterval = false;
 
             autoCircusInterval = setInterval(async () => {
-
                 if (isProcessing_autoCircusInterval) return;
-
                 isProcessing_autoCircusInterval = true;
-
                 try {
-        try {
                     const res = await fetch('/api/bot/auto_event_step', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -615,15 +582,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 } catch(e) {
                     addLog(`[Circus ${bossName}] Error: ${e.message}`);
-                }
-
                 } finally {
-
                     isProcessing_autoCircusInterval = false;
-
                 }
-
-            }, 4000);
+            }, 3500);
         });
     }
 
@@ -658,13 +620,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let isProcessing_autoYokaiInterval = false;
 
             autoYokaiInterval = setInterval(async () => {
-
                 if (isProcessing_autoYokaiInterval) return;
-
                 isProcessing_autoYokaiInterval = true;
-
                 try {
-        try {
                     const res = await fetch('/api/bot/auto_event_step', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -681,15 +639,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 } catch(e) {
                     addLog(`[Yokai ${bossName}] Error: ${e.message}`);
-                }
-
                 } finally {
-
                     isProcessing_autoYokaiInterval = false;
-
                 }
-
-            }, 4000);
+            }, 5500);
         });
     }
     // Yokai Minigame
@@ -714,13 +667,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let isProcessing_autoYokaiMinigameInterval = false;
 
             autoYokaiMinigameInterval = setInterval(async () => {
-
                 if (isProcessing_autoYokaiMinigameInterval) return;
-
                 isProcessing_autoYokaiMinigameInterval = true;
-
                 try {
-        try {
                     const res = await fetch('/api/bot/auto_yokai_minigame_step', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -736,15 +685,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 } catch(e) {
                     addLog(`[Yokai Minigame] Error: ${e.message}`);
-                }
-
                 } finally {
-
                     isProcessing_autoYokaiMinigameInterval = false;
-
                 }
-
-            }, 4000);
+            }, 1500);
         });
     }
 
@@ -769,13 +713,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let isProcessing_autoShadowWarInterval = false;
 
         autoShadowWarInterval = setInterval(async () => {
-
             if (isProcessing_autoShadowWarInterval) return;
-
             isProcessing_autoShadowWarInterval = true;
-
             try {
-        try {
                 const res = await fetch('/api/bot/auto_shadow_war_step', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -787,21 +727,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 const data = await res.json();
                 addLog(`[AutoShadowWar] Response: ${data.message}`);
-                // Stop immediately if it's not implemented on backend
                 if (data.status === 'error') {
                     if (autoShadowWarInterval) btnAutoShadowWar.click();
                 }
             } catch(e) {
                 addLog(`[AutoShadowWar] Error: ${e.message}`);
-            }
-
             } finally {
-
                 isProcessing_autoShadowWarInterval = false;
-
             }
-
-        }, 4000);
+        }, 2500);
     });
 
     // Auto Monster Hunt
@@ -824,13 +758,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let isProcessing_autoMonsterInterval = false;
             
             autoMonsterInterval = setInterval(async () => {
-            
                 if (isProcessing_autoMonsterInterval) return;
-            
                 isProcessing_autoMonsterInterval = true;
-            
                 try {
-        try {
                     const res = await fetch('/api/bot/auto_monster_step', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -844,15 +774,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (data.status === 'error') if (autoMonsterInterval) btnAutoMonster.click();
                 } catch(e) {
                     addLog(`[AutoMonster] Error: ${e.message}`);
-                }
-            
                 } finally {
-            
                     isProcessing_autoMonsterInterval = false;
-            
                 }
-            
-            }, 4000);
+            }, 2500);
         });
     }
 
@@ -876,13 +801,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let isProcessing_autoMissionSInterval = false;
             
             autoMissionSInterval = setInterval(async () => {
-            
                 if (isProcessing_autoMissionSInterval) return;
-            
                 isProcessing_autoMissionSInterval = true;
-            
                 try {
-        try {
                     const res = await fetch('/api/bot/auto_mission_s_step', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -896,15 +817,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (data.status === 'error') if (autoMissionSInterval) btnAutoMissionS.click();
                 } catch(e) {
                     addLog(`[AutoMissionS] Error: ${e.message}`);
-                }
-            
                 } finally {
-            
                     isProcessing_autoMissionSInterval = false;
-            
                 }
-            
-            }, 4000);
+            }, 1500);
         });
     }
 
@@ -928,13 +844,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let isProcessing_autoClanWarInterval = false;
             
             autoClanWarInterval = setInterval(async () => {
-            
                 if (isProcessing_autoClanWarInterval) return;
-            
                 isProcessing_autoClanWarInterval = true;
-            
                 try {
-        try {
                     const res = await fetch('/api/bot/auto_clan_war_step', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -948,15 +860,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (data.status === 'error') if (autoClanWarInterval) btnAutoClanWar.click();
                 } catch(e) {
                     addLog(`[AutoClanWar] Error: ${e.message}`);
-                }
-            
                 } finally {
-            
                     isProcessing_autoClanWarInterval = false;
-            
                 }
-            
-            }, 4000);
+            }, 1500);
         });
     }
 
@@ -1140,12 +1047,8 @@ document.getElementById('toggle-automission-farmer').addEventListener('click', (
     let isProcessing_autoMissionInterval = false;
     
     autoMissionInterval = setInterval(async () => {
-    
         if (isProcessing_autoMissionInterval) return;
-    
         isProcessing_autoMissionInterval = true;
-    
-        try {
         try {
             const res = await fetch('/api/bot/auto_mission_step', {
                 method: 'POST',
@@ -1162,22 +1065,16 @@ document.getElementById('toggle-automission-farmer').addEventListener('click', (
                 addLog(`[AutoMission] Success: ${data.message}`);
             } else {
                 addLog(`[AutoMission] Response: ${data.message || data.status}`);
-                // Stop automatically if it fails heavily (e.g. invalid mission)
                 if (data.message && data.message.includes('Invalid response')) {
                     if (autoMissionInterval) btn.click();
                 }
             }
         } catch(e) {
             addLog(`[AutoMission] Error: ${e.message}`);
-        }
-    
         } finally {
-    
             isProcessing_autoMissionInterval = false;
-    
         }
-    
-    }, 4000); // 4 seconds delay
+    }, 1500);
 });
 
 // ==========================================

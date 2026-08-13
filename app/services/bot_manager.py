@@ -1129,8 +1129,8 @@ async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int
         
     battle_code = start_res['code']
     
-    # 3. Wait for battle - 25 seconds total
-    await asyncio.sleep(25)
+    # 3. Wait for battle - 5 seconds (optimal safe & fast duration for Yokai boss)
+    await asyncio.sleep(5)
     
     # 4. Finish Event
     # From Charles logs: Yokai uses the generic/summer event endpoints.
