@@ -107,75 +107,99 @@ def get_inventory_amount(payload, item_id: str) -> int:
                 return res
     return 0
 
-def format_battle_rewards(feature_name: str, finish_res, current_level=None) -> str:
-    xp = 0
-    gold = 0
-    token = 0
+def _parse_materials(raw_mat) -> list:
+    """Safely extracts material strings from various AMF material structures without throwing IndexError."""
     materials = []
-    
-    if isinstance(finish_res, dict):
-        if 'result' in finish_res and isinstance(finish_res['result'], list):
-            rewards = finish_res['result']
-            if len(rewards) > 0: xp = rewards[0]
-            if len(rewards) > 1: gold = rewards[1]
-            if len(rewards) > 2 and isinstance(rewards[2], list):
-                mat_data = rewards[2]
-                if len(mat_data) > 0:
-                    if isinstance(mat_data[0], list):
-                        for item in mat_data:
-                            if len(item) >= 2: materials.append(f"{item[0]}x{item[1]}")
-                    else:
-                        materials.append(f"{mat_data[0]}x{mat_data[1]}")
-            if len(rewards) > 3 and isinstance(rewards[3], (int, float)):
-                token = rewards[3]
-        else:
-            rewards = finish_res.get('rewards') or finish_res.get('reward') or finish_res
-            if isinstance(rewards, dict):
-                xp = rewards.get('xp', rewards.get('character_xp', 0))
-                gold = rewards.get('gold', rewards.get('character_gold', 0))
-                token = rewards.get('token', rewards.get('character_token', 0))
-                new_level = rewards.get('level', rewards.get('character_level'))
-                if new_level: current_level = new_level
+    if not raw_mat:
+        return materials
+        
+    if isinstance(raw_mat, list):
+        for item in raw_mat:
+            if isinstance(item, list):
+                if len(item) >= 2:
+                    materials.append(f"{item[0]}x{item[1]}")
+                elif len(item) == 1:
+                    materials.append(str(item[0]))
+            elif isinstance(item, dict):
+                item_id = item.get('id', item.get('item_id', item.get('name', 'item')))
+                qty = item.get('amount', item.get('qty', item.get('count', 1)))
+                materials.append(f"{item_id}x{qty}")
+            elif isinstance(item, (str, int, float)):
+                materials.append(str(item))
+    elif isinstance(raw_mat, dict):
+        for k, v in raw_mat.items():
+            materials.append(f"{k}x{v}")
+    elif isinstance(raw_mat, (str, int, float)):
+        materials.append(str(raw_mat))
+        
+    return materials
+
+def format_battle_rewards(feature_name: str, finish_res, current_level=None) -> str:
+    try:
+        xp = 0
+        gold = 0
+        token = 0
+        materials = []
+        
+        if isinstance(finish_res, dict):
+            if 'result' in finish_res and isinstance(finish_res['result'], list):
+                rewards = finish_res['result']
+                if len(rewards) > 0 and isinstance(rewards[0], (int, float, str)):
+                    xp = rewards[0]
+                if len(rewards) > 1 and isinstance(rewards[1], (int, float, str)):
+                    gold = rewards[1]
+                if len(rewards) > 2:
+                    materials.extend(_parse_materials(rewards[2]))
+                if len(rewards) > 3 and isinstance(rewards[3], (int, float)):
+                    token = rewards[3]
+            elif 'result' in finish_res and isinstance(finish_res['result'], dict):
+                res_dict = finish_res['result']
+                xp = res_dict.get('xp', res_dict.get('character_xp', 0))
+                gold = res_dict.get('gold', res_dict.get('character_gold', 0))
+                token = res_dict.get('token', res_dict.get('character_token', 0))
+                if not current_level:
+                    current_level = res_dict.get('level', res_dict.get('character_level'))
+                mat_raw = res_dict.get('material') or res_dict.get('materials') or res_dict.get('items')
+                materials.extend(_parse_materials(mat_raw))
+            else:
+                rewards = finish_res.get('rewards') or finish_res.get('reward') or finish_res
+                if isinstance(rewards, dict):
+                    xp = rewards.get('xp', rewards.get('character_xp', 0))
+                    gold = rewards.get('gold', rewards.get('character_gold', 0))
+                    token = rewards.get('token', rewards.get('character_token', 0))
+                    new_level = rewards.get('level', rewards.get('character_level'))
+                    if new_level: current_level = new_level
+                    
+                    mat_raw = rewards.get('material') or rewards.get('materials') or rewards.get('items')
+                    materials.extend(_parse_materials(mat_raw))
+        elif isinstance(finish_res, list):
+            if len(finish_res) > 0 and isinstance(finish_res[0], (int, float, str)):
+                xp = finish_res[0]
+            if len(finish_res) > 1 and isinstance(finish_res[1], (int, float, str)):
+                gold = finish_res[1]
+            if len(finish_res) > 2:
+                materials.extend(_parse_materials(finish_res[2]))
+            if len(finish_res) > 3 and isinstance(finish_res[3], (int, float)):
+                token = finish_res[3]
                 
-                mat_info = rewards.get('material', rewards.get('materials', rewards.get('items', [])))
-                if isinstance(mat_info, dict):
-                    for k, v in mat_info.items():
-                        materials.append(f"{k}x{v}")
-                elif isinstance(mat_info, list):
-                    for item in mat_info:
-                        if isinstance(item, list) and len(item) >= 2:
-                            materials.append(f"{item[0]}x{item[1]}")
-                        elif isinstance(item, dict):
-                            item_id = item.get('id', item.get('item_id', 'unknown'))
-                            qty = item.get('amount', item.get('qty', 1))
-                            materials.append(f"{item_id}x{qty}")
-                        elif isinstance(item, str):
-                            materials.append(item)
-    elif isinstance(finish_res, list):
-        if len(finish_res) > 0: xp = finish_res[0]
-        if len(finish_res) > 1: gold = finish_res[1]
-        if len(finish_res) > 2 and isinstance(finish_res[2], list):
-            mat_data = finish_res[2]
-            if len(mat_data) > 0:
-                if isinstance(mat_data[0], list):
-                    for item in mat_data:
-                        if len(item) >= 2: materials.append(f"{item[0]}x{item[1]}")
-                else:
-                    materials.append(f"{mat_data[0]}x{mat_data[1]}")
-        if len(finish_res) > 3 and isinstance(finish_res[3], (int, float)):
-            token = finish_res[3]
-        
-    parts = [f"{feature_name} SUCCESS!"]
-    if current_level is not None: parts.append(f"Level: {current_level}")
-    if xp: parts.append(f"XP: {xp}")
-    if gold: parts.append(f"Gold: {gold}")
-    if token: parts.append(f"Token: {token}")
-    if materials: parts.append(f"Materials: {', '.join(materials)}")
-    
-    if len(parts) == 1:
+        parts = [f"{feature_name} SUCCESS!"]
+        if current_level is not None and str(current_level) not in ('--', 'None', '?'):
+            parts.append(f"Level: {current_level}")
+        if xp:
+            parts.append(f"XP: {xp}")
+        if gold:
+            parts.append(f"Gold: {gold}")
+        if token:
+            parts.append(f"Token: {token}")
+        if materials:
+            parts.append(f"Materials: {', '.join(materials)}")
+            
+        if len(parts) == 1:
+            return f"{feature_name} SUCCESS! Raw: {finish_res}"
+            
+        return " | ".join(parts)
+    except Exception as e:
         return f"{feature_name} SUCCESS! Raw: {finish_res}"
-        
-    return " | ".join(parts)
 
 _char_info_cache = {}
 
@@ -1030,8 +1054,10 @@ async def run_circus_event(client: NinjaSageClient, sessionkey: str, char_id: in
         final_tokens = finish_res.get('account_tokens')
         if final_tokens is not None and int(final_tokens) < initial_tokens:
             return f"STOPPED: Tiket {boss_type.capitalize()} habis! Server memotong {initial_tokens - int(final_tokens)} Token. Bot dihentikan untuk melindungi tokenmu."
-    
-    return format_battle_rewards(f"Circus Event {boss_type.capitalize()}", finish_res)
+        return format_battle_rewards(f"Circus Event {boss_type.capitalize()}", finish_res)
+    else:
+        error_msg = finish_res.get('result', finish_res) if isinstance(finish_res, dict) else finish_res
+        return f"Circus Event Complete but server rejected finish: {error_msg}"
 
 async def run_yokai_event(client: NinjaSageClient, sessionkey: str, char_id: int, boss_type: str = "kitsune"):
     # 1. Get Character Data
