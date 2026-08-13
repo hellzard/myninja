@@ -545,57 +545,108 @@ async def auto_shadow_war(client: NinjaSageClient, sessionkey: str, char_id: int
     else:
         return f"Shadow War Battle Failed: {finish_res}"
 
-_monster_hunt_boss_cache = {}
-
 async def auto_monster_hunt(client: NinjaSageClient, sessionkey: str, char_id: int):
     import hashlib
     import asyncio
-    global _monster_hunt_boss_cache
     
-    # Constants
     EQUIPMENT_DATA = "eyJpdGVtcyI6eyJhY2Nlc3NvcnkiOiJhY2Nlc3NvcnlfMDEiLCJiYWNrX2l0ZW0iOiJiYWNrXzIzODEiLCJ3ZWFwb24iOiJ3cG5fMjM4MCIsInNldCI6InNldF8yMjU4XzEifSwic3RhdHVzIjp7ImVhcnRoIjowLCJsaWdodG5pbmciOjAsImZpcmUiOjAsIndhdGVyIjowLCJ3aW5kIjo3OH0sImJ5dGVzIjp7Il9fXyI6IjE3NjM4Nzk1ODk0MDM2N2MzY2M5OTlhOWY5ZTk1MWExZDMzMjExNTQ1Yjg0YjJkNWE2MzkzM2IwMDIwNDMzMDAwYzNiYjQxMGZiMTc2Mzg3OTU4OTE3NjM4Nzk1ODkxNzYzODc5NTg5MTc2Mzg3OTU4OSIsIl8iOjgyMjg0NDcsIl9fX18iOjE3NjM4Nzk1ODksIl9fX19fIjo4MjI4NDQ3LCJfXyI6ODIyODQ0NywiX19fX19fIjo4MjI4NDQ3fSwiX19fXyI6W3siXyI6InNraWxsXzIzMTIiLCJfXyI6NTQ2MDV9LHsiXyI6InNraWxsXzM0NSIsIl9fIjo4MDI0M30seyJfIjoic2tpbGxfMjMxMCIsIl9fIjoxMjg0Njl9LHsiXyI6InNraWxsXzIyMTUiLCJfXyI6MjkzNDl9LHsiXyI6InNraWxsXzIyODYiLCJfXyI6NDk0NzR9LHsiXyI6InNraWxsXzIyMDYiLCJfXyI6NjA5NDR9LHsiXyI6InNraWxsXzIzMDgiLCJfXyI6NjUxMDF9LHsiXyI6InNraWxsXzMyOSIsIl9fIjo3NTM1Nn1dfQ=="
     
-    boss_id = _monster_hunt_boss_cache.get(char_id)
+    # 1. Fetch Event Data (Always check event data and energy on each step)
+    event_data = None
+    endpoint_prefix = "MonsterHunterEvent2023" # Source of truth from APK bytecode
     
-    if not boss_id:
-        # 1. Get Event Data (Only on first run)
-        event_res = await client.send_amf_request("vnB7P8simcleapK1.rqZYazLcWOgx", [char_id, sessionkey])
-        if event_res.get('status') != 1:
-            return f"Failed to get Monster Hunt data: {event_res}"
-            
-        boss_id = event_res.get('boss_id', '')
-        _monster_hunt_boss_cache[char_id] = boss_id
-        
-        energy = event_res.get('energy', 0)
-        if energy < 10:
-            return f"Not enough energy to hunt. Current: {energy}/10 required."
-            
+    try:
+        event_res = await client.send_amf_request("MonsterHunterEvent2023.getEventData", [char_id, sessionkey])
+        if isinstance(event_res, dict) and (event_res.get('status') == 1 or str(event_res.get('status')) == "1"):
+            event_data = event_res
+            endpoint_prefix = "MonsterHunterEvent2023"
+        elif isinstance(event_res, list) and len(event_res) > 0 and isinstance(event_res[0], dict):
+            event_data = event_res[0]
+            endpoint_prefix = "MonsterHunterEvent2023"
+    except Exception:
+        event_data = None
+
+    if not event_data:
+        try:
+            # Fallback to SWF obfuscated service name
+            event_res = await client.send_amf_request("vnB7P8simcleapK1.rqZYazLcWOgx", [char_id, sessionkey])
+            if isinstance(event_res, dict) and (event_res.get('status') == 1 or str(event_res.get('status')) == "1"):
+                event_data = event_res
+                endpoint_prefix = "vnB7P8simcleapK1"
+            elif isinstance(event_res, list) and len(event_res) > 0 and isinstance(event_res[0], dict):
+                event_data = event_res[0]
+                endpoint_prefix = "vnB7P8simcleapK1"
+            else:
+                error_msg = event_res.get('result', event_res.get('error', event_res)) if isinstance(event_res, dict) else event_res
+                return f"Failed to get Monster Hunt data: {error_msg}"
+        except Exception as e:
+            return f"Failed to get Monster Hunt data: {e}"
+
+    if not event_data:
+        return "Failed to get Monster Hunt event data from server (Event may be inactive)."
+
+    boss_id = event_data.get('boss_id') or event_data.get('boss') or 'ene_2080'
+    energy = int(event_data.get('energy', 0))
+    
+    if energy < 10:
+        return f"STOPPED: Energy Monster Hunt habis ({energy}/10 required). Bot dihentikan."
+
     # 2. Start Battle
-    start_hash_str = str(char_id) + str(boss_id)
+    start_hash_str = f"{char_id}{boss_id}"
     start_hash = hashlib.sha256(start_hash_str.encode()).hexdigest()
     
-    start_res = await client.send_amf_request("vnB7P8simcleapK1.L0ZnAYiHcaRE", [char_id, boss_id, start_hash, sessionkey])
-    if start_res.get("status") != 1:
-        # If it fails, maybe energy is exhausted, clear cache so next run it fetches real energy/boss.
-        _monster_hunt_boss_cache.pop(char_id, None)
-        return f"Failed to start battle (probably out of energy): {start_res}"
+    start_endpoint = "MonsterHunterEvent2023.startBattle" if endpoint_prefix == "MonsterHunterEvent2023" else "vnB7P8simcleapK1.L0ZnAYiHcaRE"
+    try:
+        start_res = await client.send_amf_request(start_endpoint, [char_id, boss_id, start_hash, sessionkey])
+    except Exception as e:
+        start_res = {"status": 0, "error": str(e)}
         
-    battle_id = str(start_res.get("code", ""))
-    await asyncio.sleep(1) # Reduced sleep to 1s for efficiency
+    if not isinstance(start_res, dict) or (start_res.get("status") != 1 and str(start_res.get("status")) != "1"):
+        # If the prefix failed, try the alternate endpoint
+        alt_start_endpoint = "vnB7P8simcleapK1.L0ZnAYiHcaRE" if endpoint_prefix == "MonsterHunterEvent2023" else "MonsterHunterEvent2023.startBattle"
+        try:
+            start_res = await client.send_amf_request(alt_start_endpoint, [char_id, boss_id, start_hash, sessionkey])
+            if isinstance(start_res, dict) and (start_res.get("status") == 1 or str(start_res.get("status")) == "1"):
+                endpoint_prefix = "vnB7P8simcleapK1" if alt_start_endpoint.startswith("vnB7P8") else "MonsterHunterEvent2023"
+        except Exception:
+            pass
+            
+    if not isinstance(start_res, dict) or (start_res.get("status") != 1 and str(start_res.get("status")) != "1"):
+        error_msg = start_res.get('result', start_res.get('error', start_res)) if isinstance(start_res, dict) else start_res
+        return f"Failed to start Monster Hunt battle against {boss_id}: {error_msg}"
+
+    battle_id = str(start_res.get("code", start_res.get("battle_code", start_res.get("id", ""))))
+    if not battle_id:
+        return f"Failed: No battle ID returned for Monster Hunt {boss_id}: {start_res}"
+
+    await asyncio.sleep(2) # Safe battle delay
     
     # 3. Finish Battle
-    finish_hash_str = str(char_id) + str(boss_id) + battle_id + "0" + EQUIPMENT_DATA
+    finish_hash_str = f"{char_id}{boss_id}{battle_id}0{EQUIPMENT_DATA}"
     finish_hash = hashlib.sha256(finish_hash_str.encode()).hexdigest()
     
-    finish_res = await client.send_amf_request("vnB7P8simcleapK1.hW7GRYkEv7Ak", [
-        char_id, boss_id, battle_id, 0, finish_hash, EQUIPMENT_DATA, sessionkey
-    ])
+    finish_endpoint = "MonsterHunterEvent2023.finishBattle" if endpoint_prefix == "MonsterHunterEvent2023" else "vnB7P8simcleapK1.hW7GRYkEv7Ak"
+    finish_params = [char_id, boss_id, battle_id, 0, finish_hash, EQUIPMENT_DATA, sessionkey]
     
-    if finish_res.get("status") == 1:
+    try:
+        finish_res = await client.send_amf_request(finish_endpoint, finish_params)
+    except Exception as e:
+        finish_res = {"status": 0, "error": str(e)}
+        
+    if not isinstance(finish_res, dict) or (finish_res.get("status") != 1 and str(finish_res.get("status")) != "1"):
+        # Fallback to alternate finish endpoint if status != 1
+        alt_finish_endpoint = "vnB7P8simcleapK1.hW7GRYkEv7Ak" if endpoint_prefix == "MonsterHunterEvent2023" else "MonsterHunterEvent2023.finishBattle"
+        try:
+            finish_res = await client.send_amf_request(alt_finish_endpoint, finish_params)
+        except Exception:
+            pass
+        
+    if isinstance(finish_res, dict) and (finish_res.get("status") == 1 or str(finish_res.get("status")) == "1"):
         level = await get_or_fetch_char_level(client, sessionkey, char_id)
         return format_battle_rewards(f"Monster Hunt {boss_id}", finish_res, current_level=level, char_id=char_id)
     else:
-        return f"Battle failed: {finish_res}"
+        error_msg = finish_res.get('result', finish_res.get('error', finish_res)) if isinstance(finish_res, dict) else finish_res
+        return f"Monster Hunt Battle failed: {error_msg}"
 
 async def auto_mission_s(client: NinjaSageClient, sessionkey: str, char_id: int):
     import hashlib

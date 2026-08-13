@@ -794,7 +794,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
                         refreshStats(true);
                     }
-                    if (data.status === 'error') if (autoMonsterInterval) btnAutoMonster.click();
+                    if (data.status === 'error' || (data.message && (data.message.toLowerCase().includes('failed') || data.message.toLowerCase().includes('energy') || data.message.toLowerCase().includes('stopped') || data.message.toLowerCase().includes('inactive')))) {
+                        if (autoMonsterInterval) btnAutoMonster.click();
+                    }
                 } catch(e) {
                     addLog(`[AutoMonster] Error: ${e.message}`);
                 } finally {
