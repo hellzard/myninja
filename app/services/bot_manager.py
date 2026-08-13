@@ -149,10 +149,23 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
         char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
         if char_data_res.get('status') == 0:
             return f"Failed to get character data: {char_data_res.get('error', 'Unknown error')}"
+        char_obj = char_data_res.get('character_data') or char_data_res.get('data') or char_data_res
+        if isinstance(char_obj, list):
+            for item in char_obj:
+                if isinstance(item, dict):
+                    char_obj = item
+                    break
         
-        char_obj = char_data_res.get('data', char_data_res)
-        lvl = int(char_obj.get("character_level", char_obj.get("level", 1)))
-        rk = int(char_obj.get("character_rank", char_obj.get("rank", 1)))
+        try:
+            lvl = int(char_obj.get("character_level") or char_obj.get("level") or 1)
+        except:
+            lvl = 1
+            
+        rank_val = char_obj.get('character_rank') or char_obj.get('character_data_character_rank') or char_obj.get('rank') or 1
+        try:
+            rk = int(rank_val)
+        except:
+            rk = 1
         
         char_info = {
             "agility": calculate_agility(char_data_res),
@@ -203,12 +216,22 @@ async def auto_daily_event(client: NinjaSageClient, sessionkey: str, char_id: in
     # 1. Fetch Char Data
     char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
     if isinstance(char_data_res, dict) and char_data_res.get('status') == 1:
-        char_obj = char_data_res.get('data', {})
-        level = int(char_obj.get('character_level', char_obj.get('level', 1)))
+        char_obj = char_data_res.get('character_data') or char_data_res.get('data') or char_data_res
+        if isinstance(char_obj, list):
+            for item in char_obj:
+                if isinstance(item, dict):
+                    char_obj = item
+                    break
+        
+        try:
+            level = int(char_obj.get('character_level') or char_obj.get('level') or 1)
+        except:
+            level = 1
+            
         rank_val = char_obj.get('character_rank') or char_obj.get('character_data_character_rank') or char_obj.get('rank') or 1
         try:
             rank = int(rank_val)
-        except (ValueError, TypeError):
+        except:
             rank = 1
     else:
         return "Failed to load character data for daily events"
@@ -439,9 +462,19 @@ async def auto_mission_s(client: NinjaSageClient, sessionkey: str, char_id: int)
     char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
     if char_data_res.get('status') == 0:
         return f"Failed to get character data for Mission S: {char_data_res.get('error', 'Unknown error')}"
-    char_data = char_data_res
-    char_obj = char_data.get('character_data', char_data)
-    char_level = int(char_obj.get('character_level', char_obj.get('level', 0)))
+        
+    char_obj = char_data_res.get('character_data') or char_data_res.get('data') or char_data_res
+    if isinstance(char_obj, list):
+        for item in char_obj:
+            if isinstance(item, dict):
+                char_obj = item
+                break
+                
+    try:
+        char_level = int(char_obj.get('character_level') or char_obj.get('level') or 0)
+    except:
+        char_level = 0
+        
     if char_level < 80:
         raise Exception(f"Mission S requires level 80. Current level: {char_level}")
 
@@ -700,9 +733,22 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
     char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
     if char_data_res.get('status') == 0:
         return f"Failed to get character data for Eudemon: {char_data_res.get('error', 'Unknown error')}"
-    char_obj = char_data_res.get('character_data', char_data_res)
-    char_level = int(char_obj.get('character_level', char_obj.get('level', 1)))
-    
+        
+    char_obj = char_data_res.get('character_data') or char_data_res.get('data') or char_data_res
+    if isinstance(char_obj, list):
+        for item in char_obj:
+            if isinstance(item, dict):
+                char_obj = item
+                break
+                
+    try:
+        char_level = int(char_obj.get('character_level') or char_obj.get('level') or 1)
+    except:
+        char_level = 1
+        
+    if char_level < 10:
+        return f"Eudemon requires level 10 (Current: {char_level})"
+        
     # 2. Get available bosses
     avail_res = await client.send_amf_request("A11M5XZ9wxhTs2Dr.RuyuMINDEhfE", [sessionkey, char_id])
     if "data" not in avail_res:
