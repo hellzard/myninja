@@ -2,24 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Ninja Sage - Web Bot Panel</title>
+
+  <!-- PWA & Mobile Web App Meta -->
   <link rel="manifest" href="/panel/manifest.json" />
-  <link rel="stylesheet" href="/panel/style.css?v=2" />
-  <!-- Font Awesome for sleek icons -->
+  <link rel="icon" type="image/png" href="/panel/assets/favicon.png" />
+  <link rel="apple-touch-icon" href="/panel/assets/apple-touch-icon.png" />
+  <meta name="theme-color" content="#050507" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="NinjaSage" />
+  <meta name="description" content="Automated Cyber Shadow Bot & Intelligence Terminal for Ninja Sage" />
+
+  <!-- Google Fonts Optimization (Preconnect for Fast Mobile Load) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/panel/style.css?v=3" />
+
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <!-- Vanilla Tilt for 3D effect -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+  <!-- Vanilla Tilt (Loaded with defer for performance) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js" defer></script>
 </head>
 <body>
   
+  <div class="ambient-glow"></div>
   <canvas id="canvas-bg"></canvas>
 
   <!-- LOGIN VIEW -->
   <div id="auth-view">
     <div class="auth-card glass-panel tilt" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
       <div class="auth-header">
-
+        <div class="brand-logo-container">
+          <img src="/panel/assets/logo.png" alt="Ninja Sage Logo" class="brand-logo-img" />
+        </div>
         <h1>Ninja Sage Bot</h1>
         <p>Authenticate to access the Shadow Terminal</p>
       </div>
@@ -55,7 +76,7 @@
     <aside class="sidebar">
       <div class="glass-panel profile-card">
         <div class="avatar-ring">
-          <i class="fa-brands fa-galactic-senate glowing-logo-spin"></i>
+          <img src="/panel/assets/icon-192.png" alt="Ninja Avatar" class="cyber-avatar-img" />
         </div>
         <h2 id="metric-char" class="profile-name">Ninja</h2>
         <div class="profile-id">ID: <span id="metric-char-id">...</span></div>
@@ -79,7 +100,10 @@
           </div>
         </div>
 
-        <button id="btn-install-pwa" class="btn btn-primary hidden" style="width: 100%; margin-top: 1rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, #10b981, #059669);"><i class="fa-solid fa-download"></i> Install App</button>
+        <!-- PWA Install Button (Shown dynamically on mobile/desktop) -->
+        <button id="btn-install-pwa" class="btn btn-primary btn-pwa-install hidden">
+          <i class="fa-solid fa-download"></i> Install App (PWA)
+        </button>
 
         <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
           <button id="btn-refresh-stats" class="btn btn-toggle"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
@@ -93,16 +117,14 @@
           IDLE - Awaiting Orders
         </div>
       </div>
-
-      
     </aside>
 
     <!-- RIGHT CONTENT AREA (Bento Box Grid - 5 Categories) -->
     <main class="dashboard-grid">
       
       <!-- Operations -->
-      <div class="glass-panel module-card tilt" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2" onclick="document.getElementById('modal-operations').classList.add('show')" style="cursor: pointer;">
-        <div class="module-header" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+      <div class="glass-panel module-card tilt" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2" onclick="document.getElementById('modal-operations').classList.add('show')">
+        <div class="module-header">
           <div class="module-icon icon-operations"><i class="fa-solid fa-meteor"></i></div>
           <div class="module-title">
             <h3>Operations</h3>
@@ -111,8 +133,8 @@
       </div>
 
       <!-- Events -->
-      <div class="glass-panel module-card tilt" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2" onclick="document.getElementById('modal-events').classList.add('show')" style="cursor: pointer;">
-        <div class="module-header" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+      <div class="glass-panel module-card tilt" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2" onclick="document.getElementById('modal-events').classList.add('show')">
+        <div class="module-header">
           <div class="module-icon icon-events"><i class="fa-solid fa-ghost"></i></div>
           <div class="module-title">
             <h3>Events</h3>
@@ -121,8 +143,8 @@
       </div>
 
       <!-- Dailies & Bosses -->
-      <div class="glass-panel module-card tilt" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2" onclick="document.getElementById('modal-dailies').classList.add('show')" style="cursor: pointer;">
-        <div class="module-header" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+      <div class="glass-panel module-card tilt" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2" onclick="document.getElementById('modal-dailies').classList.add('show')">
+        <div class="module-header">
           <div class="module-icon icon-dailies"><i class="fa-solid fa-dragon"></i></div>
           <div class="module-title">
             <h3>Dailies & Bosses</h3>
@@ -133,7 +155,7 @@
       <!-- War (Coming Soon) -->
       <div class="glass-panel module-card tilt disabled-card" data-tilt data-tilt-max="1" data-tilt-speed="400" style="cursor: not-allowed; opacity: 0.6; position: relative;">
         <div class="coming-soon-badge" style="position: absolute; top: -10px; right: -10px; background: #ef4444; color: white; padding: 4px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; box-shadow: 0 0 10px #ef4444; z-index: 10;">COMING SOON</div>
-        <div class="module-header" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+        <div class="module-header">
           <div class="module-icon icon-war"><i class="fa-brands fa-fort-awesome"></i></div>
           <div class="module-title">
             <h3>War</h3>
@@ -143,7 +165,7 @@
       
       <!-- TOP SECRET MODULE -->
       <div class="module-card clickable glass-panel" onclick="openSecretModal()">
-        <div class="module-header" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+        <div class="module-header">
           <div class="module-icon icon-secret" style="color: #ef4444; text-shadow: 0 0 10px rgba(239, 68, 68, 0.8);"><i class="fa-solid fa-user-secret"></i></div>
           <div class="module-title">
             <h3 style="color: #ef4444;">Top Secret</h3>
@@ -154,19 +176,19 @@
     </main>
 
     <!-- TERMINAL (Full Width Bottom) -->
-      <div class="terminal-wrapper">
-        <div class="terminal-header">
-          <h3>Terminal</h3>
-          <button class="btn-toggle" style="padding: 0.2rem 0.5rem;" onclick="document.getElementById('activity-log').innerHTML=''">
-            <i class="fa-solid fa-trash"></i>
-          </button>
-        </div>
-        <div class="terminal-window" id="terminal-window">
-          <ul id="activity-log" class="log-list">
-            <!-- Logs go here -->
-          </ul>
-        </div>
+    <div class="terminal-wrapper">
+      <div class="terminal-header">
+        <h3>Terminal</h3>
+        <button class="btn-toggle" style="padding: 0.2rem 0.5rem;" onclick="document.getElementById('activity-log').innerHTML=''">
+          <i class="fa-solid fa-trash"></i>
+        </button>
       </div>
+      <div class="terminal-window" id="terminal-window">
+        <ul id="activity-log" class="log-list">
+          <!-- Logs go here -->
+        </ul>
+      </div>
+    </div>
     
     <footer style="grid-column: 1 / -1; text-align: center; margin-top: 1rem; padding: 1.5rem 1rem; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); font-family: 'JetBrains Mono', monospace; line-height: 1.6; background: rgba(0,0,0,0.2); border-radius: var(--radius);">
       <p style="margin-bottom: 0.5rem; color: #f8fafc;"><i class="fa-solid fa-user-shield" style="color: var(--primary); margin-right: 0.5rem;"></i> <strong>Strictly for Personal Use. Not for commercial distribution.</strong></p>
@@ -238,7 +260,7 @@
         <div class="action-item">
           <div class="action-info">
             <h4>Auto Leveling</h4>
-            <div style="margin-top: 0.25rem;">Max Level: <input type="number" id="auto_level_max" value="60" class="input-field" style="width: 50px; text-align: center;" /></div>
+            <div style="margin-top: 0.25rem;">Max Level: <input type="number" id="auto_level_max" value="60" class="input-field" style="width: 60px; text-align: center;" /></div>
           </div>
           <button id="toggle-autolevel" class="btn btn-toggle">START</button>
         </div>
@@ -379,6 +401,7 @@
     </div>
   </div>
 
-  <script src="/panel/app.js?v=4" defer></script>
+  <!-- Main JavaScript with Cache-Busting Version -->
+  <script src="/panel/app.js?v=5" defer></script>
 </body>
 </html>

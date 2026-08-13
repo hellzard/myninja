@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offline - Ninja Sage Panel</title>
+  <link rel="stylesheet" href="/panel/style.css?v=3" />
+  <link rel="icon" type="image/png" href="/panel/assets/favicon.png" />
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 1.5rem;
+      background: radial-gradient(circle at center, #11141c 0%, #050507 100%);
+    }
+    .offline-card {
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      padding: 2.5rem 2rem;
+      border: 1px solid rgba(234, 88, 12, 0.3);
+      box-shadow: 0 0 35px rgba(234, 88, 12, 0.15);
+    }
+    .offline-icon {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      background: rgba(234, 88, 12, 0.1);
+      border: 2px solid rgba(234, 88, 12, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      color: #ea580c;
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 15px rgba(234, 88, 12, 0.3); transform: scale(1); }
+      50% { box-shadow: 0 0 30px rgba(234, 88, 12, 0.7); transform: scale(1.05); }
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.75rem;
+      color: #f8fafc;
+      font-family: 'Outfit', sans-serif;
+    }
+    p {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    .btn-retry {
+      width: 100%;
+      padding: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-panel offline-card">
+    <div class="offline-icon">⚡</div>
+    <h1>Chakra Connection Lost</h1>
+    <p>Your connection to the Shadow Terminal was interrupted. Please verify your internet connection or server status.</p>
+    <button class="btn btn-primary btn-retry" onclick="window.location.reload()">
+      RECONNECT TERMINAL
+    </button>
+  </div>
+</body>
+</html>

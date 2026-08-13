@@ -1013,43 +1013,60 @@ document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('/panel/sw.js')
-                .then(reg => console.log('ServiceWorker registration successful with scope: ', reg.scope))
-                .catch(err => console.log('ServiceWorker registration failed: ', err));
+                .then(reg => console.log('[PWA] ServiceWorker registered:', reg.scope))
+                .catch(err => console.warn('[PWA] ServiceWorker registration failed:', err));
         });
     }
 
-    let deferredPrompt;
+    let deferredPrompt = null;
     const installBtn = document.getElementById('btn-install-pwa');
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-        // Prevent the mini-infobar from appearing on mobile
-        e.preventDefault();
-        // Stash the event so it can be triggered later.
-        deferredPrompt = e;
-        // Update UI notify the user they can install the PWA
-        if (installBtn) {
+    // Detect if already running in standalone PWA mode
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    if (!isStandalone && installBtn) {
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
             installBtn.classList.remove('hidden');
-            installBtn.addEventListener('click', async () => {
-                // Hide the app provided install promotion
-                installBtn.classList.add('hidden');
-                // Show the install prompt
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
                 deferredPrompt.prompt();
-                // Wait for the user to respond to the prompt
                 const { outcome } = await deferredPrompt.userChoice;
-                console.log(`User response to the install prompt: ${outcome}`);
-                // We've used the prompt, and can't use it again, throw it away
+                console.log('[PWA] User response:', outcome);
+                if (outcome === 'accepted') {
+                    installBtn.classList.add('hidden');
+                }
                 deferredPrompt = null;
-            });
+            } else {
+                // If iOS Safari or prompt unavailable
+                alert("Untuk menginstall di HP (iOS/Android):\n1. Tekan tombol Share / Menu di browser (titik 3 atau ikon bagikan)\n2. Pilih 'Add to Home Screen' / 'Tambahkan ke Layar Utama'");
+            }
+        });
+
+        // If on mobile browser and not standalone, show install button after 2s
+        if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            setTimeout(() => {
+                if (!isStandalone) installBtn.classList.remove('hidden');
+            }, 2000);
         }
-    });
+    }
 
     window.addEventListener('appinstalled', () => {
-        // Hide the app-provided install promotion
         if (installBtn) installBtn.classList.add('hidden');
-        // Clear the deferredPrompt so it can be garbage collected
         deferredPrompt = null;
-        console.log('PWA was installed');
+        console.log('[PWA] App installed successfully');
     });
+
+    // Disable VanillaTilt on touch screens for 60 FPS mobile smoothness
+    if (window.matchMedia('(hover: none) or (pointer: coarse)').matches) {
+        document.querySelectorAll('[data-tilt]').forEach(el => {
+            el.removeAttribute('data-tilt');
+            if (el.vanillaTilt) el.vanillaTilt.destroy();
+        });
+    }
 });
 
 // Settings Logic
@@ -1167,75 +1184,81 @@ document.getElementById('toggle-automission-farmer').addEventListener('click', (
 // BACKGROUND CANVAS PARTICLES (Cyber-Ninja)
 // ==========================================
 const canvas = document.getElementById('canvas-bg');
+// Only run canvas particles on desktop with pointer/mouse to keep mobile buttery smooth (60 FPS)
+const isMobileDevice = window.innerWidth <= 768 || window.matchMedia('(pointer: coarse)').matches;
+
 if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    let particles = [];
-    
-    function resize() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        // On mobile, draw at half resolution to save GPU
-        let dpr = (width <= 768) ? 0.5 : 1;
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
-        ctx.scale(dpr, dpr);
-    }
-    window.addEventListener('resize', resize);
-    resize();
-    
-    class Particle {
-        constructor() {
-            this.x = Math.random() * width;
-            this.y = Math.random() * height;
-            this.size = Math.random() * 2 + 0.5;
-            this.speedX = Math.random() * 1 - 0.5;
-            this.speedY = Math.random() * -1 - 0.5; // Float upwards
-            this.color = Math.random() > 0.5 ? 'rgba(234, 88, 12, ' : 'rgba(251, 191, 36, ';
-            this.alpha = Math.random() * 0.5 + 0.1;
+    if (isMobileDevice) {
+        canvas.style.display = 'none'; // Mobile uses pure hardware-accelerated CSS .ambient-glow
+    } else {
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        let animationFrameId = null;
+        
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
         }
-        update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-            if (this.y < 0) {
-                this.y = height;
+        window.addEventListener('resize', resize);
+        resize();
+        
+        class Particle {
+            constructor() {
                 this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.8 - 0.4;
+                this.speedY = Math.random() * -0.8 - 0.2; // Float upwards
+                this.color = Math.random() > 0.5 ? 'rgba(234, 88, 12, ' : 'rgba(251, 191, 36, ';
+                this.alpha = Math.random() * 0.4 + 0.1;
             }
-            if (this.x < 0 || this.x > width) {
-                this.speedX *= -1;
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.y < 0) {
+                    this.y = height;
+                    this.x = Math.random() * width;
+                }
+                if (this.x < 0 || this.x > width) {
+                    this.speedX *= -1;
+                }
+            }
+            draw() {
+                ctx.fillStyle = this.color + this.alpha + ')';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
             }
         }
-        draw() {
-            ctx.fillStyle = this.color + this.alpha + ')';
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
-    
-    let numParticles = (window.innerWidth <= 768) ? 20 : 50;
-    for (let i = 0; i < numParticles; i++) {
-        particles.push(new Particle());
-    }
-    
-    let lastTime = 0;
-    function animate(timestamp) {
-        requestAnimationFrame(animate);
         
-        // Limit FPS to 30 on mobile
-        if (window.innerWidth <= 768) {
-            if (timestamp - lastTime < 33) return; 
+        for (let i = 0; i < 40; i++) {
+            particles.push(new Particle());
         }
-        lastTime = timestamp;
         
-        ctx.clearRect(0, 0, width, height);
-        particles.forEach(p => {
-            p.update();
-            p.draw();
+        function animate() {
+            if (document.hidden) return; // Pause rendering if tab in background
+            ctx.clearRect(0, 0, width, height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            animationFrameId = requestAnimationFrame(animate);
+        }
+        
+        // Pause/resume when tab switches to save CPU
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            } else {
+                animationFrameId = requestAnimationFrame(animate);
+            }
         });
+        
+        animationFrameId = requestAnimationFrame(animate);
     }
-    
-    requestAnimationFrame(animate);
 }
 
 // ----------------------------------------------------

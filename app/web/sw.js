@@ -1,56 +1,91 @@
-const CACHE_NAME = 'ns-bot-cache-v3';
-const ASSETS_TO_CACHE = [
+const CACHE_NAME = 'ns-shadow-cache-v4';
+
+const STATIC_ASSETS = [
   '/panel/',
   '/panel/index.html',
-  '/panel/style.css',
-  '/panel/app.js',
+  '/panel/style.css?v=3',
+  '/panel/app.js?v=5',
   '/panel/manifest.json',
-  '/panel/assets/icon-512.png'
+  '/panel/offline.html',
+  '/panel/assets/icon-192.png',
+  '/panel/assets/icon-512.png',
+  '/panel/assets/apple-touch-icon.png',
+  '/panel/assets/favicon.png',
+  '/panel/assets/logo.png'
 ];
 
 self.addEventListener('install', event => {
-  self.skipWaiting(); // Force the waiting service worker to become the active service worker
+  self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        return cache.addAll(ASSETS_TO_CACHE);
-      })
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(STATIC_ASSETS).catch(err => {
+        console.warn('[SW] Cache addAll partial warning:', err);
+      });
+    })
   );
 });
 
 self.addEventListener('activate', event => {
-  // Clear old caches
   event.waitUntil(
-    caches.keys().then(cacheNames => {
+    caches.keys().then(keys => {
       return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName);
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            console.log('[SW] Clearing deprecated cache:', key);
+            return caches.delete(key);
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
-  self.clients.claim(); // Claim control immediately
 });
 
-// Network First strategy for active development
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    fetch(event.request)
-      .then(response => {
-        if (!response || response.status !== 200 || response.type !== 'basic') {
-          return response;
-        }
-        const resClone = response.clone();
-        caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, resClone);
+  const req = event.request;
+  const url = new URL(req.url);
+
+  // Never cache POST or backend API endpoints
+  if (req.method !== 'GET' || url.pathname.startsWith('/api/')) {
+    return;
+  }
+
+  // Handle navigation requests (HTML pages)
+  if (req.mode === 'navigate') {
+    event.respondWith(
+      fetch(req).catch(() => {
+        return caches.match('/panel/index.html').then(cached => {
+          return cached || caches.match('/panel/offline.html');
         });
-        return response;
       })
-      .catch(() => {
-        // Fallback to cache if network fails
-        return caches.match(event.request);
+    );
+    return;
+  }
+
+  // Cache-First for static assets (images, styles, scripts, fonts)
+  if (url.pathname.match(/\.(png|jpg|jpeg|svg|css|js|woff2|woff|ttf|ico)$/)) {
+    event.respondWith(
+      caches.match(req).then(cached => {
+        if (cached) return cached;
+        return fetch(req).then(networkRes => {
+          if (networkRes && networkRes.status === 200) {
+            const clone = networkRes.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
+          }
+          return networkRes;
+        }).catch(() => caches.match('/panel/offline.html'));
       })
+    );
+    return;
+  }
+
+  // Network with cache fallback for everything else
+  event.respondWith(
+    fetch(req).then(res => {
+      if (res && res.status === 200) {
+        const clone = res.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
+      }
+      return res;
+    }).catch(() => caches.match(req))
   );
 });

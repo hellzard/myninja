@@ -1,17 +1,35 @@
 {
-    "name": "Ninja Sage Bot",
-    "short_name": "NS Bot",
-    "description": "Auto Bot Panel for Ninja Sage",
-    "start_url": "/panel/index.html",
-    "display": "standalone",
-    "background_color": "#0a0c10",
-    "theme_color": "#0a0c10",
-    "icons": [
-      {
-        "src": "/panel/assets/icon-512.png",
-        "sizes": "512x512",
-        "type": "image/png",
-        "purpose": "any maskable"
-      }
-    ]
+  "name": "Ninja Sage - Shadow Bot Panel",
+  "short_name": "NinjaSage",
+  "description": "Automated Cyber Shadow Bot & Intelligence Terminal for Ninja Sage",
+  "start_url": "/panel/index.html",
+  "scope": "/panel/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#050507",
+  "theme_color": "#ea580c",
+  "categories": [
+    "games",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "/panel/assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/panel/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/panel/assets/logo.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
 }
