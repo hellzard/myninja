@@ -54,6 +54,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function updateStatsUI(level, xp, gold, tokens) {
+        if (level !== undefined && level !== null) document.getElementById('metric-level').textContent = level;
+        if (xp !== undefined && xp !== null) document.getElementById('metric-xp').textContent = xp;
+        if (gold !== undefined && gold !== null) document.getElementById('metric-gold').textContent = gold;
+        if (tokens !== undefined && tokens !== null) document.getElementById('metric-token').textContent = tokens;
+    }
+
     function checkLoginState() {
         const stored = localStorage.getItem('ns_session');
         if (stored) {
@@ -61,15 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
             charNameText.textContent = sessionState.char_name || "Unknown";
             charIdText.textContent = sessionState.char_id || "Unknown";
             
-            // Populate stats
-            document.getElementById('metric-level').textContent = sessionState.level || '--';
-            document.getElementById('metric-xp').textContent = sessionState.xp || '--';
-            document.getElementById('metric-gold').textContent = sessionState.gold || '--';
-            document.getElementById('metric-token').textContent = sessionState.tokens || '--';
+            updateStatsUI(sessionState.level, sessionState.xp, sessionState.gold, sessionState.tokens);
             
             loginModal.classList.add('hidden');
             appShell.classList.remove('hidden');
-            addLog("Loaded session from LocalStorage.");
         } else {
             loginModal.classList.remove('hidden');
             appShell.classList.add('hidden');
@@ -422,7 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } finally {
                 isProcessing_autoDailyInterval = false;
             }
-        }, 2000);
+        }, 2500);
     });
 
     // Auto Hunting
@@ -474,7 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     currentHuntZone++;
                     if (currentHuntZone > 5) currentHuntZone = 1;
                 } else {
-                    addLog(`[AutoHunt] Zone ${currentHuntZone} Failed: ${data.message || data.status}. Moving to next zone...`);
+                    addLog(`[AutoHunt] Zone ${currentHuntZone} Response: ${data.message || data.status}`);
                     currentHuntZone++;
                     if (currentHuntZone > 5) currentHuntZone = 1;
                 }
@@ -483,11 +485,11 @@ document.addEventListener('DOMContentLoaded', () => {
             } finally {
                 isProcessing_autoHuntInterval = false;
             }
-        }, 2000);
+        }, 3000);
     });
 
     // Eudemon Boss (Desktop & Mobile share same logic if we use querySelectorAll)
-        const eudemonBtns = document.querySelectorAll('#btnAutoEudemon');
+    const eudemonBtns = document.querySelectorAll('#btnAutoEudemon');
     let autoEudemonInterval = null;
     
     eudemonBtns.forEach(btn => {
@@ -523,23 +525,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     const data = await res.json();
                     
-                    if (data.status === 'success') {
+                    if (data.status === 'success' || (data.message && data.message.includes("SUCCESS"))) {
                         addLog(`[Eudemon] ${data.message}`, 'ok');
                         refreshStats(true);
                         if (data.message.includes("No available Eudemon bosses")) {
                             if (autoEudemonInterval) btn.click();
                         }
                     } else {
-                        addLog(`[Eudemon] Failed: ${data.message}`, 'error');
-                        if (autoEudemonInterval) btn.click();
+                        const isRateLimited = data.message && data.message.toLowerCase().includes("rate limit");
+                        addLog(`[Eudemon] ${data.message}`, isRateLimited ? 'warn' : 'error');
+                        if (data.message && (data.message.includes("No available Eudemon bosses") || data.message.includes("requires level"))) {
+                            if (autoEudemonInterval) btn.click();
+                        }
                     }
                 } catch (e) {
                     addLog(`[Eudemon] Error: ${e.message}`, 'error');
-                    if (autoEudemonInterval) btn.click();
                 } finally {
                     isProcessing_autoEudemonInterval = false;
                 }
-            }, 1500);
+            }, 3500);
         });
     });
 
@@ -595,7 +599,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } finally {
                     isProcessing_autoCircusInterval = false;
                 }
-            }, 3500);
+            }, 4000);
         });
     }
 
@@ -704,7 +708,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } finally {
                     isProcessing_autoYokaiMinigameInterval = false;
                 }
-            }, 1500);
+            }, 3000);
         });
     }
 
@@ -754,7 +758,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } finally {
                 isProcessing_autoShadowWarInterval = false;
             }
-        }, 2500);
+        }, 3000);
     });
 
     // Auto Monster Hunt
@@ -801,7 +805,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } finally {
                     isProcessing_autoMonsterInterval = false;
                 }
-            }, 2500);
+            }, 3000);
         });
     }
 
@@ -847,7 +851,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } finally {
                     isProcessing_autoMissionSInterval = false;
                 }
-            }, 1500);
+            }, 2500);
         });
     }
 
@@ -893,13 +897,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 } finally {
                     isProcessing_autoClanWarInterval = false;
                 }
-            }, 1500);
+            }, 2000);
         });
     }
 
-    // Refresh Stats Logic
+    // Refresh Stats Logic (Debounced to prevent AMF server rate limiting)
+    let isRefreshingStats = false;
     async function refreshStats(quiet = false) {
-        if (!sessionState || !sessionState.sessionkey) return;
+        if (!sessionState || !sessionState.sessionkey || isRefreshingStats) return;
+        isRefreshingStats = true;
         try {
             const res = await fetch('/api/bot/get_stats', {
                 method: 'POST',
@@ -917,13 +923,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 sessionState.tokens = data.tokens;
                 
                 localStorage.setItem('ns_session', JSON.stringify(sessionState));
-                checkLoginState();
+                updateStatsUI(data.level, data.xp, data.gold, data.tokens);
                 if (!quiet) addLog("Stats refreshed successfully! ✅");
             } else {
                 if (!quiet) addLog("Failed to refresh stats: " + data.message, "err");
             }
         } catch(e) {
             if (!quiet) addLog("Error refreshing stats: " + e.message, "err");
+        } finally {
+            isRefreshingStats = false;
         }
     }
 
@@ -934,14 +942,6 @@ document.addEventListener('DOMContentLoaded', () => {
             refreshStats();
         });
     }
-
-    // Auto update stats every 5 seconds if a bot is running
-    setInterval(() => {
-        const statusTextStr = statusText ? statusText.textContent : "";
-        if (statusTextStr.includes("Running")) {
-            refreshStats(true); // quiet refresh
-        }
-    }, 5000);
 
     // Initial check
     checkLoginState();
@@ -1116,7 +1116,7 @@ document.getElementById('toggle-automission-farmer').addEventListener('click', (
         } finally {
             isProcessing_autoMissionInterval = false;
         }
-    }, 1500);
+    }, 2000);
 });
 
 // ==========================================

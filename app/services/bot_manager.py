@@ -933,30 +933,41 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
     return f"No exams available for Level {level} Rank {rank}"
 
 async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
-    # 1. Get Char Level
-    char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
-    if char_data_res.get('status') == 0:
-        return f"Failed to get character data for Eudemon: {char_data_res.get('error', 'Unknown error')}"
-        
-    char_obj = char_data_res.get('character_data') or char_data_res.get('data') or char_data_res
-    if isinstance(char_obj, list):
-        for item in char_obj:
-            if isinstance(item, dict):
-                char_obj = item
-                break
-                
-    try:
-        char_level = int(char_obj.get('character_level') or char_obj.get('level') or 1)
-    except:
-        char_level = 1
+    import asyncio
+    import hashlib
+    import json
+    import os
+
+    # 1. Get Char Level (using cache first to prevent spamming SystemLogin.getCharacterData)
+    global _char_level_cache
+    char_level = _char_level_cache.get(char_id)
+    if not char_level:
+        char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
+        if isinstance(char_data_res, dict) and char_data_res.get('status') == 0:
+            return f"Failed to get character data for Eudemon: {char_data_res.get('error', 'Unknown error')}"
+            
+        char_obj = char_data_res.get('character_data') or char_data_res.get('data') or char_data_res
+        if isinstance(char_obj, list) and len(char_obj) > 0 and isinstance(char_obj[0], dict):
+            char_obj = char_obj[0]
+                    
+        try:
+            char_level = int(char_obj.get('character_level') or char_obj.get('level') or 1)
+            _char_level_cache[char_id] = char_level
+        except:
+            char_level = 1
         
     if char_level < 10:
         return f"Eudemon requires level 10 (Current: {char_level})"
         
     # 2. Get available bosses
     avail_res = await client.send_amf_request("A11M5XZ9wxhTs2Dr.RuyuMINDEhfE", [sessionkey, char_id])
-    if "data" not in avail_res:
-        return "Eudemon boss response missing 'data'"
+    if isinstance(avail_res, dict) and "Rate limited" in str(avail_res.get("result", "")):
+        await asyncio.sleep(4) # Server rate limit backoff
+        avail_res = await client.send_amf_request("A11M5XZ9wxhTs2Dr.RuyuMINDEhfE", [sessionkey, char_id])
+
+    if not isinstance(avail_res, dict) or "data" not in avail_res:
+        error_msg = avail_res.get('result', avail_res) if isinstance(avail_res, dict) else avail_res
+        return f"Eudemon boss check response: {error_msg}"
         
     avail_raw = avail_res["data"]
     if not avail_raw:
@@ -965,8 +976,6 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
     avail_bosses = list(map(int, avail_raw.split(",")))
     
     # 3. Load gamedata.json
-    import json
-    import os
     try:
         with open(os.path.join(os.path.dirname(__file__), "..", "data", "gamedata.json"), "r", encoding="utf-8") as f:
             gamedata = json.load(f)
@@ -1000,18 +1009,19 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
     if target_boss_index == -1:
         return "No available Eudemon bosses (or failed to fetch)"
         
-    import asyncio
-    import hashlib
-    
     # Start Hunting
     start_res = await client.send_amf_request("A11M5XZ9wxhTs2Dr.iIOH3uczAJZI", [char_id, target_boss_index, sessionkey])
-    if start_res.get("status") != 1:
+    if isinstance(start_res, dict) and "Rate limited" in str(start_res.get("result", "")):
+        await asyncio.sleep(4) # Server rate limit backoff
+        start_res = await client.send_amf_request("A11M5XZ9wxhTs2Dr.iIOH3uczAJZI", [char_id, target_boss_index, sessionkey])
+
+    if not isinstance(start_res, dict) or start_res.get("status") != 1:
         return f"Failed to start {target_boss_name}: {start_res}"
         
     battle_id = str(start_res.get("code", ""))
     
-    # Wait for battle
-    await asyncio.sleep(2)
+    # Wait for battle (3s safe delay)
+    await asyncio.sleep(3)
     
     # Finish Hunting
     loc2_str = str(target_boss_index) + str(char_id) + battle_id
@@ -1021,10 +1031,12 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
     
     finish_params = [char_id, target_boss_index, battle_id, loc2, sessionkey, BATTLE_HASH]
     finish_res = await client.send_amf_request("A11M5XZ9wxhTs2Dr.L6IPyPI8oNXL", finish_params)
+    if isinstance(finish_res, dict) and "Rate limited" in str(finish_res.get("result", "")):
+        await asyncio.sleep(4)
+        finish_res = await client.send_amf_request("A11M5XZ9wxhTs2Dr.L6IPyPI8oNXL", finish_params)
     
-    if finish_res.get("status") == 1:
-        level = await get_or_fetch_char_level(client, sessionkey, char_id)
-        return format_battle_rewards(f"Eudemon {target_boss_name}", finish_res, current_level=level, char_id=char_id)
+    if isinstance(finish_res, dict) and finish_res.get("status") == 1:
+        return format_battle_rewards(f"Eudemon {target_boss_name}", finish_res, current_level=char_level, char_id=char_id)
     else:
         return f"Failed to defeat {target_boss_name}: {finish_res}"
 
