@@ -452,7 +452,7 @@ async def auto_monster_hunt(client: NinjaSageClient, sessionkey: str, char_id: i
     
     if not boss_id:
         # 1. Get Event Data (Only on first run)
-        event_res = await client.send_amf_request("MonsterHunterEvent2023.getEventData", [char_id, sessionkey])
+        event_res = await client.send_amf_request("vnB7P8simcleapK1.rqZYazLcWOgx", [char_id, sessionkey])
         if event_res.get('status') != 1:
             return f"Failed to get Monster Hunt data: {event_res}"
             
@@ -467,7 +467,7 @@ async def auto_monster_hunt(client: NinjaSageClient, sessionkey: str, char_id: i
     start_hash_str = str(char_id) + str(boss_id)
     start_hash = hashlib.sha256(start_hash_str.encode()).hexdigest()
     
-    start_res = await client.send_amf_request("MonsterHunterEvent2023.startBattle", [char_id, boss_id, start_hash, sessionkey])
+    start_res = await client.send_amf_request("vnB7P8simcleapK1.L0ZnAYiHcaRE", [char_id, boss_id, start_hash, sessionkey])
     if start_res.get("status") != 1:
         # If it fails, maybe energy is exhausted, clear cache so next run it fetches real energy/boss.
         _monster_hunt_boss_cache.pop(char_id, None)
@@ -480,7 +480,7 @@ async def auto_monster_hunt(client: NinjaSageClient, sessionkey: str, char_id: i
     finish_hash_str = str(char_id) + str(boss_id) + battle_id + "0" + EQUIPMENT_DATA
     finish_hash = hashlib.sha256(finish_hash_str.encode()).hexdigest()
     
-    finish_res = await client.send_amf_request("MonsterHunterEvent2023.finishBattle", [
+    finish_res = await client.send_amf_request("vnB7P8simcleapK1.hW7GRYkEv7Ak", [
         char_id, boss_id, battle_id, 0, finish_hash, EQUIPMENT_DATA, sessionkey
     ])
     
