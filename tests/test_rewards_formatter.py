@@ -83,5 +83,48 @@ class TestRewardFormatter(unittest.TestCase):
         self.assertIsNotNone(format_battle_rewards("Test", {'result': [100]}))
         self.assertIsNotNone(format_battle_rewards("Test", {'result': [100, 200, None]}))
 
+    def test_total_stats_tracking_with_snapshot(self):
+        """Test Total XP, Total Gold, and Total Token tracking when snapshot is provided."""
+        from app.services.bot_manager import update_char_snapshot
+        char_id = 99999
+        update_char_snapshot(char_id, initial_stats={"level": 76, "xp": 29000000, "gold": 15000000, "tokens": 200})
+        
+        payload1 = {'status': 1, 'result': [3200, 5000, [], 10]}
+        res1 = format_battle_rewards("Auto Leveling", payload1, current_level=76, char_id=char_id)
+        self.assertIn("Auto Leveling SUCCESS!", res1)
+        self.assertIn("XP: +3200", res1)
+        self.assertIn("Gold: +5000", res1)
+        self.assertIn("Token: +10", res1)
+        self.assertIn("Total XP: 29003200", res1)
+        self.assertIn("Total Gold: 15005000", res1)
+        self.assertIn("Total Token: 210", res1)
+
+        # Step 2: Second mission adds up
+        payload2 = {'status': 1, 'result': [3200, 5000, [], 0]}
+        res2 = format_battle_rewards("Auto Leveling", payload2, current_level=76, char_id=char_id)
+        self.assertIn("Total XP: 29006400", res2)
+        self.assertIn("Total Gold: 15010000", res2)
+        self.assertIn("Total Token: 210", res2)
+
+    def test_explicit_total_xp_in_payload(self):
+        """Test when server sends total cumulative xp at payload root (e.g. finish_res['xp'] = 29729477)."""
+        payload = {
+            'status': 1,
+            'xp': 29729477,
+            'character_gold': 15420000,
+            'account_tokens': 350,
+            'result': [3200, 3200, ['material_123'], 0]
+        }
+        res = format_battle_rewards("Mission msn_60", payload, current_level=76, char_id=12345)
+        self.assertIn("Mission msn_60 SUCCESS!", res)
+        self.assertIn("Level: 76", res)
+        self.assertIn("XP: +3200", res)
+        self.assertIn("Gold: +3200", res)
+        self.assertIn("Token: 0", res)
+        self.assertIn("Materials: material_123", res)
+        self.assertIn("Total XP: 29729477", res)
+        self.assertIn("Total Gold: 15420000", res)
+        self.assertIn("Total Token: 350", res)
+
 if __name__ == '__main__':
     unittest.main()

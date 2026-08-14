@@ -19,7 +19,8 @@ from app.services.bot_manager import (
     auto_eudemon,
     run_circus_event,
     run_yokai_event,
-    exploit_gacha_race
+    exploit_gacha_race,
+    update_char_snapshot
 )
 
 # -----------------
@@ -84,6 +85,15 @@ def read_root():
 async def api_login(req: LoginRequest):
     client = NinjaSageClient()
     result = await client.login(req.username, req.password)
+    if isinstance(result, dict) and result.get("status") == "success":
+        char_id = result.get("char_id")
+        if char_id:
+            update_char_snapshot(char_id, initial_stats={
+                "level": result.get("level"),
+                "xp": result.get("xp"),
+                "gold": result.get("gold"),
+                "tokens": result.get("tokens")
+            })
     return result
 
 # -----------------
@@ -244,6 +254,8 @@ async def api_get_stats(req: BasicBotRequest):
             tokens = "--"
             if acc_data.get("status") == 1:
                 tokens = acc_data.get("account", {}).get("tokens", "--")
+                
+            update_char_snapshot(req.char_id, char_data_res, acc_data)
                 
             return {
                 "status": "success",

@@ -137,6 +137,71 @@ def _parse_materials(raw_mat) -> list:
 _char_level_cache = {}
 _event_char_data_cache = {}
 _char_info_cache = {}
+_char_stats_cache = {}
+
+def update_char_snapshot(char_id: int, char_data_res: dict = None, acc_data_res: dict = None, initial_stats: dict = None):
+    """Updates internal cached stats (level, total xp, total gold, total tokens) for a character."""
+    global _char_stats_cache, _char_level_cache
+    if not char_id:
+        return
+    if char_id not in _char_stats_cache:
+        _char_stats_cache[char_id] = {"level": 1, "xp": 0, "gold": 0, "tokens": 0}
+        
+    if initial_stats and isinstance(initial_stats, dict):
+        for k in ("level", "xp", "gold", "tokens"):
+            if k in initial_stats and initial_stats[k] not in (None, '--', '?'):
+                try:
+                    _char_stats_cache[char_id][k] = int(initial_stats[k])
+                except Exception:
+                    pass
+        if "level" in _char_stats_cache[char_id]:
+            _char_level_cache[char_id] = _char_stats_cache[char_id]["level"]
+            
+    if isinstance(char_data_res, dict):
+        char_obj = char_data_res.get('character_data') or char_data_res.get('data') or char_data_res
+        if isinstance(char_obj, list) and len(char_obj) > 0 and isinstance(char_obj[0], dict):
+            char_obj = char_obj[0]
+        if isinstance(char_obj, dict):
+            try:
+                lvl_val = char_obj.get("character_level") or char_obj.get("level")
+                if lvl_val not in (None, '--', '?'):
+                    lvl = int(lvl_val)
+                    _char_stats_cache[char_id]["level"] = lvl
+                    _char_level_cache[char_id] = lvl
+            except Exception:
+                pass
+                
+            try:
+                xp_val = char_obj.get("character_xp") or char_obj.get("xp")
+                if xp_val not in (None, '--', '?'):
+                    _char_stats_cache[char_id]["xp"] = int(xp_val)
+            except Exception:
+                pass
+                
+            try:
+                gold_val = char_obj.get("character_gold") or char_obj.get("gold")
+                if gold_val not in (None, '--', '?'):
+                    _char_stats_cache[char_id]["gold"] = int(gold_val)
+            except Exception:
+                pass
+                
+            try:
+                tok_val = char_obj.get("character_tokens") or char_obj.get("tokens") or char_obj.get("token")
+                if tok_val not in (None, '--', '?'):
+                    _char_stats_cache[char_id]["tokens"] = int(tok_val)
+            except Exception:
+                pass
+                
+    if isinstance(acc_data_res, dict):
+        acc = acc_data_res.get("account", {})
+        tok_val = acc.get("tokens") if isinstance(acc, dict) else None
+        if tok_val is None:
+            tok_val = acc_data_res.get("tokens")
+        if tok_val not in (None, '--', '?'):
+            try:
+                _char_stats_cache[char_id]["tokens"] = int(tok_val)
+            except Exception:
+                pass
 
 async def get_or_fetch_char_level(client: NinjaSageClient, sessionkey: str, char_id: int) -> int:
     global _char_level_cache
@@ -144,6 +209,7 @@ async def get_or_fetch_char_level(client: NinjaSageClient, sessionkey: str, char
         return _char_level_cache[char_id]
     try:
         char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
+        update_char_snapshot(char_id, char_data_res)
         char_obj = char_data_res.get('character_data') or char_data_res.get('data') or char_data_res
         if isinstance(char_obj, list) and len(char_obj) > 0 and isinstance(char_obj[0], dict):
             char_obj = char_obj[0]
@@ -170,7 +236,7 @@ async def get_or_fetch_event_char_data(client: NinjaSageClient, sessionkey: str,
 
 def format_battle_rewards(feature_name: str, finish_res, current_level=None, char_id=None) -> str:
     try:
-        global _char_level_cache
+        global _char_level_cache, _char_stats_cache
         if current_level is None and char_id is not None:
             current_level = _char_level_cache.get(char_id)
             
@@ -179,51 +245,145 @@ def format_battle_rewards(feature_name: str, finish_res, current_level=None, cha
         token = 0
         materials = []
         
+        explicit_total_xp = None
+        explicit_total_gold = None
+        explicit_total_token = None
+        
         if isinstance(finish_res, dict):
+            # Check if total stats are explicitly provided at the root of finish_res
+            if 'xp' in finish_res and isinstance(finish_res['xp'], (int, float)):
+                explicit_total_xp = int(finish_res['xp'])
+            elif 'character_xp' in finish_res and isinstance(finish_res['character_xp'], (int, float)):
+                explicit_total_xp = int(finish_res['character_xp'])
+                
+            if 'character_gold' in finish_res and isinstance(finish_res['character_gold'], (int, float)):
+                explicit_total_gold = int(finish_res['character_gold'])
+                
+            if 'account_tokens' in finish_res and isinstance(finish_res['account_tokens'], (int, float)):
+                explicit_total_token = int(finish_res['account_tokens'])
+            elif 'tokens' in finish_res and isinstance(finish_res['tokens'], (int, float)):
+                explicit_total_token = int(finish_res['tokens'])
+            elif 'character_tokens' in finish_res and isinstance(finish_res['character_tokens'], (int, float)):
+                explicit_total_token = int(finish_res['character_tokens'])
+            
             if 'result' in finish_res and isinstance(finish_res['result'], list):
                 rewards = finish_res['result']
                 if len(rewards) > 0 and isinstance(rewards[0], (int, float, str)):
-                    xp = rewards[0]
+                    try: xp = int(rewards[0])
+                    except: xp = rewards[0]
                 if len(rewards) > 1 and isinstance(rewards[1], (int, float, str)):
-                    gold = rewards[1]
+                    try: gold = int(rewards[1])
+                    except: gold = rewards[1]
                 if len(rewards) > 2:
                     materials.extend(_parse_materials(rewards[2]))
                 if len(rewards) > 3 and isinstance(rewards[3], (int, float)):
-                    token = rewards[3]
+                    try: token = int(rewards[3])
+                    except: token = rewards[3]
             elif 'result' in finish_res and isinstance(finish_res['result'], dict):
                 res_dict = finish_res['result']
-                xp = res_dict.get('xp', res_dict.get('character_xp', 0))
-                gold = res_dict.get('gold', res_dict.get('character_gold', 0))
-                token = res_dict.get('token', res_dict.get('character_token', 0))
+                raw_xp = res_dict.get('xp', res_dict.get('character_xp', 0))
+                try: xp = int(raw_xp)
+                except: xp = raw_xp
+                
+                raw_gold = res_dict.get('gold', res_dict.get('character_gold', 0))
+                try: gold = int(raw_gold)
+                except: gold = raw_gold
+                
+                raw_token = res_dict.get('token', res_dict.get('character_token', 0))
+                try: token = int(raw_token)
+                except: token = raw_token
+                
                 new_level = res_dict.get('level', res_dict.get('character_level'))
                 if new_level:
                     current_level = new_level
-                    if char_id: _char_level_cache[char_id] = new_level
+                    if char_id:
+                        _char_level_cache[char_id] = new_level
                 mat_raw = res_dict.get('material') or res_dict.get('materials') or res_dict.get('items')
                 materials.extend(_parse_materials(mat_raw))
             else:
                 rewards = finish_res.get('rewards') or finish_res.get('reward') or finish_res
                 if isinstance(rewards, dict):
-                    xp = rewards.get('xp', rewards.get('character_xp', 0))
-                    gold = rewards.get('gold', rewards.get('character_gold', 0))
-                    token = rewards.get('token', rewards.get('character_token', 0))
+                    raw_xp = rewards.get('xp', rewards.get('character_xp', 0))
+                    try: xp = int(raw_xp)
+                    except: xp = raw_xp
+                    
+                    raw_gold = rewards.get('gold', rewards.get('character_gold', 0))
+                    try: gold = int(raw_gold)
+                    except: gold = raw_gold
+                    
+                    raw_token = rewards.get('token', rewards.get('character_token', 0))
+                    try: token = int(raw_token)
+                    except: token = raw_token
+                    
                     new_level = rewards.get('level', rewards.get('character_level'))
                     if new_level:
                         current_level = new_level
-                        if char_id: _char_level_cache[char_id] = new_level
+                        if char_id:
+                            _char_level_cache[char_id] = new_level
                     
                     mat_raw = rewards.get('material') or rewards.get('materials') or rewards.get('items')
                     materials.extend(_parse_materials(mat_raw))
         elif isinstance(finish_res, list):
             if len(finish_res) > 0 and isinstance(finish_res[0], (int, float, str)):
-                xp = finish_res[0]
+                try: xp = int(finish_res[0])
+                except: xp = finish_res[0]
             if len(finish_res) > 1 and isinstance(finish_res[1], (int, float, str)):
-                gold = finish_res[1]
+                try: gold = int(finish_res[1])
+                except: gold = finish_res[1]
             if len(finish_res) > 2:
                 materials.extend(_parse_materials(finish_res[2]))
             if len(finish_res) > 3 and isinstance(finish_res[3], (int, float)):
-                token = finish_res[3]
+                try: token = int(finish_res[3])
+                except: token = finish_res[3]
+
+        # Calculate Total Stats
+        char_stats = _char_stats_cache.get(char_id, {}) if char_id else {}
+        
+        # 1. Total XP
+        if explicit_total_xp is not None:
+            total_xp = explicit_total_xp
+        elif "xp" in char_stats and isinstance(char_stats["xp"], (int, float)) and isinstance(xp, (int, float)):
+            total_xp = char_stats["xp"] + xp
+        else:
+            total_xp = xp if isinstance(xp, (int, float)) else 0
+            
+        if char_id:
+            if char_id not in _char_stats_cache:
+                _char_stats_cache[char_id] = {}
+            if isinstance(total_xp, (int, float)):
+                _char_stats_cache[char_id]["xp"] = total_xp
                 
+        # 2. Total Gold
+        if explicit_total_gold is not None:
+            total_gold = explicit_total_gold
+        elif "gold" in char_stats and isinstance(char_stats["gold"], (int, float)) and isinstance(gold, (int, float)):
+            total_gold = char_stats["gold"] + gold
+        else:
+            total_gold = gold if isinstance(gold, (int, float)) else 0
+            
+        if char_id:
+            if isinstance(total_gold, (int, float)):
+                _char_stats_cache[char_id]["gold"] = total_gold
+                
+        # 3. Total Token
+        if explicit_total_token is not None:
+            total_token = explicit_total_token
+        elif "tokens" in char_stats and isinstance(char_stats["tokens"], (int, float)) and isinstance(token, (int, float)):
+            total_token = char_stats["tokens"] + token
+        else:
+            total_token = token if isinstance(token, (int, float)) else 0
+            
+        if char_id:
+            if isinstance(total_token, (int, float)):
+                _char_stats_cache[char_id]["tokens"] = total_token
+                
+        # 4. Total Level
+        if current_level is not None and char_id:
+            try:
+                _char_stats_cache[char_id]["level"] = int(current_level)
+            except Exception:
+                pass
+
         # Build comprehensive informative log string
         parts = [f"{feature_name} SUCCESS!"]
         
@@ -233,13 +393,13 @@ def format_battle_rewards(feature_name: str, finish_res, current_level=None, cha
         else:
             parts.append("Level: -")
             
-        # 2. XP
+        # 2. XP Reward
         parts.append(f"XP: +{xp}" if xp else "XP: 0")
         
-        # 3. Gold
+        # 3. Gold Reward
         parts.append(f"Gold: +{gold}" if gold else "Gold: 0")
         
-        # 4. Token
+        # 4. Token Reward
         parts.append(f"Token: +{token}" if token else "Token: 0")
         
         # 5. Materials
@@ -247,6 +407,15 @@ def format_battle_rewards(feature_name: str, finish_res, current_level=None, cha
             parts.append(f"Materials: {', '.join(materials)}")
         else:
             parts.append("Materials: -")
+            
+        # 6. Total XP
+        parts.append(f"Total XP: {total_xp}")
+        
+        # 7. Total Gold
+        parts.append(f"Total Gold: {total_gold}")
+        
+        # 8. Total Token
+        parts.append(f"Total Token: {total_token}")
             
         return " | ".join(parts)
     except Exception as e:
@@ -286,7 +455,7 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
         battle_id = str(start_res) if not isinstance(start_res, dict) else str(start_res.get('battle_code', start_res.get('id', start_res)))
         await asyncio.sleep(1)
         finish_res = await client.send_amf_request("BattleSystem.finishSageScrollMiniGame", [char_id, sessionkey, battle_id])
-        return f"Sage Scroll Mission {mission_id} Complete! Reward: {finish_res}"
+        return format_battle_rewards(f"Sage Scroll Mission {mission_id}", finish_res, char_id=char_id)
         
     global _char_info_cache
     
@@ -295,6 +464,7 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
         char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
         if isinstance(char_data_res, dict) and char_data_res.get('status') == 0:
             return f"Failed to get character data: {char_data_res.get('error', 'Unknown error')}"
+        update_char_snapshot(char_id, char_data_res)
         char_obj = char_data_res.get('character_data') or char_data_res.get('data') or char_data_res
         if isinstance(char_obj, list):
             for item in char_obj:
@@ -386,6 +556,7 @@ async def auto_daily_event(client: NinjaSageClient, sessionkey: str, char_id: in
     # 1. Fetch Char Data
     char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
     if isinstance(char_data_res, dict) and char_data_res.get('status') == 1:
+        update_char_snapshot(char_id, char_data_res)
         char_obj = char_data_res.get('character_data') or char_data_res.get('data') or char_data_res
         if isinstance(char_obj, list):
             for item in char_obj:
@@ -678,7 +849,7 @@ async def auto_mission_s(client: NinjaSageClient, sessionkey: str, char_id: int)
     char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
     if char_data_res.get('status') == 0:
         return f"Failed to get character data for Mission S: {char_data_res.get('error', 'Unknown error')}"
-        
+    update_char_snapshot(char_id, char_data_res)
     char_obj = char_data_res.get('character_data') or char_data_res.get('data') or char_data_res
     if isinstance(char_obj, list):
         for item in char_obj:
@@ -848,6 +1019,7 @@ async def auto_exam(client: NinjaSageClient, sessionkey: str, char_id: int):
     
     if char_data_res.get('status') == 0:
         return f"Failed to get character data for exam: {char_data_res.get('error', 'Unknown error')}"
+    update_char_snapshot(char_id, char_data_res)
     
     char_obj = char_data_res.get('character_data', char_data_res)
     if isinstance(char_obj, list):
@@ -958,6 +1130,7 @@ async def auto_eudemon(client: NinjaSageClient, sessionkey: str, char_id: int):
         char_data_res = await client.send_amf_request("SystemLogin.getCharacterData", [char_id, sessionkey])
         if isinstance(char_data_res, dict) and char_data_res.get('status') == 0:
             return f"Failed to get character data for Eudemon: {char_data_res.get('error', 'Unknown error')}"
+        update_char_snapshot(char_id, char_data_res)
             
         char_obj = char_data_res.get('character_data') or char_data_res.get('data') or char_data_res
         if isinstance(char_obj, list) and len(char_obj) > 0 and isinstance(char_obj[0], dict):

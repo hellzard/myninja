@@ -63,10 +63,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function tryUpdateStatsFromMsg(msg) {
         if (!msg || !sessionState) return;
+        let updated = false;
+
         const lvlMatch = msg.match(/Level:\s*(\d+)/i);
         if (lvlMatch && lvlMatch[1]) {
             sessionState.level = parseInt(lvlMatch[1]);
-            document.getElementById('metric-level').textContent = lvlMatch[1];
+            const el = document.getElementById('metric-level');
+            if (el) el.textContent = lvlMatch[1];
+            updated = true;
+        }
+
+        const xpMatch = msg.match(/Total XP:\s*([\d,]+|\d+)/i);
+        if (xpMatch && xpMatch[1]) {
+            sessionState.xp = xpMatch[1];
+            const el = document.getElementById('metric-xp');
+            if (el) el.textContent = xpMatch[1];
+            updated = true;
+        }
+
+        const goldMatch = msg.match(/Total Gold:\s*([\d,]+|\d+)/i);
+        if (goldMatch && goldMatch[1]) {
+            sessionState.gold = goldMatch[1];
+            const el = document.getElementById('metric-gold');
+            if (el) el.textContent = goldMatch[1];
+            updated = true;
+        }
+
+        const tokenMatch = msg.match(/Total Token:\s*([\d,]+|\d+)/i);
+        if (tokenMatch && tokenMatch[1]) {
+            sessionState.tokens = tokenMatch[1];
+            const el = document.getElementById('metric-token');
+            if (el) el.textContent = tokenMatch[1];
+            updated = true;
+        }
+
+        if (updated) {
             localStorage.setItem('ns_session', JSON.stringify(sessionState));
         }
     }
