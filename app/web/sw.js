@@ -1,9 +1,10 @@
-const CACHE_NAME = 'ns-shadow-cache-v12';
+const CACHE_NAME = 'ns-shadow-cache-v13-cloud';
 
 const STATIC_ASSETS = [
   '/panel/',
   '/panel/index.html',
   '/panel/style.css?v=3',
+  '/panel/cloud.js?v=1',
   '/panel/app.js?v=14',
   '/panel/manifest.json',
   '/panel/offline.html',
@@ -44,12 +45,10 @@ self.addEventListener('fetch', event => {
   const req = event.request;
   const url = new URL(req.url);
 
-  // Never cache POST or backend API endpoints
   if (req.method !== 'GET' || url.pathname.startsWith('/api/')) {
     return;
   }
 
-  // Handle navigation requests (HTML pages)
   if (req.mode === 'navigate') {
     event.respondWith(
       fetch(req).catch(() => {
@@ -61,7 +60,6 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Cache-First for static assets (images, styles, scripts, fonts)
   if (url.pathname.match(/\.(png|jpg|jpeg|svg|css|js|woff2|woff|ttf|ico)$/)) {
     event.respondWith(
       caches.match(req).then(cached => {
@@ -78,7 +76,6 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Network with cache fallback for everything else
   event.respondWith(
     fetch(req).then(res => {
       if (res && res.status === 200) {
