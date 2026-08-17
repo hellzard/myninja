@@ -3,6 +3,7 @@ import json
 import base64
 import hashlib
 from app.services.ninjasage_client import NinjaSageClient
+from app.services.settings_manager import load_settings
 
 async def auto_daily_gacha(client: NinjaSageClient, sessionkey: str, char_id: int):
     # 1. Check tokens/coins
@@ -529,7 +530,8 @@ async def run_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mi
     if not battle_id or battle_id == 'None' or battle_id == '':
         return f"Failed: No battle_id for {actual_mission_id}: {start_res}"
     
-    await asyncio.sleep(1)
+    battle_wait = max(3, int(load_settings().get('sage_battle_wait_seconds', 5) or 5))
+    await asyncio.sleep(battle_wait)
     
     # === PHASE 3: finishMission (matches nsepanel leveling_dis.txt:3795-3826) ===
     # nsepanel hash: f"{mission_id}{char_id}{battle_id}0"
@@ -686,49 +688,58 @@ async def run_hunting(client: NinjaSageClient, sessionkey: str, char_id: int, zo
         return f"Failed to start hunting: {error_msg}"
 
 async def auto_shadow_war(client: NinjaSageClient, sessionkey: str, char_id: int):
-    # 1. Check Event Status and Energy
+    """Run one Shadow War battle with conservative timing and explicit resource policy."""
+    cfg = load_settings()
+
     status_res = await client.send_amf_request("ShadowWar.executeService", ["getStatus", [char_id, sessionkey]])
     if not isinstance(status_res, dict) or status_res.get('status') != 1:
         return f"Shadow War unavailable: {status_res}"
-        
-    energy = int(status_res.get('energy', 0))
+
+    try:
+        energy = int(status_res.get('energy', 0))
+    except (TypeError, ValueError):
+        energy = 0
+
     if energy < 10:
-        # Try to refill energy
-        refill_res = await client.send_amf_request("ShadowWar.executeService", ["refillEnergy", [char_id, sessionkey]])
-        if isinstance(refill_res, dict) and str(refill_res.get('status')) == "1":
-            energy = 100 # Refilled
+        mode = str(cfg.get('sage_shadow_war_empty_resource_mode', 'wait')).strip().lower()
+        if mode not in {'wait', 'buy', 'stop'}:
+            mode = 'wait'
+
+        if mode == 'stop':
+            return f"Shadow War stopped: energy is {energy}."
+
+        if mode == 'buy':
+            refill_res = await client.send_amf_request("ShadowWar.executeService", ["refillEnergy", [char_id, sessionkey]])
+            if not (isinstance(refill_res, dict) and str(refill_res.get('status')) == '1'):
+                wait_minutes = max(1, int(cfg.get('sage_shadow_war_wait_minutes', 30) or 30))
+                return f"WAIT_RESOURCE:{wait_minutes * 60}|Shadow War refill failed; waiting {wait_minutes} minute(s): {refill_res}"
         else:
-            raise Exception(f"Shadow War energy empty ({energy}) and refill failed: {refill_res}")
-            
-    # 2. Get Enemies
+            wait_minutes = max(1, int(cfg.get('sage_shadow_war_wait_minutes', 30) or 30))
+            return f"WAIT_RESOURCE:{wait_minutes * 60}|Shadow War energy is {energy}; waiting {wait_minutes} minute(s) without spending tokens."
+
     enemies_res = await client.send_amf_request("ShadowWar.executeService", ["getEnemies", [char_id, sessionkey]])
-    if not isinstance(enemies_res, dict) or "enemies" not in enemies_res or not enemies_res["enemies"]:
+    if not isinstance(enemies_res, dict) or not enemies_res.get('enemies'):
         return "No Shadow War enemies available right now."
-        
-    enemy = enemies_res["enemies"][0]
-    enemy_id = enemy.get("id")
-    enemy_name = enemy.get("name", str(enemy_id))
-    
-    # 3. Start Battle
+
+    enemy = enemies_res['enemies'][0]
+    enemy_id = enemy.get('id')
+    enemy_name = enemy.get('name', str(enemy_id))
     start_res = await client.send_amf_request("ShadowWar.executeService", ["startBattle", [char_id, sessionkey, enemy_id]])
-    if not isinstance(start_res, dict) or start_res.get("status") != 1:
-        raise Exception(f"Failed to start Shadow War against {enemy_name}: {start_res}")
-        
-    battle_id = start_res.get("id")
-    await asyncio.sleep(2)
-    
-    # 4. Finish Battle
-    hash_input = f"{char_id}{battle_id}0{BATTLE_HASH}"
-    mission_hash = hashlib.sha256(hash_input.encode()).hexdigest()
-    
+    if not isinstance(start_res, dict) or start_res.get('status') != 1:
+        return f"Failed to start Shadow War against {enemy_name}: {start_res}"
+
+    battle_id = start_res.get('id')
+    wait_seconds = max(10, int(cfg.get('shadow_war_battle_wait_seconds', 20) or 20))
+    await asyncio.sleep(wait_seconds)
+
+    mission_hash = hashlib.sha256(f"{char_id}{battle_id}0{BATTLE_HASH}".encode()).hexdigest()
     finish_params = [char_id, sessionkey, battle_id, 0, BATTLE_HASH, mission_hash]
     finish_res = await client.send_amf_request("ShadowWar.executeService", ["finishBattle", finish_params])
-    
-    if finish_res.get("status") == 1:
+
+    if isinstance(finish_res, dict) and finish_res.get('status') == 1:
         level = await get_or_fetch_char_level(client, sessionkey, char_id)
         return format_battle_rewards(f"Shadow War vs {enemy_name}", finish_res, current_level=level, char_id=char_id)
-    else:
-        return f"Shadow War Battle Failed: {finish_res}"
+    return f"Shadow War Battle Failed: {finish_res}"
 
 async def auto_monster_hunt(client: NinjaSageClient, sessionkey: str, char_id: int):
     import hashlib

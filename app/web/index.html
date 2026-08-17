@@ -21,13 +21,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="/panel/style.css?v=3" />
+  <link rel="stylesheet" href="/panel/style.css?v=4" />
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <!-- Vanilla Tilt (Loaded with defer for performance) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js" defer></script>
+  <script>
+    // Load tilt only on mouse/trackpad devices; mobile keeps the same design without the JS cost.
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && window.innerWidth > 768) {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js';
+      s.defer = true;
+      document.head.appendChild(s);
+    }
+  </script>
 </head>
 <body>
   
@@ -456,7 +464,7 @@
   </div>
 
   <!-- Main JavaScript with Cache-Busting Version -->
-  <script src="/panel/cloud.js?v=1"></script>
+  <script src="/panel/cloud.js?v=2"></script>
   <script src="/panel/app.js?v=14" defer></script>
 </body>
 </html>

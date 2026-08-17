@@ -697,3 +697,38 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Utility */
 .hidden { display: none !important; }
+
+
+/* === Stability Upgrade v2: mobile performance === */
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+  #canvas-bg { display: none !important; }
+  .glass-panel {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: rgba(14, 16, 24, 0.96) !important;
+    box-shadow: 0 6px 20px rgba(0,0,0,.34) !important;
+    transform: none !important;
+  }
+  .avatar-ring::after { animation: none !important; }
+  .module-icon, .btn, .btn-toggle, .glass-panel {
+    transition-duration: .12s !important;
+  }
+  .module-card:hover .module-icon, .glass-panel.tilt:hover {
+    transform: none !important;
+  }
+  .ambient-glow {
+    background:
+      radial-gradient(circle at 15% 15%, rgba(234,88,12,.10) 0%, transparent 38%),
+      radial-gradient(circle at 85% 80%, rgba(251,191,36,.06) 0%, transparent 42%),
+      var(--bg-base) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

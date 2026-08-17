@@ -1,10 +1,9 @@
-const CACHE_NAME = 'ns-shadow-cache-v13-cloud';
-
+const CACHE_NAME = 'ns-shadow-cache-v14-stability';
 const STATIC_ASSETS = [
   '/panel/',
   '/panel/index.html',
-  '/panel/style.css?v=3',
-  '/panel/cloud.js?v=1',
+  '/panel/style.css?v=4',
+  '/panel/cloud.js?v=2',
   '/panel/app.js?v=14',
   '/panel/manifest.json',
   '/panel/offline.html',
@@ -16,73 +15,63 @@ const STATIC_ASSETS = [
 ];
 
 self.addEventListener('install', event => {
-  self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(STATIC_ASSETS).catch(err => {
-        console.warn('[SW] Cache addAll partial warning:', err);
-      });
-    })
-  );
+  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS).catch(() => undefined)));
 });
 
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(
-        keys.map(key => {
-          if (key !== CACHE_NAME) {
-            console.log('[SW] Clearing deprecated cache:', key);
-            return caches.delete(key);
-          }
-        })
-      );
-    }).then(() => self.clients.claim())
+    caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))))
+      .then(() => self.clients.claim())
   );
 });
 
+self.addEventListener('message', event => {
+  if (event.data?.type === 'SKIP_WAITING') self.skipWaiting();
+});
+
+async function networkFirst(request, fallback) {
+  try {
+    const response = await fetch(request, { cache: 'no-store' });
+    if (response?.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch (_) {
+    return (await caches.match(request)) || (fallback ? await caches.match(fallback) : undefined);
+  }
+}
+
+async function cacheFirst(request) {
+  const cached = await caches.match(request);
+  if (cached) return cached;
+  const response = await fetch(request);
+  if (response?.ok) {
+    const cache = await caches.open(CACHE_NAME);
+    cache.put(request, response.clone());
+  }
+  return response;
+}
+
 self.addEventListener('fetch', event => {
-  const req = event.request;
-  const url = new URL(req.url);
+  const request = event.request;
+  const url = new URL(request.url);
+  if (request.method !== 'GET' || url.pathname.startsWith('/api/')) return;
 
-  if (req.method !== 'GET' || url.pathname.startsWith('/api/')) {
+  if (request.mode === 'navigate') {
+    event.respondWith(networkFirst(request, '/panel/offline.html'));
     return;
   }
 
-  if (req.mode === 'navigate') {
-    event.respondWith(
-      fetch(req).catch(() => {
-        return caches.match('/panel/index.html').then(cached => {
-          return cached || caches.match('/panel/offline.html');
-        });
-      })
-    );
+  if (/\.(?:js|css)$/.test(url.pathname)) {
+    event.respondWith(networkFirst(request));
     return;
   }
 
-  if (url.pathname.match(/\.(png|jpg|jpeg|svg|css|js|woff2|woff|ttf|ico)$/)) {
-    event.respondWith(
-      caches.match(req).then(cached => {
-        if (cached) return cached;
-        return fetch(req).then(networkRes => {
-          if (networkRes && networkRes.status === 200) {
-            const clone = networkRes.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
-          }
-          return networkRes;
-        }).catch(() => caches.match('/panel/offline.html'));
-      })
-    );
+  if (/\.(?:png|jpg|jpeg|svg|webp|ico|woff2|woff|ttf)$/.test(url.pathname)) {
+    event.respondWith(cacheFirst(request));
     return;
   }
 
-  event.respondWith(
-    fetch(req).then(res => {
-      if (res && res.status === 200) {
-        const clone = res.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
-      }
-      return res;
-    }).catch(() => caches.match(req))
-  );
+  event.respondWith(networkFirst(request));
 });
