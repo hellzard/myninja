@@ -3,3 +3,5 @@ __pycache__/
 *.pyc
 .env
 .DS_Store
+.upgrade_backup_v*/
+sage_settings_history.json

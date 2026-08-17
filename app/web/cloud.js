@@ -5,8 +5,9 @@
   window.NinjaCloud = window.NinjaCloud || {};
 
   const CLOUD_ENDPOINT = '/api/bot/cloud';
-  const VISIBLE_POLL_MS = 3000;
+  const VISIBLE_POLL_MS = 5000;
   const HIDDEN_POLL_MS = 15000;
+  const REALTIME_SAFETY_POLL_MS = 60000;
   const MIN_IDLE_STATS_MS = 30000;
 
   const botDefinitions = {
@@ -151,7 +152,10 @@
       session[key] = value;
       changed = true;
     }
-    if (changed) saveSession(session);
+    if (changed) {
+      saveSession(session);
+      window.dispatchEvent(new CustomEvent('ns:account-stats', { detail: { ...stats, char_id: session.char_id } }));
+    }
   }
 
   function updateStatsFromMessage(message) {
@@ -246,6 +250,7 @@
       });
       const job = response.job;
       saveControl(session.char_id, { char_id: session.char_id, token: job.control_token, bot_type: job.bot_type });
+      window.dispatchEvent(new CustomEvent('ns:cloud-control', { detail: { char_id: session.char_id } }));
       lastLogSeq = 0;
       renderStatus(job);
       appendLog(`${def.label} handed off to the server. You may close this tab.`);
@@ -268,6 +273,7 @@
       appendLog(`Failed to stop cloud bot: ${error.message}`, 'error');
     } finally {
       saveControl(session.char_id, null);
+      window.NinjaRealtime?.disconnect?.();
       activeBotType = null;
     }
   }
@@ -319,7 +325,10 @@
 
   function restartPolling() {
     if (pollTimer) clearInterval(pollTimer);
-    pollTimer = setInterval(refreshCloudStatus, document.hidden ? HIDDEN_POLL_MS : VISIBLE_POLL_MS);
+    const interval = window.NinjaRealtime?.connected?.()
+      ? REALTIME_SAFETY_POLL_MS
+      : (document.hidden ? HIDDEN_POLL_MS : VISIBLE_POLL_MS);
+    pollTimer = setInterval(refreshCloudStatus, interval);
   }
 
   function startStatsTimer() {
@@ -413,6 +422,11 @@
     list.appendChild(createAdvancedSettingRow('Rate-limit backoff (s)', 'setting-rate-backoff', 30, 15, 300, 'Akan meningkat otomatis bila 429/rate limit berulang.'));
     list.appendChild(createAdvancedSettingRow('Circuit cooldown (s)', 'setting-circuit-cooldown', 120, 30, 900, 'Pause, bukan mematikan bot, saat banyak error.'));
     list.appendChild(createAdvancedSettingRow('Auto stats refresh (s)', 'setting-stats-refresh', 45, 30, 300, 'Hanya saat bot idle agar tidak menambah trafik battle.'));
+    list.appendChild(createCheckboxSettingRow('Adaptive pacing', 'setting-adaptive-pacing', true, 'Floor tetap 5 detik; sistem hanya memperlambat saat latency/error meningkat.'));
+    list.appendChild(createAdvancedSettingRow('Latency soft threshold (ms)', 'setting-latency-soft', 2500, 500, 10000, 'Mulai menambah delay secara konservatif.'));
+    list.appendChild(createAdvancedSettingRow('Latency hard threshold (ms)', 'setting-latency-hard', 5000, 1000, 20000, 'Penalty lebih besar bila p95 melewati threshold ini.'));
+    list.appendChild(createAdvancedSettingRow('Adaptive max penalty (s)', 'setting-adaptive-max', 30, 0, 120, 'Tambahan maksimum di atas base delay.'));
+
     list.appendChild(createSelectSettingRow('Shadow empty energy', 'setting-shadow-energy-mode', [['wait','Wait'],['stop','Stop'],['buy','Buy refill']], 'Default Wait. Buy dapat memakai token game.'));
     list.appendChild(createAdvancedSettingRow('Shadow battle wait (s)', 'setting-shadow-battle-wait', 20, 10, 60, 'Default konservatif 20 detik.'));
     list.appendChild(createAdvancedSettingRow('Shadow between battles (s)', 'setting-shadow-between', 30, 10, 180, 'Default konservatif 30 detik.'));
@@ -434,6 +448,10 @@
       set('setting-rate-backoff', s.rate_limit_backoff_seconds ?? 30);
       set('setting-circuit-cooldown', s.circuit_cooldown_seconds ?? 120);
       set('setting-stats-refresh', s.stats_refresh_seconds ?? 45);
+      const adaptive = document.getElementById('setting-adaptive-pacing'); if (adaptive) adaptive.checked = s.adaptive_pacing_enabled !== false;
+      set('setting-latency-soft', s.adaptive_latency_soft_ms ?? 2500);
+      set('setting-latency-hard', s.adaptive_latency_hard_ms ?? 5000);
+      set('setting-adaptive-max', s.adaptive_max_penalty_seconds ?? 30);
       set('setting-shadow-battle-wait', s.shadow_war_battle_wait_seconds ?? 20);
       set('setting-shadow-between', s.shadow_war_between_battles_seconds ?? 30);
       set('setting-clan-delay', s.clan_war_battle_delay_seconds ?? 8);
@@ -457,6 +475,10 @@
       rate_limit_backoff_seconds: Math.max(15, num('setting-rate-backoff', 30)),
       circuit_cooldown_seconds: Math.max(30, num('setting-circuit-cooldown', 120)),
       stats_refresh_seconds: Math.max(30, num('setting-stats-refresh', 45)),
+      adaptive_pacing_enabled: document.getElementById('setting-adaptive-pacing')?.checked !== false,
+      adaptive_latency_soft_ms: Math.max(500, num('setting-latency-soft', 2500)),
+      adaptive_latency_hard_ms: Math.max(1000, num('setting-latency-hard', 5000)),
+      adaptive_max_penalty_seconds: Math.max(0, num('setting-adaptive-max', 30)),
       sage_shadow_war_empty_resource_mode: document.getElementById('setting-shadow-energy-mode')?.value || 'wait',
       shadow_war_battle_wait_seconds: Math.max(10, num('setting-shadow-battle-wait', 20)),
       shadow_war_between_battles_seconds: Math.max(10, num('setting-shadow-between', 30)),
@@ -575,6 +597,14 @@
   }, true);
 
 
+  window.addEventListener('ns:realtime-status', event => {
+    renderStatus(event.detail || {});
+    restartPolling();
+  });
+  window.addEventListener('ns:sync-cloud-status', event => renderStatus(event.detail || {}));
+  window.addEventListener('ns:realtime-state', () => restartPolling());
+
+  window.NinjaCloud.consumeStatus = renderStatus;
   window.NinjaCloud.refreshStatus = refreshCloudStatus;
   window.NinjaCloud.stop = stopCurrentCloudBot;
   window.NinjaCloud.refreshStats = refreshStats;

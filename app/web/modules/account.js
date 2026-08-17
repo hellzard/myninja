@@ -14,8 +14,13 @@
       session[key] = value;
       changed = true;
     }
-    if (changed) window.NinjaSession?.save?.(session);
+    if (changed) {
+      window.NinjaSession?.save?.(session);
+      window.dispatchEvent(new CustomEvent('ns:account-stats', { detail: { ...stats, char_id: session.char_id } }));
+    }
   }
+
+  window.addEventListener('ns:sync-account-stats', event => apply(event.detail));
 
   window.addEventListener('ns:cloud-status', event => {
     const update = event.detail?.session_update;

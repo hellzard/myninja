@@ -19,7 +19,7 @@ except Exception:  # redis is optional in local/in-process mode
 REDIS_URL = os.getenv("REDIS_URL", "").strip()
 ENGINE_MODE = os.getenv("BOT_ENGINE_MODE", "web").strip().lower()
 STATE_SECRET = os.getenv("BOT_STATE_SECRET", "").strip()
-PREFIX = os.getenv("BOT_STATE_PREFIX", "myninja:v4").strip() or "myninja:v4"
+PREFIX = os.getenv("BOT_STATE_PREFIX", "myninja:v5").strip() or "myninja:v5"
 
 _client = None
 
@@ -100,6 +100,58 @@ def _stop_key(char_id: int) -> str:
 
 
 QUEUE_KEY = f"{PREFIX}:queue:start"
+
+
+def _push_key(char_id: int) -> str:
+    return f"{PREFIX}:push:{int(char_id)}"
+
+
+def _endpoint_hash(endpoint: str) -> str:
+    return hashlib.sha256(str(endpoint).encode("utf-8")).hexdigest()
+
+
+async def save_push_subscription(char_id: int, subscription: Dict[str, Any]) -> bool:
+    client = await _redis()
+    if client is None or not subscription.get("endpoint"):
+        return False
+    payload = dict(subscription)
+    encoded = "enc:" + _seal(payload) if STATE_SECRET else json.dumps(payload, separators=(",", ":"))
+    try:
+        await client.hset(_push_key(char_id), _endpoint_hash(str(subscription["endpoint"])), encoded)
+        await client.expire(_push_key(char_id), 60 * 60 * 24 * 90)
+        return True
+    except Exception:
+        return False
+
+
+async def list_push_subscriptions(char_id: int) -> List[Dict[str, Any]]:
+    client = await _redis()
+    if client is None:
+        return []
+    try:
+        values = await client.hvals(_push_key(char_id))
+    except Exception:
+        return []
+    result: List[Dict[str, Any]] = []
+    for raw in values:
+        try:
+            value = _open(raw[4:]) if raw.startswith("enc:") else json.loads(raw)
+            if isinstance(value, dict) and value.get("endpoint"):
+                result.append(value)
+        except Exception:
+            continue
+    return result
+
+
+async def delete_push_subscription(char_id: int, endpoint: str) -> None:
+    client = await _redis()
+    if client is None:
+        return
+    try:
+        await client.hdel(_push_key(char_id), _endpoint_hash(endpoint))
+    except Exception:
+        return
+
 
 
 async def ping() -> bool:
@@ -287,7 +339,7 @@ async def enqueue_start(spec: Dict[str, Any], control_token: str) -> Dict[str, A
         "char_id": int(spec["char_id"]),
         "params": {
             k: v for k, v in dict(spec.get("params") or {}).items()
-            if k in {"mission_id", "boss_type", "max_level", "schedule_at", "repeat_every_seconds"}
+            if k in {"mission_id", "boss_type", "max_level", "schedule_at", "repeat_every_seconds", "recipe"}
         },
         "iteration": 0,
         "consecutive_failures": 0,
@@ -336,12 +388,19 @@ async def dequeue_start(timeout_seconds: int = 2) -> Optional[Dict[str, Any]]:
 
 async def engine_info() -> Dict[str, Any]:
     return {
+        "version": "5.0.0",
         "mode": persistence_mode(),
         "engine_mode_env": ENGINE_MODE,
         "redis_configured": redis_configured(),
         "redis_reachable": await ping() if redis_configured() else False,
         "encrypted_state_ready": bool(STATE_SECRET),
         "worker_queue_enabled": queue_mode(),
+        "render": {
+            "commit": os.getenv("RENDER_GIT_COMMIT", ""),
+            "branch": os.getenv("RENDER_GIT_BRANCH", ""),
+            "service_type": os.getenv("RENDER_SERVICE_TYPE", ""),
+            "service_name": os.getenv("RENDER_SERVICE_NAME", ""),
+        },
     }
 
 

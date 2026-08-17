@@ -3,6 +3,7 @@
 
   let registration = null;
   let deferredPrompt = null;
+  window.NinjaPWA = window.NinjaPWA || {};
 
   function ensureBanner() {
     let banner = document.getElementById('ns-update-banner');
@@ -61,6 +62,7 @@
   async function register() {
     if (!('serviceWorker' in navigator)) return;
     registration = await navigator.serviceWorker.register('/panel/sw.js', { updateViaCache: 'none' });
+    window.NinjaPWA.registration = registration;
     await registration.update();
 
     registration.addEventListener('updatefound', () => {
@@ -112,7 +114,7 @@
       await register();
       await checkVersion();
     } catch (error) {
-      console.warn('[PWA v4]', error);
+      console.warn('[PWA v5]', error);
     }
   });
 })();

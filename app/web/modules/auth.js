@@ -69,6 +69,20 @@
 
   window.NinjaSession = { get: getSession, save: saveSession, hydrate };
 
+
+  window.addEventListener('ns:sync-session', event => {
+    const remote = event.detail || {};
+    if (remote.logged_out) {
+      localStorage.removeItem(SESSION_KEY);
+      hydrate(null);
+      return;
+    }
+    if (remote.char_id) {
+      localStorage.setItem(SESSION_KEY, JSON.stringify(remote));
+      hydrate(remote);
+    }
+  });
+
   document.addEventListener('DOMContentLoaded', () => {
     localStorage.removeItem(QUICK_KEY);
     hydrate(getSession());

@@ -1,12 +1,13 @@
 {
-  "version": "4.0.0",
-  "build": "cloud-engine-v2",
+  "version": "5.0.0",
+  "build": "control-center",
   "released": "2026-08-17",
   "changelog": [
-    "Bot Health states + live XP/Gold analytics",
-    "Smart server-side scheduler",
-    "Modular frontend and lighter mobile runtime",
-    "Optional Redis/Valkey shared state and Background Worker queue",
-    "PWA update banner with automatic service-worker refresh"
+    "Real-time WebSocket engine + multi-tab sync",
+    "Flight Recorder + Analytics Pro + adaptive pacing",
+    "Automation Recipe Builder + dry-run",
+    "Web Push/local notifications + Smart Diagnostics",
+    "Multi-character workspace + mobile navigation",
+    "Optional OpenTelemetry + CI quality gate"
   ]
 }

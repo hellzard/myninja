@@ -5,3 +5,10 @@ uvicorn==0.30.4
 httpx
 pycryptodomex
 redis>=5.0,<7.0
+websockets>=12,<18
+pywebpush>=2,<3
+opentelemetry-api>=1.27
+opentelemetry-sdk>=1.27
+opentelemetry-instrumentation-fastapi>=0.48b0
+opentelemetry-instrumentation-httpx>=0.48b0
+opentelemetry-exporter-otlp-proto-http>=1.27

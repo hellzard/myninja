@@ -2,6 +2,7 @@ import asyncio
 import base64
 import hashlib
 import time
+from collections import deque
 from typing import Optional
 
 import httpx
@@ -23,6 +24,10 @@ class NinjaSageClient:
         self._request_lock = asyncio.Lock()
         self._last_request_at = 0.0
         self._warmed = False
+        self._latencies_ms = deque(maxlen=80)
+        self._request_count = 0
+        self._request_failures = 0
+        self.last_request_latency_ms = 0.0
 
     def _headers(self) -> dict:
         return {
@@ -77,9 +82,17 @@ class NinjaSageClient:
         # One request at a time per cloud job. This also makes min-call spacing meaningful.
         async with self._request_lock:
             await self._pace()
+            started = time.monotonic()
             try:
                 response = await self._post_amf(payload_bytes, self._headers())
+                self._request_count += 1
+            except Exception:
+                self._request_count += 1
+                self._request_failures += 1
+                raise
             finally:
+                self.last_request_latency_ms = max(0.0, (time.monotonic() - started) * 1000.0)
+                self._latencies_ms.append(self.last_request_latency_ms)
                 self._last_request_at = time.monotonic()
 
         if response.status_code != 200:
@@ -96,6 +109,19 @@ class NinjaSageClient:
         except Exception as exc:
             raise RuntimeError(f'Failed to decode official AMF response: {exc}') from exc
         return {}
+
+
+    def network_metrics(self) -> dict:
+        values = sorted(float(v) for v in self._latencies_ms)
+        avg = sum(values) / len(values) if values else 0.0
+        p95 = values[min(len(values) - 1, max(0, int(len(values) * 0.95) - 1))] if values else 0.0
+        return {
+            "request_count": self._request_count,
+            "request_failures": self._request_failures,
+            "last_ms": round(self.last_request_latency_ms, 1),
+            "avg_ms": round(avg, 1),
+            "p95_ms": round(p95, 1),
+        }
 
     async def aclose(self) -> None:
         if self._http is not None:
