@@ -1,7 +1,8 @@
+import os
 import re
 from playwright.sync_api import Page, expect
 
-BASE_URL = "http://127.0.0.1:8000"
+BASE_URL = os.getenv("E2E_BASE_URL", "http://127.0.0.1:8000")
 
 def mock_login(page: Page):
     page.route(
