@@ -1,6 +1,8 @@
 (() => {
   'use strict';
 
+  window.__nsCloudController = true;
+
   const CLOUD_ENDPOINT = '/api/bot/cloud';
   const VISIBLE_POLL_MS = 3000;
   const HIDDEN_POLL_MS = 15000;
@@ -54,7 +56,7 @@
 
   function getQuickLogin() {
     try {
-      const value = JSON.parse(localStorage.getItem('ns_quick_login') || 'null');
+      const value = JSON.parse(sessionStorage.getItem('ns_quick_login') || 'null');
       if (!value) return null;
       const username = value.username || value.user;
       const password = value.password || value.pass;
@@ -112,7 +114,11 @@
     });
     let data = null;
     try { data = await response.json(); } catch (_) {}
-    if (!response.ok) throw new Error(data?.detail || data?.message || `HTTP ${response.status}`);
+    if (!response.ok) {
+      const error = new Error(data?.detail || data?.message || `HTTP ${response.status}`);
+      error.status = response.status;
+      throw error;
+    }
     return data;
   }
 
@@ -274,9 +280,13 @@
       renderStatus(response.job);
       if (!response.job?.running) saveControl(session.char_id, null);
     } catch (error) {
-      appendLog(`Cloud status unavailable: ${error.message}`, 'error');
-      saveControl(session.char_id, null);
-      renderStatus({ running: false, logs: [] });
+      if (error?.status === 403 || error?.status === 404) {
+        appendLog(`Cloud control expired: ${error.message}`, 'warn');
+        saveControl(session.char_id, null);
+        renderStatus({ running: false, logs: [] });
+      } else {
+        appendLog(`Cloud status temporarily unavailable: ${error.message}. Retrying automatically.`, 'warn');
+      }
     } finally { statusBusy = false; }
   }
 
@@ -380,7 +390,7 @@
     if (!list || document.getElementById('setting-rate-backoff')) return;
 
     const levelingLabel = document.getElementById('setting-leveling-delay')?.closest('.action-item')?.querySelector('span');
-    if (levelingLabel) levelingLabel.innerHTML = 'Leveling Delay (s)<small style="display:block;color:#aaa;font-size:10px;">Default 10s untuk stabilitas; jangan dipaksa terlalu cepat.</small>';
+    if (levelingLabel) levelingLabel.innerHTML = 'Leveling Delay (s)<small style="display:block;color:#aaa;font-size:10px;">Default 5s. Saat server menolak/rate-limit, backoff otomatis akan mengambil alih.</small>';
     const oldShadow = document.getElementById('setting-shadow-wait');
     if (oldShadow) {
       const span = oldShadow.closest('.action-item')?.querySelector('span');
@@ -412,7 +422,7 @@
       const data = await response.json();
       const s = data.settings || {};
       const set = (id, value) => { const el = document.getElementById(id); if (el && value !== undefined) el.value = value; };
-      set('setting-leveling-delay', s.leveling_delay_seconds ?? 10);
+      set('setting-leveling-delay', s.leveling_delay_seconds ?? 5);
       set('setting-shadow-wait', s.sage_shadow_war_wait_minutes ?? 30);
       set('setting-battle-wait', s.sage_battle_wait_seconds ?? 5);
       set('setting-rest-every', s.leveling_rest_every_cycles ?? 40);
@@ -434,7 +444,7 @@
   async function saveCloudSettings() {
     const num = (id, fallback) => parseInt(document.getElementById(id)?.value || String(fallback), 10) || fallback;
     const payload = {
-      leveling_delay_seconds: Math.max(5, num('setting-leveling-delay', 10)),
+      leveling_delay_seconds: Math.max(5, num('setting-leveling-delay', 5)),
       sage_shadow_war_wait_minutes: Math.max(1, num('setting-shadow-wait', 30)),
       sage_auto_relogin_enabled: document.getElementById('setting-auto-relogin')?.checked !== false,
       sage_battle_wait_seconds: Math.max(3, num('setting-battle-wait', 5)),

@@ -179,7 +179,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     tokens: data.tokens || '--'
                 };
                 localStorage.setItem('ns_session', JSON.stringify(sessionState));
-                localStorage.setItem('ns_quick_login', JSON.stringify({ user, pass }));
+                sessionStorage.setItem('ns_quick_login', JSON.stringify({ user, pass }));
+                localStorage.removeItem('ns_quick_login');
                 setTimeout(() => checkLoginState(), 1000); // Give user time to read logs
             } else {
                 addStartupLog(data.message || "Login failed", 'err');
@@ -194,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (quickLoginBtn) {
         quickLoginBtn.addEventListener('click', () => {
-            const stored = localStorage.getItem('ns_quick_login');
+            const stored = sessionStorage.getItem('ns_quick_login');
             if (stored) {
                 const creds = JSON.parse(stored);
                 document.getElementById('login-user').value = creds.user;
@@ -1037,7 +1038,7 @@ document.addEventListener('DOMContentLoaded', () => {
     checkLoginState();
 
     // PWA Service Worker Registration & Install Logic
-    if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator && !window.__nsCloudController) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('/panel/sw.js')
                 .then(reg => console.log('[PWA] ServiceWorker registered:', reg.scope))

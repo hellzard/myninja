@@ -31,15 +31,16 @@ class NinjaSageClient:
             'Referer': 'http://127.0.0.1:800/NinjaSage.swf',
             'Origin': 'https://play.ninjasage.id',
             'Accept': '*/*',
-            'Accept-Encoding': 'gzip, deflate, br, zstd',
             'Accept-Language': 'en-US,en;q=0.9',
             'X-Requested-With': 'ShockwaveFlash/32.0.0.465',
-            'Connection': 'keep-alive',
         }
 
     async def _persistent_http(self) -> httpx.AsyncClient:
         if self._http is None:
-            self._http = httpx.AsyncClient(verify=False, timeout=30.0)
+            self._http = httpx.AsyncClient(
+                timeout=httpx.Timeout(30.0, connect=15.0),
+                limits=httpx.Limits(max_connections=4, max_keepalive_connections=2, keepalive_expiry=30.0),
+            )
         return self._http
 
     async def _pace(self) -> None:
@@ -53,7 +54,7 @@ class NinjaSageClient:
 
     async def _post_amf(self, payload_bytes: bytes, headers: dict) -> httpx.Response:
         if not self.persistent:
-            async with httpx.AsyncClient(verify=False, timeout=30.0) as client:
+            async with httpx.AsyncClient(timeout=httpx.Timeout(30.0, connect=15.0)) as client:
                 await client.get(f'{self.base_url}/play')
                 return await client.post(f'{self.base_url}/arnf', content=payload_bytes, headers=headers)
 
@@ -102,12 +103,17 @@ class NinjaSageClient:
             self._http = None
             self._warmed = False
 
-    async def validate_session(self, sessionkey: str, char_id: int) -> bool:
+    async def validate_session(self, sessionkey: str, char_id: int) -> Optional[bool]:
+        # True = valid, False = explicitly rejected by upstream, None = transport/decode unknown.
         try:
             result = await self.send_amf_request('SystemLogin.getCharacterData', [char_id, sessionkey])
         except Exception:
-            return False
-        return isinstance(result, dict) and result.get('status') == 1
+            return None
+        if not isinstance(result, dict):
+            return None
+        if result.get('status') == 1:
+            return True
+        return False
 
     def generate_nseed(self, char_underscore: float) -> str:
         bytes_loaded = 14252961

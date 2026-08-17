@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Response, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional
 from app.routers import auth, character, gateway, bot
 from app.services.ninjasage_client import NinjaSageClient
@@ -34,7 +34,7 @@ class BotCommandRequest(BaseModel):
     action: str
     sessionkey: str
     char_id: int
-    params: dict = {}
+    params: dict = Field(default_factory=dict)
 
 class BasicBotRequest(BaseModel):
     sessionkey: str
@@ -80,6 +80,21 @@ app.include_router(bot.router, tags=["Bot API"])
 @app.get("/")
 def read_root():
     return {"message": "Ninja Sage Cloud API is running!"}
+
+@app.get("/healthz", include_in_schema=False)
+def healthz():
+    return {"status": "ok"}
+
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers.setdefault("X-Content-Type-Options", "nosniff")
+    response.headers.setdefault("X-Frame-Options", "DENY")
+    response.headers.setdefault("Referrer-Policy", "same-origin")
+    response.headers.setdefault("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
+    if request.url.path.startswith("/api/"):
+        response.headers.setdefault("Cache-Control", "no-store")
+    return response
 
 @app.post("/api/auth/login")
 async def api_login(req: LoginRequest):
@@ -194,7 +209,7 @@ async def api_auto_exam_step(req: BasicBotRequest):
     except Exception as e:
         error_trace = traceback.format_exc()
         print(f"API AUTO EXAM ERROR:\n{error_trace}")
-        return {"status": "error", "message": f"{str(e)} | TRACE: {error_trace}"}
+        return {"status": "error", "message": str(e)}
 
 @app.post("/api/bot/auto_eudemon")
 async def api_auto_eudemon(req: BasicBotRequest):

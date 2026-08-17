@@ -732,3 +732,11 @@ h1, h2, h3, h4, h5, h6 {
     scroll-behavior: auto !important;
   }
 }
+
+
+/* === Audit Upgrade v3 === */
+.log-dot.warn { background: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
+.btn, .btn-toggle, .module-card { touch-action: manipulation; }
+@media (max-width: 768px) {
+  .terminal-window { scroll-behavior: auto; }
+}

@@ -4,13 +4,13 @@ from typing import Any, Dict
 
 SETTINGS_FILE = os.path.join(os.path.dirname(__file__), '..', '..', 'sage_settings.json')
 
-# Conservative defaults. These values intentionally favor stability over speed.
+# Stable defaults. Auto Leveling uses a 5s base delay; failure/rate-limit backoff remains dynamic.
 DEFAULT_SETTINGS: Dict[str, Any] = {
-    'leveling_delay_seconds': 10,
+    'leveling_delay_seconds': 5,
     'leveling_cycle_cooldown_seconds': 5,
     'leveling_rest_every_cycles': 40,
     'leveling_rest_duration_seconds': 60,
-    'leveling_action_jitter_seconds': 2,
+    'leveling_action_jitter_seconds': 0,
     'sage_battle_wait_seconds': 5,
     'amf_min_request_interval_seconds': 1.25,
     'sage_auto_relogin_enabled': True,

@@ -21,7 +21,10 @@ class CloudClanWarSession:
         self.sessionkey = sessionkey
         self.char_id = char_id
         self.settings = settings
-        self.http = httpx.AsyncClient(verify=False, timeout=25.0)
+        self.http = httpx.AsyncClient(
+            timeout=httpx.Timeout(25.0, connect=15.0),
+            limits=httpx.Limits(max_connections=4, max_keepalive_connections=2, keepalive_expiry=30.0),
+        )
         self.token: Optional[str] = None
         self.last_stamina: Optional[int] = None
         self.last_stamina_at = 0.0

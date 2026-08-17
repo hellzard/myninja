@@ -224,9 +224,17 @@ async def _handle_666(job: CloudBotJob, client: NinjaSageClient) -> float:
     job.add_log(f'Server rejection 666 detected. Cooling down {cooldown}s before checking the session.', 'warn')
     await asyncio.sleep(cooldown)
 
-    if await client.validate_session(job.sessionkey, job.char_id):
+    validation = await client.validate_session(job.sessionkey, job.char_id)
+    if validation is True:
         job.add_log('Session is still valid; treating 666 as a temporary server rejection.', 'warn')
         return max(30.0, float(cfg.get('rate_limit_backoff_seconds', 30) or 30))
+    if validation is None:
+        delay = max(30.0, float(cfg.get('rate_limit_backoff_seconds', 30) or 30))
+        job.add_log(
+            f'Session validation was inconclusive; keeping the current session and backing off {int(delay)}s.',
+            'warn',
+        )
+        return delay
 
     if await _auto_relogin(job, client):
         job.consecutive_failures = 0
@@ -248,7 +256,7 @@ async def _run_step(job: CloudBotJob, client: NinjaSageClient) -> StepResult:
                     return StepResult(f'TARGET_REACHED: Character is level {level}; max target is {int(max_level)}.')
             except (TypeError, ValueError):
                 pass
-        if job.iteration % 10 == 0:
+        if job.iteration > 0 and job.iteration % 10 == 0:
             try:
                 exam = await auto_exam(client, sk, cid)
                 if exam and 'No exams available' not in str(exam):

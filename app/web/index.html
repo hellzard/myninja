@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Ninja Sage - Web Bot Panel</title>
 
   <!-- PWA & Mobile Web App Meta -->
@@ -18,10 +18,11 @@
   <!-- Google Fonts Optimization (Preconnect for Fast Mobile Load) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="/panel/style.css?v=4" />
+  <link rel="stylesheet" href="/panel/style.css?v=5" />
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -53,11 +54,11 @@
       <form id="login-form">
         <div class="input-wrapper">
           <label>Username</label>
-          <input type="text" id="login-user" class="input-field" placeholder="Enter username" required />
+          <input type="text" id="login-user" class="input-field" placeholder="Enter username" autocomplete="username" required />
         </div>
         <div class="input-wrapper">
           <label>Password</label>
-          <input type="password" id="login-pass" class="input-field" placeholder="Enter password" required />
+          <input type="password" id="login-pass" class="input-field" placeholder="Enter password" autocomplete="current-password" required />
         </div>
         
         <button type="submit" id="login-btn" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
@@ -464,7 +465,7 @@
   </div>
 
   <!-- Main JavaScript with Cache-Busting Version -->
-  <script src="/panel/cloud.js?v=2"></script>
-  <script src="/panel/app.js?v=14" defer></script>
+  <script src="/panel/cloud.js?v=3"></script>
+  <script src="/panel/app.js?v=15" defer></script>
 </body>
 </html>
