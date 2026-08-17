@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import asyncio
 import random
 import re
@@ -25,26 +27,30 @@ from app.services.bot_manager import (
 from app.services.clan_war_cloud import ClanRateLimited, CloudClanWarSession
 from app.services.ninjasage_client import NinjaSageClient
 from app.services.settings_manager import load_settings
+from app.services import cloud_store
+
 
 SUPPORTED_BOTS = {
-    'auto_level', 'auto_daily', 'auto_hunting', 'eudemon', 'circus', 'yokai',
-    'yokai_minigame', 'shadow_war', 'monster', 'mission_s', 'clan_war', 'mission',
+    "auto_level", "auto_daily", "auto_hunting", "eudemon", "circus", "yokai",
+    "yokai_minigame", "shadow_war", "monster", "mission_s", "clan_war", "mission",
 }
 
 BOT_DELAY_KEYS = {
-    'auto_level': 'leveling_delay_seconds',
-    'auto_daily': 'daily_delay_seconds',
-    'auto_hunting': 'hunting_delay_seconds',
-    'eudemon': 'eudemon_delay_seconds',
-    'circus': 'circus_delay_seconds',
-    'yokai': 'yokai_delay_seconds',
-    'yokai_minigame': 'yokai_minigame_delay_seconds',
-    'shadow_war': 'shadow_war_between_battles_seconds',
-    'monster': 'monster_delay_seconds',
-    'mission_s': 'mission_s_delay_seconds',
-    'mission': 'mission_delay_seconds',
-    'clan_war': 'clan_war_battle_delay_seconds',
+    "auto_level": "leveling_delay_seconds",
+    "auto_daily": "daily_delay_seconds",
+    "auto_hunting": "hunting_delay_seconds",
+    "eudemon": "eudemon_delay_seconds",
+    "circus": "circus_delay_seconds",
+    "yokai": "yokai_delay_seconds",
+    "yokai_minigame": "yokai_minigame_delay_seconds",
+    "shadow_war": "shadow_war_between_battles_seconds",
+    "monster": "monster_delay_seconds",
+    "mission_s": "mission_s_delay_seconds",
+    "mission": "mission_delay_seconds",
+    "clan_war": "clan_war_battle_delay_seconds",
 }
+
+STOP_STATES = {"IDLE", "ERROR", "STOPPED"}
 
 
 @dataclass
@@ -66,10 +72,10 @@ class CloudBotJob:
     running: bool = True
     iteration: int = 0
     consecutive_failures: int = 0
-    last_message: str = 'Starting...'
+    last_message: str = "Starting..."
     current_zone: int = 1
     log_seq: int = 0
-    logs: deque = field(default_factory=lambda: deque(maxlen=200))
+    logs: deque = field(default_factory=lambda: deque(maxlen=300))
     task: Optional[asyncio.Task] = None
     failure_times: deque = field(default_factory=lambda: deque(maxlen=50))
     rate_limit_level: int = 0
@@ -77,33 +83,91 @@ class CloudBotJob:
     session_update: Optional[Dict[str, Any]] = None
     runtime: Dict[str, Any] = field(default_factory=dict, repr=False)
 
-    def add_log(self, message: str, level: str = 'info') -> None:
+    health_state: str = "STARTING"
+    health_detail: str = "Preparing cloud job"
+    next_action_at: Optional[float] = None
+    current_delay: float = 0.0
+
+    success_count: int = 0
+    failure_count: int = 0
+    rate_limit_count: int = 0
+    relogin_count: int = 0
+    earned_xp: int = 0
+    earned_gold: int = 0
+    earned_token: int = 0
+    last_success_at: Optional[float] = None
+
+    def add_log(self, message: str, level: str = "info") -> None:
         now = time.time()
         self.log_seq += 1
         self.last_message = str(message)
         self.logs.append({
-            'seq': self.log_seq,
-            'ts': now,
-            'ts_ms': int(now * 1000),
-            'level': level,
-            'message': str(message),
+            "seq": self.log_seq,
+            "ts": now,
+            "ts_ms": int(now * 1000),
+            "level": level,
+            "message": str(message),
         })
 
-    def public_status(self) -> Dict[str, Any]:
-        safe_params = {k: v for k, v in self.params.items() if k in {'mission_id', 'boss_type', 'max_level'}}
+    def set_health(
+        self,
+        state: str,
+        detail: str = "",
+        *,
+        next_action_at: Optional[float] = None,
+        delay_seconds: float = 0.0,
+    ) -> None:
+        self.health_state = str(state).upper()
+        self.health_detail = str(detail or "")
+        self.next_action_at = next_action_at
+        self.current_delay = max(0.0, float(delay_seconds or 0.0))
+
+    def analytics(self) -> Dict[str, Any]:
+        end = self.finished_at or time.time()
+        uptime = max(0.0, end - self.created_at)
+        hours = max(uptime / 3600.0, 1 / 3600.0)
+        attempts = self.success_count + self.failure_count
         return {
-            'running': self.running,
-            'bot_type': self.bot_type,
-            'char_id': self.char_id,
-            'params': safe_params,
-            'iteration': self.iteration,
-            'consecutive_failures': self.consecutive_failures,
-            'last_message': self.last_message,
-            'created_at': self.created_at,
-            'finished_at': self.finished_at,
-            'session_generation': self.session_generation,
-            'session_update': self.session_update,
-            'logs': list(self.logs)[-80:],
+            "success_count": self.success_count,
+            "failure_count": self.failure_count,
+            "rate_limit_count": self.rate_limit_count,
+            "relogin_count": self.relogin_count,
+            "earned_xp": self.earned_xp,
+            "earned_gold": self.earned_gold,
+            "earned_token": self.earned_token,
+            "uptime_seconds": int(uptime),
+            "actions_per_hour": round(self.iteration / hours, 1),
+            "xp_per_hour": round(self.earned_xp / hours, 1),
+            "gold_per_hour": round(self.earned_gold / hours, 1),
+            "success_rate": round((self.success_count / attempts) * 100, 1) if attempts else 0.0,
+            "last_success_at": self.last_success_at,
+        }
+
+    def public_status(self) -> Dict[str, Any]:
+        safe_keys = {
+            "mission_id", "boss_type", "max_level", "schedule_at", "repeat_every_seconds",
+        }
+        safe_params = {k: v for k, v in self.params.items() if k in safe_keys}
+        return {
+            "running": self.running,
+            "bot_type": self.bot_type,
+            "char_id": self.char_id,
+            "params": safe_params,
+            "iteration": self.iteration,
+            "consecutive_failures": self.consecutive_failures,
+            "last_message": self.last_message,
+            "created_at": self.created_at,
+            "finished_at": self.finished_at,
+            "session_generation": self.session_generation,
+            "session_update": self.session_update,
+            "health": {
+                "state": self.health_state,
+                "detail": self.health_detail,
+                "next_action_at": self.next_action_at,
+                "delay_seconds": self.current_delay,
+            },
+            "analytics": self.analytics(),
+            "logs": list(self.logs)[-120:],
         }
 
 
@@ -111,7 +175,7 @@ _jobs: Dict[int, CloudBotJob] = {}
 _jobs_lock = asyncio.Lock()
 
 
-def _settings() -> dict:
+def _settings() -> Dict[str, Any]:
     return load_settings()
 
 
@@ -124,115 +188,268 @@ def _delay(bot_type: str) -> float:
         base = 10.0
     base = max(3.0, base)
     try:
-        jitter = max(0.0, float(cfg.get('leveling_action_jitter_seconds', 2)))
+        jitter = max(0.0, float(cfg.get("leveling_action_jitter_seconds", 0)))
     except (TypeError, ValueError):
-        jitter = 2.0
-    return base + random.uniform(0.0, jitter)
+        jitter = 0.0
+    return base + (random.uniform(0.0, jitter) if jitter else 0.0)
 
 
 def _mission_for_level(level: int) -> str:
-    if level >= 80: return 'msn_109'
-    if level >= 60: return 'msn_60'
-    if level >= 40: return 'msn_42'
-    if level >= 20: return 'msn_21'
-    if level >= 10: return 'msn_11'
-    return 'msn_3'
+    if level >= 80:
+        return "msn_109"
+    if level >= 60:
+        return "msn_60"
+    if level >= 40:
+        return "msn_42"
+    if level >= 20:
+        return "msn_21"
+    if level >= 10:
+        return "msn_11"
+    return "msn_3"
 
 
 def _is_failed(message: str) -> bool:
-    text = (message or '').lower()
-    return any(x in text for x in ('failed', 'error', 'exception', 'rejected'))
+    text = (message or "").lower()
+    return any(x in text for x in ("failed", "error", "exception", "rejected"))
 
 
 def _is_666(message: str) -> bool:
-    text = (message or '').lower()
-    return bool(re.search(r"(?:error['\" ]*[:=]\s*|error\s+)(?:['\"])?666\b", text)) or "'error': 666" in text
+    text = (message or "").lower()
+    return (
+        bool(re.search(r"(?:error['\" ]*[:=]\s*|error\s+)(?:['\"])?666\b", text))
+        or "'error': 666" in text
+    )
 
 
 def _is_rate_limit(message: str) -> bool:
-    text = (message or '').lower()
-    return any(x in text for x in ('rate limit', 'too many requests', 'http 429', 'status 429'))
+    text = (message or "").lower()
+    return any(x in text for x in ("rate limit", "too many requests", "http 429", "status 429"))
 
 
 def _should_stop(job: CloudBotJob, message: str) -> bool:
-    text = (message or '').lower()
-    if 'target_reached:' in text: return True
-    if job.bot_type == 'auto_daily':
-        return 'daily missions completed' in text or 'no available daily missions' in text
-    if job.bot_type == 'auto_hunting': return 'stopped' in text
-    if job.bot_type == 'eudemon': return 'no available eudemon bosses' in text or 'requires level' in text
-    if job.bot_type in {'circus', 'yokai'}: return any(w in text for w in ('ticket', 'stopped'))
-    if job.bot_type == 'yokai_minigame': return 'ticket' in text
-    if job.bot_type == 'monster': return 'energy habis' in text or 'energy monster hunter habis' in text or 'stopped' in text
-    if job.bot_type == 'mission': return 'invalid response' in text
+    text = (message or "").lower()
+    if "target_reached:" in text:
+        return True
+    if job.bot_type == "auto_daily":
+        return "daily missions completed" in text or "no available daily missions" in text
+    if job.bot_type == "auto_hunting":
+        return "stopped" in text
+    if job.bot_type == "eudemon":
+        return "no available eudemon bosses" in text or "requires level" in text
+    if job.bot_type in {"circus", "yokai"}:
+        return any(w in text for w in ("ticket", "stopped"))
+    if job.bot_type == "yokai_minigame":
+        return "ticket" in text
+    if job.bot_type == "monster":
+        return "energy habis" in text or "energy monster hunter habis" in text or "stopped" in text
+    if job.bot_type == "mission":
+        return "invalid response" in text
     return False
+
+
+def _repeat_enabled(job: CloudBotJob, message: str) -> bool:
+    if "target_reached:" in (message or "").lower():
+        return False
+    try:
+        repeat = int(job.params.get("repeat_every_seconds") or 0)
+    except (TypeError, ValueError):
+        repeat = 0
+    minimum = max(3600, int(_settings().get("scheduler_min_repeat_seconds", 3600) or 3600))
+    return repeat >= minimum
+
+
+def _repeat_seconds(job: CloudBotJob) -> int:
+    try:
+        repeat = int(job.params.get("repeat_every_seconds") or 0)
+    except (TypeError, ValueError):
+        repeat = 0
+    minimum = max(3600, int(_settings().get("scheduler_min_repeat_seconds", 3600) or 3600))
+    return max(minimum, repeat) if repeat else 0
+
+
+def _capture_rewards(job: CloudBotJob, message: str) -> None:
+    text = str(message or "")
+    if "SUCCESS" not in text.upper():
+        return
+    job.success_count += 1
+    job.last_success_at = time.time()
+
+    patterns = {
+        "xp": r"\bXP:\s*\+?(-?\d+)",
+        "gold": r"\bGold:\s*\+?(-?\d+)",
+        "token": r"\bToken:\s*\+?(-?\d+)",
+    }
+    values: Dict[str, int] = {}
+    for key, pattern in patterns.items():
+        match = re.search(pattern, text, flags=re.I)
+        if match:
+            try:
+                values[key] = max(0, int(match.group(1)))
+            except (TypeError, ValueError):
+                pass
+    job.earned_xp += values.get("xp", 0)
+    job.earned_gold += values.get("gold", 0)
+    job.earned_token += values.get("token", 0)
+
+
+async def _persist(job: CloudBotJob, *, active: Optional[bool] = None) -> None:
+    cfg = _settings()
+    retention = max(3600, int(cfg.get("cloud_status_retention_seconds", 86400) or 86400))
+    await cloud_store.save_status(job.char_id, job.public_status(), job.control_token, retention)
+    if active is not None and cloud_store.redis_configured():
+        spec = {
+            "sessionkey": job.sessionkey,
+            "char_id": job.char_id,
+            "bot_type": job.bot_type,
+            "params": job.params,
+            "credentials": job.credentials,
+        }
+        await cloud_store.save_spec(
+            job.char_id, spec, job.control_token, active=bool(active)
+        )
+
+
+async def _distributed_stop(job: CloudBotJob) -> bool:
+    if await cloud_store.stop_requested(job.char_id):
+        job.running = False
+        job.set_health("STOPPED", "Stop requested from another process/device")
+        job.add_log("Distributed stop request received.", "info")
+        return True
+    return False
+
+
+async def _sleep(
+    job: CloudBotJob,
+    seconds: float,
+    state: str,
+    detail: str,
+) -> bool:
+    seconds = max(0.0, float(seconds))
+    until = time.time() + seconds
+    job.set_health(state, detail, next_action_at=until, delay_seconds=seconds)
+    await _persist(job)
+    while job.running:
+        if await _distributed_stop(job):
+            return False
+        remaining = until - time.time()
+        if remaining <= 0:
+            break
+        await asyncio.sleep(min(2.0, remaining))
+    if job.running:
+        job.set_health("RUNNING", "Executing next action")
+    return job.running
+
+
+async def _wait_initial_schedule(job: CloudBotJob) -> bool:
+    try:
+        scheduled = float(job.params.get("schedule_at") or 0)
+    except (TypeError, ValueError):
+        scheduled = 0.0
+    if scheduled > time.time() + 1:
+        when = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(scheduled))
+        job.add_log(f"Scheduled start: {when}", "info")
+        return await _sleep(
+            job,
+            scheduled - time.time(),
+            "SCHEDULED",
+            f"Waiting until {when}",
+        )
+    return True
 
 
 async def _auto_relogin(job: CloudBotJob, client: NinjaSageClient) -> bool:
     cfg = _settings()
-    if not cfg.get('sage_auto_relogin_enabled', True):
+    if not cfg.get("sage_auto_relogin_enabled", True):
         return False
-    username = job.credentials.get('username') or job.credentials.get('user')
-    password = job.credentials.get('password') or job.credentials.get('pass')
+    username = job.credentials.get("username") or job.credentials.get("user")
+    password = job.credentials.get("password") or job.credentials.get("pass")
     if not username or not password:
-        job.add_log('Session needs recovery, but no quick-login credentials were handed to the cloud job.', 'warn')
+        job.add_log(
+            "Session needs recovery, but no quick-login credentials were handed to the cloud job.",
+            "warn",
+        )
         return False
 
-    wait_seconds = max(5, int(cfg.get('sage_auto_relogin_wait_seconds', 20) or 20))
-    attempts = max(1, min(5, int(cfg.get('sage_auto_relogin_attempts', 3) or 3)))
-    retry_seconds = max(1, int(cfg.get('sage_auto_relogin_retry_seconds', 3) or 3))
-    job.add_log(f'Session appears invalid. Cooling down {wait_seconds}s before automatic relogin.', 'warn')
-    await asyncio.sleep(wait_seconds)
+    wait_seconds = max(5, int(cfg.get("sage_auto_relogin_wait_seconds", 20) or 20))
+    attempts = max(1, min(5, int(cfg.get("sage_auto_relogin_attempts", 3) or 3)))
+    retry_seconds = max(1, int(cfg.get("sage_auto_relogin_retry_seconds", 3) or 3))
+    job.add_log(
+        f"Session appears invalid. Cooling down {wait_seconds}s before automatic relogin.",
+        "warn",
+    )
+    if not await _sleep(job, wait_seconds, "RECOVERING_SESSION", "Cooling down before relogin"):
+        return False
 
     for attempt in range(1, attempts + 1):
-        job.add_log(f'Automatic relogin attempt {attempt}/{attempts}...', 'warn')
+        job.set_health("RECOVERING_SESSION", f"Relogin attempt {attempt}/{attempts}")
+        job.add_log(f"Automatic relogin attempt {attempt}/{attempts}...", "warn")
+        await _persist(job)
         result = await client.login(username, password)
-        if isinstance(result, dict) and result.get('status') == 'success':
+        if isinstance(result, dict) and result.get("status") == "success":
             try:
-                recovered_char = int(result.get('char_id') or 0)
+                recovered_char = int(result.get("char_id") or 0)
             except (TypeError, ValueError):
                 recovered_char = 0
             if recovered_char and recovered_char != job.char_id:
-                job.add_log('Automatic relogin returned a different character; recovery aborted for safety.', 'error')
+                job.add_log(
+                    "Automatic relogin returned a different character; recovery aborted for safety.",
+                    "error",
+                )
                 return False
-            job.sessionkey = str(result['sessionkey'])
+
+            job.sessionkey = str(result["sessionkey"])
             job.session_generation += 1
+            job.relogin_count += 1
             job.session_update = {
-                'sessionkey': job.sessionkey,
-                'char_id': job.char_id,
-                'level': result.get('level'),
-                'xp': result.get('xp'),
-                'gold': result.get('gold'),
-                'tokens': result.get('tokens'),
-                'generation': job.session_generation,
+                "sessionkey": job.sessionkey,
+                "char_id": job.char_id,
+                "level": result.get("level"),
+                "xp": result.get("xp"),
+                "gold": result.get("gold"),
+                "tokens": result.get("tokens"),
+                "generation": job.session_generation,
             }
-            clan = job.runtime.get('clan')
+            clan = job.runtime.get("clan")
             if clan:
                 clan.update_session(job.sessionkey)
-            job.add_log('Automatic relogin successful. Cloud bot will continue with the new session.', 'info')
+            job.add_log(
+                "Automatic relogin successful. Cloud bot will continue with the new session.",
+                "info",
+            )
+            await _persist(job, active=True)
             return True
         if attempt < attempts:
-            await asyncio.sleep(retry_seconds)
+            if not await _sleep(
+                job, retry_seconds, "RECOVERING_SESSION", "Waiting before next relogin attempt"
+            ):
+                return False
 
-    job.add_log('Automatic relogin failed after all attempts.', 'error')
+    job.add_log("Automatic relogin failed after all attempts.", "error")
     return False
 
 
 async def _handle_666(job: CloudBotJob, client: NinjaSageClient) -> float:
     cfg = _settings()
-    cooldown = max(10, int(cfg.get('server_error_666_cooldown_seconds', 20) or 20))
-    job.add_log(f'Server rejection 666 detected. Cooling down {cooldown}s before checking the session.', 'warn')
-    await asyncio.sleep(cooldown)
+    cooldown = max(10, int(cfg.get("server_error_666_cooldown_seconds", 20) or 20))
+    job.add_log(
+        f"Server rejection 666 detected. Cooling down {cooldown}s before checking the session.",
+        "warn",
+    )
+    if not await _sleep(job, cooldown, "BACKOFF", "Server rejection 666 cooldown"):
+        return 0.0
 
     validation = await client.validate_session(job.sessionkey, job.char_id)
     if validation is True:
-        job.add_log('Session is still valid; treating 666 as a temporary server rejection.', 'warn')
-        return max(30.0, float(cfg.get('rate_limit_backoff_seconds', 30) or 30))
-    if validation is None:
-        delay = max(30.0, float(cfg.get('rate_limit_backoff_seconds', 30) or 30))
         job.add_log(
-            f'Session validation was inconclusive; keeping the current session and backing off {int(delay)}s.',
-            'warn',
+            "Session is still valid; treating 666 as a temporary server rejection.",
+            "warn",
+        )
+        return max(30.0, float(cfg.get("rate_limit_backoff_seconds", 30) or 30))
+    if validation is None:
+        delay = max(30.0, float(cfg.get("rate_limit_backoff_seconds", 30) or 30))
+        job.add_log(
+            f"Session validation was inconclusive; keeping the current session and backing off {int(delay)}s.",
+            "warn",
         )
         return delay
 
@@ -241,206 +458,411 @@ async def _handle_666(job: CloudBotJob, client: NinjaSageClient) -> float:
         job.failure_times.clear()
         return max(5.0, _delay(job.bot_type))
 
-    return max(60.0, float(cfg.get('circuit_cooldown_seconds', 120) or 120))
+    return max(60.0, float(cfg.get("circuit_cooldown_seconds", 120) or 120))
 
 
 async def _run_step(job: CloudBotJob, client: NinjaSageClient) -> StepResult:
     bt, sk, cid, params = job.bot_type, job.sessionkey, job.char_id, job.params
 
-    if bt == 'auto_level':
+    if bt == "auto_level":
         level = int(await get_or_fetch_char_level(client, sk, cid) or 1)
-        max_level = params.get('max_level')
+        max_level = params.get("max_level")
         if max_level is not None:
             try:
                 if level >= int(max_level):
-                    return StepResult(f'TARGET_REACHED: Character is level {level}; max target is {int(max_level)}.')
+                    return StepResult(
+                        f"TARGET_REACHED: Character is level {level}; max target is {int(max_level)}."
+                    )
             except (TypeError, ValueError):
                 pass
+
         if job.iteration > 0 and job.iteration % 10 == 0:
             try:
                 exam = await auto_exam(client, sk, cid)
-                if exam and 'No exams available' not in str(exam):
-                    job.add_log(f'[Exam] {exam}', 'info')
+                if exam and "No exams available" not in str(exam):
+                    job.add_log(f"[Exam] {exam}", "info")
             except Exception as exc:
-                job.add_log(f'[Exam] check skipped: {exc}', 'warn')
-        return StepResult(str(await run_mission(client, sk, cid, _mission_for_level(level))))
+                job.add_log(f"[Exam] check skipped: {exc}", "warn")
+        return StepResult(
+            str(await run_mission(client, sk, cid, _mission_for_level(level)))
+        )
 
-    if bt == 'auto_daily': return StepResult(str(await auto_daily_event(client, sk, cid)))
-    if bt == 'auto_hunting':
+    if bt == "auto_daily":
+        return StepResult(str(await auto_daily_event(client, sk, cid)))
+    if bt == "auto_hunting":
         result = str(await run_hunting(client, sk, cid, job.current_zone))
         job.current_zone = 1 if job.current_zone >= 5 else job.current_zone + 1
         return StepResult(result)
-    if bt == 'eudemon': return StepResult(str(await auto_eudemon(client, sk, cid)))
-    if bt == 'circus': return StepResult(str(await run_circus_event(client, sk, cid, boss_type=str(params.get('boss_type', 'ringmaster')))))
-    if bt == 'yokai': return StepResult(str(await run_yokai_event(client, sk, cid, boss_type=str(params.get('boss_type', 'kitsune')))))
-    if bt == 'yokai_minigame': return StepResult(str(await run_yokai_minigame(client, sk, cid)))
-    if bt == 'shadow_war':
+    if bt == "eudemon":
+        return StepResult(str(await auto_eudemon(client, sk, cid)))
+    if bt == "circus":
+        return StepResult(
+            str(
+                await run_circus_event(
+                    client, sk, cid, boss_type=str(params.get("boss_type", "ringmaster"))
+                )
+            )
+        )
+    if bt == "yokai":
+        return StepResult(
+            str(
+                await run_yokai_event(
+                    client, sk, cid, boss_type=str(params.get("boss_type", "kitsune"))
+                )
+            )
+        )
+    if bt == "yokai_minigame":
+        return StepResult(str(await run_yokai_minigame(client, sk, cid)))
+    if bt == "shadow_war":
         message = str(await auto_shadow_war(client, sk, cid))
-        match = re.match(r'^WAIT_RESOURCE:(\d+(?:\.\d+)?)\|(.*)$', message, flags=re.S)
+        match = re.match(r"^WAIT_RESOURCE:(\d+(?:\.\d+)?)\|(.*)$", message, flags=re.S)
         if match:
             return StepResult(match.group(2).strip(), float(match.group(1)))
         return StepResult(message)
-    if bt == 'monster': return StepResult(str(await auto_monster_hunt(client, sk, cid)))
-    if bt == 'mission_s': return StepResult(str(await auto_mission_s(client, sk, cid)))
-    if bt == 'mission':
-        mission_id = str(params.get('mission_id', '')).strip()
-        if not mission_id: raise ValueError('mission_id is required for mission bot')
+    if bt == "monster":
+        return StepResult(str(await auto_monster_hunt(client, sk, cid)))
+    if bt == "mission_s":
+        return StepResult(str(await auto_mission_s(client, sk, cid)))
+    if bt == "mission":
+        mission_id = str(params.get("mission_id", "")).strip()
+        if not mission_id:
+            raise ValueError("mission_id is required for mission bot")
         return StepResult(str(await run_auto_mission(client, sk, cid, mission_id)))
-    if bt == 'clan_war':
-        clan: Optional[CloudClanWarSession] = job.runtime.get('clan')
+    if bt == "clan_war":
+        clan: Optional[CloudClanWarSession] = job.runtime.get("clan")
         if clan is None:
             clan = CloudClanWarSession(job.sessionkey, cid, _settings())
-            job.runtime['clan'] = clan
+            job.runtime["clan"] = clan
         message, wait_seconds = await clan.step()
         return StepResult(message, wait_seconds)
-    raise ValueError(f'Unsupported bot_type: {bt}')
+    raise ValueError(f"Unsupported bot_type: {bt}")
 
 
 def _record_failure(job: CloudBotJob) -> bool:
     cfg = _settings()
     now = time.monotonic()
-    window = max(30, int(cfg.get('failure_window_seconds', 180) or 180))
-    maximum = max(3, int(cfg.get('max_failures_in_window', 6) or 6))
+    window = max(30, int(cfg.get("failure_window_seconds", 180) or 180))
+    maximum = max(3, int(cfg.get("max_failures_in_window", 6) or 6))
     job.failure_times.append(now)
     while job.failure_times and now - job.failure_times[0] > window:
         job.failure_times.popleft()
     return len(job.failure_times) >= maximum
 
 
-async def _maybe_scheduled_rest(job: CloudBotJob) -> None:
-    if job.bot_type not in {'auto_level', 'mission'}:
-        return
+async def _scheduled_rest(job: CloudBotJob) -> bool:
+    if job.bot_type not in {"auto_level", "mission"}:
+        return True
     cfg = _settings()
-    every = max(0, int(cfg.get('leveling_rest_every_cycles', 40) or 0))
-    duration = max(0, int(cfg.get('leveling_rest_duration_seconds', 60) or 0))
+    every = max(0, int(cfg.get("leveling_rest_every_cycles", 40) or 0))
+    duration = max(0, int(cfg.get("leveling_rest_duration_seconds", 60) or 0))
     if every and duration and job.iteration > 0 and job.iteration % every == 0:
-        job.add_log(f'Scheduled rest: {duration}s after {job.iteration} cycles.', 'info')
-        await asyncio.sleep(duration)
+        job.add_log(f"Scheduled rest: {duration}s after {job.iteration} cycles.", "info")
+        return await _sleep(job, duration, "PAUSED", "Periodic stability rest")
+    return True
 
 
 async def _job_loop(job: CloudBotJob) -> None:
     client = NinjaSageClient(persistent=True)
-    job.add_log(f'Cloud bot started: {job.bot_type}', 'info')
+    job.add_log(f"Cloud bot started: {job.bot_type}", "info")
+    await _persist(job, active=True)
+
     try:
+        if not await _wait_initial_schedule(job):
+            return
+
         while job.running:
+            if await _distributed_stop(job):
+                break
+
             try:
+                job.set_health("RUNNING", "Executing bot action")
+                await _persist(job)
                 result = await _run_step(job, client)
                 message = result.message
                 job.iteration += 1
 
-                if _is_failed(message):
+                failed = _is_failed(message)
+                if failed:
                     job.consecutive_failures += 1
-                    job.add_log(message, 'warn')
+                    job.failure_count += 1
+                    job.add_log(message, "warn")
                     circuit = _record_failure(job)
                 else:
                     job.consecutive_failures = 0
                     job.rate_limit_level = 0
-                    job.add_log(message, 'info')
+                    job.add_log(message, "info")
+                    _capture_rewards(job, message)
                     circuit = False
 
                 if _should_stop(job, message):
-                    job.add_log('Normal stop condition reached; cloud bot finished.', 'info')
+                    if _repeat_enabled(job, message):
+                        repeat = _repeat_seconds(job)
+                        job.add_log(
+                            f"Run completed. Scheduler will run it again in {repeat // 3600}h.",
+                            "info",
+                        )
+                        job.consecutive_failures = 0
+                        job.failure_times.clear()
+                        if not await _sleep(
+                            job, repeat, "SCHEDULED", "Waiting for the next scheduled run"
+                        ):
+                            break
+                        continue
+                    job.add_log("Normal stop condition reached; cloud bot finished.", "info")
                     break
 
                 if _is_666(message):
                     delay = await _handle_666(job, client)
+                    state = "BACKOFF"
+                    detail = "Server rejection recovery"
                 elif _is_rate_limit(message):
                     cfg = _settings()
-                    base = max(15, int(cfg.get('rate_limit_backoff_seconds', 30) or 30))
-                    maximum = max(base, int(cfg.get('rate_limit_backoff_max_seconds', 120) or 120))
+                    base = max(15, int(cfg.get("rate_limit_backoff_seconds", 30) or 30))
+                    maximum = max(
+                        base, int(cfg.get("rate_limit_backoff_max_seconds", 120) or 120)
+                    )
                     delay = min(maximum, base * (2 ** min(job.rate_limit_level, 3)))
                     job.rate_limit_level += 1
-                    job.add_log(f'Rate limit detected. Backing off for {delay}s.', 'warn')
+                    job.rate_limit_count += 1
+                    job.add_log(f"Rate limit detected. Backing off for {int(delay)}s.", "warn")
+                    state = "RATE_LIMITED"
+                    detail = "Respecting server rate limit"
                 elif circuit:
-                    delay = max(30, int(_settings().get('circuit_cooldown_seconds', 120) or 120))
-                    job.add_log(f'Too many failures in a short window. Circuit breaker cooling down {delay}s instead of killing the job.', 'warn')
+                    delay = max(
+                        30, int(_settings().get("circuit_cooldown_seconds", 120) or 120)
+                    )
+                    job.add_log(
+                        f"Too many failures in a short window. Circuit breaker cooling down {delay}s.",
+                        "warn",
+                    )
                     job.failure_times.clear()
+                    state = "CIRCUIT_BREAKER"
+                    detail = "Failure circuit breaker cooldown"
                 elif result.wait_seconds is not None:
                     delay = max(1.0, float(result.wait_seconds))
+                    state = "WAITING_RESOURCE"
+                    detail = "Waiting for game resource/cooldown"
                 elif job.consecutive_failures >= 3:
                     delay = max(30.0, _delay(job.bot_type))
-                    job.add_log(f'{job.consecutive_failures} consecutive failures; pausing {int(delay)}s before retry.', 'warn')
+                    job.add_log(
+                        f"{job.consecutive_failures} consecutive failures; pausing {int(delay)}s before retry.",
+                        "warn",
+                    )
+                    state = "BACKOFF"
+                    detail = "Consecutive failure backoff"
                 else:
                     delay = _delay(job.bot_type)
+                    state = "RUNNING"
+                    detail = "Normal cycle delay"
 
-                await _maybe_scheduled_rest(job)
-                if job.running:
-                    await asyncio.sleep(delay)
+                if not await _scheduled_rest(job):
+                    break
+                if job.running and delay > 0:
+                    if not await _sleep(job, delay, state, detail):
+                        break
 
             except ClanRateLimited as exc:
                 job.consecutive_failures += 1
-                job.add_log(f'Clan API rate limited. Respecting Retry-After/backoff for {exc.seconds}s.', 'warn')
-                await asyncio.sleep(exc.seconds)
+                job.failure_count += 1
+                job.rate_limit_count += 1
+                job.add_log(
+                    f"Clan API rate limited. Respecting Retry-After/backoff for {exc.seconds}s.",
+                    "warn",
+                )
+                if not await _sleep(
+                    job, exc.seconds, "RATE_LIMITED", "Clan API Retry-After"
+                ):
+                    break
             except asyncio.CancelledError:
                 raise
             except Exception as exc:
                 job.consecutive_failures += 1
-                text = f'Step error: {exc}'
-                job.add_log(text, 'error')
+                job.failure_count += 1
+                text = f"Step error: {exc}"
+                job.add_log(text, "error")
                 if _is_666(text):
-                    await asyncio.sleep(await _handle_666(job, client))
+                    delay = await _handle_666(job, client)
                 else:
                     _record_failure(job)
-                    await asyncio.sleep(max(15.0, _delay(job.bot_type)))
+                    delay = max(15.0, _delay(job.bot_type))
+                if not await _sleep(job, delay, "BACKOFF", "Recovering from step error"):
+                    break
 
     except asyncio.CancelledError:
-        job.add_log('Cloud bot cancelled by user.', 'info')
+        job.add_log("Cloud bot cancelled by user.", "info")
+        job.set_health("STOPPED", "Cancelled by user")
         raise
     finally:
-        clan = job.runtime.get('clan')
+        clan = job.runtime.get("clan")
         if clan is not None:
-            try: await clan.close()
-            except Exception: pass
+            try:
+                await clan.close()
+            except Exception:
+                pass
         await client.aclose()
         job.credentials.clear()
         job.running = False
         job.finished_at = time.time()
-        job.add_log('Cloud bot is now idle.', 'info')
+        if job.health_state not in {"STOPPED", "ERROR"}:
+            job.set_health("IDLE", "Cloud bot finished")
+        job.add_log("Cloud bot is now idle.", "info")
+        await _persist(job, active=False)
+        await cloud_store.clear_stop(job.char_id)
 
 
-async def start_job(sessionkey: str, char_id: int, bot_type: str, params: Optional[Dict[str, Any]] = None, credentials: Optional[Dict[str, str]] = None) -> Dict[str, Any]:
+async def start_job(
+    sessionkey: str,
+    char_id: int,
+    bot_type: str,
+    params: Optional[Dict[str, Any]] = None,
+    credentials: Optional[Dict[str, str]] = None,
+    *,
+    control_token: Optional[str] = None,
+    replace_existing: bool = True,
+) -> Dict[str, Any]:
     bot_type = str(bot_type).strip().lower()
-    if bot_type not in SUPPORTED_BOTS: raise ValueError(f'Unsupported bot_type: {bot_type}')
-    if not sessionkey: raise ValueError('sessionkey is required')
+    if bot_type not in SUPPORTED_BOTS:
+        raise ValueError(f"Unsupported bot_type: {bot_type}")
+    if not sessionkey:
+        raise ValueError("sessionkey is required")
+
     params = dict(params or {})
-    credentials = {str(k): str(v) for k, v in dict(credentials or {}).items() if v is not None}
+    credentials = {
+        str(k): str(v)
+        for k, v in dict(credentials or {}).items()
+        if v is not None
+    }
+
+    try:
+        scheduled = float(params.get("schedule_at") or 0)
+        if scheduled and scheduled < time.time() - 60:
+            raise ValueError("schedule_at is already in the past")
+    except (TypeError, ValueError) as exc:
+        if isinstance(exc, ValueError) and str(exc) == "schedule_at is already in the past":
+            raise
+        params.pop("schedule_at", None)
+
+    repeat = params.get("repeat_every_seconds")
+    if repeat not in (None, "", 0, "0"):
+        try:
+            repeat_i = int(repeat)
+        except (TypeError, ValueError):
+            raise ValueError("repeat_every_seconds must be an integer") from None
+        minimum = max(
+            3600, int(_settings().get("scheduler_min_repeat_seconds", 3600) or 3600)
+        )
+        if repeat_i < minimum:
+            raise ValueError(f"repeat_every_seconds must be at least {minimum}")
+        params["repeat_every_seconds"] = repeat_i
 
     async with _jobs_lock:
         existing = _jobs.get(char_id)
         if existing and existing.running and existing.task:
+            try:
+                future_schedule = float(params.get("schedule_at") or 0) > time.time() + 1
+            except (TypeError, ValueError):
+                future_schedule = False
+            if future_schedule:
+                raise ValueError("Stop the current cloud bot before scheduling another job")
+            if not replace_existing:
+                raise ValueError("A cloud bot is already running for this character")
             existing.running = False
             existing.task.cancel()
             await asyncio.gather(existing.task, return_exceptions=True)
-        token = secrets.token_urlsafe(32)
-        job = CloudBotJob(char_id=char_id, sessionkey=sessionkey, bot_type=bot_type, params=params, control_token=token, credentials=credentials)
-        _jobs[char_id] = job
-        job.task = asyncio.create_task(_job_loop(job), name=f'cloud-bot-{char_id}-{bot_type}')
+
+        token = control_token or secrets.token_urlsafe(32)
+        job = CloudBotJob(
+            char_id=int(char_id),
+            sessionkey=sessionkey,
+            bot_type=bot_type,
+            params=params,
+            control_token=token,
+            credentials=credentials,
+        )
+        _jobs[int(char_id)] = job
+        await cloud_store.clear_stop(int(char_id))
+        job.task = asyncio.create_task(
+            _job_loop(job), name=f"cloud-bot-{char_id}-{bot_type}"
+        )
 
     result = job.public_status()
-    result['control_token'] = token
+    result["control_token"] = token
     return result
 
 
 def _authorized_job(char_id: int, control_token: str) -> Optional[CloudBotJob]:
-    job = _jobs.get(char_id)
-    if job is None: return None
+    job = _jobs.get(int(char_id))
+    if job is None:
+        return None
     if not control_token or not secrets.compare_digest(job.control_token, control_token):
-        raise PermissionError('Invalid control token')
+        raise PermissionError("Invalid control token")
     return job
 
 
 async def stop_job(char_id: int, control_token: str) -> Dict[str, Any]:
     async with _jobs_lock:
         job = _authorized_job(char_id, control_token)
-        if job is None: return {'running': False, 'char_id': char_id, 'status': 'idle', 'logs': []}
-        if job.running and job.task:
-            job.running = False
-            job.task.cancel()
-            await asyncio.gather(job.task, return_exceptions=True)
-        return job.public_status()
+        if job is not None:
+            if job.running and job.task:
+                job.running = False
+                job.task.cancel()
+                await asyncio.gather(job.task, return_exceptions=True)
+            return job.public_status()
+
+    remote = await cloud_store.authorized_status(char_id, control_token)
+    if remote is None:
+        return {
+            "running": False,
+            "char_id": char_id,
+            "health": {"state": "IDLE", "detail": "No cloud job", "next_action_at": None},
+            "logs": [],
+        }
+    await cloud_store.request_stop(char_id)
+    remote["last_message"] = "Stop requested; waiting for worker acknowledgement."
+    return remote
 
 
 async def get_status(char_id: int, control_token: str) -> Dict[str, Any]:
     job = _authorized_job(char_id, control_token)
-    if job is None: return {'running': False, 'char_id': char_id, 'status': 'idle', 'logs': []}
-    return job.public_status()
+    if job is not None:
+        return job.public_status()
+
+    remote = await cloud_store.authorized_status(char_id, control_token)
+    if remote is not None:
+        return remote
+    return {
+        "running": False,
+        "char_id": char_id,
+        "health": {"state": "IDLE", "detail": "No cloud job", "next_action_at": None},
+        "analytics": {},
+        "logs": [],
+    }
+
+
+async def recover_persisted_jobs() -> int:
+    if not cloud_store.redis_configured() or cloud_store.queue_mode():
+        return 0
+    recovered = 0
+    for spec in await cloud_store.list_active_specs(include_queued=False):
+        token = str(spec.pop("control_token", "") or "")
+        spec.pop("active", None)
+        spec.pop("stored_at", None)
+        if not token:
+            continue
+        char_id = int(spec.get("char_id") or 0)
+        if not char_id or char_id in _jobs:
+            continue
+        try:
+            await start_job(
+                spec["sessionkey"],
+                char_id,
+                spec["bot_type"],
+                spec.get("params"),
+                spec.get("credentials"),
+                control_token=token,
+                replace_existing=False,
+            )
+            recovered += 1
+        except Exception:
+            continue
+    return recovered

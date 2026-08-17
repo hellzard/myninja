@@ -1,10 +1,17 @@
-const CACHE_NAME = 'ns-shadow-cache-v15-audit';
+const CACHE_NAME = 'ns-shadow-cache-v16-cloud-engine';
 const STATIC_ASSETS = [
   '/panel/',
   '/panel/index.html',
-  '/panel/style.css?v=5',
-  '/panel/cloud.js?v=3',
-  '/panel/app.js?v=15',
+  '/panel/style.css?v=6',
+  '/panel/cloud.js?v=4',
+  '/panel/app.js?v=16',
+  '/panel/modules/ui.js?v=4',
+  '/panel/modules/auth.js?v=4',
+  '/panel/modules/account.js?v=4',
+  '/panel/modules/analytics.js?v=4',
+  '/panel/modules/scheduler.js?v=4',
+  '/panel/modules/pwa.js?v=4',
+  '/panel/version.json',
   '/panel/manifest.json',
   '/panel/offline.html',
   '/panel/assets/icon-192.png',
@@ -15,12 +22,16 @@ const STATIC_ASSETS = [
 ];
 
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS).catch(() => undefined)));
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(STATIC_ASSETS).catch(() => undefined))
+  );
 });
 
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))))
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))))
       .then(() => self.clients.claim())
   );
 });
@@ -63,7 +74,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  if (/\.(?:js|css)$/.test(url.pathname)) {
+  if (/\.(?:js|css|json)$/.test(url.pathname)) {
     event.respondWith(networkFirst(request));
     return;
   }

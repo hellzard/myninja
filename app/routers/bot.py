@@ -1,8 +1,12 @@
+from __future__ import annotations
+
+import secrets
 from typing import Any, Dict, Optional
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
+from app.services import cloud_store
 from app.services.cloud_bot_runner import get_status, start_job, stop_job
 from app.services.ninjasage_client import NinjaSageClient
 
@@ -13,10 +17,14 @@ class CloudCredentials(BaseModel):
     username: Optional[str] = None
     password: Optional[str] = None
     user: Optional[str] = None
-    pass_: Optional[str] = Field(default=None, alias='pass')
+    pass_: Optional[str] = Field(default=None, alias="pass")
 
     def safe_dict(self) -> Dict[str, str]:
-        data = self.model_dump(by_alias=True) if hasattr(self, 'model_dump') else self.dict(by_alias=True)
+        data = (
+            self.model_dump(by_alias=True)
+            if hasattr(self, "model_dump")
+            else self.dict(by_alias=True)
+        )
         return {k: str(v) for k, v in data.items() if v}
 
 
@@ -33,46 +41,66 @@ class CloudBotControlRequest(BaseModel):
     control_token: str = Field(min_length=1)
 
 
-@router.post('/bot-api/check-version')
+@router.post("/bot-api/check-version")
 async def check_version():
     client = NinjaSageClient()
     try:
         response = await client.check_version()
-        return {'status': 'success', 'data': response}
+        return {"status": "success", "data": response}
     except Exception as exc:
-        return {'status': 'error', 'message': str(exc)}
+        return {"status": "error", "message": str(exc)}
     finally:
         await client.aclose()
 
 
-@router.post('/api/bot/cloud/start')
+@router.get("/api/bot/cloud/engine")
+async def cloud_engine():
+    return {"status": "success", "engine": await cloud_store.engine_info()}
+
+
+@router.post("/api/bot/cloud/start")
 async def cloud_start(req: CloudBotStartRequest):
     try:
         credentials = req.credentials.safe_dict() if req.credentials else None
-        result = await start_job(req.sessionkey, req.char_id, req.bot_type, req.params, credentials)
-        return {'status': 'success', 'job': result}
+        if cloud_store.queue_mode():
+            token = secrets.token_urlsafe(32)
+            spec = {
+                "sessionkey": req.sessionkey,
+                "char_id": req.char_id,
+                "bot_type": req.bot_type,
+                "params": dict(req.params or {}),
+                "credentials": credentials or {},
+            }
+            result = await cloud_store.enqueue_start(spec, token)
+        else:
+            result = await start_job(
+                req.sessionkey, req.char_id, req.bot_type, req.params, credentials
+            )
+        return {"status": "success", "job": result}
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
-@router.post('/api/bot/cloud/stop')
+@router.post("/api/bot/cloud/stop")
 async def cloud_stop(req: CloudBotControlRequest):
     try:
         result = await stop_job(req.char_id, req.control_token)
-        return {'status': 'success', 'job': result}
+        return {"status": "success", "job": result}
     except PermissionError as exc:
         raise HTTPException(status_code=403, detail=str(exc)) from exc
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
-@router.post('/api/bot/cloud/status')
+@router.post("/api/bot/cloud/status")
 async def cloud_status(req: CloudBotControlRequest):
     try:
         result = await get_status(req.char_id, req.control_token)
-        return {'status': 'success', 'job': result}
+        return {"status": "success", "job": result}
     except PermissionError as exc:
         raise HTTPException(status_code=403, detail=str(exc)) from exc
     except Exception as exc:

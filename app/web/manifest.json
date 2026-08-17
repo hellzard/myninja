@@ -1,13 +1,15 @@
 {
+  "id": "/panel/",
   "name": "Ninja Sage - Shadow Bot Panel",
   "short_name": "NinjaSage",
-  "description": "Automated Cyber Shadow Bot & Intelligence Terminal for Ninja Sage",
-  "start_url": "/panel/index.html",
+  "description": "Cloud automation dashboard for Ninja Sage",
+  "start_url": "/panel/",
   "scope": "/panel/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#050507",
   "theme_color": "#ea580c",
+  "lang": "en",
   "categories": [
     "games",
     "utilities"

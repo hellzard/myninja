@@ -740,3 +740,100 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 768px) {
   .terminal-window { scroll-behavior: auto; }
 }
+
+/* === Cloud Engine v4 === */
+.ns-analytics {
+  margin-top: .9rem;
+  padding: .85rem;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px;
+  background: rgba(2,6,23,.42);
+}
+.ns-health-row {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  flex-wrap: wrap;
+  margin-bottom: .7rem;
+}
+.ns-health-badge {
+  padding: .3rem .55rem;
+  border-radius: 999px;
+  font: 700 .67rem/1 'JetBrains Mono', monospace;
+  letter-spacing: .04em;
+  background: rgba(100,116,139,.18);
+  color: #cbd5e1;
+  border: 1px solid rgba(148,163,184,.25);
+}
+.ns-health-badge[data-state="RUNNING"] { color:#86efac; border-color:rgba(34,197,94,.35); background:rgba(34,197,94,.12); }
+.ns-health-badge[data-state="SCHEDULED"],
+.ns-health-badge[data-state="QUEUED"] { color:#7dd3fc; border-color:rgba(56,189,248,.35); background:rgba(56,189,248,.12); }
+.ns-health-badge[data-state="BACKOFF"],
+.ns-health-badge[data-state="RATE_LIMITED"],
+.ns-health-badge[data-state="CIRCUIT_BREAKER"],
+.ns-health-badge[data-state="RECOVERING_SESSION"],
+.ns-health-badge[data-state="WAITING_RESOURCE"],
+.ns-health-badge[data-state="PAUSED"] { color:#fcd34d; border-color:rgba(245,158,11,.35); background:rgba(245,158,11,.12); }
+.ns-health-badge[data-state="ERROR"],
+.ns-health-badge[data-state="STOPPED"] { color:#fca5a5; border-color:rgba(239,68,68,.35); background:rgba(239,68,68,.12); }
+.ns-health-detail { color: var(--text-muted); font-size: .74rem; flex: 1; min-width: 120px; }
+.ns-next-action { color: var(--primary-light); font: 500 .68rem 'JetBrains Mono', monospace; }
+
+.ns-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: .45rem;
+}
+.ns-mini-stat {
+  min-width: 0;
+  padding: .55rem;
+  border-radius: 9px;
+  background: rgba(255,255,255,.035);
+  border: 1px solid rgba(255,255,255,.055);
+}
+.ns-mini-stat small { display:block; color:var(--text-muted); font-size:.62rem; margin-bottom:.2rem; }
+.ns-mini-stat strong { display:block; overflow:hidden; text-overflow:ellipsis; font-size:.83rem; color:#f8fafc; }
+
+#ns-toast-host {
+  position: fixed; right: 1rem; bottom: calc(1rem + env(safe-area-inset-bottom,0px));
+  z-index: 4000; display:flex; flex-direction:column; gap:.5rem; max-width:min(360px,calc(100vw - 2rem));
+}
+.ns-toast {
+  transform: translateY(10px); opacity:0;
+  padding:.75rem .9rem; border-radius:10px;
+  background:rgba(15,23,42,.96); color:#e2e8f0;
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 12px 32px rgba(0,0,0,.35);
+  transition:opacity .18s ease, transform .18s ease;
+  font-size:.82rem;
+}
+.ns-toast.show { transform:translateY(0); opacity:1; }
+.ns-toast-warn { border-color:rgba(245,158,11,.35); }
+.ns-toast-error { border-color:rgba(239,68,68,.38); }
+
+.ns-update-banner {
+  position: fixed; left:50%; bottom:calc(1rem + env(safe-area-inset-bottom,0px)); transform:translateX(-50%);
+  z-index:3500; width:min(680px,calc(100vw - 1.5rem));
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  padding:.8rem 1rem; border-radius:14px;
+  background:rgba(10,14,24,.97); border:1px solid rgba(234,88,12,.36);
+  box-shadow:0 16px 40px rgba(0,0,0,.42),0 0 24px rgba(234,88,12,.12);
+}
+.ns-update-banner > div:first-child { min-width:0; }
+.ns-update-banner strong { display:block; font-size:.85rem; }
+.ns-update-banner small { display:block; margin-top:.2rem; color:var(--text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ns-update-actions { display:flex; gap:.45rem; flex-shrink:0; }
+
+.ns-scheduler-modal .input-field { max-width: 220px; }
+.ns-scheduler-note {
+  color:var(--text-muted); font-size:.76rem; line-height:1.5;
+  padding:.7rem; border-radius:10px; background:rgba(255,255,255,.035);
+}
+
+@media (max-width: 768px) {
+  .ns-metric-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .ns-update-banner { align-items:flex-start; flex-direction:column; }
+  .ns-update-actions { width:100%; }
+  .ns-update-actions .btn { flex:1; }
+  .ns-scheduler-modal .input-field { max-width: 145px; }
+}

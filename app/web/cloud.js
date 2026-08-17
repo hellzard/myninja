@@ -2,6 +2,7 @@
   'use strict';
 
   window.__nsCloudController = true;
+  window.NinjaCloud = window.NinjaCloud || {};
 
   const CLOUD_ENDPOINT = '/api/bot/cloud';
   const VISIBLE_POLL_MS = 3000;
@@ -222,6 +223,9 @@
         updateStatsFromMessage(entry.message);
       }
     }
+
+    window.__nsLastCloudJob = job || {};
+    window.dispatchEvent(new CustomEvent('ns:cloud-status', { detail: job || {} }));
   }
 
   async function startCloudBot(def, button) {
@@ -570,18 +574,24 @@
     }
   }, true);
 
+
+  window.NinjaCloud.refreshStatus = refreshCloudStatus;
+  window.NinjaCloud.stop = stopCurrentCloudBot;
+  window.NinjaCloud.refreshStats = refreshStats;
+  window.stopCurrentBot = () => stopCurrentCloudBot();
+
   window.addEventListener('load', async () => {
     ensureWarModule();
     ensureAdvancedSettingsUI();
     await loadCloudSettings();
     window.loadSettings = loadCloudSettings;
     window.saveSettings = saveCloudSettings;
+    document.getElementById('btn-save-settings')?.addEventListener('click', saveCloudSettings);
     const session = getSession();
     lastLogSeq = 0; // Replay retained server history with each entry's real timestamp after reopening.
     await refreshCloudStatus();
     if (!activeBotType) await refreshStats(false);
     restartPolling();
     startStatsTimer();
-    registerFreshServiceWorker();
   });
 })();

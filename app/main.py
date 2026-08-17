@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Response, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
@@ -5,6 +6,8 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from app.routers import auth, character, gateway, bot
 from app.services.ninjasage_client import NinjaSageClient
+from app.services.cloud_bot_runner import recover_persisted_jobs
+from app.services import cloud_store
 from app.services.bot_manager import (
     auto_daily_gacha,
     auto_giveaway,
@@ -68,7 +71,18 @@ class AutoEventRequest(BaseModel):
 # -----------------
 # FastAPI App
 # -----------------
-app = FastAPI(title="Ninja Sage API", description="Remake API for Ninja Sage")
+@asynccontextmanager
+async def cloud_lifespan(app: FastAPI):
+    recovered = await recover_persisted_jobs()
+    if recovered:
+        print(f"[Cloud Engine v4] Recovered {recovered} persisted job(s).")
+    try:
+        yield
+    finally:
+        await cloud_store.close()
+
+
+app = FastAPI(title="Ninja Sage API", description="Remake API for Ninja Sage", lifespan=cloud_lifespan)
 
 app.mount("/panel", StaticFiles(directory="app/web", html=True), name="panel")
 

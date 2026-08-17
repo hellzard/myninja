@@ -4,3 +4,4 @@ requests==2.32.3
 uvicorn==0.30.4
 httpx
 pycryptodomex
+redis>=5.0,<7.0
