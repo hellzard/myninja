@@ -1,0 +1,17 @@
+{
+  "release": "6.0.0",
+  "schema_version": 1,
+  "minimum_previous_version": "5.1.0",
+  "capabilities": {
+    "durable_journal": "optional",
+    "passkey_guard": "optional",
+    "replay_simulator": true,
+    "reliability_score": true,
+    "global_orchestrator": true,
+    "autonomous_policy_engine": true,
+    "playwright_e2e": true,
+    "supply_chain_security": true
+  },
+  "recovery_policy": "Never automatically repeat an action that was in-flight when the process stopped.",
+  "premium_resource_policy": "Autonomous policy engine forbids automatic premium-resource spending."
+}

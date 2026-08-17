@@ -19,7 +19,7 @@ except Exception:  # redis is optional in local/in-process mode
 REDIS_URL = os.getenv("REDIS_URL", "").strip()
 ENGINE_MODE = os.getenv("BOT_ENGINE_MODE", "web").strip().lower()
 STATE_SECRET = os.getenv("BOT_STATE_SECRET", "").strip()
-PREFIX = os.getenv("BOT_STATE_PREFIX", "myninja:v5").strip() or "myninja:v5"
+PREFIX = os.getenv("BOT_STATE_PREFIX", "myninja:v6").strip() or "myninja:v6"
 
 _client = None
 
@@ -388,7 +388,7 @@ async def dequeue_start(timeout_seconds: int = 2) -> Optional[Dict[str, Any]]:
 
 async def engine_info() -> Dict[str, Any]:
     return {
-        "version": "5.0.0",
+        "version": "6.0.0",
         "mode": persistence_mode(),
         "engine_mode_env": ENGINE_MODE,
         "redis_configured": redis_configured(),

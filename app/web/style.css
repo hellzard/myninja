@@ -876,3 +876,21 @@ h1, h2, h3, h4, h5, h6 {
   .ns-recipe-step .rs-mission,.ns-recipe-step .rs-actions{grid-column:auto}
   .ns-recipe-step .input-field,.ns-recipe-step .btn{min-height:44px}
 }
+
+
+/* === Autonomous Operations Center v6 === */
+.ns-panel-guard{position:fixed;inset:0;z-index:100000;display:none;place-items:center;padding:1rem;background:rgba(2,6,23,.92);backdrop-filter:blur(12px)}
+.ns-panel-guard.show{display:grid}.ns-panel-guard-card{width:min(460px,100%);padding:1.4rem;text-align:center}
+.ns-guard-icon{font-size:2.2rem;color:#67e8f9;margin-bottom:.7rem}.ns-panel-guard-card .btn{width:100%;margin-top:.75rem;min-height:46px}
+.ns-panel-guard-card label{display:block;text-align:left;margin-top:1rem;color:var(--text-muted);font-size:.8rem}
+#ns-guard-status{display:block;margin-top:.75rem;color:var(--text-muted)}#ns-guard-status[data-level="error"]{color:#fca5a5}
+.ns-v6-modal{width:min(760px,calc(100vw - 2rem));max-height:88vh;overflow:auto;overscroll-behavior:contain}
+.ns-v6-note{color:var(--text-muted);font-size:.82rem;margin:.25rem 0 1rem}.ns-v6-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}
+.ns-v6-grid label{font-size:.76rem;color:var(--text-muted)}.ns-v6-grid .input-field{display:block;width:100%;margin-top:.3rem}
+.ns-v6-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin:1rem 0}.ns-v6-pre{white-space:pre-wrap;word-break:break-word;max-height:360px;overflow:auto;background:rgba(0,0,0,.25);padding:.8rem;border-radius:10px;font:500 .7rem 'JetBrains Mono',monospace}
+.ns-v6-check{display:flex;gap:.55rem;align-items:center;margin:.7rem 0;color:var(--text-muted);font-size:.82rem}
+.ns-reliability{border:1px solid rgba(103,232,249,.2);background:rgba(8,145,178,.08);color:#a5f3fc;border-radius:999px;padding:.25rem .5rem;font:700 .62rem 'JetBrains Mono',monospace;cursor:pointer}
+.ns-reliability[data-label="UNSTABLE"]{color:#fca5a5;border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.08)}
+.ns-reliability[data-label="DEGRADED"]{color:#fde68a;border-color:rgba(245,158,11,.25);background:rgba(245,158,11,.08)}
+.ns-build-chip{display:inline-flex;margin-bottom:.7rem;padding:.3rem .55rem;border-radius:999px;background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.14);color:#a5f3fc;font-size:.68rem}
+@media(max-width:600px){.ns-v6-grid{grid-template-columns:1fr}.ns-v6-modal{width:calc(100vw - 1rem);max-height:92vh}.ns-v6-actions .btn{flex:1;min-height:44px}}

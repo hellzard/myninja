@@ -1,13 +1,14 @@
 from contextlib import asynccontextmanager
+import time
 from fastapi import FastAPI, Response, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 from typing import Optional
-from app.routers import auth, character, gateway, bot
+from app.routers import auth, character, gateway, bot, v6
 from app.services.ninjasage_client import NinjaSageClient
 from app.services.cloud_bot_runner import recover_persisted_jobs, flush_jobs
-from app.services import cloud_store
+from app.services import cloud_store, durable_journal, panel_guard, release_manager, slo
 from app.services.observability import configure as configure_observability
 from app.services.bot_manager import (
     auto_daily_gacha,
@@ -23,7 +24,6 @@ from app.services.bot_manager import (
     auto_eudemon,
     run_circus_event,
     run_yokai_event,
-    exploit_gacha_race,
     update_char_snapshot
 )
 
@@ -74,14 +74,26 @@ class AutoEventRequest(BaseModel):
 # -----------------
 @asynccontextmanager
 async def cloud_lifespan(app: FastAPI):
-    recovered = await recover_persisted_jobs()
-    if recovered:
-        print(f"[Control Center v5] Recovered {recovered} persisted job(s).")
+    release_manager.validate_startup()
+    await durable_journal.initialize()
+    recovered_redis = await recover_persisted_jobs()
+    recovered_journal = await durable_journal.recover_jobs()
+    if recovered_redis or recovered_journal.get("recovered"):
+        print(
+            f"[Control Center v6] Recovered Redis={recovered_redis}, "
+            f"Journal={recovered_journal.get('recovered', 0)} job(s)."
+        )
+    if recovered_journal.get("needs_confirmation"):
+        print(
+            f"[Control Center v6] {recovered_journal['needs_confirmation']} "
+            "job(s) require human recovery confirmation."
+        )
     try:
         yield
     finally:
         await flush_jobs()
         await cloud_store.close()
+        await durable_journal.close()
 
 
 app = FastAPI(title="Ninja Sage API", description="Remake API for Ninja Sage", lifespan=cloud_lifespan)
@@ -93,6 +105,7 @@ app.include_router(auth.router, tags=["Authentication"])
 app.include_router(character.router, tags=["Character"])
 app.include_router(gateway.router, tags=["Gateway"])
 app.include_router(bot.router, tags=["Bot API"])
+app.include_router(v6.router, tags=["Control Center v6"])
 
 @app.get("/")
 def read_root():
@@ -102,13 +115,36 @@ def read_root():
 def healthz():
     return {"status": "ok"}
 
+
+@app.get("/readyz", include_in_schema=False)
+async def readyz():
+    return await release_manager.readiness()
+
 @app.middleware("http")
 async def add_security_headers(request: Request, call_next):
+    started = time.perf_counter()
+    guard_response = await panel_guard.guard_http(request)
+    if guard_response is not None:
+        return guard_response
+
     response = await call_next(request)
+    duration_ms = (time.perf_counter() - started) * 1000.0
+    slo.observe(request.url.path, response.status_code, duration_ms)
+
     response.headers.setdefault("X-Content-Type-Options", "nosniff")
     response.headers.setdefault("X-Frame-Options", "DENY")
     response.headers.setdefault("Referrer-Policy", "same-origin")
     response.headers.setdefault("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
+    response.headers.setdefault(
+        "Content-Security-Policy",
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; "
+        "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; "
+        "img-src 'self' data: blob:; "
+        "connect-src 'self' ws: wss: https:; "
+        "object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+    )
     if request.url.path.startswith("/api/"):
         response.headers.setdefault("Cache-Control", "no-store")
     return response
@@ -262,13 +298,11 @@ async def api_auto_yokai_minigame(req: BasicBotRequest):
 
 @app.post("/api/bot/exploit_gacha")
 async def api_exploit_gacha(req: ExploitGachaRequest):
-    client = NinjaSageClient()
-    try:
-        from app.services.bot_manager import exploit_gacha_race
-        res = await exploit_gacha_race(client, req.sessionkey, req.char_id, req.coin_type, req.spam_count)
-        return {"status": "success", "message": res}
-    except Exception as e:
-        return {"status": "error", "message": str(e)}
+    return Response(
+        content='{"status":"error","message":"Experimental endpoint disabled in Control Center v6."}',
+        status_code=410,
+        media_type="application/json",
+    )
 
 @app.post("/api/bot/get_stats")
 async def api_get_stats(req: BasicBotRequest):

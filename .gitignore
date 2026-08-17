@@ -5,3 +5,7 @@ __pycache__/
 .DS_Store
 .upgrade_backup_v*/
 sage_settings_history.json
+.env.v6
+.playwright/
+test-results/
+playwright-report/

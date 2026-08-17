@@ -7,7 +7,7 @@ from typing import Any, Dict, Optional
 from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect
 from pydantic import BaseModel, Field
 
-from app.services import cloud_store, event_bus, notifications, diagnostics, recipes
+from app.services import cloud_store, event_bus, notifications, diagnostics, recipes, panel_guard
 from app.services.cloud_bot_runner import get_status, start_job, stop_job, engine_metrics
 from app.services.settings_manager import load_settings, list_setting_snapshots, restore_setting_snapshot
 from app.services.ninjasage_client import NinjaSageClient
@@ -152,6 +152,9 @@ async def cloud_ws_ticket(req: CloudBotControlRequest):
 
 @router.websocket("/api/bot/cloud/ws/{char_id}")
 async def cloud_ws(websocket: WebSocket, char_id: int, ticket: str):
+    if not await panel_guard.websocket_allowed(websocket):
+        await websocket.close(code=1008)
+        return
     control_token = await event_bus.consume_ticket(ticket, char_id)
     if not control_token:
         await websocket.close(code=1008)

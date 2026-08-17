@@ -1,7 +1,7 @@
 {
   "id": "/panel/",
-  "name": "Ninja Sage Control Center",
-  "short_name": "NinjaSage",
+  "name": "Ninja Sage Autonomous Operations Center",
+  "short_name": "NinjaOps",
   "description": "Real-time automation control center for Ninja Sage",
   "start_url": "/panel/",
   "scope": "/panel/",
@@ -32,6 +32,28 @@
       "sizes": "1024x1024",
       "type": "image/png",
       "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Automation Studio",
+      "short_name": "Automations",
+      "url": "/panel/?open=recipes"
+    },
+    {
+      "name": "Flight Recorder",
+      "short_name": "History",
+      "url": "/panel/?open=history"
+    },
+    {
+      "name": "Autonomous Plan",
+      "short_name": "Autopilot",
+      "url": "/panel/?open=autopilot"
+    },
+    {
+      "name": "Replay Simulator",
+      "short_name": "Replay",
+      "url": "/panel/?open=replay"
     }
   ]
 }

@@ -1,12 +1,14 @@
 {
-  "version": "5.1.0",
-  "build": "hardening-and-polish",
+  "version": "6.0.0",
+  "build": "autonomous-operations-center",
   "released": "2026-08-17",
   "changelog": [
-    "WebSocket heartbeat, stale-connection watchdog, bfcache-safe reconnect and compact status payloads",
-    "Per-character Flight Recorder retention, storage quota recovery and persistent-storage controls",
-    "Action-accurate analytics, warm-up confidence and conservative ETA",
-    "Recipe repeat reset, safety-cap aborts, mission parameter validation and improved dry-run",
-    "Long-session event-bus metrics, expanded regression tests and mobile polish"
+    "Optional Postgres durable job journal with encrypted crash recovery and uncertain-action confirmation",
+    "Optional WebAuthn passkey panel guard, exact-origin validation, signed panel sessions and API rate limiting",
+    "Offline Replay Simulator, Reliability Score and robust latency anomaly detection",
+    "Global multi-character action arbiter to prevent synchronized request bursts",
+    "Deterministic policy-driven Autonomous Operations planner with human confirmation and no premium-resource automation",
+    "Release readiness metadata, startup validation and migration compatibility checks",
+    "Playwright browser regression lab, Dependabot, Dependency Review and CodeQL supply-chain workflows"
   ]
 }

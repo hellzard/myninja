@@ -27,7 +27,7 @@ from app.services.bot_manager import (
 from app.services.clan_war_cloud import ClanRateLimited, CloudClanWarSession
 from app.services.ninjasage_client import NinjaSageClient
 from app.services.settings_manager import load_settings
-from app.services import cloud_store, event_bus, notifications, recipes
+from app.services import cloud_store, event_bus, notifications, recipes, durable_journal, orchestrator
 
 
 SUPPORTED_BOTS = {
@@ -67,6 +67,7 @@ class CloudBotJob:
     bot_type: str
     params: Dict[str, Any]
     control_token: str
+    job_id: str = field(default_factory=lambda: secrets.token_hex(16))
     credentials: Dict[str, str] = field(default_factory=dict, repr=False)
     created_at: float = field(default_factory=time.time)
     finished_at: Optional[float] = None
@@ -208,6 +209,7 @@ class CloudBotJob:
             "running": self.running,
             "bot_type": self.bot_type,
             "char_id": self.char_id,
+            "job_id": self.job_id,
             "params": safe_params,
             "iteration": self.iteration,
             "action_count": self.action_count,
@@ -402,9 +404,11 @@ async def _persist(job: CloudBotJob, *, active: Optional[bool] = None) -> None:
     await event_bus.publish_status(job.char_id, realtime_status)
     pending = [event for event in job.events if int(event.get("seq") or 0) > job.last_published_event_seq]
     for event in pending:
+        await durable_journal.record_event(job, event)
         await event_bus.publish_event(job.char_id, event)
         await notifications.notify_event(job.char_id, event)
         job.last_published_event_seq = max(job.last_published_event_seq, int(event.get("seq") or 0))
+    await durable_journal.save_snapshot(job)
     if active is not None and cloud_store.redis_configured():
         spec = {
             "sessionkey": job.sessionkey,
@@ -759,6 +763,45 @@ def _record_failure(job: CloudBotJob) -> bool:
     return len(job.failure_times) >= maximum
 
 
+def _will_execute_action(job: CloudBotJob) -> bool:
+    if job.bot_type != "recipe":
+        return True
+    try:
+        normalized = recipes.validate_recipe(job.params.get("recipe"))
+        runtime = job.runtime.get("recipe_state") or {}
+        index = int(runtime.get("index") or 0)
+        if index >= len(normalized["steps"]):
+            return False
+        return normalized["steps"][index].get("kind") == "bot"
+    except Exception:
+        return True
+
+
+def _apply_resume_state(job: CloudBotJob, state: Optional[Dict[str, Any]]) -> None:
+    if not isinstance(state, dict):
+        return
+    numeric = (
+        "iteration", "action_count", "success_count", "failure_count",
+        "rate_limit_count", "relogin_count", "earned_xp", "earned_gold",
+        "earned_token", "current_zone", "session_generation",
+    )
+    for key in numeric:
+        if key in state:
+            try:
+                setattr(job, key, int(state[key]))
+            except (TypeError, ValueError):
+                pass
+    runtime = state.get("runtime")
+    if isinstance(runtime, dict):
+        job.runtime.update(runtime)
+    for key in ("created_at", "first_action_at", "last_action_at"):
+        if state.get(key) is not None:
+            try:
+                setattr(job, key, float(state[key]))
+            except (TypeError, ValueError):
+                pass
+
+
 async def _scheduled_rest(job: CloudBotJob) -> bool:
     active_type = _active_delay_type(job)
     if active_type not in {"auto_level", "mission"}:
@@ -777,6 +820,7 @@ async def _job_loop(job: CloudBotJob) -> None:
     client = NinjaSageClient(persistent=True)
     job.add_log(f"Cloud bot started: {job.bot_type}", "info")
     job.record_event("JOB_STARTED", {"bot_type": job.bot_type})
+    await durable_journal.job_started(job)
     await _persist(job, active=True)
 
     try:
@@ -787,9 +831,15 @@ async def _job_loop(job: CloudBotJob) -> None:
             if await _distributed_stop(job):
                 break
 
+            action_marker = ""
             try:
                 job.set_health("RUNNING", "Executing bot action")
                 await _persist(job)
+                if _will_execute_action(job):
+                    fairness_wait = await orchestrator.wait_turn(job.char_id)
+                    if fairness_wait > 0:
+                        job.record_event("ORCHESTRATOR_WAIT", {"seconds": fairness_wait})
+                    action_marker = await durable_journal.action_started(job)
                 result = await _run_step(job, client)
                 message = result.message
                 job.iteration += 1
@@ -823,6 +873,11 @@ async def _job_loop(job: CloudBotJob) -> None:
                     if count_action:
                         _capture_rewards(job, message)
                     circuit = False
+
+                if action_marker:
+                    await durable_journal.action_finished(
+                        job, action_marker, success=not failed, message=message
+                    )
 
                 if count_action:
                     job.record_event("ACTION_RESULT", {
@@ -910,6 +965,10 @@ async def _job_loop(job: CloudBotJob) -> None:
                         break
 
             except ClanRateLimited as exc:
+                if action_marker:
+                    await durable_journal.action_finished(
+                        job, action_marker, success=False, message=str(exc)
+                    )
                 job.consecutive_failures += 1
                 job.failure_count += 1
                 job.rate_limit_count += 1
@@ -922,8 +981,16 @@ async def _job_loop(job: CloudBotJob) -> None:
                 ):
                     break
             except asyncio.CancelledError:
+                if action_marker:
+                    await durable_journal.action_uncertain(
+                        job, action_marker, "Action cancelled before confirmation"
+                    )
                 raise
             except Exception as exc:
+                if action_marker:
+                    await durable_journal.action_uncertain(
+                        job, action_marker, f"Step exception before confirmation: {exc}"
+                    )
                 job.consecutive_failures += 1
                 job.failure_count += 1
                 text = f"Step error: {exc}"
@@ -956,6 +1023,7 @@ async def _job_loop(job: CloudBotJob) -> None:
         job.add_log("Cloud bot is now idle.", "info")
         job.record_event("JOB_STOPPED", {"state": job.health_state, "iteration": job.iteration})
         await _persist(job, active=False)
+        await durable_journal.job_finished(job)
         await cloud_store.clear_stop(job.char_id)
 
 
@@ -968,6 +1036,8 @@ async def start_job(
     *,
     control_token: Optional[str] = None,
     replace_existing: bool = True,
+    resume_state: Optional[Dict[str, Any]] = None,
+    recovered_job_id: Optional[str] = None,
 ) -> Dict[str, Any]:
     bot_type = str(bot_type).strip().lower()
     if bot_type not in SUPPORTED_BOTS:
@@ -1028,8 +1098,10 @@ async def start_job(
             bot_type=bot_type,
             params=params,
             control_token=token,
+            job_id=str(recovered_job_id or secrets.token_hex(16)),
             credentials=credentials,
         )
+        _apply_resume_state(job, resume_state)
         _jobs[int(char_id)] = job
         await cloud_store.clear_stop(int(char_id))
         job.task = asyncio.create_task(
