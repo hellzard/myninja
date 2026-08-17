@@ -1,10 +1,10 @@
-const CACHE_NAME = 'ns-shadow-cache-v17-control-center';
+const CACHE_NAME = 'ns-shadow-cache-v18-hardening';
 const STATIC_ASSETS = [
-  '/panel/','/panel/index.html','/panel/style.css?v=7','/panel/cloud.js?v=5','/panel/app.js?v=17',
-  '/panel/modules/ui.js?v=5','/panel/modules/sync.js?v=5','/panel/modules/workspace.js?v=5','/panel/modules/auth.js?v=5',
-  '/panel/modules/account.js?v=5','/panel/modules/realtime.js?v=5','/panel/modules/history.js?v=5','/panel/modules/analytics.js?v=5',
-  '/panel/modules/scheduler.js?v=5','/panel/modules/recipes.js?v=5','/panel/modules/diagnostics.js?v=5','/panel/modules/notifications.js?v=5',
-  '/panel/modules/pwa.js?v=5','/panel/modules/navigation.js?v=5','/panel/version.json','/panel/manifest.json','/panel/offline.html',
+  '/panel/','/panel/index.html','/panel/style.css?v=8','/panel/cloud.js?v=51','/panel/app.js?v=18',
+  '/panel/modules/ui.js?v=51','/panel/modules/sync.js?v=51','/panel/modules/workspace.js?v=51','/panel/modules/auth.js?v=51',
+  '/panel/modules/account.js?v=51','/panel/modules/realtime.js?v=51','/panel/modules/history.js?v=51','/panel/modules/analytics.js?v=51',
+  '/panel/modules/scheduler.js?v=51','/panel/modules/recipes.js?v=51','/panel/modules/diagnostics.js?v=51','/panel/modules/notifications.js?v=51',
+  '/panel/modules/pwa.js?v=51','/panel/modules/navigation.js?v=51','/panel/version.json','/panel/manifest.json','/panel/offline.html',
   '/panel/assets/icon-192.png','/panel/assets/icon-512.png','/panel/assets/apple-touch-icon.png','/panel/assets/favicon.png','/panel/assets/logo.png'
 ];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(STATIC_ASSETS).catch(()=>undefined))));

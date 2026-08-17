@@ -1,7 +1,7 @@
 name: Quality Gate
 on:
   push:
-    branches: [main, control-center-v5]
+    branches: [main, 'control-center-*', 'hardening-*']
   pull_request:
     branches: [main]
 jobs:

@@ -57,6 +57,7 @@ STOP_STATES = {"IDLE", "ERROR", "STOPPED"}
 class StepResult:
     message: str
     wait_seconds: Optional[float] = None
+    count_action: bool = True
 
 
 @dataclass
@@ -96,6 +97,9 @@ class CloudBotJob:
     earned_gold: int = 0
     earned_token: int = 0
     last_success_at: Optional[float] = None
+    action_count: int = 0
+    first_action_at: Optional[float] = None
+    last_action_at: Optional[float] = None
 
     event_seq: int = 0
     events: deque = field(default_factory=lambda: deque(maxlen=400))
@@ -113,6 +117,7 @@ class CloudBotJob:
         event = {
             "seq": self.event_seq,
             "ts": time.time(),
+            "job_started_at": self.created_at,
             "type": str(event_type).upper()[:64],
             "level": level,
             "data": dict(data or {}),
@@ -151,9 +156,26 @@ class CloudBotJob:
     def analytics(self) -> Dict[str, Any]:
         end = self.finished_at or time.time()
         uptime = max(0.0, end - self.created_at)
-        hours = max(uptime / 3600.0, 1 / 3600.0)
         attempts = self.success_count + self.failure_count
+
+        if self.first_action_at and self.last_action_at:
+            observed = max(0.0, self.last_action_at - self.first_action_at)
+        else:
+            observed = 0.0
+        rate_window = max(300.0, observed)
+        hours = rate_window / 3600.0
+
+        if self.action_count >= 40 and observed >= 1800:
+            confidence = "high"
+        elif self.action_count >= 15 and observed >= 600:
+            confidence = "medium"
+        elif self.action_count >= 5:
+            confidence = "low"
+        else:
+            confidence = "warming"
+
         return {
+            "action_count": self.action_count,
             "success_count": self.success_count,
             "failure_count": self.failure_count,
             "rate_limit_count": self.rate_limit_count,
@@ -162,7 +184,9 @@ class CloudBotJob:
             "earned_gold": self.earned_gold,
             "earned_token": self.earned_token,
             "uptime_seconds": int(uptime),
-            "actions_per_hour": round(self.iteration / hours, 1),
+            "rate_window_seconds": int(rate_window),
+            "confidence": confidence,
+            "actions_per_hour": round(self.action_count / hours, 1),
             "xp_per_hour": round(self.earned_xp / hours, 1),
             "gold_per_hour": round(self.earned_gold / hours, 1),
             "success_rate": round((self.success_count / attempts) * 100, 1) if attempts else 0.0,
@@ -186,6 +210,7 @@ class CloudBotJob:
             "char_id": self.char_id,
             "params": safe_params,
             "iteration": self.iteration,
+            "action_count": self.action_count,
             "consecutive_failures": self.consecutive_failures,
             "last_message": self.last_message,
             "created_at": self.created_at,
@@ -305,7 +330,7 @@ def _is_rate_limit(message: str) -> bool:
 
 def _should_stop(job: CloudBotJob, message: str) -> bool:
     text = (message or "").lower()
-    if "target_reached:" in text or "recipe_complete:" in text:
+    if "target_reached:" in text or "recipe_complete:" in text or "recipe_aborted:" in text:
         return True
     if job.bot_type == "auto_daily":
         return "daily missions completed" in text or "no available daily missions" in text
@@ -349,9 +374,9 @@ def _capture_rewards(job: CloudBotJob, message: str) -> None:
     if "SUCCESS" not in text.upper():
         return
     patterns = {
-        "xp": r"\bXP:\s*\+?(-?\d+)",
-        "gold": r"\bGold:\s*\+?(-?\d+)",
-        "token": r"\bToken:\s*\+?(-?\d+)",
+        "xp": r"(?:^|\|\s*)XP:\s*\+?(-?\d+)",
+        "gold": r"(?:^|\|\s*)Gold:\s*\+?(-?\d+)",
+        "token": r"(?:^|\|\s*)Token:\s*\+?(-?\d+)",
     }
     values: Dict[str, int] = {}
     for key, pattern in patterns.items():
@@ -371,7 +396,10 @@ async def _persist(job: CloudBotJob, *, active: Optional[bool] = None) -> None:
     retention = max(3600, int(cfg.get("cloud_status_retention_seconds", 86400) or 86400))
     status = job.public_status()
     await cloud_store.save_status(job.char_id, status, job.control_token, retention)
-    await event_bus.publish_status(job.char_id, status)
+    realtime_status = dict(status)
+    realtime_status["logs"] = list(status.get("logs") or [])[-4:]
+    realtime_status["events"] = []
+    await event_bus.publish_status(job.char_id, realtime_status)
     pending = [event for event in job.events if int(event.get("seq") or 0) > job.last_published_event_seq]
     for event in pending:
         await event_bus.publish_event(job.char_id, event)
@@ -560,10 +588,11 @@ async def _run_recipe_step(job: CloudBotJob, client: NinjaSageClient) -> StepRes
     index = int(runtime.get("index") or 0)
     if index >= len(steps):
         job.record_event("RECIPE_COMPLETE", {"name": normalized["name"]})
-        return StepResult(f"RECIPE_COMPLETE: {normalized['name']}")
+        return StepResult(f"RECIPE_COMPLETE: {normalized['name']}", count_action=False)
 
     step = steps[index]
     if step["kind"] == "wait":
+        job.runtime["recipe_effective_bot_type"] = "wait"
         wait_until = float(runtime.get("wait_until") or 0)
         if wait_until <= 0:
             wait_until = time.time() + int(step["seconds"])
@@ -571,13 +600,13 @@ async def _run_recipe_step(job: CloudBotJob, client: NinjaSageClient) -> StepRes
             job.record_event("RECIPE_STEP_STARTED", {"step": index + 1, "label": step["label"], "kind": "wait"})
         remaining = max(0.0, wait_until - time.time())
         if remaining > 0:
-            return StepResult(f"Recipe wait: {step['label']}", remaining)
+            return StepResult(f"Recipe wait: {step['label']}", remaining, count_action=False)
         runtime.update({"index": index + 1, "cycles": 0, "wait_until": 0.0})
         job.record_event("RECIPE_STEP_COMPLETE", {"step": index + 1, "label": step["label"]})
         if index + 1 >= len(steps):
             job.record_event("RECIPE_COMPLETE", {"name": normalized["name"]})
-            return StepResult(f"RECIPE_COMPLETE: {normalized['name']}")
-        return StepResult(f"Recipe step complete: {step['label']}", 1.0)
+            return StepResult(f"RECIPE_COMPLETE: {normalized['name']}", count_action=False)
+        return StepResult(f"Recipe step complete: {step['label']}", 1.0, count_action=False)
 
     bot_type = step["bot_type"]
     step_params = dict(step.get("params") or {})
@@ -600,17 +629,41 @@ async def _run_recipe_step(job: CloudBotJob, client: NinjaSageClient) -> StepRes
     if step["mode"] == "cycles":
         done = runtime["cycles"] >= int(step["cycles"])
     elif step["mode"] == "until_stop":
-        done = step_stop or runtime["cycles"] >= int(step["max_cycles"])
+        if step_stop:
+            done = True
+        elif runtime["cycles"] >= int(step["max_cycles"]):
+            job.record_event(
+                "RECIPE_STEP_CAPPED",
+                {"step": index + 1, "label": step["label"], "cycles": runtime["cycles"]},
+                "warn",
+            )
+            return StepResult(
+                f"RECIPE_ABORTED: {step['label']} reached max_cycles without its stop condition. Last action: {result.message}",
+            )
     elif step["mode"] == "level_at_least":
         level = int(await get_or_fetch_char_level(client, job.sessionkey, job.char_id) or 1)
-        done = level >= int(step["target_level"]) or runtime["cycles"] >= int(step["max_cycles"])
+        if level >= int(step["target_level"]):
+            done = True
+        elif runtime["cycles"] >= int(step["max_cycles"]):
+            job.record_event(
+                "RECIPE_STEP_CAPPED",
+                {
+                    "step": index + 1, "label": step["label"],
+                    "cycles": runtime["cycles"], "level": level,
+                    "target_level": int(step["target_level"]),
+                },
+                "warn",
+            )
+            return StepResult(
+                f"RECIPE_ABORTED: {step['label']} reached max_cycles at level {level} before target {int(step['target_level'])}. Last action: {result.message}",
+            )
 
     if done:
         job.record_event("RECIPE_STEP_COMPLETE", {"step": index + 1, "label": step["label"], "cycles": runtime["cycles"]})
         runtime.update({"index": index + 1, "cycles": 0, "wait_until": 0.0})
         if index + 1 >= len(steps):
             job.record_event("RECIPE_COMPLETE", {"name": normalized["name"]})
-            return StepResult(f"RECIPE_COMPLETE: {normalized['name']}")
+            return StepResult(f"RECIPE_COMPLETE: {normalized['name']}", count_action=False)
     return result
 
 
@@ -627,7 +680,8 @@ async def _run_step(job: CloudBotJob, client: NinjaSageClient) -> StepResult:
             try:
                 if level >= int(max_level):
                     return StepResult(
-                        f"TARGET_REACHED: Character is level {level}; max target is {int(max_level)}."
+                        f"TARGET_REACHED: Character is level {level}; max target is {int(max_level)}.",
+                        count_action=False,
                     )
             except (TypeError, ValueError):
                 pass
@@ -673,7 +727,7 @@ async def _run_step(job: CloudBotJob, client: NinjaSageClient) -> StepResult:
         message = str(await auto_shadow_war(client, sk, cid))
         match = re.match(r"^WAIT_RESOURCE:(\d+(?:\.\d+)?)\|(.*)$", message, flags=re.S)
         if match:
-            return StepResult(match.group(2).strip(), float(match.group(1)))
+            return StepResult(match.group(2).strip(), float(match.group(1)), count_action=False)
         return StepResult(message)
     if bt == "monster":
         return StepResult(str(await auto_monster_hunt(client, sk, cid)))
@@ -706,14 +760,15 @@ def _record_failure(job: CloudBotJob) -> bool:
 
 
 async def _scheduled_rest(job: CloudBotJob) -> bool:
-    if job.bot_type not in {"auto_level", "mission"}:
+    active_type = _active_delay_type(job)
+    if active_type not in {"auto_level", "mission"}:
         return True
     cfg = _settings()
     every = max(0, int(cfg.get("leveling_rest_every_cycles", 40) or 0))
     duration = max(0, int(cfg.get("leveling_rest_duration_seconds", 60) or 0))
-    if every and duration and job.iteration > 0 and job.iteration % every == 0:
-        job.add_log(f"Scheduled rest: {duration}s after {job.iteration} cycles.", "info")
-        job.record_event("STABILITY_REST", {"duration": duration, "iteration": job.iteration})
+    if every and duration and job.action_count > 0 and job.action_count % every == 0:
+        job.add_log(f"Scheduled rest: {duration}s after {job.action_count} actions.", "info")
+        job.record_event("STABILITY_REST", {"duration": duration, "action_count": job.action_count})
         return await _sleep(job, duration, "PAUSED", "Periodic stability rest")
     return True
 
@@ -738,6 +793,14 @@ async def _job_loop(job: CloudBotJob) -> None:
                 result = await _run_step(job, client)
                 message = result.message
                 job.iteration += 1
+                count_action = bool(result.count_action)
+                now_action = time.time()
+                if count_action:
+                    job.action_count += 1
+                    if job.first_action_at is None:
+                        job.first_action_at = now_action
+                    job.last_action_at = now_action
+
                 net = client.network_metrics()
                 job.network_last_ms = float(net.get("last_ms") or 0)
                 job.network_avg_ms = float(net.get("avg_ms") or 0)
@@ -746,23 +809,28 @@ async def _job_loop(job: CloudBotJob) -> None:
                 failed = _is_failed(message)
                 if failed:
                     job.consecutive_failures += 1
-                    job.failure_count += 1
+                    if count_action:
+                        job.failure_count += 1
                     job.add_log(message, "warn")
                     circuit = _record_failure(job)
                 else:
                     job.consecutive_failures = 0
                     job.rate_limit_level = 0
-                    job.success_count += 1
-                    job.last_success_at = time.time()
+                    if count_action:
+                        job.success_count += 1
+                        job.last_success_at = now_action
                     job.add_log(message, "info")
-                    _capture_rewards(job, message)
+                    if count_action:
+                        _capture_rewards(job, message)
                     circuit = False
 
-                job.record_event("ACTION_RESULT", {
-                    "bot_type": _active_delay_type(job), "iteration": job.iteration,
-                    "success": not failed, "latency_ms": job.network_last_ms,
-                    "message": str(message)[:240],
-                }, "warn" if failed else "info")
+                if count_action:
+                    job.record_event("ACTION_RESULT", {
+                        "bot_type": _active_delay_type(job), "iteration": job.iteration,
+                        "action_count": job.action_count,
+                        "success": not failed, "latency_ms": job.network_last_ms,
+                        "message": str(message)[:240],
+                    }, "warn" if failed else "info")
 
                 if "target_reached:" in (message or "").lower():
                     job.record_event("TARGET_REACHED", {"message": str(message)[:240]})
@@ -776,6 +844,11 @@ async def _job_loop(job: CloudBotJob) -> None:
                         )
                         job.consecutive_failures = 0
                         job.failure_times.clear()
+                        if job.bot_type == "recipe":
+                            job.runtime["recipe_state"] = {"index": 0, "cycles": 0, "wait_until": 0.0}
+                            job.runtime.pop("recipe_effective_bot_type", None)
+                            job.record_event("RECIPE_RESET_FOR_REPEAT", {"repeat_seconds": repeat})
+                            await _persist(job, active=True)
                         if not await _sleep(
                             job, repeat, "SCHEDULED", "Waiting for the next scheduled run"
                         ):
@@ -1027,10 +1100,11 @@ async def engine_metrics() -> Dict[str, Any]:
         "jobs_total": len(jobs),
         "jobs_running": sum(1 for job in jobs if job.running),
         "states": states,
-        "actions": sum(job.iteration for job in jobs),
+        "actions": sum(job.action_count for job in jobs),
         "successes": sum(job.success_count for job in jobs),
         "failures": sum(job.failure_count for job in jobs),
         "websocket_subscribers": await event_bus.subscriber_count(),
+        "event_bus": await event_bus.stats(),
     }
 
 

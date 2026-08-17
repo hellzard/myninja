@@ -163,23 +163,43 @@ async def cloud_ws(websocket: WebSocket, char_id: int, ticket: str):
         return
 
     await websocket.accept()
-    queue = await event_bus.subscribe(char_id)
+    queue = await event_bus.subscribe(char_id, max_queue=64)
+    receive_task = asyncio.create_task(websocket.receive_json())
+    queue_task = asyncio.create_task(queue.get())
     try:
         await websocket.send_json({"type": "job_status", "job": initial})
         while True:
-            try:
-                payload = await asyncio.wait_for(queue.get(), timeout=15.0)
-            except asyncio.TimeoutError:
+            done, _ = await asyncio.wait(
+                {receive_task, queue_task},
+                timeout=15.0,
+                return_when=asyncio.FIRST_COMPLETED,
+            )
+
+            if not done:
                 try:
                     status = await get_status(char_id, control_token)
                 except PermissionError:
                     await websocket.close(code=1008)
                     return
-                payload = {"type": "heartbeat", "job": status}
-            await websocket.send_json(payload)
-    except (WebSocketDisconnect, RuntimeError):
+                await websocket.send_json({"type": "heartbeat", "job": status})
+                continue
+
+            if receive_task in done:
+                message = receive_task.result()
+                receive_task = asyncio.create_task(websocket.receive_json())
+                if isinstance(message, dict) and message.get("type") == "ping":
+                    await websocket.send_json({"type": "pong", "echo": message.get("ts")})
+
+            if queue_task in done:
+                payload = queue_task.result()
+                queue_task = asyncio.create_task(queue.get())
+                await websocket.send_json(payload)
+    except (WebSocketDisconnect, RuntimeError, OSError):
         return
     finally:
+        for task in (receive_task, queue_task):
+            task.cancel()
+        await asyncio.gather(receive_task, queue_task, return_exceptions=True)
         await event_bus.unsubscribe(char_id, queue)
 
 

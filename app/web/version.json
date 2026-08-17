@@ -1,13 +1,12 @@
 {
-  "version": "5.0.0",
-  "build": "control-center",
+  "version": "5.1.0",
+  "build": "hardening-and-polish",
   "released": "2026-08-17",
   "changelog": [
-    "Real-time WebSocket engine + multi-tab sync",
-    "Flight Recorder + Analytics Pro + adaptive pacing",
-    "Automation Recipe Builder + dry-run",
-    "Web Push/local notifications + Smart Diagnostics",
-    "Multi-character workspace + mobile navigation",
-    "Optional OpenTelemetry + CI quality gate"
+    "WebSocket heartbeat, stale-connection watchdog, bfcache-safe reconnect and compact status payloads",
+    "Per-character Flight Recorder retention, storage quota recovery and persistent-storage controls",
+    "Action-accurate analytics, warm-up confidence and conservative ETA",
+    "Recipe repeat reset, safety-cap aborts, mission parameter validation and improved dry-run",
+    "Long-session event-bus metrics, expanded regression tests and mobile polish"
   ]
 }

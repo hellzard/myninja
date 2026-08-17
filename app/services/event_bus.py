@@ -18,6 +18,9 @@ class Ticket:
 _subscribers: dict[int, set[asyncio.Queue]] = defaultdict(set)
 _tickets: Dict[str, Ticket] = {}
 _lock = asyncio.Lock()
+_published_messages = 0
+_dropped_messages = 0
+_subscriptions_created = 0
 
 
 def _cleanup_tickets() -> None:
@@ -48,10 +51,12 @@ async def consume_ticket(ticket: str, char_id: int) -> Optional[str]:
     return item.control_token
 
 
-async def subscribe(char_id: int, max_queue: int = 24) -> asyncio.Queue:
-    queue: asyncio.Queue = asyncio.Queue(maxsize=max(4, int(max_queue)))
+async def subscribe(char_id: int, max_queue: int = 64) -> asyncio.Queue:
+    global _subscriptions_created
+    queue: asyncio.Queue = asyncio.Queue(maxsize=max(8, min(256, int(max_queue))))
     async with _lock:
         _subscribers[int(char_id)].add(queue)
+        _subscriptions_created += 1
     return queue
 
 
@@ -66,13 +71,19 @@ async def unsubscribe(char_id: int, queue: asyncio.Queue) -> None:
 
 
 async def _publish(char_id: int, payload: Dict[str, Any]) -> None:
+    global _published_messages, _dropped_messages
     async with _lock:
         queues = list(_subscribers.get(int(char_id), set()))
+    if not queues:
+        return
+
+    _published_messages += 1
     for queue in queues:
         try:
             if queue.full():
                 try:
                     queue.get_nowait()
+                    _dropped_messages += 1
                 except asyncio.QueueEmpty:
                     pass
             queue.put_nowait(dict(payload))
@@ -93,3 +104,17 @@ async def subscriber_count(char_id: Optional[int] = None) -> int:
         if char_id is not None:
             return len(_subscribers.get(int(char_id), set()))
         return sum(len(group) for group in _subscribers.values())
+
+
+async def stats() -> Dict[str, int]:
+    async with _lock:
+        _cleanup_tickets()
+        current = sum(len(group) for group in _subscribers.values())
+        tickets = len(_tickets)
+    return {
+        "subscribers": current,
+        "tickets": tickets,
+        "published_messages": int(_published_messages),
+        "dropped_messages": int(_dropped_messages),
+        "subscriptions_created": int(_subscriptions_created),
+    }
