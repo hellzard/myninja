@@ -1,8 +1,8 @@
-const CACHE_NAME = 'ns-shadow-cache-v20-quick-login';
+const CACHE_NAME = 'ns-shadow-cache-v21-reliability-ux';
 const STATIC_ASSETS = [
-  '/panel/','/panel/index.html','/panel/style.css?v=9','/panel/cloud.js?v=6','/panel/app.js?v=19',
+  '/panel/','/panel/index.html','/panel/style.css?v=10','/panel/cloud.js?v=7','/panel/app.js?v=19',
   '/panel/modules/security.js?v=6',
-  '/panel/modules/ui.js?v=6','/panel/modules/sync.js?v=6','/panel/modules/workspace.js?v=6','/panel/modules/auth.js?v=61',
+  '/panel/modules/ui.js?v=6','/panel/modules/sync.js?v=6','/panel/modules/workspace.js?v=6','/panel/modules/auth.js?v=62',
   '/panel/modules/account.js?v=6','/panel/modules/realtime.js?v=6','/panel/modules/history.js?v=6','/panel/modules/analytics.js?v=6',
   '/panel/modules/scheduler.js?v=6','/panel/modules/recipes.js?v=6','/panel/modules/diagnostics.js?v=6','/panel/modules/notifications.js?v=6',
   '/panel/modules/replay.js?v=6','/panel/modules/reliability.js?v=6','/panel/modules/autopilot.js?v=6','/panel/modules/release.js?v=6',

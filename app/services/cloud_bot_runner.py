@@ -312,9 +312,42 @@ def _mission_for_level(level: int) -> str:
     return "msn_3"
 
 
+RESOURCE_EXHAUSTED_PHRASES = (
+    "you don't have energy",
+    "you dont have energy",
+    "you do not have energy",
+    "out of energy",
+    "not enough energy",
+    "insufficient energy",
+    "no energy",
+    "energy habis",
+    "energy is empty",
+    "out of free tries",
+    "no free tries",
+    "free tries exhausted",
+)
+
+
+def _is_resource_exhausted(message: str) -> bool:
+    text = str(message or "").lower()
+    return any(
+        phrase in text
+        for phrase in RESOURCE_EXHAUSTED_PHRASES
+    )
+
+
 def _is_failed(message: str) -> bool:
     text = (message or "").lower()
-    return any(x in text for x in ("failed", "error", "exception", "rejected"))
+
+    # Resource exhaustion is an expected terminal state.
+    # Do not put it into retry/backoff failure loops.
+    if _is_resource_exhausted(text):
+        return False
+
+    return any(
+        value in text
+        for value in ("failed", "error", "exception", "rejected")
+    )
 
 
 def _is_666(message: str) -> bool:
@@ -340,10 +373,18 @@ def _should_stop(job: CloudBotJob, message: str) -> bool:
         return "stopped" in text
     if job.bot_type == "eudemon":
         return "no available eudemon bosses" in text or "requires level" in text
-    if job.bot_type in {"circus", "yokai"}:
-        return any(w in text for w in ("ticket", "stopped"))
-    if job.bot_type == "yokai_minigame":
-        return "ticket" in text
+    if job.bot_type in {"circus", "yokai", "yokai_minigame"}:
+        if _is_resource_exhausted(text):
+            return True
+
+        if "stopped" in text or "ticket" in text:
+            return True
+
+        if job.bot_type == "yokai_minigame":
+            if "free tries" in text or "free play" in text:
+                return True
+
+        return False
     if job.bot_type == "monster":
         return "energy habis" in text or "energy monster hunter habis" in text or "stopped" in text
     if job.bot_type == "mission":

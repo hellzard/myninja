@@ -239,14 +239,29 @@
     const validation = def.validate?.(params);
     if (validation) { appendLog(validation, 'error'); return; }
 
+    const recoveryCredentials = getQuickLogin();
+
+    if (!recoveryCredentials) {
+      appendLog(
+        'Auto Relogin belum aktif untuk job ini. Bot tetap dapat berjalan di server, tetapi jika session game kedaluwarsa kamu mungkin perlu login ulang.',
+        'warn'
+      );
+
+      window.NinjaUI?.toast(
+        'Login manual sekali sebelum bot panjang agar Auto Relogin aktif.',
+        'warn'
+      );
+    }
+
     button.disabled = true;
+
     try {
       const response = await post('start', {
         sessionkey: session.sessionkey,
         char_id: session.char_id,
         bot_type: def.type,
         params,
-        credentials: getQuickLogin(),
+        credentials: recoveryCredentials,
       });
       const job = response.job;
       saveControl(session.char_id, { char_id: session.char_id, token: job.control_token, bot_type: job.bot_type });

@@ -18,26 +18,18 @@ async def auto_daily_gacha(client: NinjaSageClient, sessionkey: str, char_id: in
     else:
         return f"Failed to check gacha: {res}"
 
-async def exploit_gacha_race(client: NinjaSageClient, sessionkey: str, char_id: int, coin_type: str, spam_count: int = 50):
-    """
-    Race condition exploit: Send multiple AMF requests concurrently.
-    Used for bypassing the coin check when server fails to lock database rows properly.
-    """
-    try:
-        # Build tasks to run concurrently
-        tasks = []
-        for _ in range(spam_count):
-            tasks.append(client.send_amf_request("mGbT7HiV6WeVOUXp.Ckpdt4SSQ1wF", [sessionkey, char_id, coin_type, 1]))
-            
-        # Fire all requests at the exact same time
-        results = await asyncio.gather(*tasks, return_exceptions=True)
-        
-        # Count successes
-        success_count = sum(1 for r in results if isinstance(r, dict) and r.get('status') == 1)
-        
-        return f"[Gacha Exploit] Fired {spam_count}x {coin_type}. Success: {success_count}/{spam_count}. Results: {results[:2]}..."
-    except Exception as e:
-        return f"[Gacha Exploit] Failed: {e}"
+async def exploit_gacha_race(
+    client,
+    sessionkey: str,
+    char_id: int,
+    coin_type: str,
+    spam_count: int = 50,
+):
+    """Legacy unintended race-condition functionality is disabled."""
+    raise RuntimeError(
+        "Legacy race-condition functionality is disabled."
+    )
+
 
 async def auto_giveaway(client: NinjaSageClient, sessionkey: str, char_id: int):
     res = await client.send_amf_request("be9WkVbJZYaRo69c.C3VahnT6Jydb", [char_id, sessionkey])
@@ -134,6 +126,58 @@ def _parse_materials(raw_mat) -> list:
         materials.append(str(raw_mat))
         
     return materials
+
+def _collect_nested_materials(payload, depth: int = 0) -> list:
+    """Collect material/drop fields actually returned by the server."""
+    if depth > 8:
+        return []
+
+    found = []
+
+    if isinstance(payload, dict):
+        for key, value in payload.items():
+            normalized = str(key).lower()
+
+            if normalized in {
+                "material",
+                "materials",
+                "drop",
+                "drops",
+                "loot",
+                "loots",
+            }:
+                found.extend(_parse_materials(value))
+
+            if isinstance(value, (dict, list)):
+                found.extend(
+                    _collect_nested_materials(
+                        value,
+                        depth + 1,
+                    )
+                )
+
+    elif isinstance(payload, list):
+        for value in payload:
+            if isinstance(value, (dict, list)):
+                found.extend(
+                    _collect_nested_materials(
+                        value,
+                        depth + 1,
+                    )
+                )
+
+    unique = []
+    seen = set()
+
+    for item in found:
+        item = str(item)
+
+        if item not in seen:
+            seen.add(item)
+            unique.append(item)
+
+    return unique
+
 
 _char_level_cache = {}
 _event_char_data_cache = {}
@@ -336,6 +380,13 @@ def format_battle_rewards(feature_name: str, finish_res, current_level=None, cha
             if len(finish_res) > 3 and isinstance(finish_res[3], (int, float)):
                 try: token = int(finish_res[3])
                 except: token = finish_res[3]
+
+        # Some event responses wrap legitimate material drops inside
+        # nested result/data/reward structures.
+        if not materials and isinstance(finish_res, (dict, list)):
+            materials.extend(
+                _collect_nested_materials(finish_res)
+            )
 
         # Calculate Total Stats
         char_stats = _char_stats_cache.get(char_id, {}) if char_id else {}

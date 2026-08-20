@@ -22,7 +22,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="/panel/style.css?v=9" />
+  <link rel="stylesheet" href="/panel/style.css?v=10" />
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -53,11 +53,11 @@
 
       <form id="login-form">
         <div class="input-wrapper">
-          <label>Username</label>
+          <label for="login-user">Username</label>
           <input type="text" id="login-user" class="input-field" placeholder="Enter username" autocomplete="username" required />
         </div>
         <div class="input-wrapper">
-          <label>Password</label>
+          <label for="login-pass">Password</label>
           <input type="password" id="login-pass" class="input-field" placeholder="Enter password" autocomplete="current-password" required />
         </div>
         
@@ -67,6 +67,14 @@
         <button type="button" id="quick-login-btn" class="btn btn-toggle" style="width: 100%; margin-top: 0.75rem;">
           <i class="fa-solid fa-bolt"></i> QUICK LOGIN
         </button>
+        <p class="quick-login-note">
+          <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+          <span>
+            Password tidak disimpan permanen oleh MyNinja.
+            Setelah browser dibuka ulang, browser password
+            manager/autofill dapat mengisi password untuk Quick Login.
+          </span>
+        </p>
       </form>
       
       <div style="margin-top: 1.5rem; max-height: 100px; overflow-y: auto;">
@@ -109,13 +117,13 @@
         <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
           <button id="btn-refresh-stats" class="btn btn-toggle" title="Refresh Stats"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
           <button id="btn-install-pwa" class="btn btn-pwa-action" title="Install Ninja Sage App"><i class="fa-solid fa-download"></i> Install App</button>
-          <button id="btn-settings" class="btn btn-toggle" title="Settings" onclick="document.getElementById('modal-settings').classList.add('show')"><i class="fa-solid fa-gear"></i></button>
-          <button id="btn-logout" class="btn btn-toggle" title="Logout" style="color: #f87171;"><i class="fa-solid fa-power-off"></i></button>
+          <button id="btn-settings" class="btn btn-toggle" title="Settings" aria-label="Settings" onclick="document.getElementById('modal-settings').classList.add('show')"><i class="fa-solid fa-gear"></i></button>
+          <button id="btn-logout" class="btn btn-toggle" title="Logout" aria-label="Logout" style="color: #f87171;"><i class="fa-solid fa-power-off"></i></button>
           <button id="global-stop-btn" class="btn btn-primary hidden" style="background: linear-gradient(135deg, #ef4444, #b91c1c); width: 100%; margin-top: 0.5rem;" onclick="window.stopCurrentBot()">
             <i class="fa-solid fa-stop"></i> HALT ALL BOTS
           </button>
         </div>
-        <div id="bot-status-text" style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">
+        <div id="bot-status-text" role="status" aria-live="polite" style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">
           IDLE - Awaiting Orders
         </div>
       </div>
@@ -468,11 +476,11 @@
   <script src="/panel/modules/ui.js?v=6" defer></script>
   <script src="/panel/modules/sync.js?v=6" defer></script>
   <script src="/panel/modules/workspace.js?v=6" defer></script>
-  <script src="/panel/modules/auth.js?v=61" defer></script>
+  <script src="/panel/modules/auth.js?v=62" defer></script>
   <script src="/panel/modules/account.js?v=6" defer></script>
   <script src="/panel/modules/realtime.js?v=6" defer></script>
   <script src="/panel/modules/security.js?v=6"></script>
-  <script src="/panel/cloud.js?v=6" defer></script>
+  <script src="/panel/cloud.js?v=7" defer></script>
   <script src="/panel/modules/history.js?v=6" defer></script>
   <script src="/panel/modules/analytics.js?v=6" defer></script>
   <script src="/panel/modules/scheduler.js?v=6" defer></script>

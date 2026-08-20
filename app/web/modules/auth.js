@@ -3,6 +3,7 @@
 
   const SESSION_KEY = 'ns_session';
   const QUICK_KEY = 'ns_quick_login';
+  const QUICK_USER_KEY = 'ns_quick_username';
 
   function getSession() {
     try { return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); }
@@ -27,12 +28,43 @@
 
   function saveQuickCredentials(username, password) {
     if (!username || !password) return;
+
+    // Password stays temporary in this browser tab/session.
     sessionStorage.setItem(QUICK_KEY, JSON.stringify({
       user: String(username),
       pass: String(password),
       saved_at: Date.now(),
     }));
+
+    // Persist only the username for browser-reopen UX.
+    localStorage.setItem(
+      QUICK_USER_KEY,
+      String(username)
+    );
+
+    // Defensive cleanup for legacy versions that might have
+    // placed the quick-login payload in persistent storage.
     localStorage.removeItem(QUICK_KEY);
+  }
+
+  function getRememberedUsername() {
+    try {
+      return localStorage.getItem(QUICK_USER_KEY) || '';
+    } catch (_) {
+      return '';
+    }
+  }
+
+  function getFormCredentials() {
+    const user =
+      document.getElementById('login-user')?.value?.trim() || '';
+
+    const pass =
+      document.getElementById('login-pass')?.value || '';
+
+    return user && pass
+      ? { user, pass }
+      : null;
   }
 
   function clearQuickCredentials() {
@@ -92,14 +124,53 @@
 
   function updateQuickButton(quickBtn) {
     if (!quickBtn) return;
-    const ready = Boolean(getQuickCredentials());
-    quickBtn.dataset.ready = ready ? 'true' : 'false';
-    quickBtn.title = ready
-      ? 'Quick Login siap untuk sesi tab ini'
-      : 'Login manual sekali untuk mengaktifkan Quick Login pada sesi tab ini';
-    quickBtn.innerHTML = ready
-      ? '<i class="fa-solid fa-bolt"></i> QUICK LOGIN — READY'
-      : '<i class="fa-solid fa-bolt"></i> QUICK LOGIN';
+
+    const sessionReady = Boolean(getQuickCredentials());
+    const formReady = Boolean(getFormCredentials());
+    const remembered = Boolean(getRememberedUsername());
+
+    quickBtn.dataset.ready =
+      (sessionReady || formReady) ? 'true' : 'false';
+
+    quickBtn.dataset.mode =
+      sessionReady
+        ? 'session'
+        : (
+          formReady
+            ? 'autofill'
+            : (
+              remembered
+                ? 'remembered'
+                : 'empty'
+            )
+        );
+
+    if (sessionReady) {
+      quickBtn.title =
+        'Quick Login siap untuk sesi browser ini';
+
+      quickBtn.innerHTML =
+        '<i class="fa-solid fa-bolt"></i> QUICK LOGIN — READY';
+
+      return;
+    }
+
+    if (formReady) {
+      quickBtn.title =
+        'Password tersedia dari form atau browser autofill';
+
+      quickBtn.innerHTML =
+        '<i class="fa-solid fa-key"></i> QUICK LOGIN — AUTOFILL READY';
+
+      return;
+    }
+
+    quickBtn.title = remembered
+      ? 'Username sudah diingat. Gunakan password manager/autofill browser.'
+      : 'Login manual sekali untuk mengaktifkan Quick Login';
+
+    quickBtn.innerHTML =
+      '<i class="fa-solid fa-bolt"></i> QUICK LOGIN';
   }
 
   window.NinjaSession = { get: getSession, save: saveSession, hydrate };
@@ -128,8 +199,42 @@
     const form = document.getElementById('login-form');
     const loginBtn = document.getElementById('login-btn');
     const quickBtn = document.getElementById('quick-login-btn');
+    const userInput = document.getElementById('login-user');
+    const passInput = document.getElementById('login-pass');
+
+    const rememberedUsername = getRememberedUsername();
+
+    if (
+      userInput &&
+      rememberedUsername &&
+      !userInput.value
+    ) {
+      userInput.value = rememberedUsername;
+    }
 
     updateQuickButton(quickBtn);
+
+    // Browser password managers may fill credentials
+    // asynchronously after DOMContentLoaded.
+    window.setTimeout(
+      () => updateQuickButton(quickBtn),
+      250
+    );
+
+    window.setTimeout(
+      () => updateQuickButton(quickBtn),
+      1000
+    );
+
+    userInput?.addEventListener(
+      'input',
+      () => updateQuickButton(quickBtn)
+    );
+
+    passInput?.addEventListener(
+      'input',
+      () => updateQuickButton(quickBtn)
+    );
 
     async function performLogin(user, pass, source = 'manual') {
       if (!user || !pass) return;
@@ -181,15 +286,25 @@
     });
 
     quickBtn?.addEventListener('click', async () => {
-      const creds = getQuickCredentials();
+      const creds =
+        getQuickCredentials() ||
+        getFormCredentials();
+
       if (!creds) {
         window.NinjaUI?.toast(
-          'Quick Login belum siap. Login manual sekali pada tab ini terlebih dahulu.',
+          'Quick Login belum punya password. Gunakan browser password manager/autofill atau login manual sekali.',
           'warn'
         );
+
+        passInput?.focus();
         return;
       }
-      await performLogin(creds.user, creds.pass, 'quick');
+
+      await performLogin(
+        creds.user,
+        creds.pass,
+        'quick'
+      );
     });
 
     document.getElementById('btn-logout')?.addEventListener('click', () => {
