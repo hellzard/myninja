@@ -51,6 +51,13 @@ def test_quick_login_remembers_username_without_persisting_password(page: Page):
 
     expect(page.locator("#app-shell")).to_be_visible()
 
+    # The shell becomes visible as soon as the game session is
+    # hydrated, while performLogin may still be finishing the
+    # browser password-manager operation. Wait for the login
+    # button to be restored by performLogin.finally before
+    # evaluating browser storage.
+    expect(page.locator("#login-btn")).to_be_enabled()
+
     assert page.evaluate(
         "localStorage.getItem('ns_quick_username')"
     ) == "reopen-user"
