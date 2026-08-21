@@ -117,3 +117,70 @@ def test_quick_login_remembers_username_without_persisting_password(page: Page):
     ).to_be_visible()
 
     reopened.close()
+
+
+
+def test_quick_login_uses_browser_password_manager(page: Page):
+    page.add_init_script(
+        """
+        Object.defineProperty(
+          window,
+          'PasswordCredential',
+          {
+            configurable: true,
+            value: class PasswordCredential {
+              constructor(data) {
+                this.id = data.id;
+                this.password = data.password;
+                this.name = data.name;
+              }
+            }
+          }
+        );
+
+        Object.defineProperty(
+          navigator,
+          'credentials',
+          {
+            configurable: true,
+            value: {
+              get: async () => ({
+                id: 'manager-user',
+                password: 'manager-pass'
+              }),
+              store: async credential => credential
+            }
+          }
+        );
+        """
+    )
+
+    mock_login(page)
+
+    page.goto(f"{BASE_URL}/panel/")
+
+    page.evaluate(
+        """
+        localStorage.removeItem('ns_session');
+        sessionStorage.removeItem('ns_quick_login');
+        localStorage.removeItem('ns_quick_login');
+        """
+    )
+
+    page.reload()
+
+    expect(
+        page.locator("#auth-view")
+    ).to_be_visible()
+
+    page.locator(
+        "#quick-login-btn"
+    ).click()
+
+    expect(
+        page.locator("#app-shell")
+    ).to_be_visible()
+
+    assert page.evaluate(
+        "localStorage.getItem('ns_quick_login')"
+    ) is None

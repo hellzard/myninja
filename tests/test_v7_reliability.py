@@ -79,3 +79,77 @@ def test_nested_materials_are_discovered_without_inventing_rewards():
     assert _collect_nested_materials(payload) == [
         "material_testx3"
     ]
+
+
+
+def test_exact_production_event_energy_wording():
+    message = (
+        "Failed to start Circus Event: "
+        "You do not have enough energy"
+    )
+
+    assert _is_resource_exhausted(message)
+    assert _is_failed(message) is False
+
+    assert _should_stop(
+        make_job("circus"),
+        message,
+    )
+
+    assert _should_stop(
+        make_job("yokai"),
+        message,
+    )
+
+
+def test_historical_event_energy_stop_policy():
+    messages = (
+        "You don't have energy",
+        "You do not have enough energy",
+        "Not enough energy",
+        "Energy exhausted",
+        "Energy depleted",
+    )
+
+    for bot_type in (
+        "circus",
+        "yokai",
+        "yokai_minigame",
+    ):
+        for message in messages:
+            assert _should_stop(
+                make_job(bot_type),
+                message,
+            )
+
+
+def test_successful_event_reward_does_not_stop():
+    message = (
+        "Circus Ringmaster SUCCESS! | "
+        "XP: +3333 | Gold: +3333 | "
+        "Materials: material_2274"
+    )
+
+    assert not _should_stop(
+        make_job("circus"),
+        message,
+    )
+
+
+def test_nested_items_are_visible_as_legitimate_rewards():
+    payload = {
+        "rewards": {
+            "items": [
+                {
+                    "id": "material_test",
+                    "amount": 2,
+                }
+            ]
+        }
+    }
+
+    assert _collect_nested_materials(
+        payload
+    ) == [
+        "material_testx2"
+    ]

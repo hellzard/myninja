@@ -67,6 +67,64 @@
       : null;
   }
 
+  async function getBrowserPasswordCredential() {
+    if (
+      !navigator.credentials?.get ||
+      typeof window.PasswordCredential === 'undefined'
+    ) {
+      return null;
+    }
+
+    try {
+      const credential = await navigator.credentials.get({
+        password: true,
+        mediation: 'optional',
+      });
+
+      if (
+        !credential?.id ||
+        !credential?.password
+      ) {
+        return null;
+      }
+
+      return {
+        user: String(credential.id),
+        pass: String(credential.password),
+      };
+    } catch (_) {
+      return null;
+    }
+  }
+
+  async function storeBrowserPasswordCredential(
+    username,
+    password
+  ) {
+    if (
+      !navigator.credentials?.store ||
+      typeof window.PasswordCredential === 'undefined'
+    ) {
+      return false;
+    }
+
+    try {
+      const credential = new window.PasswordCredential({
+        id: String(username),
+        password: String(password),
+        name: String(username),
+      });
+
+      await navigator.credentials.store(
+        credential
+      );
+
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   function clearQuickCredentials() {
     sessionStorage.removeItem(QUICK_KEY);
     localStorage.removeItem(QUICK_KEY);
@@ -253,6 +311,14 @@
 
       try {
         const session = await login(user, pass);
+
+        if (source === 'manual') {
+          await storeBrowserPasswordCredential(
+            user,
+            pass
+          );
+        }
+
         window.NinjaUI?.log(`Login successful: ${session.char_name}`, 'info');
       } catch (error) {
         window.NinjaUI?.log(
@@ -286,13 +352,30 @@
     });
 
     quickBtn?.addEventListener('click', async () => {
-      const creds =
+      let creds =
         getQuickCredentials() ||
         getFormCredentials();
 
       if (!creds) {
+        creds =
+          await getBrowserPasswordCredential();
+
+        if (creds) {
+          if (userInput) {
+            userInput.value = creds.user;
+          }
+
+          if (passInput) {
+            passInput.value = creds.pass;
+          }
+
+          updateQuickButton(quickBtn);
+        }
+      }
+
+      if (!creds) {
         window.NinjaUI?.toast(
-          'Quick Login belum punya password. Gunakan browser password manager/autofill atau login manual sekali.',
+          'Credential Quick Login tidak tersedia. Pilih/simpan password melalui password manager browser atau login manual sekali.',
           'warn'
         );
 
