@@ -145,6 +145,8 @@ def _collect_nested_materials(payload, depth: int = 0) -> list:
                 "drops",
                 "loot",
                 "loots",
+                "item",
+                "items",
             }:
                 found.extend(_parse_materials(value))
 
@@ -1530,8 +1532,72 @@ async def run_yokai_minigame(client: NinjaSageClient, sessionkey: str, char_id: 
     if not isinstance(finish_res, dict) or finish_res.get('status') == 0:
         return f"Failed to finish Yokai Minigame: {finish_res}"
         
-    level = await get_or_fetch_char_level(client, sessionkey, char_id)
-    return format_battle_rewards("Yokai Minigame", finish_res, current_level=level, char_id=char_id)
+    level = await get_or_fetch_char_level(
+        client,
+        sessionkey,
+        char_id,
+    )
+
+    formatted = format_battle_rewards(
+        "Yokai Minigame",
+        finish_res,
+        current_level=level,
+        char_id=char_id,
+    )
+
+    # Older working versions treated rewards/reward as a
+    # dedicated minigame payload. Keep the generic formatter,
+    # but also preserve that dedicated payload so legitimate
+    # server rewards are not silently hidden.
+    reward_payload = finish_res.get(
+        "rewards",
+        finish_res.get(
+            "reward",
+            {},
+        ),
+    )
+
+    if reward_payload not in (None, {}, []):
+        preview = reward_payload
+
+        if isinstance(preview, dict):
+            sensitive_keys = {
+                "password",
+                "pass",
+                "sessionkey",
+                "session_key",
+            }
+
+            preview = {
+                key: value
+                for key, value in preview.items()
+                if str(key).lower() not in sensitive_keys
+            }
+
+        try:
+            reward_preview = json.dumps(
+                preview,
+                ensure_ascii=False,
+                separators=(",", ":"),
+            )
+        except Exception:
+            reward_preview = str(preview)
+
+        return (
+            f"{formatted} | "
+            f"Minigame Rewards: {reward_preview[:1200]}"
+        )
+
+    # Do not fabricate rewards. If the server sent no dedicated
+    # reward object, report only which response fields existed.
+    response_fields = ",".join(
+        sorted(str(key) for key in finish_res.keys())
+    )
+
+    return (
+        f"{formatted} | "
+        f"Minigame Reward Fields: {response_fields or '-'}"
+    )
 
 async def run_auto_mission(client: NinjaSageClient, sessionkey: str, char_id: int, mission_id: str):
     import hashlib

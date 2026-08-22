@@ -329,11 +329,64 @@ RESOURCE_EXHAUSTED_PHRASES = (
 
 
 def _is_resource_exhausted(message: str) -> bool:
-    text = str(message or "").lower()
-    return any(
+    text = " ".join(
+        str(message or "")
+        .lower()
+        .replace("’", "'")
+        .split()
+    )
+
+    if any(
         phrase in text
         for phrase in RESOURCE_EXHAUSTED_PHRASES
-    )
+    ):
+        return True
+
+    # Upstream event wording has changed over time.
+    # Detect the meaning instead of one exact sentence.
+    if "energy" in text:
+        energy_signals = (
+            "not enough",
+            "do not have",
+            "don't have",
+            "dont have",
+            "does not have",
+            "doesn't have",
+            "out of",
+            "insufficient",
+            "no energy",
+            "energy empty",
+            "energy is empty",
+            "energy habis",
+            "exhausted",
+            "depleted",
+        )
+
+        if any(
+            signal in text
+            for signal in energy_signals
+        ):
+            return True
+
+    if "free" in text and (
+        "tries" in text or
+        "play" in text
+    ):
+        free_signals = (
+            "no free",
+            "out of free",
+            "free tries exhausted",
+            "free play exhausted",
+            "free tries empty",
+        )
+
+        if any(
+            signal in text
+            for signal in free_signals
+        ):
+            return True
+
+    return False
 
 
 def _is_failed(message: str) -> bool:
@@ -373,18 +426,31 @@ def _should_stop(job: CloudBotJob, message: str) -> bool:
         return "stopped" in text
     if job.bot_type == "eudemon":
         return "no available eudemon bosses" in text or "requires level" in text
-    if job.bot_type in {"circus", "yokai", "yokai_minigame"}:
-        if _is_resource_exhausted(text):
+    if job.bot_type in {"circus", "yokai"}:
+        # Restore the known-good Cloud Bot behavior:
+        # event responses containing energy mean the event
+        # resource is no longer available and the job stops.
+        if "energy" in text:
             return True
 
-        if "stopped" in text or "ticket" in text:
-            return True
+        return (
+            "ticket" in text
+            or "stopped" in text
+        )
 
-        if job.bot_type == "yokai_minigame":
-            if "free tries" in text or "free play" in text:
-                return True
-
-        return False
+    if job.bot_type == "yokai_minigame":
+        # Historical minigame controller also stopped on
+        # energy/ticket exhaustion instead of retrying.
+        return any(
+            marker in text
+            for marker in (
+                "energy",
+                "ticket",
+                "free tries",
+                "free play",
+                "stopped",
+            )
+        )
     if job.bot_type == "monster":
         return "energy habis" in text or "energy monster hunter habis" in text or "stopped" in text
     if job.bot_type == "mission":
