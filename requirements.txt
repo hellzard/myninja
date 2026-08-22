@@ -1,6 +1,6 @@
 fastapi==0.111.1
 Py3AMF==0.8.12
-requests==2.33.0
+requests==2.34.2
 uvicorn==0.30.4
 httpx
 pycryptodomex
